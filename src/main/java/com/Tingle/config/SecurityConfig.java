@@ -28,8 +28,8 @@ public class SecurityConfig {
 		.logoutSuccessUrl("/");
 		
 		http.authorizeRequests()
-		.mvcMatchers("/css/**","/js/**","/img/**").permitAll()
-		.mvcMatchers("/","/members/**","/item/**","/images/**").permitAll();
+		.mvcMatchers("/css/**","/js/**","/fonts/**","/images/**","/img/**").permitAll()
+		.mvcMatchers("/","/members/**","/item/**").permitAll();
 		//.anyRequest().authenticated();
 		
 		
