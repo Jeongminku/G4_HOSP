@@ -19,7 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class disease {
+public class Disease {
 
 	@Id
 	@Column(name = "disease_id")
