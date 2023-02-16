@@ -30,11 +30,5 @@ public class Archive {
 	
 	// Archive 선언시 disease 테이블 연결 필요.
 	
-	public static Archive createArchive(ArchiveDto archiveDto) {
-		Archive archive = new Archive();
-		
-		
-		
-	}
 	
 }
