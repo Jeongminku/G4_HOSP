@@ -1,14 +1,19 @@
+
 package com.Tingle.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.Tingle.constant.Ward;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,19 +23,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table (name = "archive")
-
-public class Archive {
+@Table(name = "hospitalize")
+public class Hospitalize {
 
 	@Id
-	@Column(name = "archive_id")
+	@Column(name = "hospitalize_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String detail;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
 	private Member member;
-		
+	
+	@Enumerated(EnumType.STRING)
+	private Ward ward;
+	
 }
