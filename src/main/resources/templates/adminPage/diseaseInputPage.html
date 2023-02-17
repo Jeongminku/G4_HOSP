@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
+<div layout:fragment="content">
 	<input type="radio" name="chk_info" value="내과">내과
 	<input type="radio" name="chk_info" value="정형외과">정형외과
 	<input type="radio" name="chk_info" value="성형외과">성형외과
+</div>
 
 </body>
 </html>
