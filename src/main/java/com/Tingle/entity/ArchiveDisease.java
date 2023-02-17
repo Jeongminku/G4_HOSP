@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -18,19 +18,24 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table (name = "archive")
-
-public class Archive {
-
+@Table(name = "archive_disease")
+public class ArchiveDisease {
+	
 	@Id
-	@Column(name = "archive_id")
+	@Column(name = "archivedisease_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String detail;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "archive_id", nullable = false)
+	private Archive archive;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
-		
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "disease_id", nullable = false)
+	private Disease disease;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "hospitalize_id")
+	private Hospitalize hospitalize;
+	
 }
