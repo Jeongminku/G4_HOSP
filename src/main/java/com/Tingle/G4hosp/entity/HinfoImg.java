@@ -1,4 +1,4 @@
-package com.Tingle.entity;
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,30 +7,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Entity
+
 @Getter
 @Setter
 @ToString
-@Table (name = "archive")
-
-public class Archive {
-
+@Entity
+@Table(name="hinfo_img")
+public class HinfoImg {
+	
 	@Id
-	@Column(name = "archive_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="hinfoimg_id")
 	private Long id;
 	
-	private String detail;
+	private String imgname;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
-		
+	private String imgUrl;
+	
+	private String oriImgName;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "hinfo_id")
+	private HinfoBoard hinfoBoard;
 }

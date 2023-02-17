@@ -1,4 +1,4 @@
-package com.Tingle.config;
+package com.Tingle.G4hosp.config;
 
 import java.util.Optional;
 

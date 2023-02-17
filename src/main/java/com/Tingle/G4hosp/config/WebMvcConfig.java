@@ -1,4 +1,4 @@
-package com.Tingle.config;
+package com.Tingle.G4hosp.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

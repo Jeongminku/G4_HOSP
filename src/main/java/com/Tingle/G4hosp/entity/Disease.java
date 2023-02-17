@@ -1,4 +1,4 @@
-package com.Tingle.entity;
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,27 +15,20 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Table(name="disease") 
 @Getter
 @Setter
 @ToString
-@Table(name = "archive_disease")
-public class ArchiveDisease {
-	
+public class Disease {
+
 	@Id
-	@Column(name = "archivedisease_id")
+	@Column(name = "disease_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long diseaseId;
+	
+	private String diseaseName;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "archive_id", nullable = false)
-	private Archive archive;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "disease_id", nullable = false)
-	private Disease disease;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hospitalize_id")
-	private Hospitalize hospitalize;
-	
+	@JoinColumn(name = "med_id")
+	private Med med;
 }

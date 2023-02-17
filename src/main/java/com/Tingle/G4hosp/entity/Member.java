@@ -1,4 +1,4 @@
-package com.Tingle.entity;
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +11,8 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.Tingle.constant.Role;
-import com.Tingle.dto.MemberFormDto;
+import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.dto.MemberFormDto;
 
 import groovy.transform.ToString;
 import lombok.Getter;

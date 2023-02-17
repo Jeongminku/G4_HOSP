@@ -1,4 +1,4 @@
-package com.Tingle.entity;
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

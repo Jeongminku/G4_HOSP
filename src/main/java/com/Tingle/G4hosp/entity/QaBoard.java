@@ -1,8 +1,8 @@
-package com.Tingle.entity;
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.*;
 
-import com.Tingle.constant.QaCategory;
+import com.Tingle.G4hosp.constant.QaCategory;
 
 import lombok.*;
 

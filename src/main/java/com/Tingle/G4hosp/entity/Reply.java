@@ -1,4 +1,4 @@
-package com.Tingle.entity;
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,32 +6,29 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name="hinfo_img")
-public class HinfoImg {
+@Table(name = "Reply")
+public class Reply {
 	
 	@Id
+	@Column(name = "reply_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="hinfoimg_id")
 	private Long id;
 	
-	private String imgname;
-	
-	private String imgUrl;
-	
-	private String oriImgName;
+	private String replyContent;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hinfo_id")
-	private HinfoBoard hinfoBoard;
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Board board;
 }

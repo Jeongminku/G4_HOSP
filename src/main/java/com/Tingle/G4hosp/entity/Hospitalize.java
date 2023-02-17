@@ -1,7 +1,10 @@
-package com.Tingle.entity;
+
+package com.Tingle.G4hosp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.Tingle.G4hosp.constant.Ward;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,30 +23,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table (name = "archiveimg")
+@Table(name = "hospitalize")
+public class Hospitalize {
 
-public class ArchiveImg {
-	
 	@Id
-	@Column(name = "archiveimg_id")
+	@Column(name = "hospitalize_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String imgname;
-	
-	private String imgori;
-	
-	private String imgurl;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "archive_id", nullable = false)
-	private Archive archive;
+	@JoinColumn(name = "member_id")
+	private Member member;
 	
-	
-	public void updateArchiveImg(String imgname, String imgori, String imgurl) {
-		this.imgname = imgname;
-		this.imgori = imgori;
-		this.imgurl = imgurl;
-	}
+	@Enumerated(EnumType.STRING)
+	private Ward ward;
 	
 }

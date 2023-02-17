@@ -1,4 +1,4 @@
-package com.Tingle.constant;
+package com.Tingle.G4hosp.constant;
 
 public enum Ward {
 	ONE(301),

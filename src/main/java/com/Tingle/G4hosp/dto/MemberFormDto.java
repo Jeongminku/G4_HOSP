@@ -1,10 +1,10 @@
-package com.Tingle.dto;
+package com.Tingle.G4hosp.dto;
 
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.Tingle.constant.Role;
+import com.Tingle.G4hosp.constant.Role;
 
 import lombok.Getter;
 import lombok.Setter;
