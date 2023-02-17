@@ -18,12 +18,12 @@ public class HinfoBoard {
 	private Long id;
 	
 	@Column(name="hinfo_title")
-	private String hinfoTitle;
+	private String Title;
 	
 	@Column(name="hinfo_content")
-	private String hinfoContent;
+	private String Content;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_nm")
 	private Member member;
 }
