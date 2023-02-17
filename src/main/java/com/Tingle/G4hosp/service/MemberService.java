@@ -21,28 +21,24 @@ public class MemberService implements UserDetailsService{
 	 private final MemberRepository memberRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
-		
-		Member member = memberRepository.findByMemberId(memberId);
+	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
+		Member member = memberRepository.findByLoginid(loginid);
 		
 		if(member == null) {
-		 throw new UsernameNotFoundException(memberId);	
+			throw new UsernameNotFoundException(loginid);
 		}
-			
-			
 		return User.builder()
-				   .username(member.getMemberid())
-				   .password(member.getPwd())
-				   .roles(member.getRole().toString())
-					.build();
-	
+				.username(member.getLoginid())
+				.password(member.getPwd())
+				.roles(member.getRole().toString())
+				.build();
 	}
+	 
+	 public Member saveMember(Member member) {
+		 return memberRepository.save(member);
+	 }
 
-	
-	public Member saveMember(Member member) {
-		return memberRepository.save(member);
-	}
-		
+
 		
 	
 	 

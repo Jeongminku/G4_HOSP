@@ -26,53 +26,60 @@ import lombok.Setter;
 public class Member {
 
 	@Id
-	@Column(name="member_nm")
+	@Column(name="member_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id; //회원번호
 	
-	@Column(nullable = false, unique = true, name="member_id")
-	private String memberid; //로그인시 사용할 아이디
+	@Column(nullable = false, unique = true, name="member_loginid")
+	private String loginid; //로그인시 사용할 아이디
 	
-	@Column(nullable = false, name="member_name")
+	@Column(nullable = false)
 	private String name; //이름
 
-	@Column(nullable = false, name="member_pwd")
+	@Column(nullable = false)
 	private String pwd; //비밀번호 
 
-	@Column(nullable = false, name="member_tel")
+	@Column(nullable = false)
 	private String tel; //전화번호 
 
-	@Column(nullable = false, name="member_birth")
+	@Column(nullable = false)
 	private String birth;  //생년월일 
 
 	@Enumerated(EnumType.STRING)
 	private Role role;  //가입유저타입 
 
-	@Column(nullable = false, name="memberimg_name")
-	private String imgname; //이미지원본파일명  
+	@Column(nullable = false, name="img_name")
+	private String imgName; //이미지원본파일명  
 	
-	@Column(nullable = false, name="memberimg_ori")
-	private String imgori; //이미지파일명 
+	@Column(nullable = false, name="img_ori")
+	private String imgOri; //이미지파일명 
 	
-	@Column(nullable = false, name="memberimg_url")
-	private String imgurl; //이미지URL
+	@Column(nullable = false, name="img_url")
+	private String imgUrl; //이미지URL
 	
-	public static Member createUser(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		Member member = new Member();
 		
-		member.setMemberid(memberFormDto.getMemberid());
+		member.setLoginid(memberFormDto.getLoginid());
 		member.setName(memberFormDto.getName());
 		String pwd = passwordEncoder.encode(memberFormDto.getPwd());
 		member.setPwd(pwd);
 		member.setTel(memberFormDto.getTel());;
 		member.setBirth(memberFormDto.getBirth());
-		member.setRole(Role.USER);
-		member.setImgname(memberFormDto.getImgname());
-		member.setImgori(memberFormDto.getImgori());
-		member.setImgurl(memberFormDto.getImgurl());
+		member.setRole(memberFormDto.getRole());
 		
 		return member;
-		
-		
+	}
+	
+	public void updateImg(String imgName, String imgUrl, String imgOri) {
+		this.imgName = imgName;
+		this.imgUrl = imgUrl;
+		this.imgOri = imgOri;
+	}
+	
+	public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+		this.name = memberFormDto.getName();
+		String pwd = passwordEncoder.encode(memberFormDto.getPwd());
+		this.pwd = pwd;
 	}
 }
