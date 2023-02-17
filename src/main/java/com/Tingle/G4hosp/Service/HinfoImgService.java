@@ -38,5 +38,6 @@ public class HinfoImgService {
 		}
 		hinfoImg.updateHinfoImg(oriImgName, imgName, imgUrl);
 		hinfoImgRepository.save(hinfoImg);
+		//hinfoImgRepository.save(hinfoImg);
 	}
 }
