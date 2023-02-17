@@ -13,13 +13,13 @@ import lombok.Setter;
 @Setter
 public class MemberFormDto {
 	@NotBlank(message = "아이디는 필수 입력값입니다.")
-	private String memberid; //ID
+	private String loginid; //ID
 	
 	@NotBlank(message="이름은 필수 입력값입니다.")
 	private String name; //이름 
 	
 	@NotBlank(message="비밀번호는 필수 입력값입니다.")
-	@Length(min=6, max=12, message = " 비밀번호는 6자 이상, 12자 이하로 입력해주세요") 
+	//@Length(min=6, max=12, message = " 비밀번호는 6자 이상, 12자 이하로 입력해주세요") 
 	private String pwd; //비밀번호 
 	
 	@NotBlank(message="전화번호는 필수 입력값입니다.")
@@ -28,13 +28,19 @@ public class MemberFormDto {
 	@NotBlank(message="생년월일은 필수 입력값입니다.")
 	private String birth;
 	
-	@NotBlank
 	private Role role;
 	
-	private String imgname;
+	private String imgName;
 	
-	private String imgori;
+	private String imgOri;
 	
-	private String imgurl;
+	private String imgUrl;
 
+	/*
+	public static ModelMapper modelMapper = new ModelMapper();
+	
+	 public Member createMember() {
+	 	return modelMapper.map(this, Member.class);
+	 }
+	 */
 }
