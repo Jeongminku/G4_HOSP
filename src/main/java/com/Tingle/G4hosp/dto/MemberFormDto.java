@@ -3,8 +3,10 @@ package com.Tingle.G4hosp.dto;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
+import org.modelmapper.ModelMapper;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.entity.Member;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,11 +38,11 @@ public class MemberFormDto {
 	
 	private String imgUrl;
 
-	/*
+	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
 	 public Member createMember() {
 	 	return modelMapper.map(this, Member.class);
 	 }
-	 */
+	 
 }
