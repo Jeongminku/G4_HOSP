@@ -1,4 +1,4 @@
-package com.Tingle.G4hosp.Service;
+package com.Tingle.G4hosp.service;
 
 import java.io.IOException;
 
