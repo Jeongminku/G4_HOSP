@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	
+$(function(){
+	$('.qa_question').each(function(){
+		($(this).click(function(){				
+			$(this).next().slideToggle("slow");	
+		}));
+		})
+	});
+	</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<th:block th:each="qa : ${QaAllList}">
+		<ul class="faq_area">
+			<li>
+				<dl>
+					<dt class="qa_question" style="cursor: pointer;">
+						<span>[[${qa.qaTitle}]]</span>
+					</dt>
+					<dd class="qa_answer" style="display: none;" >
+					<div class="text_area fix">
+						<p>[[${qa.qaContent}]]</p>
+					</div>
+					</dd>
+				</dl>
+			</li>
+		</ul>
+		</th:block>
+	</div>
+</body>
+</html>
