@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-</body>
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title> 입원페이지 입니당 </title> 
+
+    <!-- THYMELEAF JS  -->
+    <th:block layout:fragment="script">
+      <script th:inline="javascript">
+      
+      </script>
+    </th:block>
+
+    <!-- THYMELEAF CSS -->
+    <th:block layout:fragment="css">
+      <style> </style>
+    </th:block>
+  </head>
+  <body>
+    <div layout:fragment="content">
+    	
+    	
+    	
+    	
+    	
+    </div>
+  </body>
 </html>

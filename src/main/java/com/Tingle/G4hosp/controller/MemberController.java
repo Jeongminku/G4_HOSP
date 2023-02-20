@@ -31,7 +31,6 @@ public class MemberController {
 	@GetMapping(value="/login")
 	public String loginMember() {
 		return "member/memberLoginForm";
-		
 	}
 	
 	//로그인 실패시.
