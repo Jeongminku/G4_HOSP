@@ -3,6 +3,7 @@ package com.Tingle.G4hosp.entity;
 import javax.persistence.*;
 
 import com.Tingle.G4hosp.constant.QaCategory;
+import com.Tingle.G4hosp.dto.QaBoardDto;
 
 import lombok.*;
 
@@ -31,4 +32,28 @@ public class QaBoard {
 	@JoinColumn(name = "member_nm")
 	@ManyToOne
 	private Member member;
+	
+	public static QaBoard createQaBoard (QaBoardDto qaBoardDto, Member member) {
+		
+		QaBoard qaBoard = new QaBoard();
+		qaBoard.setQaCategory(qaBoardDto.getCategory());
+		qaBoard.setQaTitle(qaBoardDto.getTitle());
+		qaBoard.setQaContent(qaBoardDto.getContent());
+		
+		qaBoard.setMember(member);
+		
+		return qaBoard;
+	}
+	
+	
+	//Test용
+public static QaBoard createQaTest (QaBoardDto qaBoardDto) {
+		
+		QaBoard qaBoard = new QaBoard();
+		qaBoard.setQaCategory(qaBoardDto.getCategory());
+		qaBoard.setQaTitle(qaBoardDto.getTitle());
+		qaBoard.setQaContent(qaBoardDto.getContent());
+		
+		return qaBoard;
+	}
 }

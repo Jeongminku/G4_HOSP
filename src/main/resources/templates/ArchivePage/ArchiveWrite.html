@@ -3,62 +3,200 @@
 <!-- layout이 적용되어있는 페이지 폼 입니다. 
 		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
 
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layouts/layout}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title> 환자 진료 내역 페이지입니다. </title> 
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>진료 내역 작성페이지입니다.</title>
 
-    <!-- THYMELEAF JS  -->
-    <th:block layout:fragment="script">
-      <script th:inline="javascript">
-      
-      </script>
-    </th:block>
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
 
-    <!-- THYMELEAF CSS -->
-    <th:block layout:fragment="css">
-      <style> </style>
-    </th:block>
-  </head>
-  <body>
-    <div layout:fragment="content">
+/* 	var sel_files = [];
+	 
+    $(document).ready(function() {
+        $("#input_imgs").on("change", handleImgsFilesSelect);
+    }); 
+
+    function handleImgsFilesSelect(e) {
     	
-    	<div class="wrap">
-    		<div class="cont">
-    			<!-- USER INFO, POST INFO  -->
-    			<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
-					<div class="col-md-6">
-				<!-- 		<img th:alt="${post.imgname}" th:src="${post.imgurl}" width="90%"> -->
+    	if(){
+	    $(".imgs_wrap").empty(img_html);    		
+    	}
+	    
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function(f) {
+            if(!f.type.match("image.*")) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+
+            sel_files.push(f);
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img_html = "<img class='imglist' src=\"" + e.target.result + "\" />";
+                $(".imgs_wrap").append(img_html);
+            }
+            reader.readAsDataURL(f);
+        });
+    } */
+    
+	function readURL(input) {
+ 		var id = $(input).attr('id');
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('preview'+id).src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+    }
+    
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<style>
+.wrap {
+	width: 80%;
+}
+.viewhead{
+	text-align: center;
+}
+.viewlineboxup {
+	border-top: 5px solid black;
+}
+
+.viewlinebox {
+	border: 1px solid black;
+	text-align: center;
+}
+.linemenu{
+	height: 100px;
+	text-align: center;
+	display: table;
+}
+.tablemenu{
+	border: 1px solid
+}
+.detailbody {
+	border: none;
+}
+
+.inputarea{
+	height: 100%
+}
+
+.detail{
+	width : 100%;
+	height: 150px;
+}
+
+.cont_img{
+	width: 15%;
+}
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="wrap">
+			<div class="cont">
+				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+					<div class="col-md-10 headwrap">
+					
+					<div class="col-md-12 viewhead">
+						<h1>진료 내역 작성</h1>
 					</div>
+					
+					<form action="/write" method="post" th:object="${archiveFormDto}">		
+					<div class="col-md-12 viewhead"></div>
+					<div class="col-md-12 viewlineboxup"></div>
+					<div class="col-md-12 viewlinebox">
+						<span> 환자명 </span> <span> 김김김 </span> <span> 나이 </span> <span>20
+						</span> <span> 주요내원병명 </span> <span> 감기 </span> <span> 입원여부 </span> 
+						<span>Y
+						</span>
+					</div>
+					<div class="col-md-12 linemenu">
+						<button> 작성 완료 </button>
+					</div>
+					<div class="col-md-12 tablemenu">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">진료번호</th>
+									<td> 번호 들어간다 </td>
+									<th scope="row">내원날짜</th>
+									<td> 날짜 들어간다 </td>
+								</tr>
+								<tr>
+									<th scope="row">질병코드</th>
+									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td>
+									<th scope="row">담당의</th>
+									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>
+								</tr>
+								<tr class="detailhead">
+									<td colspan="4">
+										<div>세부 진료 사항</div>
+										<p> <textarea class="detail" th:field = "*{detail}" placeholder="작성예시">  </textarea> </p>
+											<img th:id = "preview1" th:name = "1" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview2" th:name = "2" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview3" th:name = "3" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview4" th:name = "4" class="cont_img" onclick="change(this)">									
+									</td>	
+								</tr>
+								<tr>
+									<td colspan="4">
+									사진첨부
+											<input type="file" class="form-control" th:id="1" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<input type="file" class="form-control" th:id="2" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<input type="file" class="form-control" th:id="3" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<input type="file" class="form-control" th:id="4" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 					
+					
 					<div class="col-md-6">
 					<br>
 						<div class="row-md-3">
-							<h2> 작성자 : <!-- [[${member.email}]] --> </h2>
+							<h2> 작성자 :  </h2>
 						</div>
 						<br>
 						<div class="row-md-3">
 							<h3> 태그 </h3> 
 								<div >
-<!-- 									<span th:each = "tag : ${tags}"> #[[${tag.tagname}]] </span>
- -->								</div>
+									<span th:each = "tag : ${tags}"> #[[${tag.tagname}]] </span>
+								</div>
 						</div>						
 						<br>
 						<div class="row-md-3">
-							<h3> 좋아요 : <!-- [[${post.heart}]] --> </h3>
+							<h3> 좋아요 : </h3>
 						</div>	
 						<div class="row-md-3 likesection">
 							<div class="row-md-6" style="text-align: left;">							
-							<!-- 	<button class="button" th:onclick="giveheart([[${post.id}]])" style="background: transparent; border: 0"><img alt="heart" src="/images/flatheart.png" width="50px"> </button> -->
+								<button class="button" th:onclick="giveheart([[${post.id}]])" style="background: transparent; border: 0"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
 								<span> 이 TRABLE, 마음에 들어요! </span>
 							</div>
 						</div>											
 					</div>
-					<!-- UPDATE, DELETE POST -->
-<!-- 					<div th:if="${id} == ${member.email}">					
+					UPDATE, DELETE POST
+					<div th:if="${id} == ${member.email}">					
 						<div class="updateANDdelete">
 						 fdsf
 								<div class="row center">
@@ -82,20 +220,16 @@
 									</div>
  							</div>
 						</div>
-					</div> -->
+					</div>
     			</div>
     			
     			
-    			<!-- POST IMG -->
- <!--    			<div class="row row_left" th:each="postimg : ${postimgs}">
+    			POST IMG
+    			<div class="row row_left" th:each="postimg : ${postimgs}">
 					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
-    			</div>
- -->    		</div>
-    	</div>
-    	
-    	
-    	
-    	
-    </div>
-  </body>
+    			</div> -->
+
+
+
+</body>
 </html>

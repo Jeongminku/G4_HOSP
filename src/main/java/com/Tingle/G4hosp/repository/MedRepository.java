@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.Tingle.G4hosp.entity.Med;
 
 public interface MedRepository extends JpaRepository<Med, Long> {
+
+	// select * from Med
 	
 }
