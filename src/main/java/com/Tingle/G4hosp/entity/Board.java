@@ -21,8 +21,8 @@ public class Board {
 	private String boardContent;
 	
 	//Member fk
-	@JoinColumn(name = "member_nm")
-	@ManyToOne
-	private Member member;
+//	@JoinColumn(name = "member_nm")
+//	@ManyToOne
+//	private Member member;
 	
 }
