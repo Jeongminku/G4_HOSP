@@ -28,7 +28,7 @@ public class QaBoardService {
 		return qaBoardRepository.findAll();
 	}
 	
-	public List<QaBoard >findByQaCategory(QaCategory category) {
+	public List<QaBoard> findByQaCategory(QaCategory category) {
 		return qaBoardRepository.findByQaCategory(category);
 	}
 }

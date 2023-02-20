@@ -56,8 +56,7 @@ public class QaBoardController {
 		return "qaPage/qaForm";
 	}
 	
-	
-	
+
 	//로그인아이디 안넣고 글세이브하는 기능(테스트용)
 	@PostMapping(value="/new")
 	public String newQaBoard(QaBoardDto qaBoardDto, Model model) {
@@ -65,8 +64,8 @@ public class QaBoardController {
 		QaBoard qaBoard = QaBoard.createQaTest(qaBoardDto);
 		qaBoardService.saveQaBoard(qaBoard);
 
-		return "redirect:/qa/";
+		return "redirect:/qa/qaPage";
 	}
 	
-	
+
 }
