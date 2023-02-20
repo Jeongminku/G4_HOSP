@@ -1,5 +1,8 @@
 package com.Tingle.G4hosp.dto;
 
+import com.Tingle.G4hosp.entity.Disease;
+import com.Tingle.G4hosp.entity.Member;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +13,12 @@ import lombok.ToString;
 public class ArchiveFormDto {
 
 	
+	private Disease disease;
+	
+	private Member doctor;
+	
 	private String detail;
+	
 	
 	
 }
