@@ -1,11 +1,13 @@
 package com.Tingle.G4hosp.service;
 
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import com.Tingle.G4hosp.dto.ReservationDoctorDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.Reservation;
@@ -38,5 +40,11 @@ public class ReservationService {
 	public void deleteReservation (Long reservationId) {
 		Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(EntityNotFoundException::new);
 		reservationRepository.delete(reservation);
+	}
+	
+	public List<ReservationDoctorDto> findAllDoctor () {
+		Map<String, List<ReservationDoctorDto>> test = null;
+		
+		return null;
 	}
 }

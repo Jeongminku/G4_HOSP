@@ -11,11 +11,22 @@ import lombok.*;
 @ToString
 public class MemberMed {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	@JoinColumn(name="member_id")
 	@OneToOne
-	private Member id;
+	private Member memberId;
 	
 	@JoinColumn(name = "med_id")
 	@ManyToOne
 	private Med medId;
+	
+	public static MemberMed createMemberMed (Member doctor, Med med) {
+		MemberMed memberMed = new MemberMed();
+		memberMed.setMemberId(doctor);
+		memberMed.setMedId(med);
+		return memberMed;
+	}
 }

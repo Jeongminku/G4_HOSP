@@ -22,7 +22,6 @@ public class ArchiveController {
 	public String loginMember(Member member, Model model) {
 		
 		
-		
 		model.addAttribute("member", member);
 		return "ArchivePage/ArchiveView";
 	}

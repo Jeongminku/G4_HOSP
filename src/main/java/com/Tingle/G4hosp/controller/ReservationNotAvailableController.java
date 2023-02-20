@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
+<<<<<<< Updated upstream
 //@Controller
 //@RequiredArgsConstructor
 //@RequestMapping("/ReservationNotAvailable")
@@ -14,3 +15,14 @@ import lombok.RequiredArgsConstructor;
 //		
 //	}
 //}
+=======
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/ReservationNotAvailable")
+public class ReservationNotAvailableController {
+
+	public String testing () {
+		return null;
+	}
+}
+>>>>>>> Stashed changes
