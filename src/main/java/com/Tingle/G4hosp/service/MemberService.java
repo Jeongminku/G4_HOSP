@@ -49,19 +49,14 @@ public class MemberService implements UserDetailsService{
 		 return member ;
 	 }
 
-<<<<<<< HEAD
 	 // 관리자 페이지 -> 고객/의사 목록 조회
 	 public List<Member> getMemberList(Role role){
 		 return memberRepository.findByRole(role);
 	 }
-		
-=======
 	
 	 public Member findByLoginid(String loginid) {
 			return memberRepository.findByLoginid(loginid);
 	}	
->>>>>>> 0b7de740404fdc0d35fb8998787124f36f2dc1e4
 	
-	 
 	 
 }
