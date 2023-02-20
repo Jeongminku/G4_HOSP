@@ -11,6 +11,7 @@ import com.Tingle.G4hosp.dto.ArchiveFormDto;
 import com.Tingle.G4hosp.entity.Archive;
 import com.Tingle.G4hosp.entity.ArchiveImg;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.repository.ArchiveRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,16 +22,21 @@ import lombok.RequiredArgsConstructor;
 public class ArchiveService {
 	
 	private final MemberRepository memberRepository;
+	private final ArchiveRepository archiveRepository;
 	private final ArchiveImgService archiveImgService;
 	
 	
-	public Long saveArchive(ArchiveFormDto archiveFormDto, List<MultipartFile> archiveImgFileList, Member mem) throws Exception {
+	public Long saveArchive(ArchiveFormDto archiveFormDto, List<MultipartFile> archiveImgFileList) throws Exception {
 		
 		// SELECT MEMBER OBJECT (FIND DOCTOR BY NAME - USING DTO's DOCTOR NAME)
 		Member member = memberRepository.findbyNameindoctor(archiveFormDto.getDoctorname());
 		
-		// CREATE ARCHIVE BY MEMBER OBJECT
+		// CREATE ARCHIVE BY MEMBER OBJECT & SAVE ARCHIVE
 		Archive archive = Archive.createArchive(member, archiveFormDto);
+		archiveRepository.save(archive);
+		
+		// CREATE ARCHIVE_DISEASE OBJECT BY ARCHIVE
+		
 		
 		// SAVE EACH IMGFILE FROM IMGFILELIST
 		for(int i=0; i<archiveImgFileList.size(); i++) {

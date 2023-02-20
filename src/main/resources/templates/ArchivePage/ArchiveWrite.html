@@ -13,38 +13,14 @@
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-
-/* 	var sel_files = [];
-	 
-    $(document).ready(function() {
-        $("#input_imgs").on("change", handleImgsFilesSelect);
-    }); 
-
-    function handleImgsFilesSelect(e) {
-    	
-    	if(){
-	    $(".imgs_wrap").empty(img_html);    		
+    
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	if(errorMessage != null){
+        	alert(errorMessage);
     	}
-	    
-        var files = e.target.files;
-        var filesArr = Array.prototype.slice.call(files);
 
-        filesArr.forEach(function(f) {
-            if(!f.type.match("image.*")) {
-                alert("확장자는 이미지 확장자만 가능합니다.");
-                return;
-            }
-
-            sel_files.push(f);
-
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img_html = "<img class='imglist' src=\"" + e.target.result + "\" />";
-                $(".imgs_wrap").append(img_html);
-            }
-            reader.readAsDataURL(f);
-        });
-    } */
+	});
     
 	function readURL(input) {
  		var id = $(input).attr('id');
@@ -123,7 +99,7 @@
 						</span>
 					</div>
 					<div class="col-md-12 linemenu">
-						<button> 작성 완료 </button>
+						<button type="submit"> 작성 완료 </button>
 					</div>
 					<div class="col-md-12 tablemenu">
 						<table class="table table-bordered">

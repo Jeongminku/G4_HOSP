@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.service.ArchiveService;
 import com.Tingle.G4hosp.service.MemberImgService;
 import com.Tingle.G4hosp.service.MemberService;
 
@@ -26,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArchiveController {
 
+	private final ArchiveService archiveService;
+	
 	// OPEN ARCHIVE PAGE
 	@GetMapping(value="/")
 	public String archiveview(Member member, Model model) {
@@ -56,11 +59,13 @@ public class ArchiveController {
 		}
 		
 		// SAVE ARCHIVE
-		
-		
-		
-		
-		
+		try {
+			archiveService.saveArchive(archiveFormDto, archiveImgFileList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "진료기록 업로드 중 에러가 발생했습니다!");
+			return "ArchivePage/ArchiveWrite";
+		}
 		return "ArchivePage/ArchiveView";
 	}
 	
