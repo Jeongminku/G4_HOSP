@@ -24,6 +24,18 @@
 	
 </form>	
 
+	<h2>진료과 목록</h2>
+
+			<th:block th:each="meds : ${meds}">
+			
+				<article>
+					<header>
+						<span class="medName">[[${meds.medName}]] : </span>
+						<span class="medInfo">[[${meds.medInfo}]]</span>
+					</header>
+				</article>
+			</th:block>
+
 </div>
 
 </body>
