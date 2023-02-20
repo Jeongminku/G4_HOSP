@@ -55,6 +55,7 @@ public class ArchiveController {
 			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", "값을 가져오는 중 에러가 발생했습니다!");
 			return "ArchivePage/ArchiveWrite";
 		}
 		

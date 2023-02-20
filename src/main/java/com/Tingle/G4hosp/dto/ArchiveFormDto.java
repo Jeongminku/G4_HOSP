@@ -13,7 +13,7 @@ import lombok.ToString;
 public class ArchiveFormDto {
 
 	
-	private Disease disease;
+	private String disease;
 	
 	private String doctorname;
 	
