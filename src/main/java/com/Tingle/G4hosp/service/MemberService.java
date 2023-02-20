@@ -53,10 +53,6 @@ public class MemberService implements UserDetailsService{
 	 public List<Member> getMemberList(Role role){
 		 return memberRepository.findByRole(role);
 	 }
-<<<<<<< HEAD
-=======
-		
->>>>>>> a9a886cd88bb5365a54f75ea167a9499d41a93dc
 	
 	 public Member findByLoginid(String loginid) {
 			return memberRepository.findByLoginid(loginid);
