@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
+<div layout:fragment="content">
+
+	<h1>입원한 환자 목록</h1>
+
 	<table>
+	
 		<th>성함</th>
 		<th>생년월일</th>
 		<th>전화번호</th>
@@ -15,22 +22,15 @@
 			<td>1998/08/22</td>
 			<td>010-1234-1111</td>
 		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
+	
 	</table>
+
+	<form class="d-flex" role="search" th:action="@{/admin/patientList}" method="get">
+		<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
+		<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
+	</form>
+
+</div>
 
 </body>
 </html>

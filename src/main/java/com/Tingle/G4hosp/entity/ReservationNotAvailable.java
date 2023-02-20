@@ -10,6 +10,7 @@ import com.Tingle.G4hosp.constant.NotAvailableDay;
 import lombok.Data;
 
 @Data
+@Entity
 public class ReservationNotAvailable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -12,10 +12,8 @@
 
 	<h1>의사목록</h1>
 
-	<h2>의사검색</h2>
-	<input type="text" name="memberName">
-
 	<table>
+	
 		<th>성함</th>
 		<th>생년월일</th>
 		<th>전화번호</th>
@@ -24,22 +22,13 @@
 			<td>1998/08/22</td>
 			<td>010-1234-1111</td>
 		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
+		
 	</table>
+
+	<form class="d-flex" role="search" th:action="@{/admin/doctorList}" method="get">
+		<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
+		<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
+	</form>
 
 </div>
 

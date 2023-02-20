@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
-@RequiredArgsConstructor
-@RequestMapping("/ReservationNotAvailable")
-public class ReservationNotAvailableController {
-
-	public String testing () {
-		
-	}
-}
+//@Controller
+//@RequiredArgsConstructor
+//@RequestMapping("/ReservationNotAvailable")
+//public class ReservationNotAvailableController {
+//
+//	public String testing () {
+//		
+//	}
+//}

@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReservationNotAvailableService {
-	private final ReservationNotAvailableRepository reservationNotAvailableRepository;
+//	private final ReservationNotAvailableRepository reservationNotAvailableRepository;
 	
 	public ReservationNotAvailable createReservationNotAvailable (Long doctorId, String[] selected) {
 		for(String select : selected) {

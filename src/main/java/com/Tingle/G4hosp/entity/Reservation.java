@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import lombok.Data;
 
 @Data
+@Entity
 public class Reservation extends BaseTime{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
