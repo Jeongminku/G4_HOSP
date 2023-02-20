@@ -13,37 +13,112 @@
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-		
+    
+	function readURL(input) {
+ 		var id = $(input).attr('id');
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('preview'+id).src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+    }
+    
 	</script>
 </th:block>
 
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
 	<style>
-	
-	
-	.
-	
+.wrap {
+	width: 80%;
+}
+.viewhead{
+	text-align: center;
+}
+.viewlineboxup {
+	border-top: 5px solid black;
+}
+
+.viewlinebox {
+	border: 1px solid black;
+	text-align: center;
+}
+.linemenu{
+	height: 100px;
+	text-align: center;
+	display: table;
+}
+.tablemenu{
+	border: 1px solid
+}
+.detailbody {
+	border: none;
+}
+
+.cont_img{
+	width: 15%;
+}
 </style>
 </th:block>
 </head>
 <body>
 	<div layout:fragment="content">
-
 		<div class="wrap">
 			<div class="cont">
 				<!-- USER INFO, POST INFO  -->
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
-					<div class="col-md-6">
-						<h2>환자 진료 내역</h2>
+					<div class="col-md-10 headwrap">
+					
+					<div class="col-md-12 viewhead">
+						<h1>환자 진료 내역</h1>
+					</div>
+					<div class="col-md-12 viewhead"></div>
+
+					<div class="col-md-12 viewlineboxup"></div>
+					<div class="col-md-12 viewlinebox">
+						<span> 환자명 </span> <span> 김김김 </span> <span> 나이 </span> <span>20
+						</span> <span> 주요내원병명 </span> <span> 감기 </span> <span> 입원여부 </span> <span>Y
+						</span>
+					</div>
+					<div class="col-md-12 linemenu">
+						<button> 진료 수정 </button>
+					</div>
+					<div class="col-md-12 tablemenu">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">진료번호</th>
+									<td>번호 들어간다</td>
+									<th scope="row">내원날짜</th>
+									<td>날짜 들어간다</td>
+								</tr>
+								<tr>
+									<th scope="row">질병코드</th>
+									<td>코드 들어간다</td>
+									<th scope="row">담당의</th>
+									<td>의사 들어간다</td>
+								</tr>
+								<tr class="detailhead">
+									<td colspan="4">
+										<div>세부 진료 사항</div>
+										<p> 내용이 들어간다는~ </p>
+											<img th:id = "preview1" th:name = "1" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview2" th:name = "2" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview3" th:name = "3" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview4" th:name = "4" class="cont_img" onclick="change(this)">									
+									</td>	
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-			
-<!-- 					
+
+
+	<!-- 					
 					
 					<div class="col-md-6">
 					<br>
@@ -101,8 +176,8 @@
     			<div class="row row_left" th:each="postimg : ${postimgs}">
 					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
     			</div> -->
-	
-	
-	
+
+
+
 </body>
 </html>
