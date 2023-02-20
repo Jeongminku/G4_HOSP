@@ -18,7 +18,7 @@ body{
 	position: relative;
 }
 
-footer{
+/* footer{
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -26,10 +26,22 @@ footer{
 	padding : 15px 0;
 	text-align: center;
 	}
+ */
+
+/*헤더 nav, 푸터 시작 */
+footer a.text-light:hover { color: #fed136!important; text-decoration: none; }
+footer .cizgi { border-right: 1px solid #535e67; }
+@media (max-width: 992px) { footer .cizgi { border-right: none; } }
+.navbar { background-color: #484848; }
+.navbar .navbar-nav .nav-link { color: #fff; }
+.navbar .navbar-nav .nav-link:hover { color: #fbc531; }
+/*헤더 nav, 푸터 끝 */
+
 	
 .content{
 	margin : 10px;
 }
+
 
 
 
