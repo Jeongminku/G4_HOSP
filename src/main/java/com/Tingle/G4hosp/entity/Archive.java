@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessorOrder;
 
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 
@@ -32,14 +33,24 @@ public class Archive extends BaseTime{
 	private String detail;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
+	@JoinColumn(name = "patient_id", nullable = false)
 	private Member member;
+	
+	@Column(name = "doctor_id")
+	private Long doctorid;
 
-	public static Archive createArchive(Member member, ArchiveFormDto archiveFormDto) {
+	public static Archive createArchive(Member doctor, Member patient, ArchiveFormDto archiveFormDto) {
 		Archive archive = new Archive();
 		archive.setDetail(archiveFormDto.getDetail());
-		archive.setMember(member);
+		archive.setMember(patient);
+		archive.setDoctorid(doctor.getId());
 		return archive;
+	}
+	
+	// UPDATE ARCHIVE (ARCHIVE DETAIL, DOCTOR)
+	public void updateArchive(Member doctor, ArchiveFormDto archiveFormDto) {
+		this.detail = archiveFormDto.getDetail();
+		this.doctorid = doctor.getId();
 	}
 	
 }

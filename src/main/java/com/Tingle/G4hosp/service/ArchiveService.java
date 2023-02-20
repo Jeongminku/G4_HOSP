@@ -15,6 +15,7 @@ import com.Tingle.G4hosp.entity.ArchiveImg;
 import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.ArchiveDiseaseRepository;
+import com.Tingle.G4hosp.repository.ArchiveImgRepository;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
 import com.Tingle.G4hosp.repository.DiseaseRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
@@ -30,16 +31,28 @@ public class ArchiveService {
 	private final ArchiveRepository archiveRepository;
 	private final DiseaseRepository diseaseRepository;
 	private final ArchiveDiseaseRepository archiveDiseaseRepository;
+	private final ArchiveImgRepository archiveImgRepository;
 	private final ArchiveImgService archiveImgService;
 	
-	
-	public Long saveArchive(ArchiveFormDto archiveFormDto, List<MultipartFile> archiveImgFileList) throws Exception {
-		
-		// SELECT MEMBER OBJECT (FIND DOCTOR BY NAME - USING DTO's DOCTOR NAME)
-		Member member = memberRepository.findbyNameindoctor(archiveFormDto.getDoctorname());
+	public List<Archive> returnArchive(Long patientid) {
+		List<Archive> archive = archiveRepository.findArchivelistbypatientid(patientid);
+		return archive;
+	}
+
+	// CREATE & SAVE NEW ARCHIVE
+	public Long saveArchive(ArchiveFormDto archiveFormDto, List<MultipartFile> archiveImgFileList,
+			Optional<Long> patientid) throws Exception {
+		// SELECT MEMBER OBJECT 
+		// (FIND PATIENT BY OPTIONAL PATIENTID)
+		// (FIND DOCTOR BY NAME - USING DTO's DOCTOR NAME)
+		Member patientinfo = new Member();
+		if(patientid.isPresent()) {
+			patientinfo = memberRepository.getReferenceById(patientid.get());			
+		}
+		Member docinfo = memberRepository.findbyNameindoctor(archiveFormDto.getDoctorname());
 		
 		// CREATE ARCHIVE BY MEMBER OBJECT & SAVE ARCHIVE
-		Archive archive = Archive.createArchive(member, archiveFormDto);
+		Archive archive = Archive.createArchive(docinfo, patientinfo, archiveFormDto);
 		archiveRepository.save(archive);
 		
 		// CREATE ARCHIVE_DISEASE OBJECT BY ARCHIVE, DISEASE(USING ARCHIVEFORMDTO) OBJECT
@@ -56,6 +69,21 @@ public class ArchiveService {
 			ArchiveImg archiveImg = new ArchiveImg();
 			archiveImg.setArchive(archive);
 			archiveImgService.saveArchiveImg(archiveImg, archiveImgFileList.get(i));
+		}
+		return archive.getId();
+	}
+	
+	// UPDATE ARCHIVE
+	public Long updateArchive(Long arcid, ArchiveFormDto archiveFormDto, List<MultipartFile> archiveImgFileList
+			) throws Exception {
+		Member docinfo = memberRepository.findbyNameindoctor(archiveFormDto.getDoctorname());
+		Archive archive = archiveRepository.getReferenceById(arcid);
+		List<ArchiveImg> archiveImglist = archiveImgRepository.findbyid(arcid);
+		
+		//UPDATE ARCHIVE & ARCHIVE IMG
+		archive.updateArchive(docinfo, archiveFormDto);
+		for(int i=0; i<archiveImgFileList.size(); i++) {
+			archiveImgService.updateArchiveImg(archiveImglist.get(i), archiveImglist.get(i).getId(), archiveImgFileList.get(i));
 		}
 		return archive.getId();
 	}
