@@ -1,13 +1,23 @@
 package com.Tingle.G4hosp.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
-import com.Tingle.G4hosp.dto.MemberFormDto;
+import com.Tingle.G4hosp.entity.Med;
+import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.service.MedService;
+import com.Tingle.G4hosp.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +25,10 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
+	
+	
+	private final MemberService memberService;
+	private final MedService medService;
 	
 	// 관리자 페이지 화면
 	@GetMapping(value="/adminpage")
@@ -27,7 +41,25 @@ public class AdminController {
 	@GetMapping(value="/med")
 	public String medForm(Model model) {
 		model.addAttribute("medFormDto", new MedFormDto());
-		return "adminPage/diseaseForm";
+		
+		List<Med> meds = medService.getMedList();
+		model.addAttribute("meds", meds);
+		
+		return "adminPage/medForm";
+	}
+	
+	// 진료과 입력 기능
+	@PostMapping(value = "/med")
+	public String medFormInput(@Valid MedFormDto medFormDto, BindingResult bindingResult, Model model) {
+		
+		try {
+			medService.saveMed(medFormDto);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "진료과 입력 중 에러가 발생하였습니다.");
+			return "adminPage/medForm";
+		}
+		
+		return "redirect:/admin/med";
 	}
 	
 	// 병명 입력 화면
@@ -39,13 +71,25 @@ public class AdminController {
 	
 	// 고객목록 페이지 화면
 	@GetMapping(value="/patientList")
-	public String memberList() {
+	public String memberList(Model model) {
+		
+		Role client = Role.CLIENT;
+		
+		List<Member> members = memberService.getMemberList(client);
+		model.addAttribute("members", members);
+		
 		return "adminPage/patientList";
 	}
 	
 	// 의사목록 페이지 화면
 	@GetMapping(value="/doctorList")
-	public String doctorList() {
+	public String doctorList(Model model) {
+		
+		Role doctor = Role.DOCTOR;
+		
+		List<Member> members = memberService.getMemberList(doctor);
+		model.addAttribute("members", members);
+		
 		return "adminPage/doctorList";
 	}
 	
