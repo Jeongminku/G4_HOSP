@@ -1,5 +1,7 @@
 package com.Tingle.G4hosp.entity;
 
+import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,5 +39,14 @@ public class ArchiveDisease {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospitalize_id")
 	private Hospitalize hospitalize;
+	
+	 public static ArchiveDisease createAD(Archive archive, Disease disease, Optional<Hospitalize> hospitalize) {
+		 ArchiveDisease archiveDisease = new ArchiveDisease();
+		 archiveDisease.setArchive(archive);
+		 archiveDisease.setDisease(disease);
+		 archiveDisease.setHospitalize(hospitalize.get());
+		 
+		 return archiveDisease;
+	 }
 	
 }
