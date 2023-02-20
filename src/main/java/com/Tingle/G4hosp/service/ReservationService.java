@@ -9,9 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.Tingle.G4hosp.dto.ReservationDoctorDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
+import com.Tingle.G4hosp.dto.ReservationNotAvailableDto;
+import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.entity.Reservation;
+import com.Tingle.G4hosp.entity.ReservationNotAvailable;
+import com.Tingle.G4hosp.repository.MedRepository;
+import com.Tingle.G4hosp.repository.MemberMedRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
+import com.Tingle.G4hosp.repository.ReservationNotAvailableRepository;
 import com.Tingle.G4hosp.repository.ReservationRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +29,9 @@ public class ReservationService {
 	
 	private final MemberRepository memberRepository;
 	private final ReservationRepository reservationRepository;
+	private final MedRepository medRepository;
+	private final MemberMedRepository memberMedRepository;
+	private final ReservationNotAvailableRepository reservationNotAvailableRepository;
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	public Reservation createReservation (ReservationDto reservationDto) {
@@ -42,9 +52,27 @@ public class ReservationService {
 		reservationRepository.delete(reservation);
 	}
 	
-	public List<ReservationDoctorDto> findAllDoctor () {
-		Map<String, List<ReservationDoctorDto>> test = null;
-		
-		return null;
+	public Map<String, List<ReservationDoctorDto>> findAllDoctor () {
+		Map<String, List<ReservationDoctorDto>> doctorListByMed = new HashMap<>();
+		List<Med> medList = medRepository.findAll();
+		for(Med med : medList) {
+			List<ReservationDoctorDto> docList = new ArrayList<>();
+			List<Member> medDoctorList = memberMedRepository.findDoctorsByMed(med);
+			for(Member doctor : medDoctorList) {
+				docList.add(ReservationDoctorDto.of(doctor));
+			}
+			doctorListByMed.put(med.getMedName(), docList);
+		}
+		return doctorListByMed;
+	}
+	
+	public ReservationDto initDto (Long doctorId) {
+		ReservationDto reservationDto = new ReservationDto();
+		Member doctor = memberRepository.findById(doctorId).orElseThrow(EntityNotFoundException::new);
+		List<ReservationNotAvailable> notAvailableDay = reservationNotAvailableRepository.findByDoctor(doctor);
+		List<ReservationNotAvailableDto> notAvailableDayDto = ReservationNotAvailableDto.createResreAvailableDto(notAvailableDay);
+		reservationDto.setReservationDoctorId(doctor.getId());
+		reservationDto.setNotAvailableDay(notAvailableDayDto);
+		return reservationDto;
 	}
 }

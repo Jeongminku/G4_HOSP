@@ -15,7 +15,7 @@ public class ArchiveFormDto {
 	
 	private Disease disease;
 	
-	private Member doctor;
+	private String doctorname;
 	
 	private String detail;
 	

@@ -20,5 +20,5 @@ public class QaBoardDto {
 	private QaCategory Category;
 	
 	//멤버객체안에서 불러올 이름.
-//	private Member memberNm;
+	private Member memberNm;
 }

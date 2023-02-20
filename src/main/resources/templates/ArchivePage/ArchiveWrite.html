@@ -8,7 +8,7 @@
 	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8" />
-<title>환자 진료 내역 페이지입니다.</title>
+<title>진료 내역 작성페이지입니다.</title>
 
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
@@ -138,7 +138,7 @@
 									<th scope="row">질병코드</th>
 									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td>
 									<th scope="row">담당의</th>
-									<td><input type="text" th:field="*{doctor}" class="form-control inputarea"></td>
+									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">

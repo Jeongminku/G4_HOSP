@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.Tingle.G4hosp.dto.ArchiveFormDto;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +22,7 @@ import lombok.ToString;
 @ToString
 @Table (name = "archive")
 
-public class Archive {
+public class Archive extends BaseTime{
 
 	@Id
 	@Column(name = "archive_id")
@@ -32,5 +34,12 @@ public class Archive {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
-		
+
+	public static Archive createArchive(Member member, ArchiveFormDto archiveFormDto) {
+		Archive archive = new Archive();
+		archive.setDetail(archiveFormDto.getDetail());
+		archive.setMember(member);
+		return archive;
+	}
+	
 }

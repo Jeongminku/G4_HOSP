@@ -1,5 +1,7 @@
 package com.Tingle.G4hosp.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,14 +30,18 @@ public class QaBoardController {
 	private final MemberService memberService;
 	private final QaBoardService qaBoardService;
 	
-	@GetMapping(value="/new")
-	public String qnaHome(QaBoardDto qaBoardDto) {
+	@GetMapping(value="/qaPage")
+	public String qnaHome(Model model) {
 		
-		return "qaPage/qaForm";
+		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
+		model.addAttribute("QaAllList", QaBoardAllList);
+		System.out.println(QaBoardAllList);
+		
+		return "qaPage/qaPage";
 	}
 	
-//	@PostMapping(value="/new")
-//	public String newQaBoard(QaBoardDto qaBoardDto, Model model) {
+//	@PostMapping(value="/new2")
+//	public String newQaBoard2(QaBoardDto qaBoardDto, Model model) {
 //		
 //		String loginid = SecurityContextHolder.getContext().getAuthentication().getName();
 //		Member member = memberService.findByLoginid(loginid);
@@ -44,6 +50,15 @@ public class QaBoardController {
 //
 //		return "redirect:/qa/";
 //	}
+	
+	@GetMapping(value="/new")
+	public String qnaForm(QaBoardDto qaBoardDto) {
+		return "qaPage/qaForm";
+	}
+	
+	
+	
+	//로그인아이디 안넣고 글세이브하는 기능(테스트용)
 	@PostMapping(value="/new")
 	public String newQaBoard(QaBoardDto qaBoardDto, Model model) {
 		
@@ -52,4 +67,6 @@ public class QaBoardController {
 
 		return "redirect:/qa/";
 	}
+	
+	
 }

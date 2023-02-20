@@ -1,11 +1,18 @@
 package com.Tingle.G4hosp.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 import com.Tingle.G4hosp.entity.Member;
@@ -19,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArchiveController {
 
-	//회원 진료차트 화면
+	// OPEN ARCHIVE PAGE
 	@GetMapping(value="/")
 	public String archiveview(Member member, Model model) {
 		
@@ -28,7 +35,7 @@ public class ArchiveController {
 		return "ArchivePage/ArchiveView";
 	}
 	
-	//회원 진료차트 화면
+	// OPEN ARCHIVE WRITE PAGE
 	@GetMapping(value="/write")
 	public String archivewrite(Member member, Model model) {
 		ArchiveFormDto archiveFormDto = new ArchiveFormDto();
@@ -38,8 +45,21 @@ public class ArchiveController {
 		return "ArchivePage/ArchiveWrite";
 	}
 	
+	// CLICK ARCHIVE WRITE BUTTON
 	@PostMapping(value = "/write")
-	public String writearchive(Member member, Model model) {
+	public String writearchive(Member member, Model model,
+			@RequestParam("PostImgFile") List<MultipartFile> archiveImgFileList,
+			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			return "ArchivePage/ArchiveWrite";
+		}
+		
+		// SAVE ARCHIVE
+		
+		
+		
+		
 		
 		return "ArchivePage/ArchiveView";
 	}
