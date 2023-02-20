@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>환자 진료 내역 페이지입니다.</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<style>
+	
+	
+	.
+	
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+
+		<div class="wrap">
+			<div class="cont">
+				<!-- USER INFO, POST INFO  -->
+				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+					<div class="col-md-6">
+						<h2>환자 진료 내역</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+			
+<!-- 					
+					
+					<div class="col-md-6">
+					<br>
+						<div class="row-md-3">
+							<h2> 작성자 :  </h2>
+						</div>
+						<br>
+						<div class="row-md-3">
+							<h3> 태그 </h3> 
+								<div >
+									<span th:each = "tag : ${tags}"> #[[${tag.tagname}]] </span>
+								</div>
+						</div>						
+						<br>
+						<div class="row-md-3">
+							<h3> 좋아요 : </h3>
+						</div>	
+						<div class="row-md-3 likesection">
+							<div class="row-md-6" style="text-align: left;">							
+								<button class="button" th:onclick="giveheart([[${post.id}]])" style="background: transparent; border: 0"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
+								<span> 이 TRABLE, 마음에 들어요! </span>
+							</div>
+						</div>											
+					</div>
+					UPDATE, DELETE POST
+					<div th:if="${id} == ${member.email}">					
+						<div class="updateANDdelete">
+						 fdsf
+								<div class="row center">
+									<div class="col-md-3">
+									<p> 게시물 수정 </p>
+									<a th:href = "'/update/'+${post.id}"><img alt="update" src="/images/refresh.png" width="50px"></a>						
+									</div>
+									<div th:if="${post.showPost} == 'SHOW'"></div>
+									<div class="col-md-3">
+									<p> 게시물 숨김 </p>
+									<a type="button" th:onclick="hidepost([[${post.id}]])"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
+									</div>									
+									<div class="col-md-3">
+									<p> 게시물 숨김 해제 </p>
+									<a type="button" th:onclick="showpost([[${post.id}]])"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
+									</div>									
+									<div class="col-md-3">
+									<p> 게시물 삭제 </p>
+									<a type="button" th:onclick="deletepost([[${post.id}]])"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
+									<a th:href = "'/delete/'+${post.id}" onclick="delete()"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
+									</div>
+ 							</div>
+						</div>
+					</div>
+    			</div>
+    			
+    			
+    			POST IMG
+    			<div class="row row_left" th:each="postimg : ${postimgs}">
+					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
+    			</div> -->
+	
+	
+	
+</body>
+</html>
