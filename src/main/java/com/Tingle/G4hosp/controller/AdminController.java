@@ -5,12 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-<<<<<<< Updated upstream
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
-=======
 import com.Tingle.G4hosp.dto.MemberFormDto;
->>>>>>> Stashed changes
 
 import lombok.RequiredArgsConstructor;
 

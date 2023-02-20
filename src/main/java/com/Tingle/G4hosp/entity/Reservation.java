@@ -12,13 +12,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-<<<<<<< Updated upstream
-@Entity
-=======
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "reservation")
->>>>>>> Stashed changes
 public class Reservation extends BaseTime{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -11,10 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-<<<<<<< Updated upstream
-=======
 @Table(name = "reservationNotAvailable")
->>>>>>> Stashed changes
 public class ReservationNotAvailable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
