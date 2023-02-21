@@ -3,11 +3,13 @@ package com.Tingle.G4hosp.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.Tingle.G4hosp.constant.QaCategory;
+import com.Tingle.G4hosp.dto.QaBoardDto;
 import com.Tingle.G4hosp.entity.QaBoard;
 import com.Tingle.G4hosp.repository.QaBoardRepository;
 
@@ -33,9 +35,14 @@ public class QaBoardService {
 		return qaBoardRepository.findQAFromCAT(category);
 	}
 	
-	public Optional<QaBoard> findQaBoard(Long qaId) {
-		Optional<QaBoard> qaBoard = qaBoardRepository.findById(qaId);
-		return qaBoard;
+	public Long modifyQaBoard(QaBoardDto qaBoardDto) {
+		QaBoard qaBoard = qaBoardRepository.findById(qaBoardDto.getId()).orElseThrow(EntityNotFoundException::new);
+		qaBoard.modifyQaBoard(qaBoardDto);
+		return qaBoard.getId();
+	}
+	
+	public QaBoard findQaBoard(Long qaId) {
+		return qaBoardRepository.findById(qaId).orElseThrow(EntityNotFoundException::new);
 	}
 	
 }

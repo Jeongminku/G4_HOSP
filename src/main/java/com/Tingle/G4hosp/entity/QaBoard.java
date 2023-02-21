@@ -47,7 +47,7 @@ public class QaBoard {
 	
 	
 	//Test용
-public static QaBoard createQaTest (QaBoardDto qaBoardDto) {
+	public static QaBoard createQaTest (QaBoardDto qaBoardDto) {
 		
 		QaBoard qaBoard = new QaBoard();
 		qaBoard.setQaCategory(qaBoardDto.getCategory());
@@ -55,5 +55,11 @@ public static QaBoard createQaTest (QaBoardDto qaBoardDto) {
 		qaBoard.setQaContent(qaBoardDto.getContent());
 		
 		return qaBoard;
+	}
+
+	public void modifyQaBoard(QaBoardDto qaBoardDto) {
+		this.qaTitle = qaBoardDto.getTitle();
+		this.qaContent = qaBoardDto.getContent();
+		this.qaCategory = qaBoardDto.getCategory();
 	}
 }

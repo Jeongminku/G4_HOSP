@@ -68,16 +68,23 @@ public class QaBoardController {
 
 	@GetMapping(value="/mod/{qaId}")
 	public String modQaBoard(Model model, @PathVariable("qaId") Long qaId, QaBoardDto qaBoardDto) {
-		Optional<QaBoard> qaBoard = qaBoardService.findQaBoard(qaId);
-		qaBoardDto.setId(qaId);
-		qaBoardDto.setTitle(qaBoard.get().getQaTitle());
-		qaBoardDto.setContent(qaBoard.get().getQaContent());
-		qaBoardDto.setCategory(qaBoard.get().getQaCategory());
-		//qaBoardDto.setMemberNm(qaBoard.get().getMember());
-		
+		QaBoard qaBoard = qaBoardService.findQaBoard(qaId);
 		System.out.println(qaBoard);
-		
-		return "qaPage/qaForm";
+		qaBoardDto.setId(qaBoard.getId());
+		qaBoardDto.setTitle(qaBoard.getQaTitle());
+		qaBoardDto.setContent(qaBoard.getQaContent());
+		qaBoardDto.setCategory(qaBoard.getQaCategory());
+		System.out.println(qaBoard);
+		System.out.println("@@@@@@@@@@ "+qaBoard.getId());
+		return "qaPage/qaModify";
+	}
+	
+	@PostMapping(value="/mod")
+	public String modQQaBoard(QaBoardDto qaBoardDto, Model model) {
+		qaBoardService.modifyQaBoard(qaBoardDto);
+		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
+		model.addAttribute("qaList", QaBoardAllList);
+		return "qaPage/qaPage";
 	}
 	
 				
