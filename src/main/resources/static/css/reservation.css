@@ -1,5 +1,5 @@
 /* 의사 선택 페이지 */
-section {width: 80%; margin: 0 auto;}
+section {width: 80%; height: calc(100vh - 50px); margin: 0 auto; padding: 3rem 0;}
 
 #selectDoc .h2 {padding: 20px 0; margin-bottom: 20px; border-bottom: 1px solid var(--bs-border-color-translucent);}
 
@@ -14,9 +14,17 @@ section {width: 80%; margin: 0 auto;}
 }
 
 /* 날자, 시간 선택 페이지 */
-#selectDate #Fcalendar {width: 100%;}
-#selectDate form {width: 30%; padding: 100px 20px;}
-#selectDate form input[name="time"]:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);}
-#selectDate form .btn.btn-primary {border: none; padding: 20px 0; font-size: 1.2rem; font-weight: bold;}
+#selectDate #Fcalendar,
+#selectNotAvail #Fcalendar {width: 100%;}
+#selectDate form,
+#selectNotAvail form {width: 30%; padding: 0 20px;}
+#selectDate form input[name="time"]:checked + label,
+#selectNotAvail form input[type="checkbox"]:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);}
+#selectNotAvail form label {padding: 0; width: calc(50% - 5px); margin-right: 5px;}
+#selectDate form .btn.btn-primary,
+#selectNotAvail form .btn.btn-primary {border: none; padding: 20px 0; font-size: 1.2rem; font-weight: bold;}
+#selectNotAvail form .btn.btn-primary {width: calc(100% - 40px);}
+#notAvailSelectedList {height: 250px;}
+#notAvailSelectedList p {margin: auto 0;}
 
 #selectDate .selectedDay {background-color: brown;}
