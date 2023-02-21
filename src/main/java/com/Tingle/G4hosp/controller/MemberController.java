@@ -53,7 +53,6 @@ public class MemberController {
 		if(bindingResult.hasErrors()) {
 			return "member/memberForm";
 		}
-		
 		try {
 		memberService.saveMember(memberFormDto, file);
 		} catch (Exception e) {
@@ -61,7 +60,6 @@ public class MemberController {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "member/memberForm";
 		}
-		
 		return "redirect:/";
 	}	
 	

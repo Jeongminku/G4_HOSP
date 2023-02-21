@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
+import com.Tingle.G4hosp.dto.ArchiveSearchDto;
 import com.Tingle.G4hosp.entity.Archive;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
@@ -38,8 +39,19 @@ public class ArchiveController {
 	private final ArchiveRepository archiveRepository;
 	private final MemberRepository memberRepository;
 	
+	// SEARCH PATIENT PAGE
+	@GetMapping(value="/")
+	public String archivesearch(Model model) {
+		ArchiveSearchDto archiveSearchDto = new ArchiveSearchDto();
+		model.addAttribute("archiveSearchDto",archiveSearchDto);
+		return "/ArchivePage/ArchiveInfo";
+	}
+	
+	
+	
+	
 	// ARCHIVE LIST PAGE (READ)
-	@GetMapping(value={"/","/{id}"})
+	@GetMapping(value={"/view","/view/{id}"})
 	public String archiveview(Member member, Model model,@PathVariable("id") Optional<Long> patientid) {
 		List<Archive> AL = new ArrayList<>();
 		if(patientid.isPresent()) {
@@ -115,7 +127,6 @@ public class ArchiveController {
 		}
 		return "/ArchivePage/ArchiveView";
 	}
-	
 	
 	// DELETE ARCHIVE 
 	@GetMapping(value = "/delete/{id}")

@@ -57,10 +57,15 @@ public class ArchiveService {
 		
 		// CREATE ARCHIVE_DISEASE OBJECT BY ARCHIVE, DISEASE(USING ARCHIVEFORMDTO) OBJECT
 		//  + SAVE ARCHIVE_DISEASE OBJECT
-		Disease disease = diseaseRepository.findDiseasebyDiseasename(archiveFormDto.getDisease());
-		if(disease == null) {
-			
+		Disease disease = new Disease();
+		
+		try {
+			disease = diseaseRepository.findDiseasebyDiseasename(archiveFormDto.getDisease());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("archiveservice에서 disease 객체를 불러오는 동안 에러 발생!");
 		}
+		
 		ArchiveDisease archiveDisease = ArchiveDisease.createAD(archive, disease, null);
 		archiveDiseaseRepository.save(archiveDisease);
 		
