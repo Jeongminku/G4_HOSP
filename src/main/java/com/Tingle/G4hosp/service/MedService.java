@@ -1,5 +1,10 @@
 package com.Tingle.G4hosp.service;
 
+import java.util.*;
+
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.stereotype.Service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -14,13 +19,16 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
+
+// 진료과 서비스 담당
+
 public class MedService {
 	
 	private final MedRepository medRepository;
 
+	// 진료과 등록
 	public Long saveMed(MedFormDto medFormDto) throws Exception {
 
-		// 진료과 등록
 		Med med = medFormDto.createMed();
 		medRepository.save(med);
 		
@@ -29,10 +37,9 @@ public class MedService {
 
 //========================================================================================
 
-// 진료과 (Med) 리스트 불러오기
+	// 진료과 (Med) 리스트 불러오기
 	public List<Med> getMedList() {
 		return medRepository.findAll();
 	}
-
 
 }

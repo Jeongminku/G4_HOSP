@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+$(function(){
+	$('.qa_question').each(function(){
+		($(this).click(function(){				
+			$(this).next().slideToggle("slow");	
+		}));
+		})
+	});
+	
+$(document).ready(function() {
+	  $(".accordion button").click(function() {
+	    if (!$(this).hasClass("active")) {
+	      $(".accordion div").slideUp();
+	      $(".accordion button").removeClass("active");
+	      $(this).next().slideDown();
+	      $(this).addClass("active");
+	    }
+	    else {
+	      $(this).next().slideUp();
+	      $(this).removeClass("active");
+	    }
+	  });
+	});	
+	
+	</script>
+<style type="text/css">
+	.accordion {
+	list-style: none;
+	margin-bottom: 20px;
+	padding: 0;
+
+	}
+	
+	.accordion button {
+	width: 100%;
+	text-align: left;
+	display: block;
+	font-weight: bold;
+	padding: 5px 10px;
+	background-color: #ddd;
+	color: #333;
+	text-decoration: none;
+	}
+	
+	.accordion div {
+	display: none;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	}
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<th:block th:each="qa : ${QaAllList}">
+	    	<ul class="accordion">
+	    		<li>
+	    		<button>[[${qa.qaTitle}]]</button>
+	    		<div><p>[[${qa.qaContent}]]</p></div>
+	    		</li>
+	    	</ul>
+	
+  		</div>
+		</th:block>
+</body>
+</html>

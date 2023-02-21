@@ -35,4 +35,12 @@ public class Disease {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "med_id")
 	private Med med;
+	
+	public static Disease createDisease (Med med) {
+		Disease disease = new Disease();
+		
+		disease.setMed(med);
+		
+		return disease;
+	}
 }

@@ -13,9 +13,9 @@ import lombok.ToString;
 public class ArchiveFormDto {
 
 	
-	private Disease disease;
+	private String disease;
 	
-	private Member doctor;
+	private String doctorname;
 	
 	private String detail;
 	

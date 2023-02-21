@@ -5,8 +5,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.Tingle.G4hosp.constant.NotAvailableDay;
-
 import lombok.Data;
 
 @Data
@@ -22,13 +20,16 @@ public class ReservationNotAvailable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Member doctor;
 
-	@Enumerated(EnumType.STRING)
-	private NotAvailableDay notAvailableDay;
+//	@Enumerated(EnumType.STRING)
+//	private NotAvailableDay notAvailableDay;
 	
-	public static ReservationNotAvailable createReservationNotAvailable (Member doctor, NotAvailableDay notAvailableDay) {
+	@Column(nullable = false)
+	private String notAvailableDay;
+	
+	public static ReservationNotAvailable createReservationNotAvailable (Member doctor, String notAvailalbe) {
 		ReservationNotAvailable reservationNotAvailable = new ReservationNotAvailable();
 		reservationNotAvailable.setDoctor(doctor);
-		reservationNotAvailable.setNotAvailableDay(notAvailableDay);
+		reservationNotAvailable.setNotAvailableDay(notAvailalbe);
 		return reservationNotAvailable;
 	}
 }

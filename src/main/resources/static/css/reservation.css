@@ -1,13 +1,30 @@
-section {width: 80%; margin: 0 auto;}
+/* 의사 선택 페이지 */
+section {width: 80%; height: calc(100vh - 50px); margin: 0 auto; padding: 3rem 0;}
 
-.h2 {padding: 20px 0; margin-bottom: 20px; border-bottom: 1px solid var(--bs-border-color-translucent);}
+#selectDoc .h2 {padding: 20px 0; margin-bottom: 20px; border-bottom: 1px solid var(--bs-border-color-translucent);}
 
-.docList {margin-left: 20px;}
-.card {width: calc(20% - 20px);}
-.card:not(:last-of-type) {margin-right: 20px;}
-.card img {max-width: 200px; width: 100%; object-fit: cover;}
-.card-body {border-top: 1px solid var(--bs-border-color-translucent); width: 100%;}
+#selectDoc .docList {margin-left: 20px;}
+#selectDoc .card {width: calc(20% - 20px);}
+#selectDoc .card:not(:last-of-type) {margin-right: 20px;}
+#selectDoc .card img {max-width: 200px; width: 100%; object-fit: cover;}
+#selectDoc .card-body {border-top: 1px solid var(--bs-border-color-translucent); width: 100%;}
 
 @media screen and (max-width: 991.98px) {
-    .card {width: 30%;}
+    #selectDoc .card {width: 30%;}
 }
+
+/* 날자, 시간 선택 페이지 */
+#selectDate #Fcalendar,
+#selectNotAvail #Fcalendar {width: 100%;}
+#selectDate form,
+#selectNotAvail form {width: 30%; padding: 0 20px;}
+#selectDate form input[name="time"]:checked + label,
+#selectNotAvail form input[type="checkbox"]:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);}
+#selectNotAvail form label {padding: 0; width: calc(50% - 5px); margin-right: 5px;}
+#selectDate form .btn.btn-primary,
+#selectNotAvail form .btn.btn-primary {border: none; padding: 20px 0; font-size: 1.2rem; font-weight: bold;}
+#selectNotAvail form .btn.btn-primary {width: calc(100% - 40px);}
+#notAvailSelectedList {height: 250px;}
+#notAvailSelectedList p {margin: auto 0;}
+
+#selectDate .selectedDay {background-color: brown;}

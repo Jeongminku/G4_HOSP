@@ -45,6 +45,8 @@ public class QaBoard {
 		return qaBoard;
 	}
 	
+	
+	//Test용
 public static QaBoard createQaTest (QaBoardDto qaBoardDto) {
 		
 		QaBoard qaBoard = new QaBoard();
