@@ -1,12 +1,14 @@
 package com.Tingle.G4hosp.service;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import groovy.util.logging.Log;
+import lombok.extern.java.Log;
+
+
 
 @Service
 @Log
@@ -29,4 +31,15 @@ public class FileService {
 		return savedFileName;
 	}
 	
+	//파일 삭제
+	public void deleteFile(String filePath) throws Exception{
+		File delteFile = new File(filePath); //파일이 저장된 경로를 이용해서 파일 객체를 생성
+		
+		if(delteFile.exists()) {
+			delteFile.delete();
+			log.info("파일을 삭제하였습니다.");
+		}else {
+			log.info("파일이 존재 하지 않습니다.");
+		}
+	}
 }
