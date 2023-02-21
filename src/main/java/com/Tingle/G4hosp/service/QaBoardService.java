@@ -1,6 +1,7 @@
 package com.Tingle.G4hosp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -28,7 +29,13 @@ public class QaBoardService {
 		return qaBoardRepository.findAll();
 	}
 	
-	public List<QaBoard> findByQaCategory(QaCategory category) {
-		return qaBoardRepository.findByQaCategory(category);
+	public List<QaBoard> findQaFromCategory(String category) {
+		return qaBoardRepository.findQAFromCAT(category);
 	}
+	
+	public Optional<QaBoard> findQaBoard(Long qaId) {
+		Optional<QaBoard> qaBoard = qaBoardRepository.findById(qaId);
+		return qaBoard;
+	}
+	
 }

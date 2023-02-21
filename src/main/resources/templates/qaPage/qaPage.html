@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script>
+<script th:inline="javascript">
 $(function(){
 	$('.qa_question').each(function(){
 		($(this).click(function(){				
@@ -13,22 +13,33 @@ $(function(){
 		}));
 		})
 	});
-	
 $(document).ready(function() {
-	  $(".accordion button").click(function() {
-	    if (!$(this).hasClass("active")) {
-	      $(".accordion div").slideUp();
-	      $(".accordion button").removeClass("active");
+	  $('.accordion .button').click(function() {
+	    if (!$(this).hasClass('active')) {
+	      $('.accordion div').slideUp();
+	      $('.accordion button').removeClass('active');
 	      $(this).next().slideDown();
-	      $(this).addClass("active");
+	      $(this).addClass('active');
 	    }
 	    else {
 	      $(this).next().slideUp();
-	      $(this).removeClass("active");
+	      $(this).removeClass('active');
 	    }
 	  });
 	});	
-	
+
+$(document).ready(function(){
+	$('.qaMod').click(function(){
+		$(location).attr("href", "/qa/mod/"+ $(this).attr('id'))
+	})
+});
+
+$(function(){
+	$('.qaDel').click(function(){
+		$(location).attr("href", "/qa/del/")
+	})
+});
+
 	</script>
 <style type="text/css">
 	.accordion {
@@ -38,7 +49,7 @@ $(document).ready(function() {
 
 	}
 	
-	.accordion button {
+	.accordion .button {
 	width: 100%;
 	text-align: left;
 	display: block;
@@ -59,15 +70,24 @@ $(document).ready(function() {
 </head>
 <body>
 	<div layout:fragment="content">
-		<th:block th:each="qa : ${QaAllList}">
+	<button type="button" onclick="location.href='/qa/new'">등록</button>
+	<button type="button" onclick="location.href='/qa/'">전체보기</button>
+	<button type="button" onclick="location.href='/qa/pay'">페이</button>
+	<button type="button" onclick="location.href='/qa/hspdsc'">입/퇴원</button>
+		<th:block th:each="qa : ${qaList}">
 	    	<ul class="accordion">
 	    		<li>
-	    		<button>[[${qa.qaTitle}]]</button>
-	    		<div><p>[[${qa.qaContent}]]</p></div>
+	    		<button type="button" class="button">[[${qa.qaTitle}]]</button>
+	    		<div>
+	    		<p>[[${qa.qaContent}]]</p>
+	    		<button type="button" class="qaMod" th:id="${qa.Id}">수정</button>
+	    		<button type="button" class="qaDel">삭제</button>
+	    		</div>
+	    		
 	    		</li>
 	    	</ul>
+  	</div>
+	</th:block>
 	
-  		</div>
-		</th:block>
 </body>
 </html>
