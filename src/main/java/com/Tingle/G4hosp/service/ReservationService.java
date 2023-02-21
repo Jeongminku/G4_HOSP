@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.Tingle.G4hosp.dto.ReservationDoctorDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
 import com.Tingle.G4hosp.dto.ReservationNotAvailableDto;
+import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
@@ -32,10 +33,10 @@ public class ReservationService {
 	private final MedRepository medRepository;
 	private final MemberMedRepository memberMedRepository;
 	private final ReservationNotAvailableRepository reservationNotAvailableRepository;
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 	
-	public Reservation createReservation (ReservationDto reservationDto) {
-		Member patient = memberRepository.findById(reservationDto.getReservationPatientId()).orElseThrow(EntityNotFoundException::new);
+	public Reservation createReservation (ReservationDto reservationDto, String patientLoginId) {
+		Member patient = memberRepository.findByLoginid(patientLoginId);
 		Member doctor = memberRepository.findById(reservationDto.getReservationDoctorId()).orElseThrow(EntityNotFoundException::new);
 		Reservation reservation = Reservation.createReservation(reservationDto.getReservationDate(), patient, doctor, formatter);
 		return reservationRepository.save(reservation);
@@ -75,4 +76,11 @@ public class ReservationService {
 		reservationDto.setNotAvailableDay(notAvailableDayDto);
 		return reservationDto;
 	}
+	
+	public List<ReservationViewDto> findAllReservationByDoctor (String doctorLoginId) {
+		Member doctor = memberRepository.findByLoginid(doctorLoginId);
+		List<Reservation> allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(doctor);
+		return ReservationViewDto.createReservationViewDtoList(allReservation);
+	}
+	
 }

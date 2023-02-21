@@ -18,33 +18,33 @@
 <body>
     <section id="selectDate" class="d-flex justify-content-between mt-5" layout:fragment="content">
         <div id="Fcalendar"></div>
-        <form th:action="@{/reservation/checkIn}" method="post" class="d-flex flex-column" th:object="${ReservationDto}">
+        <form th:action="@{/reservation/checkIn}" method="post" class="d-flex flex-column justify-content-around" th:object="${ReservationDto}">
             <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
             <input type="hidden" name="reservationDoctorId" th:field="*{reservationDoctorId}">
             <input class="d-none" type="datetime" name="reservationDate"  th:field="*{reservationDate}">
             <input class="d-none" type="radio" id="09:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="09:00">오전 9시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="09:00">오전 9시</label>
             <input class="d-none" type="radio" id="10:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="10:00">오전 10시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="10:00">오전 10시</label>
             <input class="d-none" type="radio" id="11:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="11:00">오전 11시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="11:00">오전 11시</label>
             <input class="d-none" type="radio" id="12:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="12:00">오전 12시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="12:00">오전 12시</label>
             <input class="d-none" type="radio" id="13:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="13:00">오후 1시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="13:00">오후 1시</label>
             <input class="d-none" type="radio" id="14:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="14:00">오후 2시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="14:00">오후 2시</label>
             <input class="d-none" type="radio" id="15:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="15:00">오후 3시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="15:00">오후 3시</label>
             <input class="d-none" type="radio" id="16:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="16:00">오후 4시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="16:00">오후 4시</label>
             <input class="d-none" type="radio" id="17:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="17:00">오후 5시</label>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="17:00">오후 5시</label>
             <input class="d-none" type="radio" id="18:00" name="time">
-            <label class="w-100 text-center p-md-4 mb-2 btn btn-outline-secondary" for="18:00">오후 6시</label>                
-            <button class="btn btn-primary" type="submit">예약하기</button>
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="18:00">오후 6시</label>                
+            <button class="btn btn-primary w-100" type="submit">예약하기</button>
         </form>
-        <script src="../../js/reservation.js"></script>
+        <script src="../../js/SelectDate.js"></script>
     </section>
 </body>
 </html>

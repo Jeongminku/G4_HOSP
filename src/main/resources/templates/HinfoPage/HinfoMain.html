@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+      
+<head>
+<meta charset="UTF-8">
+<title>건강정보게시판</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		
+		<ul th:each="list, status: ${lists.getContent()}">
+		 <li>글번호 : [[${list.id}]]</li>
+		 <li>글쓴이 : [[${list.member.loginid}]]</li>
+		<li> 제목 : <a th:href="'/Hinfo/' +${list.id}">[[${list.title}]]</a></li>
+		  <li th:text="작성일 + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></li>	
+		 <li>조회수 : [[${list.view}]]</li>
+		</ul>
+
+		<!-- 페이징 -->
+		<!-- start = (현재 페이지 번호/보여줄 페이지수) + 1 , 페이지 시작 번호-->
+		<!-- end = start + (보여줄 페이지수 - 1 ), 페이지 끝 번호-->
+		item.number: [[${lists.number}]],
+        maxPage: [[${maxPage}]], <!-- 5 -->
+		totalPages: [[${lists.totalPages}]],
+		<nav
+			th:with="start=${(lists.number/maxPage)*maxPage + 1}
+			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
+			aria-label="Page navigation example">
+			<ul class="pagination d-flex justify-content-center">
+				<li class="page-item" th:classappend="${lists.first}?'disabled'">
+					<a th:href="@{'/Hinfo/HinfoMain' + '?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+						<span>이전</span>
+					</a>
+				</li>
+				<li class="page-item"
+					th:each="page: ${#numbers.sequence(start, end)}"
+					th:classappend="${lists.number eq page-1}?'active':''">
+					<a class="page-link" th:inline="text"
+					th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
+				</li>
+				<li class="page-item" th:classappend="${lists.last}?'disabled'">
+					<a class="page-link"
+					th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<button onClick="location.href='/Hinfo/write'">글쓰기</button>
+		
+	</div>
+</body>
+</html>
