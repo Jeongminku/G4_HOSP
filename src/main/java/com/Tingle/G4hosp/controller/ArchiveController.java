@@ -99,22 +99,30 @@ public class ArchiveController {
 	
 	// CLICK ARCHIVE UPDATE BUTTON (UPDATE)
 	@PostMapping(value="/update/{id}")
-	public String updatearchive(Member member, Model model,@PathVariable("id") Long arcid,
+	public String updatearchive(Model model,@PathVariable("id") Long arcid,
 			@RequestParam("PostImgFile") List<MultipartFile> archiveImgFileList,
 			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult) {		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "값을 가져오는 중 에러가 발생했습니다!");
-			return "archive/update/{id}";
+			return "/archive/update/{id}";
 		}
 		try {
 			archiveService.updateArchive(arcid, archiveFormDto, archiveImgFileList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "진료기록 수정 중 에러가 발생했습니다!");
-			return "archive/update/{id}";
+			return "/archive/update/{id}";
 		}
 		return "/ArchivePage/ArchiveView";
 	}
 	
+	
+	// DELETE ARCHIVE 
+	@GetMapping(value = "/delete/{id}")
+	public String deletearchive(Model model, @PathVariable("id") Long arcid) {
+		String deleteStatus = archiveService.deleteArchive(arcid);
+		model.addAttribute("errorMessage", deleteStatus);
+		return "/ArchivePage/ArchiveView";
+	}
 	
 }

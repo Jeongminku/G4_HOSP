@@ -88,5 +88,16 @@ public class ArchiveService {
 		return archive.getId();
 	}
 	
+	// DELETE ARCHIVE
+	public String deleteArchive(Long arcid) {
+		Archive archive = archiveRepository.getReferenceById(arcid);
+		try {
+			archiveRepository.delete(archive);
+			return "삭제완료";
+		} catch (Exception e) {
+			return "삭제 작업간 에러가 발생했습니다";
+		}
+	}
+	
 	
 }
