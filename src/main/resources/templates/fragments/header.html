@@ -6,40 +6,56 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div th:fragment="header">
-       	<nav class="navbar navbar-expand-lg">
-		<div class="container">
-			<a class="navbar-brand text-white" href="/"><i class="fa fa-graduation-cap fa-lg mr-2"></i>HOSP</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nvbCollapse" aria-controls="nvbCollapse">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="nvbCollapse">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="/"><i class="fa fa-home fa-fw mr-1"></i>Home</a>
-					</li>
-					<li class="nav-item active pl-1">
-						<a class="nav-link" href="#"><i class="fa fa-th-list fa-fw mr-1"></i>진료안내</a>
-					</li>
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="#"><i class="fa fa-info-circle fa-fw mr-1"></i>이용안내</a>
-					</li>
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="#"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>건강정보</a>
-					</li>
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="#"><i class="fa fa-user-plus fa-fw mr-1"></i>고객게시판</a>
-					</li>
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="#"><i class="fa fa-sign-in fa-fw mr-1"></i>병원소개</a>
-					</li>					
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="/reservation/selectDoc"><i class="fa fa-sign-in fa-fw mr-1"></i>예약</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		</nav>
-	</div>
+	<header th:fragment="header">
+        <button class="btn btn-openCanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </button>
+        <div class="offcanvas offcanvas-end c-offcanvas" tabindex="-1" id="offcanvasRight">
+            <div class="offcanvas-header">
+				<h1 class="offcanvas-title h5 fw-bold ">
+					<i class="fa-solid fa-house"></i>
+					로고자리
+				</h1>
+                <button class="btn btn-close" type="button" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body d-flex justify-content-between">
+				<nav class="navbar justify-content-center">
+					<ul class="d-flex">
+						<li class="nav-item w-100" >
+							<a href="/Profile">
+								<p>메뉴</p>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+							<a href="/Schedule">
+								<p>메뉴</p>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+							<a href="/Post">
+								<p>메뉴</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+				<nav class="navbar justify-content-center">
+					<ul class="d-flex">
+						<li class="nav-item w-100">
+							<a href="">
+								<p>로그인</p>
+							</a>
+						</li>
+						<li class="nav-item w-100">
+							<a href="">
+								<p>회원가입</p>
+							</a>
+						</li>
+					</ul>
+				</nav>
+            </div>
+        </div>
+	</header>
 </body>
 </html>
