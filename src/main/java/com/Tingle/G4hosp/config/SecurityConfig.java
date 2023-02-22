@@ -29,7 +29,7 @@ public class SecurityConfig {
 		
 		http.authorizeRequests()
 		.mvcMatchers("/css/**","/js/**","/fonts/**","/images/**","/img/**").permitAll()
-		.mvcMatchers("/","/members/**","/item/**").permitAll();
+		.mvcMatchers("/","/members/**","/item/**","/archive/**").permitAll();
 		//.anyRequest().authenticated();
 		
 		

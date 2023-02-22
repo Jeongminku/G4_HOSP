@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public class ArchiveFormDto {
 
+	private Long id;
 	
 	private String disease;
 	

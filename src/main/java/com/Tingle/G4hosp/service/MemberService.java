@@ -2,6 +2,7 @@ package com.Tingle.G4hosp.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.security.core.userdetails.User;
@@ -57,6 +58,10 @@ public class MemberService implements UserDetailsService{
 	 public Member findByLoginid(String loginid) {
 			return memberRepository.findByLoginid(loginid);
 	}	
+	 
+	 public Member findByMemberid(Long memid) {
+		 return memberRepository.findById(memid).orElseThrow(EntityNotFoundException::new);
+	 }
 	
 	 public Member findByMnameMtel(String memberName, String memberTel) {
 		 return memberRepository.findbtMnameandMtel(memberName, memberTel);
