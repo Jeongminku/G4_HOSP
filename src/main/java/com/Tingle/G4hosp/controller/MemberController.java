@@ -74,35 +74,35 @@ public class MemberController {
 		// ID찾기 
 		@PostMapping(value="/find")
 		public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-			model.addAttribute("findID",memberFindID);
-			System.out.println(memberFindID.getLoginid());
+			
 			try {
-				memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+				Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+				System.out.println(memberFindID.getLoginid());
+				model.addAttribute("findID",memberFindID);
+				return "member/memberFindIdResult";
 			} catch (Exception e) {
 				model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
 				return "member/memberFindId";
 			}
 			
-			System.out.println();
-		return "memberFindIdResult";
-			
+//		return "member/memberFindIdResult";
+		
 		}
 		
 		// id찾기 결과화면 
 		@GetMapping(value="/findResult")
-		public String memberFindResult() {
+		public String memberFindResult(MemberFormDto memberFormDto, Model model) {
 			
-			return "members/findIdResult";
+			return "member/memberFindIdResult";
 		}
 		
-//		
-//		@PostMapping(value="/findResult")
-//		public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-//			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-//			model.addAttribute("findID",memberFindID);
-//			System.out.println(memberFindID.getLoginid());
-//			return "redirect:/members/findResult";
-//		}
+		
+		@PostMapping(value="/findResult")
+		public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+		Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+		model.addAttribute("findID",memberFindID);
+		System.out.println(memberFindID.getLoginid());
+			return "member/memberFindIdResult";
+		}
 	
 }

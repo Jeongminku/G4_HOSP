@@ -23,9 +23,8 @@
   <body>
     <div layout:fragment="content">
     <section>
-    	<form action="/members/findResult" method="post" th:object="${memberFormDto}">
-     <span>[[${findID.logindid}]]</span>
-     </form>
+  				<p th:text = "${findID.loginid}"> </p>
+			
      </section>
     </div>
   </body>
