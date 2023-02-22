@@ -36,10 +36,18 @@ $(document).ready(function(){
 
 $(function(){
 	$('.qaDel').click(function(){
-		$(location).attr("href", "/qa/del/")
+		$(location).attr("href", "/qa/del/"+ $(this).attr('id'))
 	})
 });
 
+$(function(){
+	var delMessage = [[${delMessage}]]
+	console.log(delMessage);
+	if(delMessage != null) {
+		alert(delMessage);
+		location.href = "/qa/";
+	}
+})
 	</script>
 <style type="text/css">
 	.accordion {
@@ -81,9 +89,8 @@ $(function(){
 	    		<div>
 	    		<p>[[${qa.qaContent}]]</p>
 	    		<button type="button" class="qaMod" th:id="${qa.Id}">수정</button>
-	    		<button type="button" class="qaDel">삭제</button>
+	    		<button type="button" class="qaDel" th:id="${qa.Id}">삭제</button>
 	    		</div>
-	    		
 	    		</li>
 	    	</ul>
   	</div>

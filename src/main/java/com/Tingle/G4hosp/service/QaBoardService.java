@@ -45,4 +45,14 @@ public class QaBoardService {
 		return qaBoardRepository.findById(qaId).orElseThrow(EntityNotFoundException::new);
 	}
 	
+	public String deleteQa(Long qaId) {
+		QaBoard qaBoard = qaBoardRepository.getReferenceById(qaId);
+		try {
+			qaBoardRepository.delete(qaBoard);
+			return "정상적으로 삭제하였습니다.";
+		}catch (Exception e) {
+			return "삭제하지 못하였습니다.";
+		}
+	}
+	
 }
