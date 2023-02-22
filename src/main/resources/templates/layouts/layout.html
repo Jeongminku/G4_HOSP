@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>layout title here</title>
+    <script src="../../lib/Bootstrap_5.3.0a/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css">
+    <script src="../../lib/jquery-3.6.3.min.js"></script>
+	<link rel="stylesheet" href="../../lib/FontAwesome-Free_6.3.0-web/css/all.min.css">
+    <link rel="stylesheet" href="../../css/reset.css">
+	<link rel="stylesheet" href="../../css/layout.css">
+</head>
+<body>
+	<header th:replace="fragments/header::header"></header>
+	<section layout:fragment="content" class="content"></section>
+	<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

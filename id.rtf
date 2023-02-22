@@ -1,0 +1,276 @@
+{\rtf1\ansi\ansicpg949\cocoartf2707
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red199\green221\blue12;\red216\green216\blue216;
+\red235\green75\blue100;\red255\green198\blue0;\red141\green203\blue226;\red210\green82\blue82;\red190\green214\blue255;
+\red121\green171\blue255;\red209\green151\blue217;\red239\green192\blue144;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\csgenericrgb\c78039\c86667\c4706;\csgenericrgb\c84706\c84706\c84706;
+\csgenericrgb\c92157\c29412\c39216;\csgenericrgb\c100000\c77647\c0;\csgenericrgb\c55294\c79608\c88627;\csgenericrgb\c82353\c32157\c32157;\csgenericrgb\c74510\c83922\c100000;
+\csgenericrgb\c47451\c67059\c100000;\csgenericrgb\c81961\c59216\c85098;\csgenericrgb\c93725\c75294\c56471;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 ID\uc0\u52286 \u44592 \
+\
+\uc0\u52968 \u53944 \u47204 \u47084 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf3 // ID\uc0\u52286 \u44592 \u54868 \u47732 \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 	\cf1 @GetMapping\cf4 (\cf5 value\cf4 =\cf6 "/find"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindId\cf4 () \{\cf0 \
+\cf4 		\cf7 return\cf4  \cf6 "member/memberFindId"\cf4 ;\cf0 \
+\cf4 		\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf3 // ID\uc0\u52286 \u44592  \cf0 \
+\cf4 	\cf1 @PostMapping\cf4 (\cf5 value\cf4 =\cf6 "/find"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindId\cf4 (\cf1 @Valid\cf4  \cf8 MemberFormDto\cf4  \cf10 memberFormDto\cf4 , \cf11 BindingResult\cf4  \cf10 bindingResult\cf4 , \cf11 Model\cf4  \cf10 model\cf4 ) \{\cf0 \
+\cf4 		\cf8 Member\cf4  \cf9 memberFindID\cf4  = \cf9 memberService\cf4 .\cf1 findByMnameMtel\cf4 (\cf10 memberFormDto\cf4 .\cf1 getName\cf4 (), \cf10 memberFormDto\cf4 .\cf1 getTel\cf4 ());\cf0 \
+\cf4 	\cf8 System\cf4 .\cf12 out\cf4 .\cf1 println\cf4 (\cf10 memberFindID\cf4 .\cf1 getLoginid\cf4 ());\cf0 \
+\
+\cf4 	\cf10 model\cf4 .\cf9 addAttribute\cf4 (\cf6 "findID"\cf4 ,\cf10 memberFindID\cf4 );\cf0 \
+\cf4 		\cf0 \
+\cf4 		\cf0 \
+\cf4 	\cf7 return\cf4  \cf6 "redirect:/"\cf4 ;\cf0 \
+\cf4 		\cf0 \
+\cf4 	\}\
+\
+\cf2 memberFindId.html\
+\
+\
+\pard\pardeftab720\partightenfactor0
+\cf1 <!\cf9 DOCTYPE\cf0  \cf1 html>\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf10 <\cf9 html\cf0 \
+  \cf9 xmlns:th\cf4 =\cf6 "http://www.thymeleaf.org"\cf0 \
+  \cf9 xmlns:layout\cf4 =\cf6 "http://www.ultraq.net.nz/thymeleaf/layout"\cf0 \
+  \cf9 layout:decorate\cf4 =\cf6 "~\{layouts/layout\}"\cf0 \
+\cf10 >\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4   \cf10 <\cf9 head\cf10 >\cf0 \
+\cf4     \cf10 <\cf9 meta\cf0  \cf9 charset\cf4 =\cf6 "UTF-8"\cf0  \cf10 />\cf0 \
+\cf4     \cf10 <\cf9 title\cf10 >\cf4  Insert title here \cf10 </\cf9 title\cf10 >\cf4  \cf0 \
+\
+\cf4     \cf3 <!-- THYMELEAF JS  -->\cf0 \
+\cf4     \cf10 <\cf9 th:block\cf0  \cf9 layout:fragment\cf4 =\cf6 "script"\cf10 >\cf0 \
+\cf4       \cf10 <\cf9 script\cf0  \cf9 th:inline\cf4 =\cf6 "javascript"\cf10 >\cf0 \
+\cf4       \cf0 \
+\cf4       \cf10 </\cf9 script\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 th:block\cf10 >\cf0 \
+\
+\cf4     \cf3 <!-- THYMELEAF CSS -->\cf0 \
+\cf4     \cf10 <\cf9 th:block\cf0  \cf9 layout:fragment\cf4 =\cf6 "css"\cf10 >\cf0 \
+\cf4       \cf10 <\cf9 style\cf10 >\cf4  \cf10 </\cf9 style\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 th:block\cf10 >\cf0 \
+\cf4   \cf10 </\cf9 head\cf10 >\cf0 \
+\cf4   \cf10 <\cf9 body\cf10 >\cf0 \
+\cf4     \cf10 <\cf9 div\cf0  \cf9 layout:fragment\cf4 =\cf6 "content"\cf10 >\cf0 \
+\cf4     \cf0 \
+\cf4     	\cf10 <\cf9 form\cf0  \cf9 class\cf4 =\cf6 "row g-3"\cf0  \cf9 action\cf4 =\cf6 "/members/find"\cf0  \cf9 method\cf4 =\cf6 "post"\cf10 >\cf0 \
+\cf4 			\cf10 <\cf9 div\cf10 >\cf0 \
+\cf4 				\cf10 <\cf9 label\cf0  \cf9 th:for\cf4 =\cf6 "name"\cf10 >\cf4 \uc0\u51060 \u47492 \cf10 </\cf9 label\cf10 >\cf4  \cf0 \
+\cf4 				\cf10 <\cf9 input\cf0  \cf9 type\cf4 =\cf6 "text"\cf0  \cf9 name\cf4 =\cf6 "name"\cf0  \cf9 id\cf4 =\cf6 "name"\cf0  \cf9 class\cf4 =\cf6 "form-control"\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 div\cf10 >\cf0 \
+\cf4 			\cf10 <\cf9 div\cf10 >\cf0 \
+\cf4 				\cf10 <\cf9 label\cf0  \cf9 th:for\cf4 =\cf6 "tel"\cf10 >\cf4 \uc0\u51204 \u54868 \u48264 \u54840 \cf10 </\cf9 label\cf10 >\cf4  \cf0 \
+\cf4 				\cf10 <\cf9 input\cf0  \cf9 type\cf4 =\cf6 "text"\cf0  \cf9 name\cf4 =\cf6 "tel"\cf0  \cf9 id\cf4 =\cf6 "tel"\cf0  \cf9 class\cf4 =\cf6 "form-control"\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 div\cf10 >\cf0 \
+\cf4 			\cf10 <\cf9 div\cf10 >\cf0 \
+\cf4 				\cf10 <\cf9 button\cf0  \cf9 type\cf4 =\cf6 "submit"\cf0  \cf9 class\cf4 =\cf6 "btn btn-primary mb-3"\cf0  \cf9 id\cf4 =\cf6 "loginbtn"\cf10 >\cf4 \uc0\u50500 \u51060 \u46356 \u52286 \u44592 \cf10 </\cf9 button\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 div\cf10 >\cf0 \
+\cf4  	\cf0 \
+\cf4 			 \cf10 <\cf9 input\cf0  \cf9 type\cf4 =\cf6 "hidden"\cf0  \cf9 th:name\cf4 =\cf6 "$\{_csrf.parameterName\}"\cf0  \cf9 th:value\cf4 =\cf6 "$\{_csrf.token\}"\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 form\cf10 >\cf0 \
+\
+\cf4     \cf10 </\cf9 div\cf10 >\cf0 \
+\cf4   \cf10 </\cf9 body\cf10 >\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf10 </\cf9 html\cf10 >\
+\
+\
+\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97 \uc0\u52968 \u53944 \u47204 \u47084  21\u51068  21\u49884  12\u48516  \'97\'97\'97-\
+\pard\pardeftab720\partightenfactor0
+\cf3 // ID\uc0\u52286 \u44592 \u54868 \u47732 \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 	\cf1 @GetMapping\cf4 (\cf5 value\cf4 =\cf6 "/find"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindId\cf4 () \{\cf0 \
+\cf4 		\cf7 return\cf4  \cf6 "member/memberFindId"\cf4 ;\cf0 \
+\cf4 		\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf3 // ID\uc0\u52286 \u44592  \cf0 \
+\cf4 	\cf1 @PostMapping\cf4 (\cf5 value\cf4 =\cf6 "/find"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindId\cf4 (\cf1 @Valid\cf4  \cf8 MemberFormDto\cf4  \cf10 memberFormDto\cf4 , \cf11 BindingResult\cf4  \cf10 bindingResult\cf4 , \cf11 Model\cf4  \cf10 model\cf4 ) \{\cf0 \
+\cf4 		\cf8 Member\cf4  \cf9 memberFindID\cf4  = \cf9 memberService\cf4 .\cf1 findByMnameMtel\cf4 (\cf10 memberFormDto\cf4 .\cf1 getName\cf4 (), \cf10 memberFormDto\cf4 .\cf1 getTel\cf4 ());\cf0 \
+\cf4 	\cf8 System\cf4 .\cf12 out\cf4 .\cf1 println\cf4 (\cf10 memberFindID\cf4 .\cf1 getLoginid\cf4 ());\cf0 \
+\
+\cf4 	\cf10 model\cf4 .\cf9 addAttribute\cf4 (\cf6 "findID"\cf4 ,\cf10 memberFindID\cf4 );\cf0 \
+\cf4 		\cf0 \
+\cf4 		\cf0 \
+\cf4 	\cf7 return\cf4  \cf6 "members/findIdResult"\cf4 ;\cf0 \
+\cf4 		\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf1 @GetMapping\cf4 (\cf5 value\cf4 =\cf6 "/findResult"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindResult\cf4 () \{\cf0 \
+\
+\cf4 		\cf7 return\cf4  \cf6 "member/memberFindIdResult"\cf4 ;\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf1 @PostMapping\cf4 (\cf5 value\cf4 =\cf6 "findResult"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindResult\cf4 (\cf1 @Valid\cf4  \cf8 MemberFormDto\cf4  \cf10 memberFormDto\cf4 , \cf11 BindingResult\cf4  \cf10 bindingResult\cf4 , \cf11 Model\cf4  \cf10 model\cf4 ) \{\cf0 \
+\cf4 		\cf8 Member\cf4  \cf9 memberFindID\cf4  = \cf9 memberService\cf4 .\cf1 findByMnameMtel\cf4 (\cf10 memberFormDto\cf4 .\cf1 getName\cf4 (), \cf10 memberFormDto\cf4 .\cf1 getTel\cf4 ());\cf0 \
+\cf4 		\cf10 model\cf4 .\cf9 addAttribute\cf4 (\cf6 "findID"\cf4 ,\cf10 memberFindID\cf4 );\cf0 \
+\cf4 		\cf8 System\cf4 .\cf12 out\cf4 .\cf1 println\cf4 (\cf10 memberFindID\cf4 .\cf1 getLoginid\cf4 ());\cf0 \
+\cf4 		\cf7 return\cf4  \cf6 "redirect:/member/memberFindResult"\cf4 ;\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 \}\cf0 \
+\
+\'97\'97\'97\'97\'97\'97\'97\'9722\uc0\u51068  \
+\pard\pardeftab720\partightenfactor0
+\cf3 // ID\uc0\u52286 \u44592 \u54868 \u47732 \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4 	\cf1 @GetMapping\cf4 (\cf5 value\cf4 =\cf6 "/find"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindId\cf4 () \{\cf0 \
+\cf4 		\cf7 return\cf4  \cf6 "member/memberFindId"\cf4 ;\cf0 \
+\cf4 		\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf3 // ID\uc0\u52286 \u44592  \cf0 \
+\cf4 	\cf1 @PostMapping\cf4 (\cf5 value\cf4 =\cf6 "/find"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindId\cf4 (\cf1 @Valid\cf4  \cf8 MemberFormDto\cf4  \cf10 memberFormDto\cf4 , \cf11 BindingResult\cf4  \cf10 bindingResult\cf4 , \cf11 Model\cf4  \cf10 model\cf4 ) \{\cf0 \
+\cf4 		\cf0 \
+\cf4 		\cf7 try\cf4  \{\cf0 \
+\cf4 			\cf9 memberService\cf4 .\cf1 findByMnameMtel\cf4 (\cf10 memberFormDto\cf4 .\cf1 getName\cf4 (), \cf10 memberFormDto\cf4 .\cf1 getTel\cf4 ());\cf0 \
+\cf4 		\} \cf7 catch\cf4  (\cf8 Exception\cf4  \cf9 e\cf4 ) \{\cf0 \
+\cf4 			\cf10 model\cf4 .\cf9 addAttribute\cf4 (\cf6 "errorMessage"\cf4 , \cf6 "\uc0\u51068 \u52824 \u54616 \u45716  \u54924 \u50896 \u51221 \u48372 \u44032  \u50630 \u49845 \u45768 \u45796 ."\cf4 );\cf0 \
+\cf4 			\cf7 return\cf4  \cf6 "member/memberFindId"\cf4 ;\cf0 \
+\cf4 		\}\cf0 \
+\cf4 		\cf0 \
+\cf4 		\cf0 \
+\cf4 	\cf7 return\cf4  \cf6 "members/findIdResult"\cf4 ;\cf0 \
+\cf4 		\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf1 @GetMapping\cf4 (\cf5 value\cf4 =\cf6 "/findResult"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindResult\cf4 () \{\cf0 \
+\
+\cf4 		\cf7 return\cf4  \cf6 "members/findIdResult"\cf4 ;\cf0 \
+\cf4 	\}\cf0 \
+\cf4 	\cf0 \
+\cf4 	\cf1 @PostMapping\cf4 (\cf5 value\cf4 =\cf6 "findResult"\cf4 )\cf0 \
+\cf4 	\cf7 public\cf4  \cf8 String\cf4  \cf9 memberFindResult\cf4 (\cf1 @Valid\cf4  \cf8 MemberFormDto\cf4  \cf10 memberFormDto\cf4 , \cf11 BindingResult\cf4  \cf10 bindingResult\cf4 , \cf11 Model\cf4  \cf10 model\cf4 ) \{\cf0 \
+\cf4 		\cf8 Member\cf4  \cf9 memberFindID\cf4  = \cf9 memberService\cf4 .\cf1 findByMnameMtel\cf4 (\cf10 memberFormDto\cf4 .\cf1 getName\cf4 (), \cf10 memberFormDto\cf4 .\cf1 getTel\cf4 ());\cf0 \
+\cf4 		\cf10 model\cf4 .\cf9 addAttribute\cf4 (\cf6 "findID"\cf4 ,\cf10 memberFindID\cf4 );\cf0 \
+\cf4 		\cf8 System\cf4 .\cf12 out\cf4 .\cf1 println\cf4 (\cf10 memberFindID\cf4 .\cf1 getLoginid\cf4 ());\cf0 \
+\cf4 		\cf7 return\cf4  \cf6 "redirect:/members/findResult"\cf4 ;\cf0 \
+\cf4 	\}\
+\
+>html\
+\pard\pardeftab720\partightenfactor0
+\cf1 <!\cf9 DOCTYPE\cf0  \cf1 html>\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf10 <\cf9 html\cf0 \
+  \cf9 xmlns:th\cf4 =\cf6 "http://www.thymeleaf.org"\cf0 \
+  \cf9 xmlns:layout\cf4 =\cf6 "http://www.ultraq.net.nz/thymeleaf/layout"\cf0 \
+  \cf9 layout:decorate\cf4 =\cf6 "~\{layouts/layout\}"\cf0 \
+\cf10 >\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4   \cf10 <\cf9 head\cf10 >\cf0 \
+\cf4     \cf10 <\cf9 meta\cf0  \cf9 charset\cf4 =\cf6 "UTF-8"\cf0  \cf10 />\cf0 \
+\cf4     \cf10 <\cf9 title\cf10 >\cf4  Insert title here \cf10 </\cf9 title\cf10 >\cf4  \cf0 \
+\
+\cf4     \cf3 <!-- THYMELEAF JS  -->\cf0 \
+\cf4     \cf10 <\cf9 th:block\cf0  \cf9 layout:fragment\cf4 =\cf6 "script"\cf10 >\cf0 \
+\cf4       \cf10 <\cf9 script\cf0  \cf9 th:inline\cf4 =\cf6 "javascript"\cf10 >\cf0 \
+\cf4        $(document).ready(
+\f1\b \cf7 function
+\f0\b0 \cf4 ()\{\cf0 \
+\cf4       	
+\f1\b \cf7 var
+\f0\b0 \cf4  errorMessage = [[$\ul \{\ulnone errorMessage\}]];\cf0 \
+\cf4       	
+\f1\b \cf7 if
+\f0\b0 \cf4 (errorMessage != 
+\f1\b \cf7 null
+\f0\b0 \cf4 )\{\cf0 \
+\cf4           	alert(errorMessage);\cf0 \
+\cf4       	\}\cf0 \
+\
+\cf4   	\}); \cf0 \
+\cf4       \cf10 </\cf9 script\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 th:block\cf10 >\cf0 \
+\
+\cf4     \cf3 <!-- THYMELEAF CSS -->\cf0 \
+\cf4     \cf10 <\cf9 th:block\cf0  \cf9 layout:fragment\cf4 =\cf6 "css"\cf10 >\cf0 \
+\cf4       \cf10 <\cf9 style\cf10 >\cf4  \cf10 </\cf9 style\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 th:block\cf10 >\cf0 \
+\cf4   \cf10 </\cf9 head\cf10 >\cf0 \
+\cf4   \cf10 <\cf9 body\cf10 >\cf0 \
+\cf4     \cf10 <\cf9 div\cf0  \cf9 layout:fragment\cf4 =\cf6 "content"\cf10 >\cf0 \
+\cf4     \cf0 \
+\cf4     	\cf10 <\cf9 form\cf0  \cf9 class\cf4 =\cf6 "row g-3"\cf0  \cf9 action\cf4 =\cf6 "/members/findResult"\cf0  \cf9 method\cf4 =\cf6 "post"\cf10 >\cf0 \
+\cf4 			\cf10 <\cf9 div\cf10 >\cf0 \
+\cf4 				\cf10 <\cf9 label\cf0  \cf9 th:for\cf4 =\cf6 "name"\cf10 >\cf4 \uc0\u51060 \u47492 \cf10 </\cf9 label\cf10 >\cf4  \cf0 \
+\cf4 				\cf10 <\cf9 input\cf0  \cf9 type\cf4 =\cf6 "text"\cf0  \cf9 name\cf4 =\cf6 "name"\cf0  \cf9 id\cf4 =\cf6 "name"\cf0  \cf9 class\cf4 =\cf6 "form-control"\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 div\cf10 >\cf0 \
+\cf4 			\cf10 <\cf9 div\cf10 >\cf0 \
+\cf4 				\cf10 <\cf9 label\cf0  \cf9 th:for\cf4 =\cf6 "tel"\cf10 >\cf4 \uc0\u51204 \u54868 \u48264 \u54840 \cf10 </\cf9 label\cf10 >\cf4  \cf0 \
+\cf4 				\cf10 <\cf9 input\cf0  \cf9 type\cf4 =\cf6 "text"\cf0  \cf9 name\cf4 =\cf6 "tel"\cf0  \cf9 id\cf4 =\cf6 "tel"\cf0  \cf9 class\cf4 =\cf6 "form-control"\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 div\cf10 >\cf0 \
+\cf4 			\cf10 <\cf9 div\cf10 >\cf0 \
+\cf4 				\cf10 <\cf9 button\cf0  \cf9 type\cf4 =\cf6 "submit"\cf0  \cf9 class\cf4 =\cf6 "btn btn-primary mb-3"\cf0  \cf9 id\cf4 =\cf6 "loginbtn"\cf0  \cf9 onclick\cf4 =\cf6 "location.href='/members/findResult'"\cf10 >\cf4 \uc0\u50500 \u51060 \u46356 \u52286 \u44592 \cf10 </\cf9 button\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 div\cf10 >\cf0 \
+\cf4 			\cf0 \
+\cf4  	\cf0 \
+\cf4 			 \cf10 <\cf9 input\cf0  \cf9 type\cf4 =\cf6 "hidden"\cf0  \cf9 th:name\cf4 =\cf6 "$\{_csrf.parameterName\}"\cf0  \cf9 th:value\cf4 =\cf6 "$\{_csrf.token\}"\cf10 >\cf0 \
+\cf4 			\cf10 </\cf9 form\cf10 >\cf0 \
+\
+\cf4     \cf10 </\cf9 div\cf10 >\cf0 \
+\cf4   \cf10 </\cf9 body\cf10 >\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf10 </\cf9 html\cf10 >\
+\
+\
+>\
+\
+\pard\pardeftab720\partightenfactor0
+\cf1 <!\cf9 DOCTYPE\cf0  \cf1 html>\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf10 <\cf9 html\cf0 \
+  \cf9 xmlns:th\cf4 =\cf6 "http://www.thymeleaf.org"\cf0 \
+  \cf9 xmlns:layout\cf4 =\cf6 "http://www.ultraq.net.nz/thymeleaf/layout"\cf0 \
+  \cf9 layout:decorate\cf4 =\cf6 "~\{layouts/layout\}"\cf0 \
+\cf10 >\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf4   \cf10 <\cf9 head\cf10 >\cf0 \
+\cf4     \cf10 <\cf9 meta\cf0  \cf9 charset\cf4 =\cf6 "UTF-8"\cf0  \cf10 />\cf0 \
+\cf4     \cf10 <\cf9 title\cf10 >\cf4  Insert title here \cf10 </\cf9 title\cf10 >\cf4  \cf0 \
+\
+\cf4     \cf3 <!-- THYMELEAF JS  -->\cf0 \
+\cf4     \cf10 <\cf9 th:block\cf0  \cf9 layout:fragment\cf4 =\cf6 "script"\cf10 >\cf0 \
+\cf4       \cf10 <\cf9 script\cf0  \cf9 th:inline\cf4 =\cf6 "javascript"\cf10 >\cf0 \
+\cf4       \cf0 \
+\cf4       \cf10 </\cf9 script\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 th:block\cf10 >\cf0 \
+\
+\cf4     \cf3 <!-- THYMELEAF CSS -->\cf0 \
+\cf4     \cf10 <\cf9 th:block\cf0  \cf9 layout:fragment\cf4 =\cf6 "css"\cf10 >\cf0 \
+\cf4       \cf10 <\cf9 style\cf10 >\cf4  \cf10 </\cf9 style\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 th:block\cf10 >\cf0 \
+\cf4   \cf10 </\cf9 head\cf10 >\cf0 \
+\cf4   \cf10 <\cf9 body\cf10 >\cf0 \
+\cf4     \cf10 <\cf9 div\cf0  \cf9 layout:fragment\cf4 =\cf6 "content"\cf10 >\cf0 \
+\cf4     	\cf10 <\cf9 form\cf0  \cf9 action\cf4 =\cf6 "/members/findIdResult"\cf0  \cf9 method\cf4 =\cf6 "post"\cf0  \cf9 th:object\cf4 =\cf6 "$\{memberFormDto\}"\cf10 >\cf0 \
+\cf4      \cf10 <\cf9 span\cf10 >\cf4 [[$\{findID.logindid\}]]\cf10 </\cf9 span\cf10 >\cf0 \
+\cf4      \cf10 </\cf9 form\cf10 >\cf0 \
+\cf4     \cf10 </\cf9 div\cf10 >\cf0 \
+\cf4   \cf10 </\cf9 body\cf10 >\cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf10 </\cf9 html\cf10 >\cf0 \
+}

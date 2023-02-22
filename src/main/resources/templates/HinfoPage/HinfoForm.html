@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+      
+<head>
+<meta charset="UTF-8">
+<title>건강정보게시판</title>
+
+<th:block layout:fragment="script">
+
+</th:block>
+
+</head>
+<body>
+	<div layout:fragment="content">
+  	<div th:if="${#strings.isEmpty(hinfoBoardDto.id)}"> 
+		<form role="form" method="post" enctype="multipart/form-data" th:object="${hinfoBoardDto}">
+		<input type="text" placeholder="글제목입력" th:field="*{Title}">
+		<p th:if="${#fields.hasErrors('Title')}" th:errors="*{Title}" class="fieldError">Incorrect Data</p>
+		<textarea placeholder="글내용입력" th:field="*{content}"></textarea>
+		<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Incorrect Data</p>
+		<input type="file" id="HinfoImg" name="HinfoImg">
+		<button th:formaction="@{/Hinfo/Hinfo}">글쓰기</button>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	</form>
+
+ 	</div>
+	<div th:unless="${#strings.isEmpty(hinfoBoardDto.id)}"> 
+	<form role="form" method="post" enctype="multipart/form-data" th:object="${hinfoBoardDto}">
+		<input type="text" placeholder="글제목입력" th:field="*{Title}">	
+		<textarea placeholder="글내용입력" th:field="*{content}"></textarea>
+		<p th:if="${#fields.hasErrors('Title')}" th:errors="*{Title}" class="fieldError">Incorrect Data</p>
+		<input type="file" id="HinfoImg" name="HinfoImg">
+		<input type="hidden" th:field="*{Id}" th:value="${HinfoBoardDto.id}">
+				<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Incorrect Data</p>
+		<button th:formaction="@{'/Hinfo/updatepage/' + ${HinfoBoardDto.id} }" type="submit">수정하기</button>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	</form> -->
+	 </div>  
+
+		
+	</div>
+</body>
+</html>

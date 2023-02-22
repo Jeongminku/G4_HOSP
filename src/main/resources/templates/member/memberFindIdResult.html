@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title> Insert title here </title> 
+
+    <!-- THYMELEAF JS  -->
+    <th:block layout:fragment="script">
+      <script th:inline="javascript">
+      
+      </script>
+    </th:block>
+
+    <!-- THYMELEAF CSS -->
+    <th:block layout:fragment="css">
+      <style> </style>
+    </th:block>
+  </head>
+  <body>
+    <div layout:fragment="content">
+    <section>
+  				<p th:text = "${findID.loginid}"> </p>
+  				<p th:text= "${findID.pwd}"></p>
+			
+     </section>
+    </div>
+  </body>
+</html>

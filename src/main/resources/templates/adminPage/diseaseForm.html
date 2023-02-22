@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+<section>
+
+<form action="/admin/disease" method="post" enctype="multipart/form-data" th:object="${diseaseFormDto}">
+
+	<!-- 진료과에서 생성한 항목들 들어가기 -->
+	
+	<th:block >
+		<select th:field="*{med}" name="job">
+			<option th:each="meds : ${meds}" th:value="${meds.medId}"> [[${meds.medName}]]  </span>
+		</select>
+		
+	</th:block>
+	
+		
+	<h2>새 병명 기입</h2>
+	<input type="text" th:field="*{diseaseName}" name="diseaseName">
+	
+	<button type="submit">병 등록하기</button>
+	
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	
+</form>	
+
+	<h2>진료과 별 담당 병 목록</h2>
+
+		
+			<th:block th:each="diseases : ${diseases}">
+				<article>
+					<header>
+						<span class="medInfo">[[${diseases.med.medName}]] : </span>
+						<span class="medInfo">[[${diseases.diseaseName}]]</span>
+					</header>
+				</article>
+				
+			</th:block>
+
+</div>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="../../lib/Bootstrap_5.3.0a/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css">
+    <script src="../../lib/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="../../css/reset.css"> -->
+    <link rel="stylesheet" href="../../css/reservation.css">
+    <script src="../../lib/FulCal_6.1.1/local/index.global.min.js"></script>
+    <script src="../../lib/FulCal_6.1.1/index.global.min.js"></script>
+</head>
+<body>
+    <section id="selectDate" class="d-flex justify-content-between" layout:fragment="content">
+        <div id="Fcalendar"></div>
+        <form th:action="@{/reservation/checkIn}" method="post" class="d-flex flex-column justify-content-around" th:object="${ReservationDto}">
+            <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
+            <input type="hidden" name="reservationDoctorId" th:field="*{reservationDoctorId}">
+            <input class="d-none" type="datetime" name="reservationDate"  th:field="*{reservationDate}">
+            <input class="d-none" type="radio" id="09:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="09:00">오전 9시</label>
+            <input class="d-none" type="radio" id="10:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="10:00">오전 10시</label>
+            <input class="d-none" type="radio" id="11:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="11:00">오전 11시</label>
+            <input class="d-none" type="radio" id="12:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="12:00">오전 12시</label>
+            <input class="d-none" type="radio" id="13:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="13:00">오후 1시</label>
+            <input class="d-none" type="radio" id="14:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="14:00">오후 2시</label>
+            <input class="d-none" type="radio" id="15:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="15:00">오후 3시</label>
+            <input class="d-none" type="radio" id="16:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="16:00">오후 4시</label>
+            <input class="d-none" type="radio" id="17:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="17:00">오후 5시</label>
+            <input class="d-none" type="radio" id="18:00" name="time">
+            <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="18:00">오후 6시</label>                
+            <button class="btn btn-primary w-100" type="submit">예약하기</button>
+        </form>
+        <script src="../../js/SelectDate.js"></script>
+    </section>
+</body>
+</html>
