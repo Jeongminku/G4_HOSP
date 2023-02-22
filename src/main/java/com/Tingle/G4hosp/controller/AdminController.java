@@ -15,8 +15,10 @@ import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.entity.Disease;
+import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberService;
@@ -31,6 +33,8 @@ public class AdminController {
 	private final MemberService memberService;
 	private final MedService medService;
 	private final DiseaseService diseaseService;
+	private final HospitalizeRepository hospitalizeRepository;
+	
 	
 	// 관리자 페이지 화면
 	@GetMapping(value="/adminpage")
@@ -97,8 +101,20 @@ public class AdminController {
 //	===================================================================================
 	
 	// 고객목록 페이지 화면
-	@GetMapping(value="/patientList")
+	@GetMapping(value="/memberList")
 	public String memberList(Model model) {
+		
+		Role client = Role.CLIENT;
+		
+		List<Member> members = memberService.getMemberList(client);
+		model.addAttribute("members", members);
+		
+		return "adminPage/memberList";
+	}
+	
+	// 입원환자목록 페이지 화면
+	@GetMapping(value="/patientList")
+	public String patientList(Model model) {
 		
 		Role client = Role.CLIENT;
 		
