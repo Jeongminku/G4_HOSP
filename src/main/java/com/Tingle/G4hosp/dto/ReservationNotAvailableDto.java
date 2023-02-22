@@ -16,7 +16,10 @@ public class ReservationNotAvailableDto {
 	public static List<ReservationNotAvailableDto> createResreAvailableDto (List<ReservationNotAvailable> reservationNotAvailable) {
 		List<ReservationNotAvailableDto> ReservationNotAvailableDtoList = new ArrayList<>();
 		for(ReservationNotAvailable notAvailable : reservationNotAvailable) {
-			ReservationNotAvailableDtoList.add(modelMapper.map(notAvailable, ReservationNotAvailableDto.class));
+//			ReservationNotAvailableDtoList.add(modelMapper.map(notAvailable, ReservationNotAvailableDto.class));
+			ReservationNotAvailableDto dto = new ReservationNotAvailableDto();
+			dto.setNotAvailableDay(notAvailable.getNotAvailableDay());
+			ReservationNotAvailableDtoList.add(dto);
 		}
 		return ReservationNotAvailableDtoList;
 	}

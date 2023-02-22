@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="../../css/reservation.css">
     <script src="../../lib/FulCal_6.1.1/local/index.global.min.js"></script>
     <script src="../../lib/FulCal_6.1.1/index.global.min.js"></script>
+    <script th:inline="javascript">
+        const reservationDto = [[${ReservationDto}]];
+    </script>
 </head>
 <body>
     <section id="selectDate" class="d-flex justify-content-between" layout:fragment="content">

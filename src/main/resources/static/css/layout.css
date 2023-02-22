@@ -58,7 +58,7 @@ footer {background-color: #3C4048; padding: 100px 0;}
 footer > *:not(:first-child) {margin-top: 10px;}
 
 /* 공통섹션 */
-section {width: 80%; height: calc(100vh - 50px); margin: 0 auto; padding: 3rem 0; max-width: 1200px;}
+section {width: 80%; min-height: calc(100vh - 50px); margin: 0 auto; padding: 3rem 0; max-width: 1200px;}
 
 @media screen and (max-width: 991.98px) {
     /* custom class */

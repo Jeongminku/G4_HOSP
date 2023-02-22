@@ -18,9 +18,9 @@
         <div class="w-100">
             <h2 class="h1 text-center">진료예약</h2>
             <div th:each="divison : ${DocList}">
-                <h3 class="h2" th:text="${division.key}">과이름</h3>
-                <div class="d-flex flex-wrap w-100 docList" th:each="doctor : ${division.value}">
-                    <a th:href="@{/reservation/${doctor.id}}" class="card mb-3 d-flex flex-column align-items-center">
+                <h3 class="h2" th:text="${divison.key}">과이름</h3>
+                <div class="d-flex flex-wrap w-100 docList">
+                    <a th:href="@{${doctor.id}}" th:each="doctor : ${divison.value}" class="card mb-3 d-flex flex-column align-items-center">
                         <img th:src="${doctor.imgUrl}" class="card-img-top" th:alt="${doctor.imgName}">
                         <div class="card-body">
                             <h5 class="card-title text-center" th:text="${doctor.name}">의사 이름</h5>

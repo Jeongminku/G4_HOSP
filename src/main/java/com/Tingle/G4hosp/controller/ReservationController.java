@@ -40,7 +40,7 @@ public class ReservationController {
 	
 	@GetMapping("/{doctorId}")
 	public String selectDayPage (Model model, @PathVariable("doctorId") Long doctorId) {
-		model.addAttribute("ReservationDto", new ReservationDto());
+		model.addAttribute("ReservationDto", reservationService.initDto(doctorId));
 		return "ReservationPage/SelectDate";
 	}
 	
