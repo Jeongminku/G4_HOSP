@@ -9,7 +9,8 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		
+	
+	<section>
 	
 		<ul>
 		<li>작성자 : [[${HinfoBoard.member.name}]]</li>
@@ -21,7 +22,10 @@
 		</ul>
 		<a th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}">수정</a>
 		<a th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}">삭제</a>
-
+	
+	</section>	
+	
+	
 
 		
 	</div>
