@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 <th:block layout:fragment="script">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-		<script th:inline="javascript">
-    
+
+<script th:inline="javascript">  
 	$(document).ready(function(){
     	var errorMessage = [[${errorMessage}]];
     	if(errorMessage != null){
@@ -17,7 +17,16 @@
 
 	});
  
-    
+ 	function medListEvent() {
+ 		var doctor = $('#doctor');
+ 		if(doctor.is(":checked")) {
+ 			$('#medList').css('display','block');
+ 			$('#profile').css('display','block');
+ 		} else {
+ 			$('#medList').css('display','none');
+ 			$('#profile').css('display','none');
+ 		}
+ 	}
 	</script>
 	
 </th:block>
@@ -26,41 +35,28 @@
 
 <body>
 	<div layout:fragment="content">
-    	<section class="normal-breadcrumb set-bg" style="background:#070720";>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="normal__breadcrumb__text">
-                        <p>Welcome to the Search Streamer</p>
-                        <h2>SignUp</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    	</section>
     	<section class="login spad">
         <div class="container">
             <div class="sign-up-content">
                 <form action="/members/new" method="post" th:object="${memberFormDto}" enctype="multipart/form-data">
                      <div class="signup">
 	                    <div class="form-radio">               	             	
-	                        <input type="radio" name="role" value="CLIENT" id="client" checked="checked"/>
+	                        <input type="radio" name="role" value="CLIENT" id="client" checked="checked" onclick="medListEvent()"/>
 	                        <label for="client">환자</label> 
 	
-	                        <input type="radio" name="role" value="DOCTOR" id="doctor" onclick="broadInfoEvent()" />
+	                        <input type="radio" name="role" value="DOCTOR" id="doctor" onclick="medListEvent()" />
 	                        <label for="doctor">의사</label>	
 	                        
-	                        <input type="radio" name="role" value="ADMIN" id="admin" onclick="broadInfoEvent()" />
+	                        <input type="radio" name="role" value="ADMIN" id="admin" onclick="medListEvent()" />
 	                        <label for="admin">관리자</label>
 	                    </div>
-	                    
-	                    <!-- 여기에 희재님이 주신 select box option 넣으면 됨. -->
+	                    <br/>
 	                    <th:block>
-							<select name="job" th:field="*{medId}">
+							<select id="medList" name="job" th:field="*{medId}" style="display:none">
 								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}"> [[${meds.medName}]]  </span>
 							</select>
 						</th:block>
-	                    
+	                    <br/>
 						<div class="form-textbox row">
 	                        <label th:for="nickname">아이디</label>
 	                        <input type="text" th:field="*{loginid}" class="form-control" placeholder="아이디 입력" style="padding-left: 100px;" />
@@ -88,7 +84,7 @@
 	                        <p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="fieldError">잘못된 생년월일 입력</p>
 	                    </div>
 	
-	                    <div class="form-textbox row form-bottom">
+	                    <div class="form-textbox row form-bottom" id = "profile" style="display:none">
 	                        <div class="col">
 	                            <label for="profile">프로필 사진</label>
 	                        </div>
@@ -108,10 +104,6 @@
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">         
                      </div>
                 </form>
-
-                <p class="loginhere">
-                    이미 회원이신가요 ?<a href="/members/login" class="loginhere-link" style="text-decoration:none"> Log in</a>
-                </p>
             </div>
         </div>
     </section>

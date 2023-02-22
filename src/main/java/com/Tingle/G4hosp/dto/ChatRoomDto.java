@@ -16,12 +16,21 @@ public class ChatRoomDto {
     private String name;
     private Set<WebSocketSession> sessions = new HashSet<>();
 
-    @Builder
-    public ChatRoomDto(String roomId, String name) {
-        this.roomId = roomId;
-        this.name = name;
+//    @Builder
+//    public ChatRoomDto(String roomId, String name) {
+//        this.roomId = roomId;
+//        this.name = name;
+//    }
+    private ChatRoomDto () {
+    	this.roomId = UUID.randomUUID().toString();
+    	this.name = "병원 채팅방";
     }
 
+    private static ChatRoomDto onlyRoom = new ChatRoomDto();
+    public static ChatRoomDto getChatRoomDto () {
+    	return onlyRoom;
+    }
+    
     public void handlerActions(WebSocketSession session, ChatMessageDto chatMessageDto, ChatService chatService) {
         if (chatMessageDto.getType().equals(MessageType.ENTER)) {
             sessions.add(session);
