@@ -10,6 +10,8 @@
 
 <div layout:fragment="content">
 
+<section>
+
 <form action="/admin/disease" method="post" enctype="multipart/form-data" th:object="${diseaseFormDto}">
 
 	<!-- 진료과에서 생성한 항목들 들어가기 -->
@@ -45,6 +47,8 @@
 			</th:block>
 
 </div>
+
+</section>
 
 </body>
 </html>

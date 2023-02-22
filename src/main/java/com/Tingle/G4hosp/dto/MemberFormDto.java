@@ -1,18 +1,23 @@
 package com.Tingle.G4hosp.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 
+import groovy.transform.ToString;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@lombok.ToString
 public class MemberFormDto {
 	@NotBlank(message = "아이디는 필수 입력값입니다.")
 	private String loginid; //ID
@@ -38,6 +43,9 @@ public class MemberFormDto {
 	
 	private String imgUrl;
 
+	private List<Med> med;
+	
+	private String medId;
 	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
