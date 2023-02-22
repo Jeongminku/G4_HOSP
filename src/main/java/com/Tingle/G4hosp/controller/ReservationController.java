@@ -92,15 +92,4 @@ public class ReservationController {
 		return "ReservationPage/SetNotAvailableDay";
 	}
 	
-	@GetMapping("/chat")
-	public String chatTesting () {
-		return "ReservationPage/WebChatTesting";
-	}
-	
-	  @OnOpen
-	  public void open(Session newUser) {
-	      System.out.println("connected");
-	      System.out.println(newUser.getId());
-	      System.out.println(newUser.getUserProperties());
-	  }
 }
