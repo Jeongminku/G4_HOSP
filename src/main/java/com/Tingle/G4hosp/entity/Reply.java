@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,7 +20,7 @@ import lombok.*;
 @ToString
 @Entity
 @Table(name = "Reply")
-public class Reply {
+public class Reply extends BaseEntity{
 	
 	@Id
 	@Column(name = "reply_id")
@@ -30,5 +31,10 @@ public class Reply {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name="board_id")
 	private Board board;
+	
+	@ManyToOne
+	@JoinColumn(name = "member_id")
+	private Member member;
 }

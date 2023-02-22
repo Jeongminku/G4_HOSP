@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,4 +91,16 @@ public class ReservationController {
 		}
 		return "ReservationPage/SetNotAvailableDay";
 	}
+	
+	@GetMapping("/chat")
+	public String chatTesting () {
+		return "ReservationPage/WebChatTesting";
+	}
+	
+	  @OnOpen
+	  public void open(Session newUser) {
+	      System.out.println("connected");
+	      System.out.println(newUser.getId());
+	      System.out.println(newUser.getUserProperties());
+	  }
 }

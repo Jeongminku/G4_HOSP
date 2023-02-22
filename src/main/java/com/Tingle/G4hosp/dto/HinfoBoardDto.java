@@ -45,4 +45,6 @@ public class HinfoBoardDto {
 	public static HinfoBoardDto of(HinfoBoard hinfoBoard) {
 		return modelMapper.map(hinfoBoard, HinfoBoardDto.class);
 	}
+	
+
 }

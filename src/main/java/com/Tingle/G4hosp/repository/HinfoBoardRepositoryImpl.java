@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.repository;
 
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -68,26 +69,13 @@ public class HinfoBoardRepositoryImpl implements HinfoBoardRepositoryCustum{
 
 	//조회수증가
 	@Override
-	public long updateViewtest(Long HinfoId) {
+	public long updateView(Long HinfoId) {
 		QHinfoBoard hinfoBoard = QHinfoBoard.hinfoBoard;
 		
 		long content = queryFactory.update(hinfoBoard).set(hinfoBoard.view, hinfoBoard.view.add(1)).where(hinfoBoard.id.eq(HinfoId)).execute();
 		return content;
 	}
 
-	//의학정보게시판 게시글 업데이트
-	@Override
-	public long updateHinfo(Long hinfoId,HinfoBoardDto hinfoBoardDto) {
-		QHinfoBoard hinfoBoard = QHinfoBoard.hinfoBoard;
-		
-		long content = queryFactory.update(hinfoBoard)
-				.set(hinfoBoard.Title, hinfoBoardDto.getTitle())
-				.set(hinfoBoard.Content, hinfoBoardDto.getContent())
-				.where(hinfoBoard.id.eq(hinfoId))
-				.execute();
-		
-		return content;
-	}
 
 
 
