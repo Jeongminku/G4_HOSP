@@ -63,4 +63,46 @@ public class MemberController {
 		return "redirect:/";
 	}	
 	
+	// ID찾기화면
+		@GetMapping(value="/find")
+		public String memberFindId(Model model) {
+			model.addAttribute("memberFormDto", new MemberFormDto());
+			return "member/memberFindId";
+			
+		}
+		
+		// ID찾기 
+		@PostMapping(value="/find")
+		public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+			model.addAttribute("findID",memberFindID);
+			System.out.println(memberFindID.getLoginid());
+			try {
+				memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+			} catch (Exception e) {
+				model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
+				return "member/memberFindId";
+			}
+			
+			System.out.println();
+		return "memberFindIdResult";
+			
+		}
+		
+		// id찾기 결과화면 
+		@GetMapping(value="/findResult")
+		public String memberFindResult() {
+			
+			return "members/findIdResult";
+		}
+		
+//		
+//		@PostMapping(value="/findResult")
+//		public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+//			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+//			model.addAttribute("findID",memberFindID);
+//			System.out.println(memberFindID.getLoginid());
+//			return "redirect:/members/findResult";
+//		}
+	
 }
