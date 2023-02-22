@@ -1,8 +1,10 @@
 let selectDay;
+let calendar;
 let calendatBaseObj = {
     headerToolbar: {
-        left: "prev,next today",
-        center: "title",
+        start: "prev,next today",
+        center:'',
+        end: "title",
     },
     initialView: 'dayGridMonth',
     timeZone: 'local',
@@ -25,7 +27,6 @@ if (path == 'setNotAvailDay') {
     calendatBaseObj.select = (arg) => {
         setNotAvailDay(arg);
     };
-    calendarLoad(calendatBaseObj)
 } else if(path == 'listView') {
     
 } else {
@@ -38,7 +39,7 @@ calendarLoad(calendatBaseObj)
 function calendarLoad (calendatBaseObj) {
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('Fcalendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, calendatBaseObj);
+        calendar = new FullCalendar.Calendar(calendarEl, calendatBaseObj);
             calendar.render();
     }); 
 }
