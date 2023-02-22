@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>환자 조회 페이지입니다.</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+ 
+    
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<style>
+.wrap {
+	width: 80%;
+}
+.viewhead{
+	text-align: center;
+}
+.viewlineboxup {
+	border-top: 5px solid black;
+}
+
+.viewlinebox {
+	border: 1px solid black;
+	text-align: center;
+}
+.linemenu{
+	height: 100px;
+	text-align: center;
+	display: table;
+}
+.tablemenu{
+	border: 1px solid
+}
+.detailbody {
+	border: none;
+}
+
+.cont_img{
+	width: 15%;
+}
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="wrap">
+			<div class="cont">
+				<!-- USER INFO, POST INFO  -->
+				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+					<div class="col-md-10 headwrap">
+					<div class="col-md-12 viewhead">
+						<h1>진료 대상 환자 조회</h1>
+					</div>
+					<div class="col-md-12 viewhead"></div>
+					<div class="col-md-12 viewlineboxup"> </div>
+					<div class="col-md-12 viewlinebox"> </div>
+					<div class="col-md-12 tablemenu">
+					<form action="/archive/search" method="post" role="form" th:object="${archiveSearchDto}">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">환자 아이디</th>
+									<td><input type="text" th:field = "*{loginid}" class="form-control" id="inputPostname" placeholder="환자 아이디를 입력해주세요."> </td>
+									<th scope="row">환자 이름</th>
+									<td><input type="text" th:field = "*{name}" class="form-control" id="inputPostname" placeholder="환자 이름을 입력해주세요."></td>
+								</tr>
+							</tbody>
+						</table>					
+						<button type="submit"> 환자 조회 </button>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form>
+					</div>
+					<div class="col-md-12 linemenu">
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

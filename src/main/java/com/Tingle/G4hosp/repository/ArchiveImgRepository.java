@@ -13,4 +13,8 @@ public interface ArchiveImgRepository extends JpaRepository<ArchiveImg, Long> {
 	@Query(value = "select * from archiveimg where archiveimg.archiveimg_id = :ARCIMGID ",nativeQuery = true)
 	List<ArchiveImg> findbyid(@Param("ARCIMGID") Long archiveimgid);
 	
+	@Query(value = "select * from archiveimg where archiveimg.archive_id = :ARCID ",nativeQuery = true)
+	List<ArchiveImg> findbyARCid(@Param("ARCID") Long archiveid);
+	
+	
 }

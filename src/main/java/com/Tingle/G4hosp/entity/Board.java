@@ -2,6 +2,9 @@ package com.Tingle.G4hosp.entity;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.modelmapper.ModelMapper;
+
 import lombok.*;
 
 @Entity
@@ -9,20 +12,27 @@ import lombok.*;
 @Setter
 @ToString
 @Table(name="board")
-public class Board {
+public class Board extends BaseEntity{
 	
 	@Id
 	@Column(name = "board_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String boardTitle;
+	@Column(name = "board_title")
+	private String title;
 	
-	private String boardContent;
+	@Column(name= "board_content")
+	private String content;
+	
+	@Column(name="board_content_view")
+	@ColumnDefault("0")
+	private int view;
 	
 	//Member fk
-	@JoinColumn(name = "member_nm")
+	@JoinColumn(name = "member_id")
 	@ManyToOne
 	private Member member;
+		
 	
 }
