@@ -9,19 +9,26 @@
 <body>
 
 <div layout:fragment="content">
+<section>
 
 <h1>관리자 페이지</h1>
+<br>
 
-	<a href="#">고객목록</a>  
-	<a href="#">입원환자목록</a> <!-- 고객목록 페이지랑 틀 똑같이 / 후에 아이작스로 한페이지 구현? -->
-	<a href="#">의사목록</a> 
-	<a href="#">고객게시판</a> <!-- 만들어진 게시판 바탕으로 -->
-	<a href="#">자주묻는질문</a> <!-- 만들어진 게시판 바탕으로 -->
-	<a href="#">건강정보게시판</a> <!-- 만들어진 게시판 바탕으로 -->
-	<a href="#">진료과 개설 페이지</a>
-	<a href="#">병명 기입 페이지</a>
-	
+<ul>
+	<li><a href="/admin/memberList">고객목록</a></li><br>
+	<li><a href="/admin/patientList">입원환자목록</a></li> <!-- 고객목록 페이지랑 틀 똑같이 / 후에 아이작스로 한페이지 구현? --><br>
+	<li><a href="/admin/doctorList">의사목록</a></li><br>
+	<li><a href="#">고객게시판</a></li> <!-- 만들어진 게시판 바탕으로 --><br>
+	<li><a href="#">자주묻는질문</a></li> <!-- 만들어진 게시판 바탕으로 --><br>
+	<li><a href="/Hinfo/HinfoMain">건강정보게시판</a></li> <!-- 만들어진 게시판 바탕으로 --><br>
+	<li><a href="/admin/med">진료과 개설 페이지</a></li><br>
+	<li><a href="/admin/disease">병명 기입 페이지</a></li>
+</ul>
+
 </div>
+
+
+</section>
 
 </body>
 </html>

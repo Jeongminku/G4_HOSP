@@ -19,8 +19,8 @@ public class DiseaseFormDto {
 
 	private Long diseaseId;
 	
-	@NotBlank(message = "병 코드는 필수 입력값입니다.")
-	private String diseaseCode; //ID
+//	@NotBlank(message = "병 코드는 필수 입력값입니다.")
+//	private String diseaseCode; //ID
 	
 	@NotBlank(message="이름은 필수 입력값입니다.")
 	private String diseaseName; //이름 

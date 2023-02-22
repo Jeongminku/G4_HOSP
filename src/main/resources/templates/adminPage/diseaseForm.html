@@ -10,6 +10,8 @@
 
 <div layout:fragment="content">
 
+<section>
+
 <form action="/admin/disease" method="post" enctype="multipart/form-data" th:object="${diseaseFormDto}">
 
 	<!-- 진료과에서 생성한 항목들 들어가기 -->
@@ -33,11 +35,11 @@
 
 	<h2>진료과 별 담당 병 목록</h2>
 
+		
 			<th:block th:each="diseases : ${diseases}">
-			
 				<article>
 					<header>
-						<span class="medName">[[${diseases.diseaseCode}]] : </span>
+						<span class="medInfo">[[${diseases.med.medName}]] : </span>
 						<span class="medInfo">[[${diseases.diseaseName}]]</span>
 					</header>
 				</article>
@@ -45,6 +47,8 @@
 			</th:block>
 
 </div>
+
+</section>
 
 </body>
 </html>

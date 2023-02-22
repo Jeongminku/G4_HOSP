@@ -10,36 +10,27 @@
 
 <div layout:fragment="content">
 
-	<h1>고객목록</h1>
+<section>
 
-	<h2>고객검색</h2>
-	<input type="text" name="memberName">
-	
+	<h1>고객 목록</h1>
+
 	<table>
+	
 		<th>성함</th>
 		<th>생년월일</th>
 		<th>전화번호</th>
+	<th:block th:each="members : ${members}">
 		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
+			<td>[[${members.name}]] &nbsp;&nbsp;</td>
+			<td>[[${members.birth}]] &nbsp;&nbsp;</td>
+			<td>[[${members.tel}]] &nbsp;&nbsp;</td>
 		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
-		<tr>
-			<td>홍길동</td>
-			<td>1998/08/22</td>
-			<td>010-1234-1111</td>
-		</tr>
+	
 	</table>
+
+	</th:block>
+
+</section>
 
 </div>
 

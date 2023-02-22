@@ -89,17 +89,16 @@
 						<h1>진료 내역 작성</h1>
 					</div>
 					
-					<form action="/write" method="post" th:object="${archiveFormDto}">		
-					<div class="col-md-12 viewhead"></div>
+					<form th:action="'/archive/update/'+${archive.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">		
+					<input type="hidden" th:value="${archiveFormDto.id}" th:field = "*{id}">					
+					<div class="col-md-12 viewhead">
+					</div>
 					<div class="col-md-12 viewlineboxup"></div>
 					<div class="col-md-12 viewlinebox">
 						<span> 환자명 </span> <span> 김김김 </span> <span> 나이 </span> <span>20
 						</span> <span> 주요내원병명 </span> <span> 감기 </span> <span> 입원여부 </span> 
 						<span>Y
 						</span>
-					</div>
-					<div class="col-md-12 linemenu">
-						<button type="submit"> 작성 완료 </button>
 					</div>
 					<div class="col-md-12 tablemenu">
 						<table class="table table-bordered">
@@ -137,6 +136,9 @@
 								</tr>
 							</tbody>
 						</table>
+					<div class="col-md-12 linemenu">
+						<button type="submit"> 수정 완료 </button>
+					</div>
 					</div>
 					</form>
 					</div>
@@ -144,68 +146,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- 					
-					
-					<div class="col-md-6">
-					<br>
-						<div class="row-md-3">
-							<h2> 작성자 :  </h2>
-						</div>
-						<br>
-						<div class="row-md-3">
-							<h3> 태그 </h3> 
-								<div >
-									<span th:each = "tag : ${tags}"> #[[${tag.tagname}]] </span>
-								</div>
-						</div>						
-						<br>
-						<div class="row-md-3">
-							<h3> 좋아요 : </h3>
-						</div>	
-						<div class="row-md-3 likesection">
-							<div class="row-md-6" style="text-align: left;">							
-								<button class="button" th:onclick="giveheart([[${post.id}]])" style="background: transparent; border: 0"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
-								<span> 이 TRABLE, 마음에 들어요! </span>
-							</div>
-						</div>											
-					</div>
-					UPDATE, DELETE POST
-					<div th:if="${id} == ${member.email}">					
-						<div class="updateANDdelete">
-						 fdsf
-								<div class="row center">
-									<div class="col-md-3">
-									<p> 게시물 수정 </p>
-									<a th:href = "'/update/'+${post.id}"><img alt="update" src="/images/refresh.png" width="50px"></a>						
-									</div>
-									<div th:if="${post.showPost} == 'SHOW'"></div>
-									<div class="col-md-3">
-									<p> 게시물 숨김 </p>
-									<a type="button" th:onclick="hidepost([[${post.id}]])"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
-									</div>									
-									<div class="col-md-3">
-									<p> 게시물 숨김 해제 </p>
-									<a type="button" th:onclick="showpost([[${post.id}]])"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
-									</div>									
-									<div class="col-md-3">
-									<p> 게시물 삭제 </p>
-									<a type="button" th:onclick="deletepost([[${post.id}]])"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
-									<a th:href = "'/delete/'+${post.id}" onclick="delete()"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
-									</div>
- 							</div>
-						</div>
-					</div>
-    			</div>
-    			
-    			
-    			POST IMG
-    			<div class="row row_left" th:each="postimg : ${postimgs}">
-					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
-    			</div> -->
-
-
 
 </body>
 </html>

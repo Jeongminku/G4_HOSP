@@ -20,6 +20,7 @@ import com.Tingle.G4hosp.repository.ArchiveRepository;
 import com.Tingle.G4hosp.repository.DiseaseRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -63,10 +64,10 @@ public class ArchiveService {
 			disease = diseaseRepository.findDiseasebyDiseasename(archiveFormDto.getDisease());
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("archiveservice에서 disease 객체를 불러오는 동안 에러 발생!");
+			throw new Exception("archiveservice에서 disease 객체를 불러오는 동안 에러 발생!");
 		}
 		
-		ArchiveDisease archiveDisease = ArchiveDisease.createAD(archive, disease, null);
+		ArchiveDisease archiveDisease = ArchiveDisease.createAD(archive, disease);
 		archiveDiseaseRepository.save(archiveDisease);
 		
 		// SAVE EACH IMGFILE FROM IMGFILELIST
@@ -83,12 +84,35 @@ public class ArchiveService {
 			) throws Exception {
 		Member docinfo = memberRepository.findbyNameindoctor(archiveFormDto.getDoctorname());
 		Archive archive = archiveRepository.getReferenceById(arcid);
-		List<ArchiveImg> archiveImglist = archiveImgRepository.findbyid(arcid);
+		List<ArchiveImg> archiveImglist = archiveImgRepository.findbyARCid(arcid);
+		
+		System.out.println("archiveImglist test : " + archiveImglist);
+		System.out.println("archiveImglist size test : " + archiveImglist.size());
+		System.out.println("archiveImgFileList test : " + archiveImgFileList);
 		
 		//UPDATE ARCHIVE & ARCHIVE IMG
 		archive.updateArchive(docinfo, archiveFormDto);
-		for(int i=0; i<archiveImgFileList.size(); i++) {
-			archiveImgService.updateArchiveImg(archiveImglist.get(i), archiveImglist.get(i).getId(), archiveImgFileList.get(i));
+		
+		if(archiveImglist.size() == 0) {
+			for(int i=0; i<archiveImgFileList.size(); i++) {
+				ArchiveImg archiveImg = new ArchiveImg();
+				archiveImg.setArchive(archive);
+				archiveImgService.saveArchiveImg(archiveImg, archiveImgFileList.get(i));
+			}
+			return archive.getId();
+		}
+		try {
+			for(int i=0; i<archiveImgFileList.size(); i++) {
+				if(archiveImglist.get(i).getImgname().isEmpty()) {
+					ArchiveImg archiveImg = new ArchiveImg();
+					archiveImg.setArchive(archive);
+					archiveImgService.saveArchiveImg(archiveImg, archiveImgFileList.get(i));
+				}
+				archiveImgService.updateArchiveImg(archiveImglist.get(i), archiveImglist.get(i).getId(), archiveImgFileList.get(i));
+			}			
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			return archive.getId();
 		}
 		return archive.getId();
 	}
@@ -97,6 +121,12 @@ public class ArchiveService {
 	public String deleteArchive(Long arcid) {
 		Archive archive = archiveRepository.getReferenceById(arcid);
 		try {
+			ArchiveDisease AD = archiveDiseaseRepository.FindADbyARCid(arcid);
+			archiveDiseaseRepository.delete(AD);
+			List<ArchiveImg> archiveimglist = archiveImgRepository.findbyARCid(arcid);
+			for(ArchiveImg ARI : archiveimglist) {
+				archiveImgRepository.delete(ARI);
+			}
 			archiveRepository.delete(archive);
 			return "삭제완료";
 		} catch (Exception e) {

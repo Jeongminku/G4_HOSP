@@ -50,14 +50,14 @@ public class HinfoBoardService {
 		Member member = memberRepository.findByLoginid(principal.getName());	 
 		HinfoBoard hinfoBoard = hinfoBoardDto.createHinfoBoard();
 		hinfoBoard.setMember(member);
-		hinfoBoardRepository.save(hinfoBoard); // git stash
+		hinfoBoardRepository.save(hinfoBoard); 
 		saveHinfoImg(hinfoImgFileList,hinfoBoard);
 		
 	
 	}
 	
 	//건강정보게시판의 게시글 뿌려줌
-	public Page<HinfoListDto> getMainHinfoMain(HinfoSerchDto hinfoSerchDto,Pageable pageable){
+	public Page<HinfoListDto> getHinfoMain(HinfoSerchDto hinfoSerchDto,Pageable pageable){
 		return hinfoBoardRepository.getMainHinfoMain(hinfoSerchDto,pageable);
 	}
 	
@@ -65,7 +65,7 @@ public class HinfoBoardService {
 	@Transactional
 	public void updateViewtest(Long HinfoId) {
 		//3.조회수 증가
-		hinfoBoardRepository.updateViewtest(HinfoId);
+		hinfoBoardRepository.updateView(HinfoId);
 	}
 	
 	//건강정보게시판 게시글 확인

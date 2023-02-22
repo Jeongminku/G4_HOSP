@@ -36,21 +36,21 @@ public class Archive extends BaseTime{
 	@JoinColumn(name = "patient_id", nullable = false)
 	private Member member;
 	
-	@Column(name = "doctor_id")
-	private Long doctorid;
+	@Column(name = "doctor_name")
+	private String doctorname;
 
 	public static Archive createArchive(Member doctor, Member patient, ArchiveFormDto archiveFormDto) {
 		Archive archive = new Archive();
 		archive.setDetail(archiveFormDto.getDetail());
 		archive.setMember(patient);
-		archive.setDoctorid(doctor.getId());
+		archive.setDoctorname(doctor.getName());
 		return archive;
 	}
 	
 	// UPDATE ARCHIVE (ARCHIVE DETAIL, DOCTOR)
 	public void updateArchive(Member doctor, ArchiveFormDto archiveFormDto) {
 		this.detail = archiveFormDto.getDetail();
-		this.doctorid = doctor.getId();
+		this.doctorname = doctor.getName();
 	}
 	
 }

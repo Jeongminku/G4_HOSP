@@ -26,8 +26,8 @@ public class Disease {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long diseaseId;
 	
-	@Column(name = "disease_code")
-	private String diseaseCode;
+//	@Column(name = "disease_code")
+//	private String diseaseCode;
 	
 	@Column(name = "disease_name")
 	private String diseaseName;

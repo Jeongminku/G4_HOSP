@@ -55,7 +55,11 @@
 	                    </div>
 	                    
 	                    <!-- 여기에 희재님이 주신 select box option 넣으면 됨. -->
-	                    
+	                    <th:block>
+							<select name="job" th:field="*{medId}">
+								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}"> [[${meds.medName}]]  </span>
+							</select>
+						</th:block>
 	                    
 						<div class="form-textbox row">
 	                        <label th:for="nickname">아이디</label>

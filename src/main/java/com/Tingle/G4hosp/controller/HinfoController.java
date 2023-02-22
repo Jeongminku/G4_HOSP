@@ -43,7 +43,7 @@ public class HinfoController {
 	public String viewHinfoList(HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
-		Page<HinfoListDto> list = hinfoBoardService.getMainHinfoMain(hinfoSerchDto,pageable);
+		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
 
 				
 		model.addAttribute("lists", list);
@@ -56,7 +56,7 @@ public class HinfoController {
 	//글쓰기 페이지 입장
 	@GetMapping(value = "/write")
 	public String mainview(Model model) {
-		model.addAttribute("HinfoBoardDto",new HinfoBoardDto());
+		model.addAttribute("hinfoBoardDto",new HinfoBoardDto());
 		return "HinfoPage/HinfoForm";
 	}
 	
@@ -67,8 +67,6 @@ public class HinfoController {
 			,Principal principal,Model model) {
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("HinfoBoardDto" , new HinfoBoardDto());
-			model.addAttribute("model","게시글제목 글내용을 확인해주세요");
 			return "HinfoPage/HinfoForm";
 		}
 		
@@ -83,7 +81,7 @@ public class HinfoController {
 	
 	//게시글 상세조회 그리고 조회수증가
 	@GetMapping(value={"/{hinfoId}"})
-	public String test(Model model, @PathVariable("hinfoId") Long hinfoIdId,HttpServletRequest request, HttpServletResponse response) {
+	public String hinfoview(Model model, @PathVariable("hinfoId") Long hinfoIdId,HttpServletRequest request, HttpServletResponse response) {
 		
 		 Cookie oldCookie = null;
 		 Cookie[] cookies = request.getCookies();
@@ -110,7 +108,7 @@ public class HinfoController {
 		        newCookie.setPath("/");
 		        newCookie.setMaxAge(60 * 60 * 24);
 		        response.addCookie(newCookie);
-		    }
+		    }// 쿠키를 이용한 게시글 중복조회 방지 
 		
 		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
@@ -149,7 +147,7 @@ public class HinfoController {
 		
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
-		Page<HinfoListDto> list = hinfoBoardService.getMainHinfoMain(hinfoSerchDto,pageable);
+		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
 
 				
 		model.addAttribute("lists", list);

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.Tingle.G4hosp.constant.Hosp;
 import com.Tingle.G4hosp.constant.Ward;
 
 import lombok.Getter;
@@ -37,5 +38,8 @@ public class Hospitalize {
 	
 	@Enumerated(EnumType.STRING)
 	private Ward ward;
+	
+	@Enumerated(EnumType.STRING)
+	private Hosp hosp;
 	
 }

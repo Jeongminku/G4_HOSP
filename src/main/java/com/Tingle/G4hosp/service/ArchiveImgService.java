@@ -1,5 +1,7 @@
 package com.Tingle.G4hosp.service;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
@@ -32,7 +34,7 @@ public class ArchiveImgService {
 		String imgUrl = "";
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(ImgLocation, oriImgName, file.getBytes());
-			imgUrl = "/images/item" + imgName;
+			imgUrl = "/images/item/" + imgName;
 		}
 		archiveimg.updateArchiveImg(oriImgName, imgName, imgUrl);
 		archiveImgRepository.save(archiveimg);
@@ -52,11 +54,15 @@ public class ArchiveImgService {
 		String imgUrl = "";
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(ImgLocation, oriImgName, archiveImgfile.getBytes());
-			imgUrl = "/images/item" + imgName;
+			imgUrl = "/images/item/" + imgName;
 		}
 		archiveImg.updateArchiveImg(oriImgName, imgName, imgUrl);
 		archiveImgRepository.save(archiveImg);
 		
+	}
+	
+	public List<ArchiveImg> getarchiveimglist(Archive archive){
+		return archiveImgRepository.findbyARCid(archive.getId());
 	}
 	
 }
