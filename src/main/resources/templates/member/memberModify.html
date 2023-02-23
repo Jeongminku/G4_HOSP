@@ -27,6 +27,7 @@
  			$('#profile').css('display','none');
  		}
  	}
+ 	
 	</script>
 	
 </th:block>
@@ -40,11 +41,9 @@
             <div class="sign-up-content">
                 <form action="/members/modify" method="post" enctype="multipart/form-data">
                      <div class="signup">
-                     	[[${modiMember}]]
-						<th:block th:if="${modiMember.role}==DOCTOR">
-						<p>의사만보임</p>
-							<select id="medList" name="job" th:field="*{medId}" style="display:none">
-								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}"> [[${meds.medName}]]  </span>
+						<th:block th:if="${modiMember.role.toString().equals('DOCTOR')}">
+							<select id="medList" name="medId">
+								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}" > [[${meds.medName}]]  </span>
 							</select>
 						</th:block>
 	                    <br/>

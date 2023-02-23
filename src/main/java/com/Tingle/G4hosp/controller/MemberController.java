@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.dto.MemberFormDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
+import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberImgService;
 import com.Tingle.G4hosp.service.MemberMedService;
@@ -38,7 +40,9 @@ public class MemberController {
 	private final PasswordEncoder passwordEncoder;
 	private final MedService medService;
 	private final MemberMedService memberMedService;
+	private final MedRepository medRepository;
 
+	
 	// 로그인 화면
 	@GetMapping(value = "/login")
 	public String loginMember() {
@@ -124,9 +128,14 @@ public class MemberController {
 	public String memberModify(Model model, Principal principal) {
 		String loginId = principal.getName();
 		MemberFormDto memberFormDto = new MemberFormDto();
-		model.addAttribute(memberFormDto);
+		List<Med> medlist = medRepository.findAll();
+		memberFormDto.setMed(medlist);
+		System.err.println(memberFormDto);
+		model.addAttribute("memberFormDto",memberFormDto);
+		
 		Member member = memberService.findByLoginid(loginId);
 		model.addAttribute("modiMember", member);
+		
 		
 		MemberMed memberMed = memberMedService.findMemberMed(member.getId());
 		model.addAttribute("memberMed", memberMed);
@@ -138,7 +147,6 @@ public class MemberController {
 	public String memberModify(MemberFormDto memberFormDto, Model model, Principal principal) {
 		String loginId = principal.getName();
 		memberService.updateMember(memberFormDto, loginId);
-		
 		return "member/memberLoginForm";
 	}
 }	

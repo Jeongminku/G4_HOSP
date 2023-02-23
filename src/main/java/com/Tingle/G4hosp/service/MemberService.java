@@ -56,7 +56,7 @@ public class MemberService implements UserDetailsService{
 		 memberImgService.saveMemberImg(member, file);
 		 Member doctor = memberRepository.save(member);
 		 if(memberFormDto.getMedId() != null) {
-			 Med med = medRepository.findById(Long.parseLong(memberFormDto.getMedId())).orElseThrow(EntityNotFoundException::new);
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);
 			 MemberMed memberMed = MemberMed.createMemberMed(doctor, med);
 			 memberMedRepository.save(memberMed);			 
 		 }
@@ -84,8 +84,9 @@ public class MemberService implements UserDetailsService{
 	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
 		 Member member = memberRepository.findByLoginid(loginId);
 		 if (member.getRole() == Role.DOCTOR) {
-			 MemberMed med = new MemberMed();
-
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);//med값이 나옴.
+			 MemberMed memberMed = memberMedRepository.findByMemberid(member.getId());
+			 memberMed.updateMemberMed(med);
 		 }
 		 member.updateMember(memberFormDto, passwordEncoder);
 	 }
