@@ -36,5 +36,6 @@ public class Reply extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id")
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 }

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.*;
 
@@ -35,6 +37,7 @@ public class HinfoBoard extends BaseEntity{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_nm")
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 	
 	

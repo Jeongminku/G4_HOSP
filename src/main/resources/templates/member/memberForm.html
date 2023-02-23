@@ -20,10 +20,10 @@
  	function medListEvent() {
  		var doctor = $('#doctor');
  		if(doctor.is(":checked")) {
- 			$('#medList').css('display','block');
- 			$('#profile').css('display','block');
+ 			$('.medList').css('display','inline-block');
+ 			$('#profile').css('display','inline-block');
  		} else {
- 			$('#medList').css('display','none');
+ 			$('.medList').css('display','none');
  			$('#profile').css('display','none');
  		}
  	}
@@ -52,8 +52,9 @@
 	                    </div>
 	                    <br/>
 	                    <th:block>
-							<select id="medList" name="job" th:field="*{medId}" style="display:none">
-								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}"> [[${meds.medName}]]  </span>
+		                    <span class="medList" style="display:none"> 진료과 &nbsp; &nbsp; &nbsp; </span>
+							<select class="medList" name="job" th:field="*{medId}" style="display:none">
+								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}"> [[${meds.medName}]]
 							</select>
 						</th:block>
 	                    <br/>

@@ -98,4 +98,13 @@ public class MemberService implements UserDetailsService{
 		 return memberRepository.findDocbyMid(doctorid);
 	 }
 	 
+	 public String deleteMember(Long memberId) {
+			Member member = memberRepository.getReferenceById(memberId);
+			try {
+				memberRepository.delete(member);
+				return "정상적으로 탈퇴되었습니다.";
+			} catch (Exception e) {
+				return "탈퇴하지 못하였습니다.";
+			}
+		}
 }

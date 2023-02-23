@@ -149,6 +149,15 @@ public class MemberController {
 		memberService.updateMember(memberFormDto, loginId);
 		return "member/memberLoginForm";
 	}
+	
+	@GetMapping(value= "/del/{id}")
+	public String deleteMember(Model model, @PathVariable("id") Long memberId) {
+		String delMemberMsg = memberService.deleteMember(memberId);
+		model.addAttribute("delMemberMsg", delMemberMsg);
+		SecurityContextHolder.clearContext();
+		
+		return "redirect:/";
+	}
 }	
 
 

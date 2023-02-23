@@ -2,6 +2,9 @@ package com.Tingle.G4hosp.entity;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.Tingle.G4hosp.constant.QaCategory;
 import com.Tingle.G4hosp.dto.QaBoardDto;
 
@@ -31,6 +34,7 @@ public class QaBoard {
 	
 	@JoinColumn(name = "member_nm")
 	@ManyToOne
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 	
 	public static QaBoard createQaBoard (QaBoardDto qaBoardDto, Member member) {
