@@ -2,13 +2,16 @@ package com.Tingle.G4hosp.config;
 
 import java.util.*;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.Tingle.G4hosp.dto.ChatMessageDto;
-import com.Tingle.G4hosp.dto.ChatRoomDto;
+import com.Tingle.G4hosp.entity.ChatRoom;
+import com.Tingle.G4hosp.repository.ChatRoomRepository;
 import com.Tingle.G4hosp.service.ChatService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,19 +22,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class WebSocketHandler extends TextWebSocketHandler {
-	Map<String, WebSocketSession> userSessions = new HashMap<>();
-	Map<String, List<String>> userByRoom = new HashMap<>();
 	private final ObjectMapper objectMapper;
     private final ChatService chatService;
+	private final ChatRoomRepository chatRoomRepository;
 	
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
         log.info("{}", payload);
         ChatMessageDto chatMessage = objectMapper.readValue(payload, ChatMessageDto.class);
-//        ChatRoomDto chatRoom = chatService.findRoomById(chatMessage.getRoomId());
-        ChatRoomDto chatRoom = ChatRoomDto.getChatRoomDto();
-        chatRoom.handlerActions(session, chatMessage, chatService);
+        ChatRoom connectedRoom = chatRoomRepository.findById(chatMessage.getRoomId()).orElseThrow(EntityNotFoundException::new);
+        connectedRoom.handlerActions(session, chatMessage, chatService);
     }
 	
 }

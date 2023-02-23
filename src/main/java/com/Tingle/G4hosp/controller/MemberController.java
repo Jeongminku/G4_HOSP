@@ -130,10 +130,6 @@ public class MemberController {
 	
 	@GetMapping("/myReservation")
 	public String reservationListView (Model model, Principal principal) {
-//		if(principal == null) {
-//			model.addAttribute("Error", "Need Login");
-//			return "member/memberLoginForm";
-//		}
 		try {
 			List<ReservationViewDto> viewList = reservationService.findAllReservationByMember(principal.getName());
 			model.addAttribute("NotAvail", new ArrayList<>());
