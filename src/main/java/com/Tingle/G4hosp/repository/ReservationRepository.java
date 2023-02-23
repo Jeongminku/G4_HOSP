@@ -9,4 +9,5 @@ import com.Tingle.G4hosp.entity.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 	List<Reservation> findByReservationDoctorOrderByReservationDate (Member doctor);
+	List<Reservation> findByReservationPatientOrderByReservationDate (Member patient);
 }

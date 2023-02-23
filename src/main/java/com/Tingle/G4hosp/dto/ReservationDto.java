@@ -10,5 +10,4 @@ public class ReservationDto {
 	private Long reservationPatientId;
 	private Long reservationDoctorId;
 	private String reservationDate;
-	private List<ReservationNotAvailableDto> notAvailableDay;
 }
