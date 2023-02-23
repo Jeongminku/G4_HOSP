@@ -3,6 +3,8 @@ package com.Tingle.G4hosp.entity;
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.modelmapper.ModelMapper;
 
 import lombok.*;
@@ -32,6 +34,7 @@ public class Board extends BaseEntity{
 	//Member fk
 	@JoinColumn(name = "member_id")
 	@ManyToOne
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 		
 	

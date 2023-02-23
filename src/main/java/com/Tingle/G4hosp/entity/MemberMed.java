@@ -2,6 +2,9 @@ package com.Tingle.G4hosp.entity;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.*;
 
 @Entity
@@ -17,6 +20,7 @@ public class MemberMed {
 	
 	@JoinColumn(name="member_id")
 	@OneToOne
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member memberId;
 	
 	@JoinColumn(name = "med_id")

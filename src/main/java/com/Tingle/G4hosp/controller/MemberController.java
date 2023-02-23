@@ -130,10 +130,6 @@ public class MemberController {
 	
 	@GetMapping("/myReservation")
 	public String reservationListView (Model model, Principal principal) {
-//		if(principal == null) {
-//			model.addAttribute("Error", "Need Login");
-//			return "member/memberLoginForm";
-//		}
 		try {
 			List<ReservationViewDto> viewList = reservationService.findAllReservationByMember(principal.getName());
 			model.addAttribute("NotAvail", new ArrayList<>());
@@ -168,6 +164,15 @@ public class MemberController {
 		String loginId = principal.getName();
 		memberService.updateMember(memberFormDto, loginId);
 		return "member/memberLoginForm";
+	}
+	
+	@GetMapping(value= "/del/{id}")
+	public String deleteMember(Model model, @PathVariable("id") Long memberId) {
+		String delMemberMsg = memberService.deleteMember(memberId);
+		model.addAttribute("delMemberMsg", delMemberMsg);
+		SecurityContextHolder.clearContext();
+		
+		return "redirect:/";
 	}
 }	
 

@@ -11,6 +11,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessorOrder;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 
 import lombok.Getter;
@@ -34,6 +37,7 @@ public class Archive {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id", nullable = false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 	
 	@Column(name = "doctor_name")
