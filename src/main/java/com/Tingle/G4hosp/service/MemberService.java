@@ -78,4 +78,12 @@ public class MemberService implements UserDetailsService{
 		 return memberRepository.findbtMnameandMtel(memberName, memberTel);
 	 }
 	 
+	 public List<Member> findMListbyMname(String memberName){
+		 return memberRepository.findMListbyMname(memberName);
+	 }
+	 
+	 public Member findDocbyMid(String doctorid) {
+		 return memberRepository.findDocbyMid(doctorid);
+	 }
+	 
 }

@@ -19,7 +19,13 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@Query(value = "select * from member where member.role = 'doctor' and name = :MemberName",nativeQuery = true)
 	Member findbyNameindoctor(@Param("MemberName") String membername);
 	
+	@Query(value = "select * from member where member.role = 'doctor' and member_loginid = :MID", nativeQuery = true)
+	Member findDocbyMid(@Param("MID") String doctorid);
+	
 	@Query(value = "select * from member where member.name = :MNAME and member.tel = :MTEL", nativeQuery = true)
 	Member findbtMnameandMtel(@Param("MNAME") String mname, @Param("MTEL") String mtel);
+	
+	@Query(value = "select * from member where member.role = 'client' and member.name = :MNAME",nativeQuery = true)
+	List<Member> findMListbyMname(@Param("MNAME") String mname);
 	
 }

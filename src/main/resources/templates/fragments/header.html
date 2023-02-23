@@ -43,6 +43,11 @@
 								<p>관리자 페이지</p>
                             </a>
                         </li>
+                        <li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_DOCTOR')">
+							<a href="/archive/">
+								<p>진료내역</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
 				<nav class="navbar justify-content-center">

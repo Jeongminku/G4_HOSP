@@ -39,21 +39,34 @@
 							<div class="col-md-12 viewhead"></div>
 							<div class="col-md-12 viewlineboxup"></div>
 							<div class="col-md-12 viewlinebox">
-								<span> 환자명 </span> <span> [[${patient.name}]] </span> <span>
-									나이 </span> <span> [[${age}]] </span> <span> 주요내원병명 </span> <span>
-									감기 </span> <span> 입원여부 </span> <span> [[${hospYN}]] </span>
+								<span > 환자명 </span> 
+								<span> [[${patient.name}]] </span> 
+								<span> 나이 </span> 
+								<span> [[${age}]] </span> 
+								<span> 주요내원병명 </span> 
+								<span> 감기 </span> 
+								<span> 입원여부 </span> 
+								<span> [[${hospYN}]] </span>
 							</div>
 							<div class="col-md-12 linemenu"></div>
 							<div class="col-md-12 tablemenu">
+							<input type="hidden" th:field ="*{doctorname}" th:value="${hospitalizeFormDto.Doctorname}">
 								<table class="table table-bordered">
 									<tbody>
 										<tr>
+											<th> 담당의 </th>
+											<td> [[${hospitalizeFormDto.Doctorname}]] (진료 과목 : [[${hospitalizeFormDto.Doctormed}]])</td>
 											<th scope="row">질병이름</th>
-											<td><input type="text" class="form-control inputarea" th:field = "*{symptom}"></td>
+											<td><select class="form-select" aria-label="Default select example" th:field = "*{symptom}">
+												<option th:each ="dis : ${disease}" th:value="${dis.diseaseName}"> [[${dis.diseaseName}]] </option>
+											</select>
+											</td>
 											<td>
 											  <input class="form-check-input" type="checkbox" th:field = "*{nonsymptom}">
- 									 		<label class="form-check-label" for="flexCheckDefault"> 검사목적 입원 (질병 미확인) </label>
+ 									 		<label class="form-check-label" for="flexCheckDefault"> 질병명 없음 (단순 검사, 미확인 질병) </label>
 											</td>
+										</tr>
+										<tr>
 											<th scope="row">병실 선택</th>
 											<td><select class="form-select" aria-label="Default select example" th:field = "*{ward}">
 													<option value="0" selected>병실 선택</option>
@@ -68,6 +81,7 @@
 													<option value="309">309호</option>
 													<option value="310">310호</option>
 											</select>
+											</td>
 										</tr>
 										<tr class="detailhead">
 											<td colspan="4"></td>

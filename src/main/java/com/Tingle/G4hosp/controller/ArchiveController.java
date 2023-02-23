@@ -55,6 +55,28 @@ public class ArchiveController {
 		model.addAttribute("archiveSearchDto",archiveSearchDto);
 		return "/ArchivePage/ArchiveSearch";
 	}
+	
+	// PATIENT SEARCH RESULT
+	@PostMapping(value = "/patientsearch")
+	public String patientresult(Model model, @Valid ArchiveSearchDto archiveSearchDto) {
+		List<Member> patient = memberService.findMListbyMname(archiveSearchDto.getName());
+		
+		if(patient.isEmpty()) {
+			model.addAttribute("errorMessage", "환자 이름이 조회되지 않습니다.");
+			ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
+			model.addAttribute("archiveSearchDto",archiveSearchDto1);
+			return "/ArchivePage/ArchiveSearch";
+		}
+		
+		ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
+		System.out.println("@@@@@@@@@@@@test : " + patient);
+		model.addAttribute("patientlist",patient);
+		model.addAttribute("archiveSearchDto",archiveSearchDto1);
+		
+		return "ArchivePage/ArchiveSearch";
+	}
+	
+	// OPEN ARCHIVE PAGE
 	@GetMapping(value = "/search/{id}")
 	public String searcharchive1(Model model, @PathVariable("id") Optional<Long> patientid) {
 		Member patientinfo = memberService.findByMemberid(patientid.get());
@@ -83,12 +105,12 @@ public class ArchiveController {
 		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
 		model.addAttribute("age",age);
 		
-		
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
 		model.addAttribute("patientinfo",patientinfo);
 		return "ArchivePage/ArchiveView";
 	}
+
 	@PostMapping(value = "/search")
 	public String searcharchive(Model model, @Valid ArchiveSearchDto archiveSearchDto
 			) {

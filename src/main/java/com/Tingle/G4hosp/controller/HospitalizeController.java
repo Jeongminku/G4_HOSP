@@ -1,7 +1,9 @@
 package com.Tingle.G4hosp.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,11 +21,13 @@ import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
+import com.Tingle.G4hosp.repository.DiseaseRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.ArchiveImgService;
 import com.Tingle.G4hosp.service.ArchiveService;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.HospitalizeService;
+import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
@@ -35,13 +39,16 @@ public class HospitalizeController {
 	private final MemberService memberService;
 	private final HospitalizeService hospitalizeService;
 	private final DiseaseService diseaseService;
+	private final MedService medService;
 	
 	// OPEN HOSPITALIZE PAGE
 	@GetMapping(value="/{id}")
-	public String hospitalizewritepage(Model model, @PathVariable("id") Long patientid) {
+	public String hospitalizewritepage(Model model, @PathVariable("id") Long patientid, Principal principal) {
+		String loginId = principal.getName();
+		Member doctor = memberService.findDocbyMid(loginId);
+		List<Disease> disease = diseaseService.findDiseaseListByDocId(doctor.getLoginid());
 		
 		HospitalizeFormDto hospitalizeFormDto = new HospitalizeFormDto();
-		
 		Member patient = memberService.findByMemberid(patientid);
 		
 		// CHECK PATIENT IS HOSPITALIZED OR NOT
@@ -59,8 +66,11 @@ public class HospitalizeController {
         String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
         String birth = patient.getBirth().substring(0, 4);
 		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
-		model.addAttribute("age",age);
 		
+		hospitalizeFormDto.setDoctorname(doctor.getName());
+		hospitalizeFormDto.setDoctormed(medService.findMedbyDocid(doctor.getId()).getMedName());
+		
+		model.addAttribute("disease",disease);
 		model.addAttribute("hospitalizeFormDto",hospitalizeFormDto);
 		model.addAttribute("patient",patient);
 		
