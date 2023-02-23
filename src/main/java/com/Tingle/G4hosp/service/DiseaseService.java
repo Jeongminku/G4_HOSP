@@ -61,4 +61,9 @@ public class DiseaseService {
 	public Disease findDiseasebyArcid(Long Archiveid) {
 		return diseaseRepository.findDiseasebyArcid(Archiveid);
 	}
+	
+	public List<Disease> findDiseaseListByDocId(String docloginid){
+		return diseaseRepository.findDiseaseListByDocId(docloginid);
+	}
+	
 }

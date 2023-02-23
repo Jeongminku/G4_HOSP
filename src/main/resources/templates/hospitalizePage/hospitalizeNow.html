@@ -20,6 +20,35 @@
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
 	<style>
+	.wrap {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
+}
+
+.viewhead{
+	border-bottom: 5px solid; 
+}
+
+.viewbody{
+	margin-top : 20px;
+	border: 1px solid;
+}
+
+.linemenu{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.goback{
+	border: 3px solid;
+	width: 100%;
+}
+
+
 </style>
 </th:block>
 </head>
@@ -31,11 +60,10 @@
 					<div class="col-md-10 headwrap">
 
 						<div class="col-md-12 viewhead">
-							<h1>[[${patient.name}]]님 입원 상세 내용</h1>
+							<h1>[[${patient.name}]]님 입원 내역</h1>
 						</div>
-
+						<div class="col-md-12 viewbody">
 						<form enctype="multipart/form-data">
-							<div class="col-md-12 viewhead"></div>
 							<div class="col-md-12 viewlineboxup"></div>
 							<div class="col-md-12 viewlinebox">
 							</div>
@@ -46,31 +74,34 @@
 										<tr>
 											<th scope="row">환자명</th>
 											<td>[[${patient.name}]]</td>
+											<th scope="row">담당의</th>
+											<td>[[${hospitalize.doctor}]] (담당과) </td>
+
+										</tr>
+										<tr>
 											<th scope="row">나이</th>
 											<td>[[${age}]]</td>
-										</tr>
-										<tr>
 											<th scope="row">입원 사유</th>
 											<td>[[${disease}]] </td>
-											<th scope="row">입원일</th>
-											<td>[[${hospitalize.hospitalizeddate}]] </td>
+
 										</tr>
 										<tr>
-											<th scope="row">입원 병실</th>
+											<th scope="row">병실</th>
 											<td>[[${hospitalize.ward}]]호 </td>
-											<th scope="row"></th>
-											<td> </td>
+											<th scope="row">입원일</th>
+											<td>[[${hospitalize.hospitalizeddate}]] </td>
 										</tr>
 
 										<tr>
 										</tr>
 									</tbody>
 								</table>
-								<div class="col-md-12 linemenu">
-								<button type="submit">뒤로가기</button>
-								</div>
 							</div>
 						</form>
+						</div>
+								<div class="col-md-12 linemenu">
+								<a class="goback" th:href = "'/archive/search/'+${patient.id}" >뒤로가기</a>
+								</div>
 					</div>
 				</div>
 			</div>

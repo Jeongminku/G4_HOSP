@@ -22,5 +22,9 @@ public class HospitalizeFormDto {
 	
 	private Hosp hosp;
 	
+	private String doctorname;
+	
+	private String doctormed;
+	
 	
 }

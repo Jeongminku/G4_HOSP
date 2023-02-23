@@ -39,12 +39,16 @@
 	<style>
 .wrap {
 	width: 80%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
 }
 .viewhead{
 	text-align: center;
-}
-.viewlineboxup {
-	border-top: 5px solid black;
+	border-bottom: 3px solid black;
+	height: 10%;
 }
 
 .viewlinebox {
@@ -64,7 +68,8 @@
 }
 
 .inputarea{
-	height: 100%
+	height: 100%;
+	width: 70%;
 }
 
 .detail{
@@ -90,7 +95,6 @@
 					</div>
 					
 					<form th:action="'/archive/write/'+${patient.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">		
-					<div class="col-md-12 viewhead"></div>
 					<div class="col-md-12 viewlineboxup"></div>
 					<div class="col-md-12 viewlinebox">
 					</div>
@@ -132,7 +136,7 @@
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<button type="submit"> 작성 완료 </button>
+						<button type="submit" style="height: 30%"> 작성 완료 </button>
 					</div>
 					</div>
 					</form>

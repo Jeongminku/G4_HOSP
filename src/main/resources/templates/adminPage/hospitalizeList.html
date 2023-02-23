@@ -19,11 +19,18 @@
 		<th>성함</th>
 		<th>생년월일</th>
 		<th>전화번호</th>
+		<th>병명</th>		
+		<th>입원호실</th>
+		<th>입원날짜</th>
+		
 	<th:block th:each="members : ${members}">
 		<tr>
-			<td>[[${members.name}]] &nbsp;&nbsp;</td>
-			<td>[[${members.birth}]] &nbsp;&nbsp;</td>
-			<td>[[${members.tel}]] &nbsp;&nbsp;</td>
+			<td>[[${members.member.name}]] &nbsp;&nbsp;</td>
+			<td>[[${members.member.birth}]] &nbsp;&nbsp;</td>
+			<td>[[${members.member.tel}]] &nbsp;&nbsp;</td>
+			<td>[[${members.member.tel}]] &nbsp;&nbsp;</td>
+			<td>[[${members.ward}]] &nbsp;&nbsp;</td>			
+			<td>[[${members.hospitalizeddate}]] &nbsp;&nbsp;</td>			
 		</tr>
 	
 	</table>

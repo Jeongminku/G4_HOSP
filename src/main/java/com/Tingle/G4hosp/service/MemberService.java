@@ -89,4 +89,12 @@ public class MemberService implements UserDetailsService{
 		 }
 		 member.updateMember(memberFormDto, passwordEncoder);
 	 }
+	 public List<Member> findMListbyMname(String memberName){
+		 return memberRepository.findMListbyMname(memberName);
+	 }
+	 
+	 public Member findDocbyMid(String doctorid) {
+		 return memberRepository.findDocbyMid(doctorid);
+	 }
+	 
 }

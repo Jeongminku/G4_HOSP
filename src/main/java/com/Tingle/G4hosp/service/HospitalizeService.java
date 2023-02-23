@@ -46,11 +46,11 @@ public class HospitalizeService {
 		
 		if(hospitalizeFormDto.getNonsymptom() == true) {
 			hosp = Hosp.N;
-			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now);
+			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, hospitalizeFormDto.getDoctorname());
 			hospitalizeRepository.save(hospitalize);
 		}else {
 			hosp = Hosp.Y;
-			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now);
+			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, hospitalizeFormDto.getDoctorname());
 			hospitalizeRepository.save(hospitalize);
 			disease = diseaseRepository.findDiseasebyDiseasename(hospitalizeFormDto.getSymptom());
 			hospitalizeDisease = HospitalizeDisease.createHospitalize(disease, hospitalize);

@@ -51,6 +51,7 @@ public class HinfoController {
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		
 		return "HinfoPage/hinfoMain";
+		
 	}
 	
 	//글쓰기 페이지 입장
@@ -122,7 +123,7 @@ public class HinfoController {
 	@GetMapping("/updatepage/{hinfoId}")
 	public String HinfoUpdateForm(@PathVariable("hinfoId") Long hinfoIdId,Model model) {
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
-		model.addAttribute("HinfoBoardDto",hinfoBoardDto);
+		model.addAttribute("hinfoBoardDto",hinfoBoardDto);
 		return "HinfoPage/HinfoForm";
 	}
 	
