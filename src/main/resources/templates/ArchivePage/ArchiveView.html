@@ -77,32 +77,41 @@
 					<div class="col-md-10 headwrap">
 					
 					<div class="col-md-12 viewhead">
-						<h1>환자 진료 내역</h1>
+						<h1> [[${patientinfo.name}]]님 진료 내역</h1>
 					</div>
 					<div class="col-md-12 viewhead"></div>
 					<div class="col-md-12 linemenu">
 						<a th:href="'/archive/write/'+${patientinfo.id}"> 신규작성 </a>
+						<a th:if ="${hospYN} == N" th:href="'/hospitalize/'+${patientinfo.id}"> 입원수속 </a>
+						<a th:if ="${hospYN} == Y" th:href="'/hospitalize/view/'+${patientinfo.id}"> 입원정보확인 </a>
+						<a th:if ="${hospYN} == Y" th:href="'/hospitalize/delete/'+${patientinfo.id}"> 퇴원수속 </a>
 					</div>
 					<div class="col-md-12 viewlineboxup"></div>
 					<div class="col-md-12 viewlinebox">
-						<span> 환자명 </span> <span> [[${patientinfo.name}]] </span> <span> 나이 </span> <span>20
-						</span> <span> 주요내원병명 </span> <span> 감기 </span> <span> 입원여부 </span> <span>Y
-						</span>
+								<span> 환자명 </span> <span> [[${patientinfo.name}]] </span> <span>
+									나이 </span> <span> [[${age}]] </span>
+								 <span> 입원여부 </span> <span> [[${hospYN}]] </span>
 					</div>
 					<div class="col-md-12 tablemenu" th:each="archive : ${ArchiveList}">
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<th scope="row">진료번호</th>
+									<th scope="row">진료내역번호</th>
 									<td>[[${archive.id}]]</td>
-									<th scope="row">내원날짜</th>
-									<td>[[${archive.getRegDatetime()}]]</td>
+									<th scope="row">진료일</th>
+									<td>[[${archive.ArchiveCreatedtime}]]</td>
 								</tr>
 								<tr>
 									<th scope="row">질병코드</th>
 									<td>코드 들어간다</td>
+									<th scope="row">질병명</th>
+									<td>코드 들어간다</td>
+								</tr>
+								<tr>
 									<th scope="row">담당의</th>
 									<td>[[${archive.doctorname}]]</td>
+									<th th:if = "archive.ArchiveModifiedtime != null" scope="row">차트 수정일</th>
+									<td th:if = "archive.ArchiveModifiedtime != null" >[[${archive.ArchiveModifiedtime}]]</td>
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">

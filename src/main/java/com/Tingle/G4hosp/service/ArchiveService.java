@@ -1,5 +1,8 @@
 package com.Tingle.G4hosp.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +46,8 @@ public class ArchiveService {
 	// CREATE & SAVE NEW ARCHIVE
 	public Long saveArchive(ArchiveFormDto archiveFormDto, List<MultipartFile> archiveImgFileList,
 			Optional<Long> patientid) throws Exception {
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+ 		
 		// SELECT MEMBER OBJECT 
 		// (FIND PATIENT BY OPTIONAL PATIENTID)
 		// (FIND DOCTOR BY NAME - USING DTO's DOCTOR NAME)
@@ -53,7 +58,7 @@ public class ArchiveService {
 		Member docinfo = memberRepository.findbyNameindoctor(archiveFormDto.getDoctorname());
 		
 		// CREATE ARCHIVE BY MEMBER OBJECT & SAVE ARCHIVE
-		Archive archive = Archive.createArchive(docinfo, patientinfo, archiveFormDto);
+		Archive archive = Archive.createArchive(docinfo, patientinfo, archiveFormDto, now);
 		archiveRepository.save(archive);
 		
 		// CREATE ARCHIVE_DISEASE OBJECT BY ARCHIVE, DISEASE(USING ARCHIVEFORMDTO) OBJECT
@@ -86,12 +91,11 @@ public class ArchiveService {
 		Archive archive = archiveRepository.getReferenceById(arcid);
 		List<ArchiveImg> archiveImglist = archiveImgRepository.findbyARCid(arcid);
 		
-		System.out.println("archiveImglist test : " + archiveImglist);
-		System.out.println("archiveImglist size test : " + archiveImglist.size());
-		System.out.println("archiveImgFileList test : " + archiveImgFileList);
+		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
 		
 		//UPDATE ARCHIVE & ARCHIVE IMG
-		archive.updateArchive(docinfo, archiveFormDto);
+		archive.updateArchive(docinfo, archiveFormDto, now);
 		
 		if(archiveImglist.size() == 0) {
 			for(int i=0; i<archiveImgFileList.size(); i++) {

@@ -15,18 +15,21 @@
                      <div class="qaBroadUp">
 	                    <div class="form-radio">               	
 	             			<p>카테고리 설정</p>
+	             		<br/>
 	                        <input type="radio" name="category" value="PAY" id="pay" checked="checked"/>
 	                        <label for="pay">결제</label>
 	
 	                        <input type="radio" name="category" value="HSPDSC" id="hspdsc" onclick="broadInfoEvent()" />
 	                        <label for="hspdsc">입/퇴원</label>
 	                    </div>
-	                    
+	                    <br/>
 						<div class="form-textbox row">
-	                        <label th:for="title">자주묻는 질문</label>
+						    <label th:for="title">자주묻는 질문</label>
 	                        <input type="text" th:field="*{title}" class="form-control" placeholder="자주묻는 질문 Q&A" style="padding-left: 100px;" />
 	                    </div>
-	
+						
+						<br/>
+	                    
 	                    <div class="form-textbox row">
 	                        <label th:for="content">질문 답변</label>
 	                        <textarea class="form-control" th:field="*{content}" placeholder = "답변을 작성해주세요" style="padding-left: 100px; border-radius:inherit;"></textarea>

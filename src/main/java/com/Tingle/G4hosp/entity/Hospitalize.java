@@ -36,10 +36,24 @@ public class Hospitalize {
 	@JoinColumn(name = "member_id")
 	private Member member;
 	
-	@Enumerated(EnumType.STRING)
-	private Ward ward;
+	private String ward;
 	
 	@Enumerated(EnumType.STRING)
-	private Hosp hosp;
+	private Hosp hospYN;
+
+	@Enumerated(EnumType.STRING)
+	private Hosp hasdisease;
+	
+	private String hospitalizeddate;
+	
+	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate) {
+		Hospitalize hos = new Hospitalize();
+		hos.setMember(member);
+		hos.setWard(ward);
+		hos.setHospYN(Hosp.Y);
+		hos.setHasdisease(hosp);
+		hos.setHospitalizeddate(nowdate);
+		return hos;
+	}
 	
 }
