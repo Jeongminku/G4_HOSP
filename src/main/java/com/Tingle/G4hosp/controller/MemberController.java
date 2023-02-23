@@ -1,14 +1,18 @@
 package com.Tingle.G4hosp.controller;
 
+import java.security.Principal;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Tingle.G4hosp.dto.MemberFormDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberImgService;
+import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +37,7 @@ public class MemberController {
 	private final MemberImgService memberImgService;
 	private final PasswordEncoder passwordEncoder;
 	private final MedService medService;
+	private final MemberMedService memberMedService;
 
 	// 로그인 화면
 	@GetMapping(value = "/login")
@@ -50,22 +57,15 @@ public class MemberController {
 	public String memberForm(Model model) {
 		MemberFormDto dto = new MemberFormDto();
 		dto.setMed(medService.getMedList());
-		System.err.println(dto);
 		model.addAttribute("memberFormDto", dto);
-		
-//		List<Med> meds = medService.getMedList();
-//		System.out.println(meds);
-//		model.addAttribute("meds", meds);
-		
 		return "member/memberForm";
-		
 	}
 
 	// 회원가입 버튼 클릭
 	@PostMapping(value = "/new")
 	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
 			@RequestParam("profileImg") MultipartFile file) {
-		System.err.println(memberFormDto);
+		System.err.println(memberFormDto.getMedId());
 		if (bindingResult.hasErrors()) {
 			return "member/memberForm";
 		}
@@ -120,4 +120,27 @@ public class MemberController {
 		return "member/memberFindIdResult";
 	}
 
-}
+	@GetMapping(value = "/modify")
+	public String memberModify(Model model, Principal principal) {
+		String loginId = principal.getName();
+		MemberFormDto memberFormDto = new MemberFormDto();
+		model.addAttribute(memberFormDto);
+		Member member = memberService.findByLoginid(loginId);
+		model.addAttribute("modiMember", member);
+		
+		MemberMed memberMed = memberMedService.findMemberMed(member.getId());
+		model.addAttribute("memberMed", memberMed);
+		
+		return "member/memberModify";
+	}
+	
+	@PostMapping(value="/modify")
+	public String memberModify(MemberFormDto memberFormDto, Model model, Principal principal) {
+		String loginId = principal.getName();
+		memberService.updateMember(memberFormDto, loginId);
+		
+		return "member/memberLoginForm";
+	}
+}	
+
+

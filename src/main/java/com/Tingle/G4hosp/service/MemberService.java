@@ -1,10 +1,13 @@
 package com.Tingle.G4hosp.service;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,7 +60,7 @@ public class MemberService implements UserDetailsService{
 			 MemberMed memberMed = MemberMed.createMemberMed(doctor, med);
 			 memberMedRepository.save(memberMed);			 
 		 }
-		 System.out.println(member);
+		 //System.out.println(member);
 		 return doctor;
 	 }
 
@@ -76,6 +79,22 @@ public class MemberService implements UserDetailsService{
 	
 	 public Member findByMnameMtel(String memberName, String memberTel) {
 		 return memberRepository.findbtMnameandMtel(memberName, memberTel);
+	 }
+	 
+	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
+		 Member member = memberRepository.findByLoginid(loginId);
+		 if (member.getRole() == Role.DOCTOR) {
+			 MemberMed med = new MemberMed();
+
+		 }
+		 member.updateMember(memberFormDto, passwordEncoder);
+	 }
+	 public List<Member> findMListbyMname(String memberName){
+		 return memberRepository.findMListbyMname(memberName);
+	 }
+	 
+	 public Member findDocbyMid(String doctorid) {
+		 return memberRepository.findDocbyMid(doctorid);
 	 }
 	 
 }

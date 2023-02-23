@@ -29,4 +29,8 @@ public class MemberMed {
 		memberMed.setMedId(med);
 		return memberMed;
 	}
+	
+	public void updateMemberMed(Med medId) {
+		this.medId = medId;
+	}
 }

@@ -42,17 +42,21 @@ public class Hospitalize {
 	private Hosp hospYN;
 
 	@Enumerated(EnumType.STRING)
-	private Hosp hasdisease;
+	private Hosp hasdisease; 
 	
+	//입원날짜
 	private String hospitalizeddate;
 	
-	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate) {
+	private String doctor;
+	
+	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate, String docname) {
 		Hospitalize hos = new Hospitalize();
 		hos.setMember(member);
 		hos.setWard(ward);
 		hos.setHospYN(Hosp.Y);
 		hos.setHasdisease(hosp);
 		hos.setHospitalizeddate(nowdate);
+		hos.setDoctor(docname);
 		return hos;
 	}
 	
