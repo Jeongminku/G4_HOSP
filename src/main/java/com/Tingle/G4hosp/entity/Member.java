@@ -82,8 +82,12 @@ public class Member {
 	}
 	
 	public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
-		this.name = memberFormDto.getName();
-		String pwd = passwordEncoder.encode(memberFormDto.getPwd());
-		this.pwd = pwd;
+		if(memberFormDto.getPwd() != null) {
+			String pwd = passwordEncoder.encode(memberFormDto.getPwd());
+			this.pwd = pwd;			
+		}
+		if(memberFormDto.getTel() != null) {
+			this.tel = memberFormDto.getTel();			
+		}
 	}
 }

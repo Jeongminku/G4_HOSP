@@ -49,8 +49,7 @@ public class MemberFormDto {
 	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
-	 public Member createMember() {
-	 	return modelMapper.map(this, Member.class);
-	 }
-	 
+	public Member createMember() {
+		return modelMapper.map(this, Member.class);
+	}
 }

@@ -44,6 +44,7 @@ public class Hospitalize {
 	@Enumerated(EnumType.STRING)
 	private Hosp hasdisease;
 	
+	//입원날짜
 	private String hospitalizeddate;
 	
 	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate) {

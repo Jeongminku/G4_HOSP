@@ -14,6 +14,8 @@ public interface HospitalizeRepository extends JpaRepository<Hospitalize, Long>{
 	@Query(value = "select * from hospitalize a join member b on a.member_id = b.member_id where a.hospyn = 'Y'" , nativeQuery = true)
 	List<Hospitalize> FindHosListByHosStatus ();
 	
+	
+	
 	@Query(value = "select * from hospitalize a where a.member_id = :MEMID", nativeQuery = true)
 	Hospitalize FindHosbymemid(@Param("MEMID") Long memid);
 	

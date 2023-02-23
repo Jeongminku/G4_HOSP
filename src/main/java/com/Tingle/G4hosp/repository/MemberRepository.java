@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long>{
@@ -21,5 +22,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	
 	@Query(value = "select * from member where member.name = :MNAME and member.tel = :MTEL", nativeQuery = true)
 	Member findbtMnameandMtel(@Param("MNAME") String mname, @Param("MTEL") String mtel);
+	
+	//입원상태인 환자의 정보 가져오기.
+	@Query(value = "select * from member b join hospitalize a on b.member_id = a.member_id where a.hospyn = 'Y'" , nativeQuery = true)
+	List<Member> FindHosMemListByHosStatus ();
 	
 }
