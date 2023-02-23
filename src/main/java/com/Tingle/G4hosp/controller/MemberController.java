@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.controller;
 
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class MemberController {
 	@PostMapping(value = "/new")
 	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
 			@RequestParam("profileImg") MultipartFile file) {
-		System.err.println(memberFormDto.getMedId());
+		//System.err.println(memberFormDto.getMedId());
 		if (bindingResult.hasErrors()) {
 			return "member/memberForm";
 		}
@@ -143,13 +144,16 @@ public class MemberController {
 	@GetMapping(value = "/modify")
 	public String memberModify(Model model, Principal principal) {
 		String loginId = principal.getName();
-		MemberFormDto memberFormDto = new MemberFormDto();
-		List<Med> medlist = medRepository.findAll();
-		memberFormDto.setMed(medlist);
-		System.err.println(memberFormDto);
-		model.addAttribute("memberFormDto",memberFormDto);
-		
 		Member member = memberService.findByLoginid(loginId);
+		Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
+		
+		MemberFormDto memberFormDto = new MemberFormDto();
+		if(med != null) {
+			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
+			memberFormDto.setMed(medlist);			
+		}
+
+		model.addAttribute("memberFormDto",memberFormDto);
 		model.addAttribute("modiMember", member);
 		
 		
@@ -170,6 +174,7 @@ public class MemberController {
 	public String deleteMember(Model model, @PathVariable("id") Long memberId) {
 		String delMemberMsg = memberService.deleteMember(memberId);
 		model.addAttribute("delMemberMsg", delMemberMsg);
+		System.err.println(delMemberMsg);
 		SecurityContextHolder.clearContext();
 		
 		return "redirect:/";

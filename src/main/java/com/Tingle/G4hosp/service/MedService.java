@@ -42,6 +42,10 @@ public class MedService {
 		return medRepository.findAll();
 	}
 
+	public List<Med> getMedListNotMyMed(Long medId) {
+		return medRepository.getMedListNotMyMed(medId);
+	}
+	
 	public Med findMedbyDocid(Long doctorid) {
 		return medRepository.findMedbyDocid(doctorid);
 	}

@@ -11,11 +11,11 @@
 <script th:inline="javascript">  
 	$(document).ready(function(){
     	var delMemberMsg = [[${delMemberMsg}]]
-    	console.log(delMemberMsg);
     	if(delMemberMsg != null){
         	alert(delMemberMsg);
+        	location.href="/"
     	}
-	});
+	}); //작동안함
 
 	$(function(){
 		$('.delMember').click(function(){
@@ -41,6 +41,7 @@
 						<th:block th:if="${modiMember.role.toString().equals('DOCTOR')}">
 							<span> 진료과 &nbsp; &nbsp; &nbsp; </span>
 							<select id="medList" name="medId">
+								<option th:value="${memberMed.medId.medId}">[[${memberMed.medId.medName}]]</option>
 								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}" > [[${meds.medName}]]
 							</select>
 						</th:block>
