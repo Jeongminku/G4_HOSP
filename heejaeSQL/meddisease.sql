@@ -10,7 +10,10 @@ drop table disease;
 
 select * from member;
 select * from med;
+select * from membermed;
 select * from disease;
+select * from hospitalize_disease;
+select * from hospitalize;
 
 insert into med values(1, '저희는 건강한 눈과 가치 있는 생활을 많은 사람들이 누릴 수 있도록 항상 노력해 왔습니다.
 3명의 교수진과 7명의 안과 간호사 및 3명의 전문기사가 각 환자에 따라 각 분야에 맞는

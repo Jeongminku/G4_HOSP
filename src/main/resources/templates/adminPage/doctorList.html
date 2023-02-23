@@ -20,18 +20,18 @@
       <th scope="col">성함</th>
       <th scope="col">생년월일</th>
       <th scope="col">전화번호</th>
-      <th scope="col">담당진료과</th>
+      <th scope="col">담당진료과(미구현)</th>
     </tr>
-  </thead>
+  </thead><hr>
   
-  <th:block th:each="members : ${members}">
-  
+  <th:block th:each="memberMeds : ${memberMeds}">
   	<tbody>
     <tr>
-      <td>[[${members.name}]]</td>
-      <td>[[${members.birth}]]</td>
-      <td>[[${members.tel}]]</td>
-      <td>[[${members.tel}]]</td>
+      <td>[[${memberMeds.memberId.name}]]</td>
+      <td>[[${memberMeds.memberId.birth}]]</td>
+      <td>[[${memberMeds.memberId.tel}]]</td>
+      <td>[[${memberMeds.medId.medName}]]</td>
+      <th>[[${memberMeds.memberId.role}]]</th>
     </tr>
   </tbody>
 </table>
