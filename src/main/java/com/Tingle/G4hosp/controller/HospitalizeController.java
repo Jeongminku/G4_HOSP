@@ -19,9 +19,11 @@ import com.Tingle.G4hosp.dto.ArchiveSearchDto;
 import com.Tingle.G4hosp.dto.HospitalizeFormDto;
 import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.Hospitalize;
+import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
 import com.Tingle.G4hosp.repository.DiseaseRepository;
+import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.ArchiveImgService;
 import com.Tingle.G4hosp.service.ArchiveService;
@@ -40,6 +42,8 @@ public class HospitalizeController {
 	private final HospitalizeService hospitalizeService;
 	private final DiseaseService diseaseService;
 	private final MedService medService;
+	
+	private final MedRepository medRepository;
 	
 	// OPEN HOSPITALIZE PAGE
 	@GetMapping(value="/{id}")
@@ -101,8 +105,11 @@ public class HospitalizeController {
 		String disease;
 		if(hospitalize.getHasdisease().equals(Hosp.Y)) {
 			disease = diseaseService.findDiseasebyHospMemid(hospitalize.getMember().getId()).getDiseaseName();	
+			Med med = medRepository.getReferenceById(diseaseService.findDiseasebyDiseasename(disease).getMed().getMedId());
+			model.addAttribute("med",med);
 		}else {
 			disease = "질병없음";
+			hospitalize.setDoctor("담당 의사 미지정");
 		}
 		
 		// CALCULATE AGE BY MEMBER BIRTH
@@ -110,6 +117,8 @@ public class HospitalizeController {
         String birth = patient.getBirth().substring(0, 4);
 		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
 		model.addAttribute("age",age);
+		
+		
 		
 		model.addAttribute("hospitalize",hospitalize);
 		model.addAttribute("patient",patient);

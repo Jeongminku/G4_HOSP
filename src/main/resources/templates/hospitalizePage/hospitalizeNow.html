@@ -75,7 +75,7 @@
 											<th scope="row">환자명</th>
 											<td>[[${patient.name}]]</td>
 											<th scope="row">담당의</th>
-											<td>[[${hospitalize.doctor}]] (담당과) </td>
+											<td th:if="${med}">[[${hospitalize.doctor}]] ([[${med.medName}]]) </td>
 
 										</tr>
 										<tr>
