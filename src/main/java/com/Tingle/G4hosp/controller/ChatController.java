@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.Tingle.G4hosp.dto.ChatMessageDto;
-import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.service.ChatService;
+import com.Tingle.G4hosp.service.MedService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,19 +28,20 @@ import lombok.RequiredArgsConstructor;
 public class ChatController {
 	
     private final ChatService chatService;
+    private final MedService medService;
 
     @PostMapping
     public String createRoom(@RequestParam("roomName") String name, Model model) {
 //    	model.addAttribute("RoomDto", chatService.createRoom(name));
 //    	System.err.println(chatService.createRoom(name));
-        return "ReservationPage/WebChatTesting";
+        return "ChatPage/ChatRoomSelect";
     }
 
     @GetMapping
     public String findAllRoom(Model model, Principal principal) {
-//    	List<ChatRoomDto> allRooms = chatService.findAllRoom();
-//    	model.addAttribute("allRooms", allRooms);
-        return "ReservationPage/WebChatTesting";
+    	model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
+    	model.addAttribute("AllMedList", medService.findAllMedListToMap());
+        return "ChatPage/ChatRoomSelect";
     }
     
 //    @PostMapping("/send")

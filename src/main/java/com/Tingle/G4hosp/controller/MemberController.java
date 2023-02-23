@@ -1,6 +1,7 @@
 package com.Tingle.G4hosp.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.dto.MemberFormDto;
+import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
@@ -28,6 +30,7 @@ import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberImgService;
 import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
+import com.Tingle.G4hosp.service.ReservationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +42,7 @@ public class MemberController {
 	private final MemberImgService memberImgService;
 	private final PasswordEncoder passwordEncoder;
 	private final MedService medService;
+	private final ReservationService reservationService;
 	private final MemberMedService memberMedService;
 	private final MedRepository medRepository;
 
@@ -122,6 +126,18 @@ public class MemberController {
 		model.addAttribute("findID", memberFindID);
 		System.out.println(memberFindID.getLoginid());
 		return "member/memberFindIdResult";
+	}
+	
+	@GetMapping("/myReservation")
+	public String reservationListView (Model model, Principal principal) {
+		try {
+			List<ReservationViewDto> viewList = reservationService.findAllReservationByMember(principal.getName());
+			model.addAttribute("NotAvail", new ArrayList<>());
+			model.addAttribute("ViewList", viewList);
+		} catch (Exception e) {
+			model.addAttribute("Error", e.getMessage());
+		}
+		return "ReservationPage/ViewReservation";
 	}
 
 	@GetMapping(value = "/modify")
