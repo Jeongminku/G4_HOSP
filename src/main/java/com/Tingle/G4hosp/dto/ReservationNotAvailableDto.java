@@ -2,7 +2,7 @@ package com.Tingle.G4hosp.dto;
 
 import java.util.*;
 
-import org.modelmapper.ModelMapper;
+//import org.modelmapper.ModelMapper;
 
 import com.Tingle.G4hosp.entity.ReservationNotAvailable;
 
@@ -12,7 +12,7 @@ import lombok.Data;
 public class ReservationNotAvailableDto {
 	private String notAvailableDay;
 	
-	private static ModelMapper modelMapper;
+//	private static ModelMapper modelMapper;
 	public static List<ReservationNotAvailableDto> createResreAvailableDto (List<ReservationNotAvailable> reservationNotAvailable) {
 		List<ReservationNotAvailableDto> ReservationNotAvailableDtoList = new ArrayList<>();
 		for(ReservationNotAvailable notAvailable : reservationNotAvailable) {

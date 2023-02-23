@@ -52,6 +52,11 @@
                 </nav>
 				<nav class="navbar justify-content-center">
 					<ul class="d-flex">
+						<li class="nav-item w-100" sec:authorize="hasRole('CLIENT')">
+							<a href="/members/login">
+								<p>나의 예약</p>
+							</a>
+						</li>
 						<li class="nav-item w-100" sec:authorize="isAnonymous()">
 							<a href="/members/login">
 								<p>로그인</p>

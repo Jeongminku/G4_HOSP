@@ -46,4 +46,5 @@ public class MedService {
 		return medRepository.findMedbyDocid(doctorid);
 	}
 	
+	
 }

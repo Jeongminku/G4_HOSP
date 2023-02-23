@@ -45,7 +45,7 @@ public class MemberFormDto {
 
 	private List<Med> med;
 	
-	private String medId;
+	private Long medId;
 	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
