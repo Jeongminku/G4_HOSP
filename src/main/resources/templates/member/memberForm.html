@@ -54,6 +54,7 @@
 	                    <th:block>
 		                    <span class="medList" style="display:none"> 진료과 &nbsp; &nbsp; &nbsp; </span>
 							<select class="medList" name="job" th:field="*{medId}" style="display:none">
+								<option hidden="hidden" selected="selected" value="">==진료과를 선택해주세요==</option>
 								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}"> [[${meds.medName}]]
 							</select>
 						</th:block>
