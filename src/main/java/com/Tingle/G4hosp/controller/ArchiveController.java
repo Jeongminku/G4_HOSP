@@ -1,13 +1,13 @@
 package com.Tingle.G4hosp.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,15 +22,17 @@ import com.Tingle.G4hosp.dto.ArchiveFormDto;
 import com.Tingle.G4hosp.dto.ArchiveSearchDto;
 import com.Tingle.G4hosp.entity.Archive;
 import com.Tingle.G4hosp.entity.ArchiveImg;
+import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.ArchiveImgService;
 import com.Tingle.G4hosp.service.ArchiveService;
+import com.Tingle.G4hosp.service.DiseaseService;
+import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MemberImgService;
 import com.Tingle.G4hosp.service.MemberService;
 
-import javassist.expr.NewArray;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/archive")
@@ -40,7 +42,9 @@ public class ArchiveController {
 	private final MemberService memberService;
 	private final ArchiveService archiveService;
 	private final ArchiveImgService archiveImgService;
-
+	private final HospitalizeService hospitalizeService;
+	private final DiseaseService diseaseService;
+	
 	private final ArchiveRepository archiveRepository;
 	private final MemberRepository memberRepository;
 	
@@ -51,20 +55,62 @@ public class ArchiveController {
 		model.addAttribute("archiveSearchDto",archiveSearchDto);
 		return "/ArchivePage/ArchiveSearch";
 	}
+	
+	// PATIENT SEARCH RESULT
+	@PostMapping(value = "/patientsearch")
+	public String patientresult(Model model, @Valid ArchiveSearchDto archiveSearchDto) {
+		List<Member> patient = memberService.findMListbyMname(archiveSearchDto.getName());
+		
+		if(patient.isEmpty()) {
+			model.addAttribute("errorMessage", "환자 이름이 조회되지 않습니다.");
+			ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
+			model.addAttribute("archiveSearchDto",archiveSearchDto1);
+			return "/ArchivePage/ArchiveSearch";
+		}
+		
+		ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
+		System.out.println("@@@@@@@@@@@@test : " + patient);
+		model.addAttribute("patientlist",patient);
+		model.addAttribute("archiveSearchDto",archiveSearchDto1);
+		
+		return "ArchivePage/ArchiveSearch";
+	}
+	
+	// OPEN ARCHIVE PAGE
 	@GetMapping(value = "/search/{id}")
 	public String searcharchive1(Model model, @PathVariable("id") Optional<Long> patientid) {
 		Member patientinfo = memberService.findByMemberid(patientid.get());
+		Member patient = memberService.findByMemberid(patientid.get());
 		List<Archive> AL = archiveService.returnArchive(patientinfo.getId());
 		List<List<ArchiveImg>> AIL = new ArrayList<>();
 		for(Archive A : AL) {
 			AIL.add(archiveImgService.getarchiveimglist(A));
 		}
 		
+		
+		// CHECK PATIENT IS HOSPITALIZED OR NOT
+		Hospitalize hospitalize;
+		String hospYN;
+		if(hospitalizeService.FindHosbymemid(patientid.get()) == null) {
+			hospYN = "N";
+		}else {
+			hospitalize = hospitalizeService.FindHosbymemid(patientid.get());
+			hospYN = hospitalize.getHospYN().toString();
+		}
+		model.addAttribute("hospYN",hospYN);
+		
+		// CALCULATE AGE BY MEMBER BIRTH
+        String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        String birth = patient.getBirth().substring(0, 4);
+		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
+		model.addAttribute("age",age);
+		
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
 		model.addAttribute("patientinfo",patientinfo);
 		return "ArchivePage/ArchiveView";
 	}
+
 	@PostMapping(value = "/search")
 	public String searcharchive(Model model, @Valid ArchiveSearchDto archiveSearchDto
 			) {
@@ -74,6 +120,23 @@ public class ArchiveController {
 		for(Archive A : AL) {
 			AIL.add(archiveImgService.getarchiveimglist(A));
 		}
+		
+		// CHECK PATIENT IS HOSPITALIZED OR NOT
+		Hospitalize hospitalize;
+		String hospYN;
+		if(hospitalizeService.FindHosbymemid(patientinfo.getId()) == null) {
+			hospYN = "N";
+		}else {
+			hospitalize = hospitalizeService.FindHosbymemid(patientinfo.getId());
+			hospYN = hospitalize.getHospYN().toString();
+		}
+		model.addAttribute("hospYN",hospYN);
+		
+		// CALCULATE AGE BY MEMBER BIRTH
+        String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        String birth = patientinfo.getBirth().substring(0, 4);
+		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
+		model.addAttribute("age",age);
 		
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
@@ -89,6 +152,12 @@ public class ArchiveController {
 		if(patientid.isPresent()) {
 			patient = memberRepository.getReferenceById(patientid.get());	
 		}
+		// CALCULATE AGE BY MEMBER BIRTH
+        String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        String birth = patient.getBirth().substring(0, 4);
+		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
+		model.addAttribute("age",age);
+		
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("patient", patient);
 		return "/ArchivePage/ArchiveWrite";
@@ -126,8 +195,15 @@ public class ArchiveController {
 		if(arcid.isPresent()) {
 			archive = archiveRepository.getReferenceById(arcid.get());
 		}
-		Member member = memberRepository.getReferenceById(archive.getMember().getId());
-		archiveFormDto.setId(member.getId());
+		Member patient = memberRepository.getReferenceById(archive.getMember().getId());
+		archiveFormDto.setId(patient.getId());
+		
+		// CALCULATE AGE BY MEMBER BIRTH
+        String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        String birth = patient.getBirth().substring(0, 4);
+		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
+		model.addAttribute("age",age);
+		model.addAttribute("patient",patient);
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("archive",archive);
 		return "/ArchivePage/ArchiveUpdate";

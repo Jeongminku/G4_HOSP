@@ -43,6 +43,11 @@
 								<p>관리자 페이지</p>
                             </a>
                         </li>
+                        <li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_DOCTOR')">
+							<a href="/archive/">
+								<p>진료내역</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
 				<nav class="navbar justify-content-center">
@@ -65,10 +70,21 @@
 								<p>회원가입</p>
 							</a>
 						</li>
+						<li class="nav-item w-100" sec:authorize="isAuthenticated()">
+							<a href="/members/modify">
+								<p>마이페이지</p>
+							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="isAuthenticated()">
+							<a href="/members/##">
+								<p>내 예약</p>
+							</a>
+						</li>
 					</ul>
 				</nav>
             </div>
         </div>
 	</header>
+
 </body>
 </html>

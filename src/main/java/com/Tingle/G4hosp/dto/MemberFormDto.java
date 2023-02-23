@@ -45,12 +45,11 @@ public class MemberFormDto {
 
 	private List<Med> med;
 	
-	private String medId;
+	private Long medId;
 	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
-	 public Member createMember() {
-	 	return modelMapper.map(this, Member.class);
-	 }
-	 
+	public Member createMember() {
+		return modelMapper.map(this, Member.class);
+	}
 }

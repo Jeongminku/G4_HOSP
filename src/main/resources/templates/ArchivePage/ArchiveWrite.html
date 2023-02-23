@@ -39,12 +39,16 @@
 	<style>
 .wrap {
 	width: 80%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
 }
 .viewhead{
 	text-align: center;
-}
-.viewlineboxup {
-	border-top: 5px solid black;
+	border-bottom: 3px solid black;
+	height: 10%;
 }
 
 .viewlinebox {
@@ -64,7 +68,8 @@
 }
 
 .inputarea{
-	height: 100%
+	height: 100%;
+	width: 70%;
 }
 
 .detail{
@@ -90,28 +95,21 @@
 					</div>
 					
 					<form th:action="'/archive/write/'+${patient.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">		
-					<div class="col-md-12 viewhead"></div>
 					<div class="col-md-12 viewlineboxup"></div>
 					<div class="col-md-12 viewlinebox">
-						<span> 환자명 </span> <span> [[${patient.name}]] </span> 
-						<span> 나이 </span> <span> 20 </span> 
-						<span> 주요내원병명 </span> <span> 감기 </span> 
-						<span> 입원여부 </span> <span> Y </span>
 					</div>
-					<div class="col-md-12 linemenu">
-						<button type="submit"> 작성 완료 </button>
-					</div>
+
 					<div class="col-md-12 tablemenu">
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<th scope="row">진료번호</th>
-									<td> 번호 들어간다 </td>
-									<th scope="row">내원날짜</th>
-									<td> 날짜 들어간다 </td>
+									<th scope="row">환자명</th>
+									<td><input type="text" readonly="readonly" th:value="${patient.name}" class="form-control inputarea"></td>
+									<th scope="row">나이</th>
+									<td><input type="text" readonly="readonly" th:value="${age}+세" class="form-control inputarea"></td>
 								</tr>
 								<tr>
-									<th scope="row">질병이름</th>
+									<th scope="row">질병명</th>
 									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td>
 									<th scope="row">담당의</th>
 									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>
@@ -119,7 +117,7 @@
 								<tr class="detailhead">
 									<td colspan="4">
 										<div>세부 진료 사항</div>
-										<p> <textarea class="detail" th:field = "*{detail}" placeholder="작성예시">  </textarea> </p>
+										<p> <textarea class="detail" th:field = "*{detail}" placeholder="내용을 작성해주세요">  </textarea> </p>
 											<img th:id = "preview1" th:name = "1" class="cont_img" onclick="change(this)">									
 											<img th:id = "preview2" th:name = "2" class="cont_img" onclick="change(this)">									
 											<img th:id = "preview3" th:name = "3" class="cont_img" onclick="change(this)">									
@@ -137,6 +135,9 @@
 								</tr>
 							</tbody>
 						</table>
+					<div class="col-md-12 linemenu">
+						<button type="submit" style="height: 30%"> 작성 완료 </button>
+					</div>
 					</div>
 					</form>
 					</div>

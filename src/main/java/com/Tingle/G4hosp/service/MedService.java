@@ -42,4 +42,8 @@ public class MedService {
 		return medRepository.findAll();
 	}
 
+	public Med findMedbyDocid(Long doctorid) {
+		return medRepository.findMedbyDocid(doctorid);
+	}
+	
 }

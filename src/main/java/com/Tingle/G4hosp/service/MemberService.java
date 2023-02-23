@@ -1,10 +1,13 @@
 package com.Tingle.G4hosp.service;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,11 +56,11 @@ public class MemberService implements UserDetailsService{
 		 memberImgService.saveMemberImg(member, file);
 		 Member doctor = memberRepository.save(member);
 		 if(memberFormDto.getMedId() != null) {
-			 Med med = medRepository.findById(Long.parseLong(memberFormDto.getMedId())).orElseThrow(EntityNotFoundException::new);
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);
 			 MemberMed memberMed = MemberMed.createMemberMed(doctor, med);
 			 memberMedRepository.save(memberMed);			 
 		 }
-		 System.out.println(member);
+		 //System.out.println(member);
 		 return doctor;
 	 }
 
@@ -76,6 +79,23 @@ public class MemberService implements UserDetailsService{
 	
 	 public Member findByMnameMtel(String memberName, String memberTel) {
 		 return memberRepository.findbtMnameandMtel(memberName, memberTel);
+	 }
+	 
+	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
+		 Member member = memberRepository.findByLoginid(loginId);
+		 if (member.getRole() == Role.DOCTOR) {
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);//med값이 나옴.
+			 MemberMed memberMed = memberMedRepository.findByMemberid(member.getId());
+			 memberMed.updateMemberMed(med);
+		 }
+		 member.updateMember(memberFormDto, passwordEncoder);
+	 }
+	 public List<Member> findMListbyMname(String memberName){
+		 return memberRepository.findMListbyMname(memberName);
+	 }
+	 
+	 public Member findDocbyMid(String doctorid) {
+		 return memberRepository.findDocbyMid(doctorid);
 	 }
 	 
 }

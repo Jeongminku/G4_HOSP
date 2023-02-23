@@ -24,40 +24,27 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name = "hospitalize")
-public class Hospitalize {
+@Table(name = "hospitalize_disease")
+public class HospitalizeDisease {
 
 	@Id
-	@Column(name = "hospitalize_id")
+	@Column(name = "hospitalizedisease_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+	@JoinColumn(name = "disease_id", nullable = false)
+	private Disease disease;
 	
-	private String ward;
-	
-	@Enumerated(EnumType.STRING)
-	private Hosp hospYN;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "hospitalize_id", nullable = false)
+	private Hospitalize hospitalize;
 
-	@Enumerated(EnumType.STRING)
-	private Hosp hasdisease; 
-	
-	//입원날짜
-	private String hospitalizeddate;
-	
-	private String doctor;
-	
-	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate, String docname) {
-		Hospitalize hos = new Hospitalize();
-		hos.setMember(member);
-		hos.setWard(ward);
-		hos.setHospYN(Hosp.Y);
-		hos.setHasdisease(hosp);
-		hos.setHospitalizeddate(nowdate);
-		hos.setDoctor(docname);
-		return hos;
+	public static HospitalizeDisease createHospitalize(Disease disease, Hospitalize hospitalize) {
+		HospitalizeDisease hosd = new HospitalizeDisease();
+		hosd.setDisease(disease);
+		hosd.setHospitalize(hospitalize);
+		return hosd;
 	}
 	
 }

@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.MemberFormDto;
@@ -82,8 +83,12 @@ public class Member {
 	}
 	
 	public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
-		this.name = memberFormDto.getName();
-		String pwd = passwordEncoder.encode(memberFormDto.getPwd());
-		this.pwd = pwd;
+		if(!StringUtils.equals(memberFormDto.getPwd(), "")) { //빈값이면 True -> ! false
+			String pwd = passwordEncoder.encode(memberFormDto.getPwd());
+			this.pwd = pwd;			
+		}
+		if(memberFormDto.getTel() != null) {
+			this.tel = memberFormDto.getTel();			
+		}
 	}
 }
