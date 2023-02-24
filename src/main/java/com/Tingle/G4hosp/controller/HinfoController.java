@@ -110,6 +110,7 @@ public class HinfoController {
 //		        newCookie.setMaxAge(60 * 60 * 24);
 //		        response.addCookie(newCookie);
 //		    }// 쿠키를 이용한 게시글 중복조회 방지 
+		
 		hinfoBoardService.updateViewtest(hinfoIdId);
 		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
