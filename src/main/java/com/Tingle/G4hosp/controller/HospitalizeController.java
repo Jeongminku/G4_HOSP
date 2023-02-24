@@ -74,6 +74,7 @@ public class HospitalizeController {
 		hospitalizeFormDto.setDoctorname(doctor.getName());
 		hospitalizeFormDto.setDoctormed(medService.findMedbyDocid(doctor.getId()).getMedName());
 		
+		model.addAttribute("age",age);
 		model.addAttribute("disease",disease);
 		model.addAttribute("hospitalizeFormDto",hospitalizeFormDto);
 		model.addAttribute("patient",patient);
