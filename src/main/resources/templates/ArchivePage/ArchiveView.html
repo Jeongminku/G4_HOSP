@@ -61,7 +61,7 @@
 <th:block layout:fragment="css">
 	<style>
 .wrap {
-	width: 80%;
+	width: 70%;
 	margin: 0 auto;
 }
 
@@ -75,8 +75,8 @@
 	margin-bottom: 10px;
 	height: 15%;
 	}
+	
 .viewlineboxup {
-	border-top: 5px solid black;
 }
 
 .viewlinebox {
@@ -116,6 +116,10 @@ a:hover {
 	margin-left: 5px;
 }
 
+.but{
+	height: 30px;
+	width: 80px;
+}
 
 </style>
 </th:block>
@@ -160,10 +164,7 @@ a:hover {
 									<td>[[${archive.ArchiveCreatedtime}]]</td>
 								</tr>
 								<tr>
-									<th scope="row">질병코드</th>
-									<td>코드 들어간다</td>
-									<th scope="row">질병명</th>
-									<td>코드 들어간다</td>
+									<!--질병명?  -->
 								</tr>
 								<tr>
 									<th scope="row">담당의</th>
