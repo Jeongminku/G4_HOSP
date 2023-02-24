@@ -50,7 +50,7 @@ public class HinfoController {
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		
-		return "HinfoPage/hinfoMain";
+		return "HinfoPage/HinfoMain";
 		
 	}
 	
