@@ -21,9 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 import com.Tingle.G4hosp.dto.ArchiveSearchDto;
 import com.Tingle.G4hosp.entity.Archive;
+import com.Tingle.G4hosp.entity.ArchiveDisease;
 import com.Tingle.G4hosp.entity.ArchiveImg;
+import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.repository.ArchiveDiseaseRepository;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.ArchiveImgService;
@@ -48,6 +51,7 @@ public class ArchiveController {
 	private final ArchiveRepository archiveRepository;
 	private final MemberRepository memberRepository;
 	
+	private final ArchiveDiseaseRepository archiveDiseaseRepository;
 	// SEARCH PATIENT PAGE
 	@GetMapping(value="/")
 	public String archivesearchpage(Model model) {
@@ -69,7 +73,6 @@ public class ArchiveController {
 		}
 		
 		ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
-		System.out.println("@@@@@@@@@@@@test : " + patient);
 		model.addAttribute("patientlist",patient);
 		model.addAttribute("archiveSearchDto",archiveSearchDto1);
 		
@@ -85,6 +88,7 @@ public class ArchiveController {
 		List<List<ArchiveImg>> AIL = new ArrayList<>();
 		for(Archive A : AL) {
 			AIL.add(archiveImgService.getarchiveimglist(A));
+			List<ArchiveDisease> ADR = archiveDiseaseRepository.findAll();
 		}
 		
 		
@@ -104,6 +108,7 @@ public class ArchiveController {
         String birth = patient.getBirth().substring(0, 4);
 		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
 		model.addAttribute("age",age);
+		
 		
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);

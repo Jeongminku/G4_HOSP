@@ -38,23 +38,29 @@
 <th:block layout:fragment="css">
 	<style>
 .wrap {
-	width: 80%;
+	width: 70%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
 }
 .viewhead{
 	text-align: center;
-}
-.viewlineboxup {
-	border-top: 5px solid black;
+	border-bottom: 3px solid black;
+	height: 10%;
 }
 
 .viewlinebox {
 	border: 1px solid black;
 	text-align: center;
 }
+
 .linemenu{
-	height: 100px;
+	height: 50px;
 	text-align: center;
 	display: table;
+	margin-top: 10px;
 }
 .tablemenu{
 	border: 1px solid
@@ -64,7 +70,8 @@
 }
 
 .inputarea{
-	height: 100%
+	height: 100%;
+	width: 70%;
 }
 
 .detail{
@@ -74,6 +81,11 @@
 
 .cont_img{
 	width: 15%;
+}
+
+.but{
+	height: 30px;
+	width: 80px;
 }
 </style>
 </th:block>
@@ -139,7 +151,7 @@
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<button type="submit"> 수정 완료 </button>
+						<button class="but" type="submit"> 수정 완료 </button>
 					</div>
 					</div>
 					</form>

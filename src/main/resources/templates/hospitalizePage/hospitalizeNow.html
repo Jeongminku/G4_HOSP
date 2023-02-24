@@ -21,7 +21,7 @@
 <th:block layout:fragment="css">
 	<style>
 	.wrap {
-	width: 80%;
+	width: 70%;
 	margin: 0 auto;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .viewhead{
-	border-bottom: 5px solid; 
+	border-bottom: 3px solid; 
 }
 
 .viewbody{
@@ -43,10 +43,11 @@
 	text-align: center;
 }
 
-.goback{
-	border: 3px solid;
-	width: 100%;
+.but{
+	height: 30px;
+	width: 80px;
 }
+
 
 
 </style>
@@ -100,7 +101,7 @@
 						</form>
 						</div>
 								<div class="col-md-12 linemenu">
-								<a class="goback" th:href = "'/archive/search/'+${patient.id}" >뒤로가기</a>
+								<button class="but" th:onclick = "|location.href='/archive/search/'+${patient.id}|" >뒤로가기</button>
 								</div>
 					</div>
 				</div>
