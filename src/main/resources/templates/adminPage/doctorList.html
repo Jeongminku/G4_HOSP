@@ -10,23 +10,36 @@
 
 <div layout:fragment="content">
 
-	<h1>의사 목록</h1>
+<section>
 
-	<table>
-	
-		<th>성함</th>
-		<th>생년월일</th>
-		<th>전화번호</th>
-	<th:block th:each="members : ${members}">
-		<tr>
-			<td>[[${members.name}]] &nbsp;&nbsp;</td>
-			<td>[[${members.birth}]] &nbsp;&nbsp;</td>
-			<td>[[${members.tel}]] &nbsp;&nbsp;</td>
-		</tr>
-	
-	</table>
+	<h1>의사 목록</h1><br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">성함</th>
+      <th scope="col">생년월일</th>
+      <th scope="col">전화번호</th>
+      <th scope="col">담당진료과(미구현)</th>
+    </tr>
+  </thead><hr>
+  
+  <th:block th:each="memberMeds : ${memberMeds}">
+  	<tbody>
+    <tr>
+      <td>[[${memberMeds.memberId.name}]]</td>
+      <td>[[${memberMeds.memberId.birth}]]</td>
+      <td>[[${memberMeds.memberId.tel}]]</td>
+      <td>[[${memberMeds.medId.medName}]]</td>
+      <th>[[${memberMeds.memberId.role}]]</th>
+    </tr>
+  </tbody>
+</table>
 
 	</th:block>
+
+
+</section>
 
 </div>
 

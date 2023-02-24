@@ -40,6 +40,7 @@ public class Reply extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id")
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 	
 	public void createReply(String replyContent,Board board,Member member) {

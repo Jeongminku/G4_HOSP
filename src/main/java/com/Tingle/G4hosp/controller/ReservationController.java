@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +40,7 @@ public class ReservationController {
 	
 	@GetMapping("/{doctorId}")
 	public String selectDayPage (Model model, @PathVariable("doctorId") Long doctorId) {
+		model.addAttribute("ReservationViewPatDto", reservationService.initDto(doctorId));
 		model.addAttribute("ReservationDto", new ReservationDto());
 		return "ReservationPage/SelectDate";
 	}
@@ -60,7 +64,9 @@ public class ReservationController {
 //			return "member/memberLoginForm";
 //		}
 		try {
-			List<ReservationViewDto> viewList = reservationService.findAllReservationByDoctor(principal.getName());
+			List<ReservationViewDto> viewList = reservationService.findAllReservationByMember(principal.getName());
+			List<String> notAvail = reservationNotAvailableService.findAllNotAvailByDoctor(principal.getName());
+			model.addAttribute("NotAvail", notAvail);
 			model.addAttribute("ViewList", viewList);
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
@@ -70,17 +76,25 @@ public class ReservationController {
 	
 	@GetMapping("/setNotAvailDay")
 	public String setNotAvailableDay (Model model, Principal principal) {
+		try {
+			List<String> notAvail = reservationNotAvailableService.findAllNotAvailByDoctor(principal.getName());
+			List<ReservationViewDto> viewList = reservationService.findAllReservationByMember(principal.getName());
+			model.addAttribute("NotAvail", notAvail);
+			model.addAttribute("ViewList", viewList);
+		} catch (Exception e) {
+			model.addAttribute("Error", e.getMessage());
+		}
 		return "ReservationPage/SetNotAvailableDay";
 	}
 	
 	@PostMapping("/setNotAvailDay")
 	public String setNotAvailableDayToDB (@RequestParam(name = "notAvailDate", required = false) List<String> notAvailDateList,
-										  @RequestParam("dayCheck") List<String> notAvailDayList,
+										  @RequestParam(name = "dayCheck", required = false) List<String> notAvailDayList,
 										  Principal principal, Model model) {
 		try {
 			reservationNotAvailableService.createReservationNotAvailable(principal.getName(), notAvailDateList, notAvailDayList);
 			List<String> notAvail = reservationNotAvailableService.findAllNotAvailByDoctor(principal.getName());
-			List<ReservationViewDto> viewList = reservationService.findAllReservationByDoctor(principal.getName());
+			List<ReservationViewDto> viewList = reservationService.findAllReservationByMember(principal.getName());
 			model.addAttribute("NotAvail", notAvail);
 			model.addAttribute("ViewList", viewList);
 		} catch (Exception e) {

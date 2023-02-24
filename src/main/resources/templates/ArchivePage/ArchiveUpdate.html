@@ -95,22 +95,24 @@
 					</div>
 					<div class="col-md-12 viewlineboxup"></div>
 					<div class="col-md-12 viewlinebox">
-						<span> 환자명 </span> <span> 김김김 </span> <span> 나이 </span> <span>20
-						</span> <span> 주요내원병명 </span> <span> 감기 </span> <span> 입원여부 </span> 
-						<span>Y
-						</span>
 					</div>
 					<div class="col-md-12 tablemenu">
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
-									<th scope="row">진료번호</th>
-									<td> 번호 들어간다 </td>
-									<th scope="row">내원날짜</th>
-									<td> 날짜 들어간다 </td>
+									<th scope="row">진료내역번호</th>
+									<td> [[${archive.id}]] </td>
+									<th scope="row">진료일</th>
+									<td> [[${archive.ArchiveCreatedtime}]] </td>
 								</tr>
 								<tr>
-									<th scope="row">질병이름</th>
+									<th scope="row">환자명</th>
+									<td><input type="text" readonly="readonly" th:value="${patient.name}" class="form-control inputarea"></td>
+									<th scope="row">나이</th>
+									<td><input type="text" readonly="readonly" th:value="${age}+세" class="form-control inputarea"></td>
+								</tr>								
+								<tr>
+									<th scope="row">질병병</th>
 									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td>
 									<th scope="row">담당의</th>
 									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>

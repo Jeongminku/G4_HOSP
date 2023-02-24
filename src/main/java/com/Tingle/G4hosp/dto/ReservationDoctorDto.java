@@ -17,6 +17,13 @@ public class ReservationDoctorDto {
 	private static ModelMapper mapper;
 	
 	public static ReservationDoctorDto of (Member doctor) {
-		return mapper.map(doctor, ReservationDoctorDto.class);
+		ReservationDoctorDto dto = new ReservationDoctorDto();
+		dto.setId(doctor.getId());
+		dto.setImgName(doctor.getImgName());
+		dto.setImgUrl(doctor.getImgUrl());
+		dto.setName(doctor.getName());
+		dto.setTel(doctor.getTel());
+		
+		return dto;
 	}
 }

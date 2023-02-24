@@ -11,6 +11,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessorOrder;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 
 import lombok.Getter;
@@ -23,7 +26,7 @@ import lombok.ToString;
 @ToString
 @Table (name = "archive")
 
-public class Archive extends BaseTime{
+public class Archive {
 
 	@Id
 	@Column(name = "archive_id")
@@ -34,23 +37,31 @@ public class Archive extends BaseTime{
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id", nullable = false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 	
 	@Column(name = "doctor_name")
 	private String doctorname;
 
-	public static Archive createArchive(Member doctor, Member patient, ArchiveFormDto archiveFormDto) {
+	private String ArchiveCreatedtime;
+	
+	private String ArchiveModifiedtime;
+	
+	public static Archive createArchive(Member doctor, Member patient, ArchiveFormDto archiveFormDto, String time) {
 		Archive archive = new Archive();
 		archive.setDetail(archiveFormDto.getDetail());
 		archive.setMember(patient);
 		archive.setDoctorname(doctor.getName());
+		archive.setArchiveCreatedtime(time);
+		archive.setArchiveModifiedtime(null);
 		return archive;
 	}
 	
 	// UPDATE ARCHIVE (ARCHIVE DETAIL, DOCTOR)
-	public void updateArchive(Member doctor, ArchiveFormDto archiveFormDto) {
+	public void updateArchive(Member doctor, ArchiveFormDto archiveFormDto, String time) {
 		this.detail = archiveFormDto.getDetail();
 		this.doctorname = doctor.getName();
+		this.ArchiveModifiedtime = time;
 	}
 	
 }

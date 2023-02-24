@@ -7,10 +7,12 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.ReservationDoctorDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
 import com.Tingle.G4hosp.dto.ReservationNotAvailableDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
+import com.Tingle.G4hosp.dto.ReservationViewPatDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
@@ -57,9 +59,11 @@ public class ReservationService {
 		Map<String, List<ReservationDoctorDto>> doctorListByMed = new HashMap<>();
 		List<Med> medList = medRepository.findAll();
 		for(Med med : medList) {
+			System.err.println(med);
 			List<ReservationDoctorDto> docList = new ArrayList<>();
 			List<Member> medDoctorList = memberMedRepository.findDoctorsByMed(med);
 			for(Member doctor : medDoctorList) {
+				System.err.println(doctor.getName());
 				docList.add(ReservationDoctorDto.of(doctor));
 			}
 			doctorListByMed.put(med.getMedName(), docList);
@@ -67,19 +71,21 @@ public class ReservationService {
 		return doctorListByMed;
 	}
 	
-	public ReservationDto initDto (Long doctorId) {
-		ReservationDto reservationDto = new ReservationDto();
+	public ReservationViewPatDto initDto (Long doctorId) {
 		Member doctor = memberRepository.findById(doctorId).orElseThrow(EntityNotFoundException::new);
 		List<ReservationNotAvailable> notAvailableDay = reservationNotAvailableRepository.findByDoctor(doctor);
-		List<ReservationNotAvailableDto> notAvailableDayDto = ReservationNotAvailableDto.createResreAvailableDto(notAvailableDay);
-		reservationDto.setReservationDoctorId(doctor.getId());
-		reservationDto.setNotAvailableDay(notAvailableDayDto);
-		return reservationDto;
+		List<Reservation> takenReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(doctor);
+		return ReservationViewPatDto.createReservationViewPatDto(notAvailableDay, takenReservation);
 	}
 	
-	public List<ReservationViewDto> findAllReservationByDoctor (String doctorLoginId) {
-		Member doctor = memberRepository.findByLoginid(doctorLoginId);
-		List<Reservation> allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(doctor);
+	public List<ReservationViewDto> findAllReservationByMember (String memberLoginId) {
+		Member member = memberRepository.findByLoginid(memberLoginId);
+		List<Reservation> allReservation = new ArrayList<>();
+		if(member.getRole() == Role.CLIENT) {
+			allReservation = reservationRepository.findByReservationPatientOrderByReservationDate(member);
+		} else {
+			allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(member);			
+		}
 		return ReservationViewDto.createReservationViewDtoList(allReservation);
 	}
 	

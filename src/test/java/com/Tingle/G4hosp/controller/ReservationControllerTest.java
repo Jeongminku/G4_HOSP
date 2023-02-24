@@ -126,7 +126,7 @@ class ReservationControllerTest {
 			dto.setReservationDate("2023-02-1" + i + "T12:00:00");
 			reservationService.createReservation(dto, patient.getLoginid());			
 		}
-		List<ReservationViewDto> view = reservationService.findAllReservationByDoctor(doctor.getLoginid());
+		List<ReservationViewDto> view = reservationService.findAllReservationByMember(doctor.getLoginid());
 		for(ReservationViewDto dto : view) {
 			System.err.println(dto);
 		}

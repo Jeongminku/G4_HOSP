@@ -10,12 +10,15 @@
 <body>
 	<div layout:fragment="content">
 		
+		<section>
+		
 		<ul th:each="list, status: ${lists.getContent()}">
 		 <li>글번호 : [[${list.id}]]</li>
 		 <li>글쓴이 : [[${list.member.loginid}]]</li>
 		<li> 제목 : <a th:href="'/Hinfo/' +${list.id}">[[${list.title}]]</a></li>
 		  <li th:text="작성일 + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></li>	
 		 <li>조회수 : [[${list.view}]]</li>
+		 <li><br></li>
 		</ul>
 
 		<!-- 페이징 -->
@@ -47,7 +50,9 @@
 			</ul>
 		</nav>
 		
-		<button onClick="location.href='/Hinfo/write'">글쓰기</button>
+		<button onClick="location.href='/Hinfo/write'" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_DOCTOR')">글쓰기</button>
+		
+		</section>
 		
 	</div>
 </body>

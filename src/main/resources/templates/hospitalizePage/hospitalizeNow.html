@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>입원 수속 페이지</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<style>
+	.wrap {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
+}
+
+.viewhead{
+	border-bottom: 5px solid; 
+}
+
+.viewbody{
+	margin-top : 20px;
+	border: 1px solid;
+}
+
+.linemenu{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.goback{
+	border: 3px solid;
+	width: 100%;
+}
+
+
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="wrap">
+			<div class="cont">
+				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+					<div class="col-md-10 headwrap">
+
+						<div class="col-md-12 viewhead">
+							<h1>[[${patient.name}]]님 입원 내역</h1>
+						</div>
+						<div class="col-md-12 viewbody">
+						<form enctype="multipart/form-data">
+							<div class="col-md-12 viewlineboxup"></div>
+							<div class="col-md-12 viewlinebox">
+							</div>
+
+							<div class="col-md-12 tablemenu">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th scope="row">환자명</th>
+											<td>[[${patient.name}]]</td>
+											<th scope="row">담당의</th>
+											<td th:if="${med}">[[${hospitalize.doctor}]] ([[${med.medName}]]) </td>
+
+										</tr>
+										<tr>
+											<th scope="row">나이</th>
+											<td>[[${age}]]</td>
+											<th scope="row">입원 사유</th>
+											<td>[[${disease}]] </td>
+
+										</tr>
+										<tr>
+											<th scope="row">병실</th>
+											<td>[[${hospitalize.ward}]]호 </td>
+											<th scope="row">입원일</th>
+											<td>[[${hospitalize.hospitalizeddate}]] </td>
+										</tr>
+
+										<tr>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+						</div>
+								<div class="col-md-12 linemenu">
+								<a class="goback" th:href = "'/archive/search/'+${patient.id}" >뒤로가기</a>
+								</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+</body>
+</html>

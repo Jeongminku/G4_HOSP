@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +20,7 @@ public class MemberImgService {
 	private String imgLocation;
 	
 	private final FileService fileService;
+	private final MemberRepository memberRepository;
 	
 	public void saveMemberImg(Member member, MultipartFile imgfile) throws Exception {
 		String imgOri = imgfile.getOriginalFilename();

@@ -16,11 +16,17 @@ import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.Hospitalize;
+import com.Tingle.G4hosp.entity.HospitalizeDisease;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.entity.MemberMed;
+import com.Tingle.G4hosp.repository.HospitalizeDiseaseRepository;
 import com.Tingle.G4hosp.repository.HospitalizeRepository;
+import com.Tingle.G4hosp.repository.MemberMedRepository;
 import com.Tingle.G4hosp.service.DiseaseService;
+import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MedService;
+import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +39,10 @@ public class AdminController {
 	private final MemberService memberService;
 	private final MedService medService;
 	private final DiseaseService diseaseService;
+	private final HospitalizeService hospitalizeService;
 	private final HospitalizeRepository hospitalizeRepository;
+	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
+	private final MemberMedRepository memberMedRepository;
 	
 	
 	// 관리자 페이지 화면
@@ -113,25 +122,32 @@ public class AdminController {
 	}
 	
 	// 입원환자목록 페이지 화면
-	@GetMapping(value="/patientList")
-	public String patientList(Model model) {
+	@GetMapping(value="/hospitalizeList")
+	public String hospitalizeList(Model model) {
 		
-		Role client = Role.CLIENT;
+//		List<Hospitalize> members = hospitalizeService.FindHosListByHosStatus();
+//		model.addAttribute("members", members);
 		
-		List<Member> members = memberService.getMemberList(client);
-		model.addAttribute("members", members);
+		List<HospitalizeDisease> memHosDis = hospitalizeDiseaseRepository.findAll();
+		model.addAttribute("memHosDis", memHosDis);
 		
-		return "adminPage/patientList";
+		System.err.println(memHosDis);
+		
+		return "adminPage/hospitalizeList";
 	}
 	
 	// 의사목록 페이지 화면
 	@GetMapping(value="/doctorList")
 	public String doctorList(Model model) {
 		
-		Role doctor = Role.DOCTOR;
+//		Role doctor = Role.DOCTOR;
 		
-		List<Member> members = memberService.getMemberList(doctor);
-		model.addAttribute("members", members);
+//		List<Member> members = memberService.getMemberList(doctor);
+//		model.addAttribute("members", members);
+		
+		List<MemberMed> memberMeds = memberMedRepository.findAll();
+		
+		model.addAttribute("memberMeds", memberMeds);
 		
 		return "adminPage/doctorList";
 	}

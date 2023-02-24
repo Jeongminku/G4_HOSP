@@ -50,4 +50,20 @@ public class DiseaseService {
 		return diseaseRepository.findAll();
 	}
 	
+	public Disease findDiseasebyDiseasename(String Diseasename) {
+		return diseaseRepository.findDiseasebyDiseasename(Diseasename);
+	}
+	
+	public Disease findDiseasebyHospMemid(Long hospmemid) {
+		return diseaseRepository.findDiseasebyHospMemid(hospmemid);
+	}
+	
+	public Disease findDiseasebyArcid(Long Archiveid) {
+		return diseaseRepository.findDiseasebyArcid(Archiveid);
+	}
+	
+	public List<Disease> findDiseaseListByDocId(String docloginid){
+		return diseaseRepository.findDiseaseListByDocId(docloginid);
+	}
+	
 }

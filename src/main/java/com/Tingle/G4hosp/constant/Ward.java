@@ -12,11 +12,14 @@ public enum Ward {
 	NINE(309),
 	TEN(310);
 	
-	private final int number;
+	private int number;
 	
 	Ward(int number){
 		this.number= number;
 	}
 
+	public int getNum() {
+		return number;
+	}
 	
 }

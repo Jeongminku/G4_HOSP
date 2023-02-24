@@ -74,8 +74,6 @@ public class QaBoardController {
 		qaBoardDto.setTitle(qaBoard.getQaTitle());
 		qaBoardDto.setContent(qaBoard.getQaContent());
 		qaBoardDto.setCategory(qaBoard.getQaCategory());
-		System.out.println(qaBoard);
-		System.out.println("@@@@@@@@@@ "+qaBoard.getId());
 		return "qaPage/qaModify";
 	}
 	
@@ -88,6 +86,19 @@ public class QaBoardController {
 	}
 	
 				
+	@GetMapping(value = "/del/{id}")
+	public String deletearchive(Model model, @PathVariable("id") Long qaId, QaBoardDto qaBoardDto) {
+		String delMessage = qaBoardService.deleteQa(qaId); 
+		model.addAttribute("delMessage", delMessage);
+		System.out.println(delMessage);
+		
+		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
+		model.addAttribute("qaList", QaBoardAllList);
+		return "qaPage/qaPage";
+	}
+	
+	
+	
 	
 	//	@PostMapping(value="/new2")
 //	public String newQaBoard2(QaBoardDto qaBoardDto, Model model) {

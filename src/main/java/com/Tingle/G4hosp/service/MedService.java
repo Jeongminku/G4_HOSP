@@ -42,4 +42,21 @@ public class MedService {
 		return medRepository.findAll();
 	}
 
+	public List<Med> getMedListNotMyMed(Long medId) {
+		return medRepository.getMedListNotMyMed(medId);
+	}
+	
+	public Med findMedbyDocid(Long doctorid) {
+		return medRepository.findMedbyDocid(doctorid);
+	}
+	
+	public Map<Long, String> findAllMedListToMap () {
+		List<Med> medList = getMedList();
+		Map<Long, String> medListMap = new HashMap<>();
+		for(Med med : medList) {
+			medListMap.put(med.getMedId(), med.getMedName());
+		}
+		return medListMap;
+	}
+	
 }

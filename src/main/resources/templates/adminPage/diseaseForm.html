@@ -10,41 +10,61 @@
 
 <div layout:fragment="content">
 
+<section>
+
 <form action="/admin/disease" method="post" enctype="multipart/form-data" th:object="${diseaseFormDto}">
 
 	<!-- 진료과에서 생성한 항목들 들어가기 -->
 	
+	<h3>병 기입될 진료과 선택</h3><br>
+	
 	<th:block >
-		<select th:field="*{med}" name="job">
+
+		<select th:field="*{med}" class="form-select" aria-label="Default select example">
 			<option th:each="meds : ${meds}" th:value="${meds.medId}"> [[${meds.medName}]]  </span>
 		</select>
-		
+
 	</th:block>
+	<br>
 	
-		
-	<h2>새 병명 기입</h2>
-	<input type="text" th:field="*{diseaseName}" name="diseaseName">
+	<div class="input-group mb-3">
+  	<span class="input-group-text" id="inputGroup-sizing-default">해당 진료과 병명 기입</span>
+  	<input type="text" th:field="*{diseaseName}"  name="diseaseName" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+	</div>
 	
-	<button type="submit">병 등록하기</button>
+	<button type="submit" class="btn btn-primary btn-lg">병 등록하기</button>
 	
 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 	
 </form>	
 
-	<h2>진료과 별 담당 병 목록</h2>
-
-		
+	<h2><br>진료과 별 담당 병 목록</h2>
+	<hr>
+			
+		<table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">진료과</th>
+				      <th scope="col">해당 진료과 등록 병명</th>
+				    </tr>
+				  </thead>
 			<th:block th:each="diseases : ${diseases}">
-				<article>
-					<header>
-						<span class="medInfo">[[${diseases.med.medName}]] : </span>
-						<span class="medInfo">[[${diseases.diseaseName}]]</span>
-					</header>
-				</article>
+				  <tbody>
+				    <tr>
+				      <td style="color:blue"><span class="medName">[[${diseases.med.medName}]]</span></td>
+				      
+				      <td><span class="medInfo">[[${diseases.diseaseName}]]</span></td>
+				      
+				    </tr>
+				  </tbody>
+		</table>
 				
 			</th:block>
+			<br>
 
 </div>
+
+</section>
 
 </body>
 </html>

@@ -25,4 +25,6 @@
 #notAvailSelectedList {height: 250px;}
 #notAvailSelectedList p {margin: auto 0;}
 
-#selectDate .selectedDay {background-color: brown;}
+#selectDate .selectedDay {background-color: #226597;}
+.btn.taken {cursor: auto; background-color: #C1474F; border-color: #C1474F; color: #ffffff;}
+.btn.taken:active {background-color: #C1474F; border-color: #C1474F; color: #ffffff;}

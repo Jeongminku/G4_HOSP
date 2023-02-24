@@ -13,7 +13,14 @@
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
- 
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	console.log(errorMessage);
+    	if(errorMessage != null){
+        	alert(errorMessage);
+    	}
+	return false;
+	});
     
 	</script>
 </th:block>
@@ -23,12 +30,18 @@
 	<style>
 .wrap {
 	width: 80%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
 }
 .viewhead{
 	text-align: center;
+	margin-bottom: 10px;
 }
 .viewlineboxup {
-	border-top: 5px solid black;
+	border-top: 3px solid black;
 }
 
 .viewlinebox {
@@ -36,7 +49,7 @@
 	text-align: center;
 }
 .linemenu{
-	height: 100px;
+	height: 50px;
 	text-align: center;
 	display: table;
 }
@@ -47,9 +60,23 @@
 	border: none;
 }
 
+.table_con{
+margin-top: 10px;
+text-align: center;
+}
+
 .cont_img{
 	width: 15%;
 }
+
+.patientlist{
+	text-align: center;
+}
+
+.pnamein{
+	width: 80%
+}
+
 </style>
 </th:block>
 </head>
@@ -67,22 +94,40 @@
 					<div class="col-md-12 viewlineboxup"> </div>
 					<div class="col-md-12 viewlinebox"> </div>
 					<div class="col-md-12 tablemenu">
-					<form action="/archive/search" method="post" role="form" th:object="${archiveSearchDto}">
-						<table class="table table-bordered">
+					<form action="/archive/patientsearch" method="post" role="form" th:object="${archiveSearchDto}">
+						<table class="table table-bordered table_con">
 							<tbody>
 								<tr>
-									<th scope="row">환자 아이디</th>
-									<td><input type="text" th:field = "*{loginid}" class="form-control" id="inputPostname" placeholder="환자 아이디를 입력해주세요."> </td>
 									<th scope="row">환자 이름</th>
-									<td><input type="text" th:field = "*{name}" class="form-control" id="inputPostname" placeholder="환자 이름을 입력해주세요."></td>
+									<td><input type="text" th:field = "*{name}" class="form-control pnamein" id="inputPostname" placeholder="환자 이름을 입력해주세요."></td>
 								</tr>
 							</tbody>
 						</table>					
-						<button type="submit"> 환자 조회 </button>
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					</form>
-					</div>
 					<div class="col-md-12 linemenu">
+						<button type="submit" style="height: 70%"> 환자 조회 </button>
+					</div>
+					</form>
+					<div class="patientlist" th:if = "${patientlist}">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">환자 번호</th>
+									<th scope="row">아이디</th>
+									<th scope="row">이름</th>
+									<th scope="row">생년월일</th>
+									<th scope="row">전화번호</th>
+								</tr>
+								<tr th:each ="patient : ${patientlist}">
+									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.id}]] </a></td>
+									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.loginid}]] </a></td>
+									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.name}]] </a></td>
+									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.birth}]] </a></td>
+									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.tel}]] </a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					</div>
 					</div>
 				</div>
