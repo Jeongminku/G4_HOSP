@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class MedService {
 	
 	private final MedRepository medRepository;
-
+	private final MedRepository medRepository2;
 	// 진료과 등록
 	public Long saveMed(MedFormDto medFormDto) throws Exception {
 
@@ -59,4 +59,7 @@ public class MedService {
 		return medListMap;
 	}
 	
+	public List<Med> getTesListNotMy(Long medId) {
+		return medRepository2.getMedListNotMyMed(medId);
+	}
 }
