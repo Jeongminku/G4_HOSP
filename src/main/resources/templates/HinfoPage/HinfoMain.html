@@ -11,10 +11,7 @@
 	<div layout:fragment="content">
 
 		<style>
-body {
-	margin-top: 20px;
-	background-color: #eee;
-}
+
 /*================================
 Filter Box Style
 ====================================*/
@@ -190,21 +187,6 @@ a:hover {
 
 		<section>
 
-			<ul th:each="list, status: ${lists.getContent()}">
-				<li>글번호 : [[${list.id}]]</li>
-				<li>글쓴이 : [[${list.member.loginid}]]</li>
-				<li>제목 : <a th:href="'/Hinfo/' +${list.id}">[[${list.title}]]</a></li>
-				<li
-					th:text="작성일 + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></li>
-				<li>조회수 : [[${list.view}]]</li>
-				<li><br></li>
-			</ul>
-
-
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="chat_container">
 							<div class="job-box">
 								<div class="job-box-filter">
 									<div class="row">
@@ -227,25 +209,30 @@ a:hover {
 									</div>
 								</div>
 								<div class="inbox-message">
-									<ul th:each="list, status: ${lists.getContent()}">
+									<ul th:each="list , i : ${lists.getContent()}">
+											
 										<li>
 										<a href="#">
 												<div class="message-avatar">
 													<img
-														src="https://bootdey.com/img/Content/avatar/avatar1.png"
-														alt="">
+														th:src="${list.member.imgUrl}"
+														th:alt="${list.member.imgOri}">
 												</div>
 												<div class="message-body">
 													<div class="message-body-heading">
-														<h5 th:href="'/Hinfo/' +${list.id}">
-															[[${list.title}]] 
-															<span class="unread" style="margin-top:1px">New</span>
+													
+														<h5 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/Hinfo/' +${list.id}">
+															[[${list.title}]] </a>
+															
+															<span th:if="${i.first}" class="unread" style="margin-top:1px">New</span>
+															<span th:if="${list.view} >= 5" class="important" style="margin-top:1px">Hot</span>
+														
 														</h5>
-															<span style="color:gray">작성자 : [[${list.member.loginid}]]</span>
-														<span th:text="작성일 + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+
+														<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 													</div>
 													<p>항상 외출하고 돌아오면 손을 깨끗이 씻고, 재채기할때는 코와 입을 가리고 하도록 하자</p><br>
-													<p>조회수 : [[${list.view}]]</p>
+													<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]]</p>
 												</div>
 										</a>
 										</li>
@@ -253,18 +240,17 @@ a:hover {
 									</ul>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				
 
 			<br>
 			<!-- 페이징 -->
 			<!-- start = (현재 페이지 번호/보여줄 페이지수) + 1 , 페이지 시작 번호-->
 			<!-- end = start + (보여줄 페이지수 - 1 ), 페이지 끝 번호-->
-			item.number: [[${lists.number}]], maxPage: [[${maxPage}]],
+			<!-- item.number: [[${lists.number}]], maxPage: [[${maxPage}]], -->
 			<!-- 5 -->
-			totalPages: [[${lists.totalPages}]],
+			<!-- totalPages: [[${lists.totalPages}]], -->
+			
+			<br>
 			
 			<nav
 				th:with="start=${(lists.number/maxPage)*maxPage + 1}
@@ -292,11 +278,6 @@ a:hover {
 
 			<button onClick="location.href='/Hinfo/write'"
 				sec:authorize="hasAnyAuthority('ROLE_DOCTOR')">글쓰기</button>
-
-
-
-
-
 
 		</section>
 
