@@ -20,6 +20,57 @@
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
 	<style>
+	.wrap {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.headwrap{
+	margin: 0 auto;
+}
+
+.viewhead{
+	border-bottom: 3px solid; 
+}
+
+.viewbody{
+	margin-top : 20px;
+	border: 1px solid;
+}
+
+.viewlinebox {
+	text-align: center;
+	height: 30px;
+	margin-top: 10px;
+}
+
+.linemenu{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.goback{
+	border: 2px solid;
+}
+
+.tablemenu{
+	border: 1px solid;
+}
+
+.condivide{
+	border-right: 3px solid;
+	
+}
+
+.cond{
+	margin-left: 5px;
+}
+
+.but{
+	height: 30px;
+	width: 80px;
+}
+
 </style>
 </th:block>
 </head>
@@ -39,16 +90,13 @@
 							<div class="col-md-12 viewhead"></div>
 							<div class="col-md-12 viewlineboxup"></div>
 							<div class="col-md-12 viewlinebox">
-								<span > 환자명 </span> 
-								<span> [[${patient.name}]] </span> 
-								<span> 나이 </span> 
-								<span> [[${age}]] </span> 
-								<span> 주요내원병명 </span> 
-								<span> 감기 </span> 
-								<span> 입원여부 </span> 
-								<span> [[${hospYN}]] </span>
+								<span> 환자명 :  </span> 
+								<span class="condivide"> [[${patient.name}]] </span> 
+								<span class="cond"> 나이 : </span> 
+								<span class="condivide"> [[${age}]] </span>
+								<span class="cond"> 입원여부 : </span> 
+								<span> [[${hospYN}]] </span>	
 							</div>
-							<div class="col-md-12 linemenu"></div>
 							<div class="col-md-12 tablemenu">
 							<input type="hidden" th:field ="*{doctorname}" th:value="${hospitalizeFormDto.Doctorname}">
 								<table class="table table-bordered">
@@ -90,8 +138,10 @@
 										</tr>
 									</tbody>
 								</table>
-								<button type="submit">입원</button>
 							</div>
+							<div class="col-md-12 linemenu">
+								<button class="but" type="submit">입원</button>
+							</div>							
 						</form>
 					</div>
 				</div>

@@ -32,6 +32,8 @@ public class BoardFormDto {
 	
 	private LocalDateTime regTime;
 	
+	private List<Reply> reply;
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
 	public Board createBoard() {// 게시글을 저장(만들어줌)

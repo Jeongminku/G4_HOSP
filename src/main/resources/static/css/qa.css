@@ -1,0 +1,28 @@
+	.accordion {
+	list-style: none;
+	margin-bottom: 20px;
+	padding: 0;
+
+	}
+	
+	.accordion .button {
+	width: 100%;
+	text-align: left;
+	display: block;
+	font-weight: bold;
+	padding: 5px 10px;
+	background-color: #ddd;
+	color: #333;
+	text-decoration: none;
+	}
+	
+	.accordion .qaContent {
+	display: none;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	}
+
+	.test {
+		text-align:right;
+	}

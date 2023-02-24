@@ -12,23 +12,30 @@
 
 <section>
 
-	<h1>고객 목록</h1>
+	<h1>고객 목록</h1><br>
 
-	<table>
-	
-		<th>성함</th>
-		<th>생년월일</th>
-		<th>전화번호</th>
-	<th:block th:each="members : ${members}">
-		<tr>
-			<td>[[${members.name}]] &nbsp;&nbsp;</td>
-			<td>[[${members.birth}]] &nbsp;&nbsp;</td>
-			<td>[[${members.tel}]] &nbsp;&nbsp;</td>
-		</tr>
-	
-	</table>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">성함</th>
+      <th scope="col">생년월일</th>
+      <th scope="col">전화번호</th>
+    </tr>
+  </thead><hr>
+  
+  <th:block th:each="members : ${members}">
+  
+  	<tbody>
+    <tr>
+      <td>[[${members.name}]]</td>
+      <td>[[${members.birth}]]</td>
+      <td>[[${members.tel}]]</td>
+    </tr>
+  </tbody>
+</table>
 
 	</th:block>
+
 
 </section>
 

@@ -13,7 +13,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Setter
@@ -29,12 +32,20 @@ public class Reply extends BaseEntity{
 	
 	private String replyContent;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="board_id")
+	@JsonIgnore
 	private Board board;
 	
 	@ManyToOne
 	@JoinColumn(name = "member_id")
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
+	
+	public void createReply(String replyContent,Board board,Member member) {
+		this.replyContent = replyContent;
+		this.board = board;
+		this.member = member;
+	}
 }

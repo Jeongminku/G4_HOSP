@@ -74,8 +74,6 @@ public class QaBoardController {
 		qaBoardDto.setTitle(qaBoard.getQaTitle());
 		qaBoardDto.setContent(qaBoard.getQaContent());
 		qaBoardDto.setCategory(qaBoard.getQaCategory());
-		System.out.println(qaBoard);
-		System.out.println("@@@@@@@@@@ "+qaBoard.getId());
 		return "qaPage/qaModify";
 	}
 	

@@ -10,25 +10,22 @@
 
 <script th:inline="javascript">  
 	$(document).ready(function(){
-    	var errorMessage = [[${errorMessage}]];
-    	if(errorMessage != null){
-        	alert(errorMessage);
+    	var delMemberMsg = [[${delMemberMsg}]]
+    	if(delMemberMsg != null){
+        	alert(delMemberMsg);
+        	location.href="/"
     	}
+	}); //작동안함
 
+	$(function(){
+		$('.delMember').click(function(){
+			if (confirm("삭제하시겠습니까?")) {
+			$(location).attr("href", "/members/del/"+$(this).attr('id'));				
+			}
+			return false;
+		})
 	});
- 
- 	function medListEvent() {
- 		var doctor = $('#doctor');
- 		if(doctor.is(":checked")) {
- 			$('#medList').css('display','block');
- 			$('#profile').css('display','block');
- 		} else {
- 			$('#medList').css('display','none');
- 			$('#profile').css('display','none');
- 		}
- 	}
- 	
-	</script>
+</script>
 	
 </th:block>
 
@@ -42,8 +39,10 @@
                 <form action="/members/modify" method="post" enctype="multipart/form-data">
                      <div class="signup">
 						<th:block th:if="${modiMember.role.toString().equals('DOCTOR')}">
+							<span> 진료과 &nbsp; &nbsp; &nbsp; </span>
 							<select id="medList" name="medId">
-								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}" > [[${meds.medName}]]  </span>
+								<option th:value="${memberMed.medId.medId}">[[${memberMed.medId.medName}]]</option>
+								<option th:each="meds : ${memberFormDto.med}" th:value="${meds.medId}" > [[${meds.medName}]]
 							</select>
 						</th:block>
 	                    <br/>
@@ -62,6 +61,7 @@
 	                    </div>
 	                    <div class="form-textbox row">
 	                        <label th:for="tel">전화번호</label>
+	                        
 	                        <input type="text" name="tel" th:value="${modiMember.tel}" class="form-control" style="padding-left: 100px;" />
 	                    </div>
 	                    <div class="form-textbox row">
@@ -83,8 +83,8 @@
                     <br>
                     
                     <div class="form-textbox row signWrap" style="text-align:center;">
-                        <button type="submit" class="submitSign">회원가입</button>
-                        <button type="button" onclick="location.href='/'" class="submitSign">가입취소</button>
+                        <button type="submit">정보 수정</button>
+                        <button type="button" class="delMember" th:id="${modiMember.Id}">회원 탈퇴</button>
                     </div>
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">         
                      </div>

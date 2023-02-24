@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.controller;
 
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.dto.MemberFormDto;
+import com.Tingle.G4hosp.dto.MessageDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.repository.MedRepository;
+import com.Tingle.G4hosp.repository.MedRepository2;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberImgService;
 import com.Tingle.G4hosp.service.MemberMedService;
@@ -73,7 +76,7 @@ public class MemberController {
 	@PostMapping(value = "/new")
 	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
 			@RequestParam("profileImg") MultipartFile file) {
-		System.err.println(memberFormDto.getMedId());
+		//System.err.println(memberFormDto.getMedId());
 		if (bindingResult.hasErrors()) {
 			return "member/memberForm";
 		}
@@ -143,13 +146,19 @@ public class MemberController {
 	@GetMapping(value = "/modify")
 	public String memberModify(Model model, Principal principal) {
 		String loginId = principal.getName();
-		MemberFormDto memberFormDto = new MemberFormDto();
-		List<Med> medlist = medRepository.findAll();
-		memberFormDto.setMed(medlist);
-		System.err.println(memberFormDto);
-		model.addAttribute("memberFormDto",memberFormDto);
-		
 		Member member = memberService.findByLoginid(loginId);
+		Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
+		
+		
+		
+		MemberFormDto memberFormDto = new MemberFormDto();
+		if(med != null) {
+			List<Med> medlist = medService.getTesListNotMy(med.getMedId());
+//			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
+			memberFormDto.setMed(medlist);			
+		}
+
+		model.addAttribute("memberFormDto",memberFormDto);
 		model.addAttribute("modiMember", member);
 		
 		
@@ -164,6 +173,26 @@ public class MemberController {
 		String loginId = principal.getName();
 		memberService.updateMember(memberFormDto, loginId);
 		return "member/memberLoginForm";
+	}
+	
+	@GetMapping(value= "/del/{id}")
+	public String deleteMember(Model model, @PathVariable("id") Long memberId) {
+		MessageDto message;				
+		try {
+			String delMemberMsg = memberService.deleteMember(memberId);
+			message = new MessageDto(delMemberMsg, "/");
+			SecurityContextHolder.clearContext();
+		} catch (Exception e) {
+			message = new MessageDto("회원 탈퇴에 실패했습니다.", "/");
+		}
+		
+		return showMessageAndRedirect(message, model);
+	}
+	
+	
+	private String showMessageAndRedirect(final MessageDto params, Model model) {
+		model.addAttribute("params", params);
+		return "common/messageRedirect";
 	}
 }	
 
