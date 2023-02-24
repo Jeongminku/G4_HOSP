@@ -130,10 +130,9 @@ public class HinfoController {
 	//의학정보게시판 글내용 수정
 	@PostMapping("/updatepage/{hinfoId}")
 	public String HinfoUpdate(@PathVariable("hinfoId") Long hinfoId,@Valid HinfoBoardDto hinfoBoardDto,@RequestParam("HinfoImg") List<MultipartFile> itemImgFileList,BindingResult bindingResult,Model model) {
-		System.out.println(hinfoBoardDto);
 
 		try {
-			hinfoBoardService.HinfoUpdate(hinfoId,itemImgFileList, hinfoBoardDto);
+			 hinfoBoardService.HinfoUpdate(hinfoId,itemImgFileList, hinfoBoardDto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

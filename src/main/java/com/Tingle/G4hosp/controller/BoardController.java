@@ -1,6 +1,8 @@
 package com.Tingle.G4hosp.controller;
 
+
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.Cookie;
@@ -11,19 +13,28 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Tingle.G4hosp.dto.BoardFormDto;
 import com.Tingle.G4hosp.dto.BoardListDto;
 import com.Tingle.G4hosp.dto.BoardSerchDto;
-import com.Tingle.G4hosp.repository.BoardRepository;
+import com.Tingle.G4hosp.dto.ReplyDto;
+import com.Tingle.G4hosp.dto.ReplyJsonDto;
 import com.Tingle.G4hosp.service.BoardService;
+import com.Tingle.G4hosp.service.ReplyService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +44,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService boardSerivce;
+	private final ReplyService replyService;
 	
 	//현재 환자정보게시판의 메인화면을 보여줍니다.
 	@GetMapping(value = "/main")
@@ -66,13 +78,13 @@ public class BoardController {
 		}
 		
 		try {
-			boardSerivce.saveBoardForm(boardFormDto, pricipal);	
+			Long path = boardSerivce.saveBoardForm(boardFormDto, pricipal);	
 		} catch (Exception e) {
 			model.addAttribute("errorMessage","로그인을 해주세요");
 			return "boardpage/boardForm";
 		}
 	
-		return "redirect:/";
+		return "redirect:/board/main";
 	}
 	
 	//게시글 상세 보기
@@ -109,9 +121,54 @@ public class BoardController {
 		    }
 		
 		    BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
+		    List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
+		    
+		    model.addAttribute("ReplyDtoList" ,ReplyDtoList);
 		    model.addAttribute("boardFormDto",boardFormDto);
 		    
-		return "boardpage/boardDtl";
+		    
+		    return "boardpage/boardDtl";
 	}
 	
+	//댓글 저장
+	@PostMapping(value = "saveReply")
+	@ResponseBody public ResponseEntity saveReply(@RequestBody ReplyJsonDto replyJsonDto,Principal principal,Model model) {
+		boardSerivce.saveReply(replyJsonDto, principal);
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	//테스트 댓글 목록 보내기
+	@RequestMapping(value = "/test/{boardId}"  , method = { RequestMethod.POST })
+	@ResponseBody List<ReplyDto> test(@PathVariable("boardId") Long boardId) {
+		  List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
+		  
+		  return ReplyDtoList;
+	}
+
+	
+	//페이지 리로딩
+	@PostMapping("/reload/{boardId}")
+	public String replacePost (@PathVariable("boardId") Long boardId , Model model) {
+		
+		List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
+		model.addAttribute("ReplyDtoList" ,ReplyDtoList);
+		return "boardPage/BoardDtl :: reply";
+	}
+	
+	//댓글삭제
+	@PostMapping(value = "/replydel")
+	@ResponseBody public ResponseEntity delReply(@RequestBody ReplyDto replyDto) {
+
+		replyService.delReply(replyDto.getId());
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/upRe")
+	@ResponseBody public ResponseEntity upReply(@RequestBody ReplyDto replyDto) {
+
+		replyService.upReply(replyDto);
+		System.out.println("??????????????????????????????????????????????????????");
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
 }

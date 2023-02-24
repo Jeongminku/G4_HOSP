@@ -5,6 +5,241 @@
 <head>
 <meta charset="UTF-8">
 <title>메인페이지 title입니다.</title>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	
+	function saveReply() {
+		
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url = "/board/saveReply";
+        
+        var paramData = {
+        		replyContent : $("#replyContent").val(),
+        		board :  $("#boardId").val(),       		
+                         };
+        console.log(paramData);
+        var param = JSON.stringify(paramData);
+        
+        $.ajax({
+            url      : url,
+            type     : "POST",
+            contentType : "application/json",
+            data     : param,
+            async:false,
+            beforeSend : function(xhr){
+                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                xhr.setRequestHeader(header, token);
+            },
+            cache   : false,
+            success  : function(result, status){
+                //location.href='/board/' + [[${boardFormDto.id}]];
+                postPageReload()
+                
+            },
+            error : function(jqXHR, status, error){
+            		alert("회원가입을 해주세요");
+                    alert(jqXHR.responseText);
+                    location.href='/members/login';
+            }
+        });
+        
+		
+	}
+	//=========================================================================
+	
+ 	function test() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url = "/board/test/" + [[${boardFormDto.id}]];
+        
+        $.ajax({
+        	url : url,
+        	type : 'POST',
+        	data : {
+            
+        	},
+            beforeSend : function(xhr){
+                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                xhr.setRequestHeader(header, token);
+            },
+        	success : function(data) { // controllor에서 list를 return 받았음
+            			alert(data);
+                     console.log(data[0].member.imgUrl)
+                     //location.href='/board/' + [[${boardFormDto.id}]];
+                         
+             },
+        	error : function() {
+        		alert("error");
+        	}
+        });
+	} 
+	//=================================================================================
+	function postPageReload() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");	
+    url = "/board/reload/" + [[${boardFormDto.id}]];
+    
+    
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'text',
+        beforeSend: function (xhr) {
+        	console.log('리로드')
+            xhr.setRequestHeader(header, token);
+        },
+        success: function (frag) {
+        	console.log(frag)
+            //frag - 받아온 프래그먼트 태그
+            $('#reply').replaceWith(frag);
+        },
+        error: function (jqXHR, status, error) {
+            console.log(jqXHR);
+            console.log(status);
+            console.log(error);
+        }
+    })
+    }
+	///////////////////
+	
+
+	
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function deletReply(e) {
+	
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		url = "/board/replydel"
+		
+		var replyIdIndex = $(event.target).attr("id");
+		
+		console.log(replyIdIndex);	
+		
+		var replyId = $("#replyId"+replyIdIndex).val();
+		
+		
+	    var paramData = {
+	    		id : replyId,    		
+	                     };
+	    console.log(paramData);
+	    var param = JSON.stringify(paramData);
+	    console.log(param);
+		
+	      $.ajax({
+	            url      : url,
+	            type     : "POST",
+	            contentType : "application/json",
+	            data     : param,
+	            async:false,
+	            beforeSend : function(xhr){
+	                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+	                xhr.setRequestHeader(header, token);
+	            },
+	            cache   : false,
+	            success  : function(result, status){
+	            	postPageReload();
+	           		alert("댓글 삭제를 완료 했습니다.");
+	            },
+	            error : function(jqXHR, status, error){
+	            	alert("error");
+	            	  console.log(jqXHR);
+	                  console.log(status);
+	                  console.log(error);
+	                    location.href='/members/login';
+	            }
+	        });
+}
+//수정창만들기
+	function createinput(e) {
+	
+	var replyIdIndex = $(event.target).attr("id");
+
+	 var content = $("#con"+replyIdIndex.substr(2)).val();
+		
+	
+	 
+	 //인풋창 생성
+	 let input = document.createElement("input")
+	 input.setAttribute("type","text")
+	 input.setAttribute("class","upContent")
+	 input.setAttribute("id","upContent")
+	 input.setAttribute("value", content )
+	 document.querySelector("#Reply"+replyIdIndex).append(input);
+	
+	 
+	 
+	 let button = document.getElementById(replyIdIndex)
+	 console.log(button);
+	 button.setAttribute("onClick","upRe()")
+	
+	 
+	}
+///댓글수정
+	function upRe(e) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url = "/board/upRe";
+        
+        
+        if(!$("#upContent").val()) {
+        	alert("수정할 댓글을 입력하세요");
+        	return false;
+        }
+        
+ 	
+		var replyIdIndex = $(event.target).attr("id");
+		replyIdIndex = replyIdIndex.substr(2)
+		
+		var replyId = $("#replyId"+replyIdIndex).val();
+        
+        var paramData = {
+        		id :  replyId,       		
+        		replyContent : $("#upContent").val(),
+                         };
+        console.log(paramData);
+        var param = JSON.stringify(paramData);
+        
+        $.ajax({
+            url      : url,
+            type     : "POST",
+            contentType : "application/json",
+            data     : param,
+            async:false,
+            beforeSend : function(xhr){
+                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                xhr.setRequestHeader(header, token);
+            },
+            cache   : false,
+            success  : function(result, status){
+            	alert("댓글이 수정 되었습니다")
+            	postPageReload()
+                
+            },
+            error : function(jqXHR, status, error){
+            		alert("회원가입을 해주세요");
+                    alert(jqXHR.responseText);
+                    location.href='/members/login';
+            }
+        });
+}
+
+	
+	</script>
+</th:block>
+
 </head>
 <body>
 	<div layout:fragment="content">
@@ -31,13 +266,34 @@
 				<td>[[${boardFormDto.content}]]</td>
 			</tr>
 		</table>
-		<form action="">
+
 		댓글입력
-		<input type="text">
-		</form>
-		<button>댓글입력</button>
+		<input type="text" id="replyContent" name="replyContent">
+		<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
 		
+		<button onclick="saveReply()">댓글입력</button>
+		댓글내용
+		<div class="reply" id="reply" th:fragment="reply">
 		
+				<div th:each="reply , i : ${ReplyDtoList}"> 
+				<div th:id="Replyup+${i.index+1}" th:name="Replyup+${i.index+1}">
+				<img alt="" th:src="${reply.member.imgUrl}" style="width: 100px"> 
+				    <span>아이디 : <span th:text="${reply.member.loginid}"></span></span>
+					<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">내용 : <span th:text="${reply.replyContent}"></span></span>
+					<input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
+					 <button onclick="deletReply()" th:id="${i.index+1}" class="del">삭제</button> 
+					 <button onclick="createinput()" th:id="up+${i.index+1}" class="up">수정</button>
+				<input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
+				</div>
+
+			</div>	
+			
+		</div>
+				
 	</div>
+	
+	
+	
+	
 </body>
 </html>
