@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.entity.Med;
+import com.Tingle.G4hosp.repository.ChatRoomAccessRepository;
 import com.Tingle.G4hosp.repository.MedRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,14 @@ import lombok.RequiredArgsConstructor;
 public class MedService {
 	
 	private final MedRepository medRepository;
-
+	private final ChatRoomAccessService chatRoomAccessService;
+	
 	// 진료과 등록
 	public Long saveMed(MedFormDto medFormDto) throws Exception {
 
 		Med med = medFormDto.createMed();
-		medRepository.save(med);
-		
+		Med savedMed = medRepository.save(med);
+		chatRoomAccessService.createChatRoomAccess(savedMed);
 		return med.getMedId();
 	}
 
@@ -44,15 +46,6 @@ public class MedService {
 
 	public Med findMedbyDocid(Long doctorid) {
 		return medRepository.findMedbyDocid(doctorid);
-	}
-	
-	public Map<Long, String> findAllMedListToMap () {
-		List<Med> medList = getMedList();
-		Map<Long, String> medListMap = new HashMap<>();
-		for(Med med : medList) {
-			medListMap.put(med.getMedId(), med.getMedName());
-		}
-		return medListMap;
 	}
 	
 }

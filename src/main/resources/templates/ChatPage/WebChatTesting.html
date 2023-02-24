@@ -2,28 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-      
 <head>
-<meta charset="UTF-8">
-<title></title>
+    <meta charset="UTF-8">
+    <title></title>
+    <script th:inline="javascript">
+        const senderData = [[${SenderData}]];
+        const errorMsg = [[${ErrorMsg}]];
+    </script>
 </head>
 <body>
 	<section layout:fragment="content">
-        <!-- <form action="/chat" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <input type="text" name="roomName">
-            <button type="submit">submit</button>
-        </form> -->
-        <!-- <div th:if="${allRooms}" th:each="room : ${allRooms}">
-            <button th:text="${room.name}" th:id="${room.roomId}" name="chatRoomBtn"></button>
-        </div> -->
+        <p class="h2" th:text="${}"></p>
         <textarea id="messageTextArea" rows="10" cols="50"></textarea>
         <form action="" method="post" id="send">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <!-- <input type="text" name="roomId" id="rommId" placeholder="방넘버"> -->
+            <th:block th:each="map : ${SenderData}">
+                <input type="hidden" th:value="${map.key}" name="roomId">
+                <input type="hidden" th:value="${map.value}" name="senderName">
+            </th:block>
             <input type="text" name="message" placeholder="메세지">
-            <input type="text" name="sender" placeholder="유저명">
-            <input type="text" name="type"placeholder="타입">
             <button type="submit">보내기?</button>
         </form>
         <script src="../../js/ChatTest.js"></script>

@@ -7,23 +7,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../../css/reservation.css">
+    <link rel="stylesheet" href="../../css/chat.css">
+    <script th:inline="javascript">
+        const errorMsg = [[${ErrorMsg}]];
+    </script>
 </head>
 <body>
     <section class="d-flex flex-column align-items-center" layout:fragment="content">
-        <form method="get" class="d-flex flex-column justify-content-around">
-            <select name="medId">
-                <option th:each="med : ${AllMedList}" th:value="${med.key}" th:text="${med.value}"></option>
-            </select>
-            <input type="text" name="roomName">
+        <form th:action="@{/chat}" method="post" class="d-flex justify-content-around align-items-end w-100 mb-5" id="newChatRoom">
+            <div class="d-flex flex-column justify-content-start" id="newChatAccess">
+                <p class="text-muted mb-2">공개범위</p>
+                <select class="p-3 rounded" name="chatRoomAccess">
+                    <option th:each="access : ${AllAccessList}" th:value="${access.key}" th:text="${access.value}" th:selected="${access.value} == '전체'"></option>
+                </select>
+            </div>
+            <div class="d-flex flex-column justify-content-start" id="newChatName">
+                <p class="text-muted mb-2">채팅방 이름</p>
+                <input class="p-3 rounded" type="text" name="chatRoomName" placeholder="새로운 방 이름을 설정하세요">
+            </div>
+            <button type="submit" class="text-center p-3 btn btn-primary">생성</button>
         </form>
-        <form method="get" class="d-flex flex-column justify-content-around" th:if="${AllChatRoom}">
+        <form th:action="@{/chat/room}" method="post" class="d-flex flex-column justify-content-around w-100" th:if="${AllChatRoom}">
             <th:block th:each="room : ${AllChatRoom}">
-                <input type="hidden" th:value="${room.medId}">
-                <input class="d-none" type="radio" th:id="${room.id}" name="roomId">
-                <button type="submit" class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" th:for="${room.id}" th:text="${room.chatRoomName}"></button>
+                <input type="hidden" th:value="${room.chatRoomAccess}" name="roomAccessId">
+                <input class="d-none" type="radio" th:id="${room.id}" th:value="${room.id}" name="roomId">
+                <label class="w-100 text-center p-3 mb-2 btn btn-outline-secondary" th:for="${room.id}" th:text="${room.chatRoomName}"></label>
             </th:block>
+            <button type="submit" class="w-100 text-center p-3 mb-2 btn btn-primary">입장</button>
         </form>
+        <!-- <script src="../../js/ChatTest.js"></script> -->
     </section>
 </body>
 </html>
