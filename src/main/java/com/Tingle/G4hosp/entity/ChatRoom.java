@@ -32,38 +32,21 @@ public class ChatRoom {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@JoinColumn(name = "medId")
+	@JoinColumn(name = "chatRoomAccess")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Med medId;
+	private ChatRoomAccess chatRoomAccess;
 	
 	private String chatRoomName;
 	
-	@Transient
-	private Set<WebSocketSession> sessions = new HashSet<>();
-	
-	public static ChatRoom createChatRoom (Med med) {
+	public static ChatRoom createChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
 		ChatRoom chatRoom = new ChatRoom();
-		chatRoom.setMedId(med);
-		chatRoom.setChatRoomName(med.getMedName());
+		chatRoom.setChatRoomAccess(chatRoomAccess);
+		chatRoom.setChatRoomName(chatRoomName);
 		return chatRoom;
 	}
 	
-	public void updateChatRoom (String name) {
-		this.chatRoomName = name;
+	public void updateChatRoom (String chatRoomName) {
+		this.chatRoomName = chatRoomName;
 	}
-	
-	public void handlerActions(WebSocketSession session, ChatMessageDto chatMessageDto, ChatService chatService) {
-        if (chatMessageDto.getType().equals(MessageType.ENTER)) {
-            sessions.add(session);
-            chatMessageDto.setMessage(chatMessageDto.getSender() + "님이 입장했습니다.");
-        }
-        sendMessage(chatMessageDto, chatService);
-
-    }
-
-    private <T> void sendMessage(T message, ChatService chatService) {
-        sessions.parallelStream()
-                .forEach(session -> chatService.sendMessage(session, message));
-    }
 }

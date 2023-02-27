@@ -8,18 +8,19 @@
 <title>메인페이지 title입니다.</title>
 </head>
 <body>
+
 	<div layout:fragment="content">
 	
 	<section>
 	
-		<ul>
-		<li>작성자 : [[${HinfoBoard.member.name}]]</li>
-		<li>글제목 : [[${HinfoBoard.title}]]</li>
-		<li>조회수 : [[${HinfoBoard.view}]]</li>
-		<li th:text="작성일 + ${#temporals.format(HinfoBoard.regTime, 'yyyy-MM-dd HH:mm:ss')}"></li>
-		<li th:each="img, status:${HinfoBoard.hinfoImgDtoList}">이미지 <img alt="" th:src="${img.imgUrl}"></li>
-		<li>글내용 : [[${HinfoBoard.content}]]</li>
-		</ul>
+	<h2>건강정보 게시판</h2><hr>
+	
+	<p>작성자 : [[${HinfoBoard.member.name}]] 글제목 : [[${HinfoBoard.title}]] 조회수 : [[${HinfoBoard.view}]]</p>
+	<p th:text="작성일_ + ${#temporals.format(HinfoBoard.regTime, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
+	<p>[[${HinfoBoard.content}]]</p>
+	
+	<div th:each="img, status:${HinfoBoard.hinfoImgDtoList}"> <img alt="" th:src="${img.imgUrl}"></div>
+
 		<a th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}">수정</a>
 		<a th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}">삭제</a>
 	

@@ -1,5 +1,5 @@
 package com.Tingle.G4hosp.constant;
 
 public enum MessageType {
-	ENTER, TALK
+	ENTER, TALK, LEAVE
 }

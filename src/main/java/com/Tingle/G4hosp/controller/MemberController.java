@@ -22,11 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.dto.MemberFormDto;
+import com.Tingle.G4hosp.dto.MessageDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.repository.MedRepository;
+import com.Tingle.G4hosp.repository.MedRepository2;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberImgService;
 import com.Tingle.G4hosp.service.MemberMedService;
@@ -147,9 +149,12 @@ public class MemberController {
 		Member member = memberService.findByLoginid(loginId);
 		Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
 		
+		
+		
 		MemberFormDto memberFormDto = new MemberFormDto();
 		if(med != null) {
-			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
+			List<Med> medlist = medService.getTesListNotMy(med.getMedId());
+//			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
 			memberFormDto.setMed(medlist);			
 		}
 
@@ -172,12 +177,22 @@ public class MemberController {
 	
 	@GetMapping(value= "/del/{id}")
 	public String deleteMember(Model model, @PathVariable("id") Long memberId) {
-		String delMemberMsg = memberService.deleteMember(memberId);
-		model.addAttribute("delMemberMsg", delMemberMsg);
-		System.err.println(delMemberMsg);
-		SecurityContextHolder.clearContext();
+		MessageDto message;				
+		try {
+			String delMemberMsg = memberService.deleteMember(memberId);
+			message = new MessageDto(delMemberMsg, "/");
+			SecurityContextHolder.clearContext();
+		} catch (Exception e) {
+			message = new MessageDto("회원 탈퇴에 실패했습니다.", "/");
+		}
 		
-		return "redirect:/";
+		return showMessageAndRedirect(message, model);
+	}
+	
+	
+	private String showMessageAndRedirect(final MessageDto params, Model model) {
+		model.addAttribute("params", params);
+		return "common/messageRedirect";
 	}
 }	
 

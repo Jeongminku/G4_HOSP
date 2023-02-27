@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:inline="javascript">
+	window.onload = () => {
+		const message = [[${params.alertMessage}]]
+		if(message) {
+			alert(message);
+		}
+		const redirectUri = [[${params.returnUrl}]]
+		location.href = redirectUri;
+		console.log(redirectUri);
+	}
+</script>
+</head>
+
+<body>
+
+</body>
+</html>

@@ -17,4 +17,5 @@ public interface MedRepository extends JpaRepository<Med, Long> {
 	
 	@Query(value = "select * from med where med_id not in(:myMedId)", nativeQuery=true)
 	List<Med> getMedListNotMyMed(@Param("myMedId") Long medid);
+	
 }
