@@ -32,38 +32,38 @@ public class ChatRoom {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@JoinColumn(name = "chatRoomAccess")
+	@JoinColumn(name = "medId")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private ChatRoomAccess chatRoomAccess;
+	private Med medId;
 	
 	private String chatRoomName;
 	
-//	@Transient
-//	private Set<WebSocketSession> sessions = new HashSet<>();
+	@Transient
+	private Set<WebSocketSession> sessions = new HashSet<>();
 	
-	public static ChatRoom createChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
+	public static ChatRoom createChatRoom (Med med) {
 		ChatRoom chatRoom = new ChatRoom();
-		chatRoom.setChatRoomAccess(chatRoomAccess);
-		chatRoom.setChatRoomName(chatRoomName);
+		chatRoom.setMedId(med);
+		chatRoom.setChatRoomName(med.getMedName());
 		return chatRoom;
 	}
 	
-	public void updateChatRoom (String chatRoomName) {
-		this.chatRoomName = chatRoomName;
+	public void updateChatRoom (String name) {
+		this.chatRoomName = name;
 	}
 	
-//	public void handlerActions(WebSocketSession session, ChatMessageDto chatMessageDto, ChatService chatService) {
-//        if (chatMessageDto.getType().equals(MessageType.ENTER)) {
-//            sessions.add(session);
-//            chatMessageDto.setMessage(chatMessageDto.getSender() + "님이 입장했습니다.");
-//        }
-//        sendMessage(chatMessageDto, chatService);
-//
-//    }
-//
-//    private <T> void sendMessage(T message, ChatService chatService) {
-//        sessions.parallelStream()
-//                .forEach(session -> chatService.sendMessage(session, message));
-//    }
+	public void handlerActions(WebSocketSession session, ChatMessageDto chatMessageDto, ChatService chatService) {
+        if (chatMessageDto.getType().equals(MessageType.ENTER)) {
+            sessions.add(session);
+            chatMessageDto.setMessage(chatMessageDto.getSender() + "님이 입장했습니다.");
+        }
+        sendMessage(chatMessageDto, chatService);
+
+    }
+
+    private <T> void sendMessage(T message, ChatService chatService) {
+        sessions.parallelStream()
+                .forEach(session -> chatService.sendMessage(session, message));
+    }
 }

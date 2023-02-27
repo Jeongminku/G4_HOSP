@@ -16,8 +16,8 @@
 #selectNotAvail #Fcalendar {width: 100%;}
 #selectDate form,
 #selectNotAvail form {width: 30%; padding: 0 0 0 20px;}
-/* #selectDate form input[name="time"]:checked + label,
-#selectNotAvail form input[type="checkbox"]:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);} */
+#selectDate form input[name="time"]:checked + label,
+#selectNotAvail form input[type="checkbox"]:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);}
 #selectNotAvail form label {padding: 0; width: calc(50% - 5px); margin-right: 5px;}
 #selectDate form .btn.btn-primary,
 #selectNotAvail form .btn.btn-primary {border: none; padding: 20px 0; font-size: 1.2rem; font-weight: bold;}

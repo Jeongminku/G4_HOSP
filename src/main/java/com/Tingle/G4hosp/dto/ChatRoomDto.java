@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ChatRoomDto {
 	private Long id;
-	private Long chatRoomAccess;
+	private Long medId;
 	private String chatRoomName;
 	
 	public static List<ChatRoomDto> createChatRoomDtoList (List<ChatRoom> chatRoomList) {
@@ -17,7 +17,7 @@ public class ChatRoomDto {
 		for(ChatRoom room : chatRoomList) {
 			ChatRoomDto chatRoomDto = new ChatRoomDto();
 			chatRoomDto.setId(room.getId());
-			chatRoomDto.setChatRoomAccess(room.getChatRoomAccess().getId());
+			chatRoomDto.setMedId(room.getMedId().getMedId());
 			chatRoomDto.setChatRoomName(room.getChatRoomName());
 			chatRoomDtoList.add(chatRoomDto);
 		}
