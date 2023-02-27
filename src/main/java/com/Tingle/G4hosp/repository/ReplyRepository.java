@@ -11,11 +11,15 @@ import org.springframework.data.repository.query.Param;
 
 import com.Tingle.G4hosp.entity.Reply;
 
-public interface ReplyRepository extends JpaRepository<Reply, Long>{
+public interface ReplyRepository extends JpaRepository<Reply, Long>, ReplyRepositoryCustom{
 	List<Reply> findByBoardId(Long id);
 	
 	@Transactional
 	@Modifying
 	@Query(value = "Update Reply set reply_content = :content  where reply_id = :id",nativeQuery = true)
 	int upDateReply(@Param("content") String content,@Param("id") Long id);
+	
+    
+
+
 }

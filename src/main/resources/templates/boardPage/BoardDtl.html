@@ -10,9 +10,15 @@
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-	
+	   
+
 	
 	function saveReply() {
+		
+	       if(!$("#replyContent").val()) {
+	        	alert("댓글을 입력하세요");
+	        	return false;
+	        }
 		
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
@@ -38,13 +44,15 @@
             },
             cache   : false,
             success  : function(result, status){
-                //location.href='/board/' + [[${boardFormDto.id}]];
+         		document.getElementById("replyContent").value ='';
+               
                 postPageReload()
+           
+               // test()
                 
             },
             error : function(jqXHR, status, error){
-            		alert("회원가입을 해주세요");
-                    alert(jqXHR.responseText);
+            		alert("로그인을 해주세요");
                     location.href='/members/login';
             }
         });
@@ -72,6 +80,9 @@
         	success : function(data) { // controllor에서 list를 return 받았음
             			alert(data);
                      console.log(data[0].member.imgUrl)
+                   	let str = JSON.stringify(data); // <> parse()
+					alert(str); 
+
                      //location.href='/board/' + [[${boardFormDto.id}]];
                          
              },
@@ -80,7 +91,7 @@
         	}
         });
 	} 
-	//=================================================================================
+	//페이지 리로딩
 	function postPageReload() {
 	
 	var token = $("meta[name='_csrf']").attr("content");
@@ -96,11 +107,12 @@
         	console.log('리로드')
             xhr.setRequestHeader(header, token);
         },
-        success: function (frag) {
+        success:function(frag){
         	console.log(frag)
             //frag - 받아온 프래그먼트 태그
             $('#reply').replaceWith(frag);
-        },
+        }
+        ,
         error: function (jqXHR, status, error) {
             console.log(jqXHR);
             console.log(status);
@@ -168,21 +180,27 @@
 
 	 var content = $("#con"+replyIdIndex.substr(2)).val();
 		
-	
+	 //댓글창 none
+	$("#conview"+replyIdIndex.substr(2)).css('display', 'none');
 	 
+	//버튼 none
+	$("[class*='btn']").not("[class*=" + replyIdIndex.substr(2) + "]").css('display', 'none');
+	
+	
 	 //인풋창 생성
 	 let input = document.createElement("input")
 	 input.setAttribute("type","text")
 	 input.setAttribute("class","upContent")
 	 input.setAttribute("id","upContent")
 	 input.setAttribute("value", content )
-	 document.querySelector("#Reply"+replyIdIndex).append(input);
+	 document.querySelector("#ReId"+replyIdIndex.substr(2)).append(input);
 	
+	$("#upRe").css('display', 'block');
 	 
 	 
 	 let button = document.getElementById(replyIdIndex)
 	 console.log(button);
-	 button.setAttribute("onClick","upRe()")
+	 button.setAttribute("onClick","upRe()") 
 	
 	 
 	}
@@ -234,6 +252,13 @@
                     location.href='/members/login';
             }
         });
+        
+        
+
+
+  
+ 	
+     
 }
 
 	
@@ -243,11 +268,11 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		
+
 		<table style="text-align: center;">
 			<tr>
 				<td>제목</td>	
-				<td>[[${boardFormDto.title}]]</td>	
+				<td>[[${boardFormDto.title}]] 	[[${h}]]</td>	
 			</tr>
 			<tr>
 				<td>글쓴이</td>	
@@ -265,30 +290,62 @@
 				<td>내용</td>
 				<td>[[${boardFormDto.content}]]</td>
 			</tr>
+			<tr>
+				<td><a th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a></td>
+				<td><a th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a></td>
+			</tr>
 		</table>
-
+		
 		댓글입력
 		<input type="text" id="replyContent" name="replyContent">
 		<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
-		
 		<button onclick="saveReply()">댓글입력</button>
-		댓글내용
+		
+		<!-- 댓글 -->
 		<div class="reply" id="reply" th:fragment="reply">
 		
-				<div th:each="reply , i : ${ReplyDtoList}"> 
+				<div th:each="reply , i : ${lists}"> 
 				<div th:id="Replyup+${i.index+1}" th:name="Replyup+${i.index+1}">
 				<img alt="" th:src="${reply.member.imgUrl}" style="width: 100px"> 
-				    <span>아이디 : <span th:text="${reply.member.loginid}"></span></span>
+				    <span th:id="ReId+${i.index+1}">아이디 : <span th:text="${reply.member.loginid}"></span></span>
 					<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">내용 : <span th:text="${reply.replyContent}"></span></span>
 					<input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
-					 <button onclick="deletReply()" th:id="${i.index+1}" class="del">삭제</button> 
-					 <button onclick="createinput()" th:id="up+${i.index+1}" class="up">수정</button>
+					 <button onclick="deletReply()" th:id="${i.index+1}" class="del-btn">삭제</button> 
+					 <button onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}">수정</button>
 				<input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
 				</div>
 
 			</div>	
 			
+	
+			<!-- 페이징 -->
+			<nav
+			th:with="start=${(lists.number/maxPage)*maxPage + 1}
+			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
+			aria-label="Page navigation example">
+			<ul class="pagination d-flex justify-content-center">
+				<li class="page-item" th:classappend="${lists.first}?'disabled'">
+					<a th:href="@{'/board/'+ ${boardFormDto.id} + '?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+						<span>이전</span>
+					</a>
+				</li>
+				<li class="page-item"
+					th:each="page: ${#numbers.sequence(start, end)}"
+					th:classappend="${lists.number eq page-1}?'active':''">
+					<a class="page-link" th:inline="text"
+					th:href="@{'/board/' +${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
+				</li>
+				<li class="page-item" th:classappend="${lists.last}?'disabled'">
+					<a class="page-link"
+					th:href="@{'/board/'+${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+				</li>
+			</ul>
+		</nav>
+		<!-- 페이징 -->		
 		</div>
+		<!-- 댓글 -->
+		
+
 				
 	</div>
 	

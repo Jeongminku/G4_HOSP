@@ -31,7 +31,8 @@ public class HinfoBoardRepositoryImpl implements HinfoBoardRepositoryCustum{
 	private BooleanExpression hinfoNmLike(String searchQuery) {
 		return StringUtils.isEmpty(searchQuery) ? null : QHinfoBoard.hinfoBoard.Title.like("%"+ searchQuery +"%");
 	}
-
+	
+	//페이징
 	@Override
 	public Page<HinfoListDto> getMainHinfoMain(HinfoSerchDto hinfoSerchDto, Pageable pageable) {
 		QHinfoBoard hinfoBoard = QHinfoBoard.hinfoBoard;

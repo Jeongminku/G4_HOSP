@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.Tingle.G4hosp.dto.BoardFormDto;
@@ -88,4 +89,26 @@ public class BoardService {
 		//리플저장
 		replyRepository.save(reply);
 	}
+	
+	//게시글삭제
+	@Transactional
+	public void delBoard(Long boardId) {
+		Board board = boardRepository.findById(boardId).orElseThrow(EntityNotFoundException::new);
+		
+		 boardRepository.delete(board);
+	}
+	
+	//수정할 게시판정보를 넘겨줌
+	@Transactional
+	public BoardFormDto getboardDto(Long boardId) {
+		Board board = boardRepository.findById(boardId).orElseThrow(EntityNotFoundException::new);
+		BoardFormDto boardFormDto = BoardFormDto.of(board);
+		return boardFormDto;
+	}
+	//게시글수정
+	public int upDateBoard(BoardFormDto boardFormDto) {
+		int succes = boardRepository.upDateBoard(boardFormDto.getContent(), boardFormDto.getId(), boardFormDto.getTitle());
+		return succes;
+	}
+	
 }
