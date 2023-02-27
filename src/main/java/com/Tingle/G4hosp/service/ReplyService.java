@@ -7,8 +7,11 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.Tingle.G4hosp.dto.PageSerchDto;
 import com.Tingle.G4hosp.dto.ReplyDto;
 import com.Tingle.G4hosp.entity.Reply;
 import com.Tingle.G4hosp.repository.BoardRepository;
@@ -46,11 +49,14 @@ public class ReplyService {
 	
 	//리플수정
 	public void upReply(ReplyDto replyDto) {
-		System.out.println(replyDto.getId() + " 아이디 "+"ddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 		Long replyId = replyDto.getId();
 		String content = replyDto.getReplyContent();
-		System.out.println(content);
 		replyRepository.upDateReply(content, replyId);
 		
+	}
+	
+	//리플 페이징
+	public Page<ReplyDto> getReplyPage(PageSerchDto pageSerchDto,Pageable pageable,Long boardId) {
+		return replyRepository.getReplyPage(pageSerchDto, pageable,boardId);
 	}
 }

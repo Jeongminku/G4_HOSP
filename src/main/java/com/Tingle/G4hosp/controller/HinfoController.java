@@ -141,6 +141,7 @@ public class HinfoController {
 		return  "redirect:/Hinfo/{hinfoId}";
 	}
 	
+
 	@GetMapping("/deletepage/{hinfoId}")
 	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId,HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
 
@@ -157,4 +158,8 @@ public class HinfoController {
 		
 		return "HinfoPage/hinfoMain";
 	}
+	
+
+
+	
 }
