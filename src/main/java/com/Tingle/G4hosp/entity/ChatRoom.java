@@ -17,10 +17,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.Tingle.G4hosp.constant.MessageType;
-import com.Tingle.G4hosp.dto.ChatMessageDto;
-import com.Tingle.G4hosp.service.ChatService;
-
 import lombok.Data;
 
 @Data
@@ -39,6 +35,9 @@ public class ChatRoom {
 	
 	private String chatRoomName;
 	
+	@Transient
+	private Set<WebSocketSession> sessions = new HashSet<>();
+	
 	public static ChatRoom createChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
 		ChatRoom chatRoom = new ChatRoom();
 		chatRoom.setChatRoomAccess(chatRoomAccess);
@@ -48,5 +47,15 @@ public class ChatRoom {
 	
 	public void updateChatRoom (String chatRoomName) {
 		this.chatRoomName = chatRoomName;
+	}
+	
+	public Set<WebSocketSession> addSession (WebSocketSession session) {
+		this.sessions.add(session);
+		return this.sessions;
+	}
+	
+	public Set<WebSocketSession> removeSession (WebSocketSession session) {
+		this.sessions.remove(session);
+		return this.sessions;
 	}
 }

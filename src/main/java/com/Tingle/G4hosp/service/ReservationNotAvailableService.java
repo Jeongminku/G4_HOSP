@@ -6,7 +6,6 @@ import java.util.stream.*;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.ReservationNotAvailable;

@@ -15,36 +15,36 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		http.formLogin()
-		.loginPage("/members/login")
-		.defaultSuccessUrl("/")
-		.usernameParameter("loginid")
-		.failureUrl("/members/login/error")
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-		.logoutSuccessUrl("/");
-		
-		http.authorizeRequests()
-		.mvcMatchers("/css/**","/js/**","/fonts/**","/images/**","/img/**").permitAll()
-		.mvcMatchers("/","/members/**","/item/**","/archive/**").permitAll();
-		//.anyRequest().authenticated();
-		
-		
-		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.formLogin()
+                .loginPage("/members/login")
+                .defaultSuccessUrl("/")
+                .usernameParameter("loginid")
+                .failureUrl("/members/login/error")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+                .logoutSuccessUrl("/");
 
-		// http.csrf().disable();
-		
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS); //모든 접속(?)리퀘스트에 대하여 항상 session을 만들어줍니다.
-		
-		return http.build();
-	}
-	
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(); 
-	}
+        http.authorizeRequests()
+                .mvcMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**").permitAll()
+                .mvcMatchers("/", "/members/**", "/item/**", "/archive/**").permitAll();
+        //.anyRequest().authenticated();
+        
+        
+        http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+        // http.csrf().disable();
+        
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS); //모든 접속(?)리퀘스트에 대하여 항상 session을 만들어줍니다.
+        
+        return http.build();
+    }
+
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
