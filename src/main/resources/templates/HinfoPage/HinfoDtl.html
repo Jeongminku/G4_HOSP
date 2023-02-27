@@ -15,14 +15,15 @@
 	
 	<h2>건강정보 게시판</h2><hr>
 	
+	<p></p>
 	<p>작성자 : [[${HinfoBoard.member.name}]] 글제목 : [[${HinfoBoard.title}]] 조회수 : [[${HinfoBoard.view}]]</p>
 	<p th:text="작성일_ + ${#temporals.format(HinfoBoard.regTime, 'yyyy-MM-dd HH:mm:ss')}"></p><br>
 	<p>[[${HinfoBoard.content}]]</p>
 	
 	<div th:each="img, status:${HinfoBoard.hinfoImgDtoList}"> <img alt="" th:src="${img.imgUrl}"></div>
-
-		<a th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}">수정</a>
-		<a th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}">삭제</a>
+	
+		<a class="btn btn-primary" th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}" role="button">수정</a>
+		<a class="btn btn-primary" th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}" role="button">삭제</a>
 	
 	</section>	
 	
