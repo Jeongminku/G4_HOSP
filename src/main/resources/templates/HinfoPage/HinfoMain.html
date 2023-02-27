@@ -183,11 +183,19 @@ Inbox Message Style
 a:hover {
 	text-decoration: none;
 }
+
+.p-content {
+ 	overflow: hidden;
+	text-overflow: p-content;
+  	display: -webkit-box;
+	-webkit-line-clamp: 2;
+ 	-webkit-box-orient: vertical;
+}
 </style>
 
 		<section>
 
-			<h1>건강정보 게시판</h1><br><hr><br>
+			<h3>건강정보 게시판</h3><br><hr><br>
 
 							<div class="job-box">
 								<div class="job-box-filter">
@@ -233,7 +241,7 @@ a:hover {
 
 														<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 													</div>
-													<p>항상 외출하고 돌아오면 손을 깨끗이 씻고, 재채기할때는 코와 입을 가리고 하도록 하자</p><br>
+													<p class="p-content">[[${list.content}]]</p><br>
 													<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]]</p>
 												</div>
 										</a>
@@ -278,8 +286,7 @@ a:hover {
 				</ul>
 			</nav>
 
-			<button onClick="location.href='/Hinfo/write'"
-				sec:authorize="hasAnyAuthority('ROLE_DOCTOR')">글쓰기</button>
+			<button style="float: right;" class="btn btn-primary" onClick="location.href='/Hinfo/write'" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')">글쓰기</button>
 
 		</section>
 

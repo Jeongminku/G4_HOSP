@@ -152,4 +152,9 @@ public class AdminController {
 		return "adminPage/doctorList";
 	}
 	
+	// 비회원 예약환자 조회
+	@GetMapping(value="nonMemberSearch")
+	public String nonMemberSearch() {
+		return "adminPage/nonMemberSearch";
+	}
 }

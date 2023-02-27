@@ -44,7 +44,8 @@ public class HinfoBoardRepositoryImpl implements HinfoBoardRepositoryCustum{
 								hinfoBoard.member,
 								hinfoBoard.Title,
 								hinfoBoard.view,
-								hinfoBoard.regDatetime
+								hinfoBoard.regDatetime,
+								hinfoBoard.Content
 								)
 						).from(hinfoBoard)
 						.join(hinfoBoard.member,member)
