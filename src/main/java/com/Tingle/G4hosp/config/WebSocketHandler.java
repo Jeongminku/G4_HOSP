@@ -40,14 +40,11 @@ public class WebSocketHandler extends TextWebSocketHandler {
         ChatMessageDto chatMessage = objectMapper.readValue(payload, ChatMessageDto.class);
         ChatRoom connectedRoom = chatRoomRepository.findById(chatMessage.getRoomId()).orElseThrow(EntityNotFoundException::new);
         
-        System.err.println("1");
         if(roomSeesionList.containsKey(connectedRoom.getId())){
         	sessions = roomSeesionList.get(connectedRoom.getId());
         } 
-        System.err.println("2");
         
         if (chatMessage.getType().equals(MessageType.ENTER)) {
-        	System.err.println("3");
             sessions.add(session);
             roomSeesionList.put(connectedRoom.getId(), sessions);
             chatMessage.setMessage(chatMessage.getSender() + " 님이 입장하셨습니다.");
@@ -59,10 +56,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
             chatMessage.setMessage(chatMessage.getSender() + " 님이 퇴장하셨습니다.");
         }
         
-        System.err.println("4");
-        
         sendMessage(chatMessage);
-        System.err.println(sessions);
     }
     
 //    public void handlerActions(WebSocketSession webSocketSession, ChatMessageDto chatMessageDto) {
@@ -75,7 +69,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
     
     private <T> void sendMessage(T message) {
         sessions.parallelStream().forEach(session -> {
-        	System.err.println("message: " + session);
         	chatService.sendMessage(session, message);
         	});
     }
