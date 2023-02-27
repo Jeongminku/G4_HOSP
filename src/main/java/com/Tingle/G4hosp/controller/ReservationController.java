@@ -1,12 +1,8 @@
 package com.Tingle.G4hosp.controller;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.Tingle.G4hosp.dto.QuickReservationDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
+import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.Reservation;
+import com.Tingle.G4hosp.service.DiseaseService;
+import com.Tingle.G4hosp.service.QuickReservationService;
 import com.Tingle.G4hosp.service.ReservationNotAvailableService;
 import com.Tingle.G4hosp.service.ReservationService;
 
@@ -31,6 +31,8 @@ public class ReservationController {
 	
 	private final ReservationService reservationService;
 	private final ReservationNotAvailableService reservationNotAvailableService;
+	private final QuickReservationService quickReservationService;
+	private final DiseaseService diseaseService;
 	
 	@GetMapping("/selectDoc")
 	public String selectDocPage (Model model) {
@@ -102,4 +104,22 @@ public class ReservationController {
 		}
 		return "ReservationPage/SetNotAvailableDay";
 	}
+	
+	@GetMapping("/quick")
+	public String quickResevation(Model model) {
+		QuickReservationDto quickReservationDto = new QuickReservationDto();
+		List<Disease> DL = diseaseService.getDiseaseList();
+		
+		model.addAttribute(quickReservationDto);
+		model.addAttribute("DL",DL);
+		return "ReservationPage/QuickReservation";
+	}
+	
+	@PostMapping("/sendqr")
+	public String sendReservation(Model model, QuickReservationDto quickReservationDto)  {
+		Long res = quickReservationService.saveQR(quickReservationDto);	
+		
+		return "redirect:/";
+	}
+	
 }

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.dto.ArchiveFormDto;
 import com.Tingle.G4hosp.dto.ArchiveSearchDto;
+import com.Tingle.G4hosp.dto.ArchiveViewDto;
 import com.Tingle.G4hosp.entity.Archive;
 import com.Tingle.G4hosp.entity.ArchiveDisease;
 import com.Tingle.G4hosp.entity.ArchiveImg;
@@ -28,6 +29,7 @@ import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.ArchiveDiseaseRepository;
 import com.Tingle.G4hosp.repository.ArchiveRepository;
+import com.Tingle.G4hosp.repository.DiseaseRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.ArchiveImgService;
 import com.Tingle.G4hosp.service.ArchiveService;
@@ -50,7 +52,7 @@ public class ArchiveController {
 	
 	private final ArchiveRepository archiveRepository;
 	private final MemberRepository memberRepository;
-	
+	private final DiseaseRepository diseaseRepository;
 	private final ArchiveDiseaseRepository archiveDiseaseRepository;
 	// SEARCH PATIENT PAGE
 	@GetMapping(value="/")
@@ -90,7 +92,19 @@ public class ArchiveController {
 			AIL.add(archiveImgService.getarchiveimglist(A));
 			List<ArchiveDisease> ADR = archiveDiseaseRepository.findAll();
 		}
+		List<ArchiveViewDto> AVDlist = new ArrayList<>();
 		
+		for(Archive archive : AL) {
+			ArchiveViewDto archiveViewDto = new ArchiveViewDto();
+			archiveViewDto.setARid(archive.getId());
+			archiveViewDto.setARcreatedtime(archive.getArchiveCreatedtime());
+			archiveViewDto.setARdoctorname(archive.getDoctorname());
+			archiveViewDto.setARmodifiedtime(archive.getArchiveModifiedtime());
+			archiveViewDto.setARdetail(archive.getDetail());
+			archiveViewDto.setARdiseasename(diseaseService.findDiseasebyArcid(archive.getId()).getDiseaseName());
+			AVDlist.add(archiveViewDto);
+		}
+		model.addAttribute("AVDlist",AVDlist);
 		
 		// CHECK PATIENT IS HOSPITALIZED OR NOT
 		Hospitalize hospitalize;
@@ -157,6 +171,9 @@ public class ArchiveController {
 		if(patientid.isPresent()) {
 			patient = memberRepository.getReferenceById(patientid.get());	
 		}
+		
+		List<Disease> Diseaselist = diseaseRepository.findAll();
+		
 		// CALCULATE AGE BY MEMBER BIRTH
         String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
         String birth = patient.getBirth().substring(0, 4);
@@ -165,6 +182,7 @@ public class ArchiveController {
 		
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("patient", patient);
+		model.addAttribute("DL",Diseaselist);
 		return "/ArchivePage/ArchiveWrite";
 	}
 	

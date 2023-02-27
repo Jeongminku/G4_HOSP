@@ -1,7 +1,5 @@
 package com.Tingle.G4hosp.dto;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data

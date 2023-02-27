@@ -70,7 +70,7 @@ public class MemberService implements UserDetailsService{
 	 }
 	
 	 public Member findByLoginid(String loginid) {
-			return memberRepository.findByLoginid(loginid);
+		return memberRepository.findByLoginid(loginid);
 	}	
 	 
 	 public Member findByMemberid(Long memid) {
@@ -106,5 +106,9 @@ public class MemberService implements UserDetailsService{
 			} catch (Exception e) {
 				return "탈퇴하지 못하였습니다.";
 			}
-		}
+	}
+	 
+	 public Role getMemberRole (String loginId) {
+		 return findByLoginid(loginId).getRole();
+	 }
 }
