@@ -8,6 +8,7 @@ import com.Tingle.G4hosp.entity.Board;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.Reply;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.querydsl.core.annotations.QueryProjection;
 
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
@@ -23,10 +24,13 @@ public class ReplyDto {
 	
 	private LocalDateTime regTime;
 	
-
 	private Board board; //게시글의 pk
 	
 	private Member member; // 회원의 pk
+	
+	public ReplyDto() {
+		
+	}
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
@@ -35,7 +39,14 @@ public class ReplyDto {
 	}
 	
 	
-	
+	@QueryProjection
+	public ReplyDto(Long id,String replyContent,LocalDateTime regTime,Board board,Member member) {
+		this.id =id;
+		this.replyContent =replyContent;
+		this.regTime = regTime;
+		this.board =board;
+		this.member =member;
+	}
 	
 	
 	

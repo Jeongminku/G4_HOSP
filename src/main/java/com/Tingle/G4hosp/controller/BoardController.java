@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.Tingle.G4hosp.dto.BoardFormDto;
 import com.Tingle.G4hosp.dto.BoardListDto;
 import com.Tingle.G4hosp.dto.BoardSerchDto;
+import com.Tingle.G4hosp.dto.PageSerchDto;
 import com.Tingle.G4hosp.dto.ReplyDto;
 import com.Tingle.G4hosp.dto.ReplyJsonDto;
 import com.Tingle.G4hosp.service.BoardService;
@@ -49,15 +50,12 @@ public class BoardController {
 	//현재 환자정보게시판의 메인화면을 보여줍니다.
 	@GetMapping(value = "/main")
 	public String boardView(BoardSerchDto boardserchDto,Optional<Integer> page,Model model) {
-		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
 		Page<BoardListDto> list = boardSerivce.getBoardMain(boardserchDto, pageable);
-		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
 		
-		System.out.println(list.getContent().size());
 		
 		return "boardpage/BoardMain";
 	}
@@ -78,7 +76,7 @@ public class BoardController {
 		}
 		
 		try {
-			Long path = boardSerivce.saveBoardForm(boardFormDto, pricipal);	
+			 boardSerivce.saveBoardForm(boardFormDto, pricipal);	
 		} catch (Exception e) {
 			model.addAttribute("errorMessage","로그인을 해주세요");
 			return "boardpage/boardForm";
@@ -90,7 +88,7 @@ public class BoardController {
 	//게시글 상세 보기
 	@GetMapping(value = "/{boardId}")
 	public String boardview(Model model, @PathVariable("boardId") Long boardId,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response , PageSerchDto pageSerchDto,Optional<Integer> page) {
 
 		//쿠키를 통한 게시글 조회수 중복 카운트 방지
 		 Cookie oldCookie = null;
@@ -98,7 +96,8 @@ public class BoardController {
 		 
 		    if (cookies != null) {
 		        for (Cookie cookie : cookies) {
-		            if (cookie.getName().equals("postView")) {
+        	
+		            if (cookie.getName().equals("postView")) {		            	
 		                oldCookie = cookie;
 		            }
 		        }
@@ -121,9 +120,18 @@ public class BoardController {
 		    }
 		
 		    BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
-		    List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
+		    //List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
 		    
-		    model.addAttribute("ReplyDtoList" ,ReplyDtoList);
+		    
+			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
+			Page<ReplyDto> list = replyService.getReplyPage(pageSerchDto, pageable,boardId);
+			
+			model.addAttribute("lists" , list);
+			model.addAttribute("pageSerchDto" , pageSerchDto);
+			model.addAttribute("maxPage", 5);
+			
+		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
+		    
 		    model.addAttribute("boardFormDto",boardFormDto);
 		    
 		    
@@ -148,10 +156,17 @@ public class BoardController {
 	
 	//페이지 리로딩
 	@PostMapping("/reload/{boardId}")
-	public String replacePost (@PathVariable("boardId") Long boardId , Model model) {
+	public String replacePost (@PathVariable("boardId") Long boardId , Model model,PageSerchDto pageSerchDto,Optional<Integer> page) {
 		
-		List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
-		model.addAttribute("ReplyDtoList" ,ReplyDtoList);
+		 BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
+		Page<ReplyDto> list = replyService.getReplyPage(pageSerchDto, pageable,boardId);
+		
+		model.addAttribute("lists" , list);
+		model.addAttribute("pageSerchDto" , pageSerchDto);
+		model.addAttribute("maxPage", 5);
+		 model.addAttribute("boardFormDto",boardFormDto);
+		 
 		return "boardPage/BoardDtl :: reply";
 	}
 	
@@ -167,8 +182,64 @@ public class BoardController {
 	@ResponseBody public ResponseEntity upReply(@RequestBody ReplyDto replyDto) {
 
 		replyService.upReply(replyDto);
-		System.out.println("??????????????????????????????????????????????????????");
 		return new ResponseEntity(HttpStatus.OK);
 	}
-
+	
+//	//테스트 페이징
+//	@RequestMapping(value = "/page/{boardId}"  , method = { RequestMethod.POST })
+//	@ResponseBody Page<ReplyDto> repaging(PageSerchDto pageSerchDto,Optional<Integer> page,Model model) {
+//		
+//		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
+//		Page<ReplyDto> list = replyService.getReplyPage(pageSerchDto, pageable);
+//		model.addAttribute("pageSerchDto" , pageSerchDto);
+//		model.addAttribute("h", "h");
+//		System.out.println(list.getContent()+"?");
+//		return list;
+//	}
+	
+	//게시글 삭제
+	@RequestMapping(value = "/delBoard/{boardId}")
+	public String deleteBoard(@PathVariable("boardId") Long boardId,BoardSerchDto boardserchDto,Optional<Integer> page,Model model) {
+		boardSerivce.delBoard(boardId);
+		
+		
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
+		Page<BoardListDto> list = boardSerivce.getBoardMain(boardserchDto, pageable);
+		model.addAttribute("lists", list);
+		model.addAttribute("maxPage", 5);
+		model.addAttribute("boardserchDto" , boardserchDto);
+		
+		
+		return "redirect:/board/main";
+	}
+	
+	//게시글 수정페이지로 가기
+	@GetMapping(value = "/upDateForm/{boardId}")
+	public String boardUpdateForm(@PathVariable("boardId") Long boardId,Model model) {
+	 BoardFormDto boardFormDto	= boardSerivce.getboardDto(boardId);
+		model.addAttribute("boardFormDto", boardFormDto);
+		return "boardpage/boardForm";
+	}
+	
+	//게시글 수정하기
+	@PostMapping(value = "/updateB")
+	public String boardUpdate(@Valid BoardFormDto boardFormDto,BindingResult bindingResult,Model model ) {
+		
+		if(bindingResult.hasErrors()) {
+			return "boardpage/boardForm";
+		}
+		
+		try {
+			int succes = boardSerivce.upDateBoard(boardFormDto);
+			
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "게시글 수정에 실패했습니다");
+			return "redirect:/board/" + boardFormDto.getId();
+		}
+		
+		
+		
+		return "redirect:/board/" + boardFormDto.getId();
+	}
 }

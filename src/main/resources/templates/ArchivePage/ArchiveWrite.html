@@ -86,8 +86,18 @@
 .but{
 	height: 30px;
 	width: 80px;
+	background: #205B8A;
+	color: white;
 }
 
+.inspace{
+	padding: 5px;
+	margin: 1px;
+}
+
+.imgspace{
+	margin-top: 10px;
+}
 
 </style>
 </th:block>
@@ -98,7 +108,7 @@
 			<div class="cont">
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-10 headwrap">
-					
+
 					<div class="col-md-12 viewhead">
 						<h1>진료 내역 작성</h1>
 					</div>
@@ -119,23 +129,29 @@
 								</tr>
 								<tr>
 									<th scope="row">질병명</th>
-									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td>
+											<td><select class="form-select" aria-label="Default select example" th:field = "*{disease}" style="width: 70%">
+												<option th:each ="dis : ${DL}" th:value="${dis.diseaseName}"> [[${dis.diseaseName}]] </option>
+											</select>
+											</td>
+<!-- 									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td> -->
 									<th scope="row">담당의</th>
 									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">
-										<div>세부 진료 사항</div>
+										<div class="inspace" >세부 진료 사항</div>
 										<p> <textarea class="detail" th:field = "*{detail}" placeholder="내용을 작성해주세요">  </textarea> </p>
+										<div class="imgspace">
 											<img th:id = "preview1" th:name = "1" class="cont_img" onclick="change(this)">									
 											<img th:id = "preview2" th:name = "2" class="cont_img" onclick="change(this)">									
 											<img th:id = "preview3" th:name = "3" class="cont_img" onclick="change(this)">									
-											<img th:id = "preview4" th:name = "4" class="cont_img" onclick="change(this)">									
+											<img th:id = "preview4" th:name = "4" class="cont_img" onclick="change(this)">																			
+										</div>
 									</td>	
 								</tr>
 								<tr>
 									<td colspan="4">
-									사진첨부
+									<p class="inspace">사진첨부</p> 
 											<input type="file" class="form-control" th:id="1" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 											<input type="file" class="form-control" th:id="2" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 											<input type="file" class="form-control" th:id="3" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>비회원 빠른 예약</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	console.log(errorMessage);
+    	if(errorMessage != null){
+        	alert(errorMessage);
+    	}
+	return false;
+	});
+	function check(){
+		var form = document.resvform;
+		var checkbox = document.getElementById('checkok');
+		console.log(checkbox.checked);
+		
+		if(checkbox.checked == false){
+			alert("개인정보 수집 및 이용 동의에 동의해야 예약을 진행할 수 있습니다.");
+			return false;
+		}else{
+			alert("예약이 완료되었습니다!");
+			form.submit();
+		}
+		
+	}
+    
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<style>
+.wrap {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.headwrap {
+	margin: 0 auto;
+}
+
+.viewhead {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.viewlineboxup {
+	border-top: 4px solid black;
+}
+
+.viewlinebox{
+	background-color: #DDE0E1;
+	padding: 60px 100px;
+}
+
+.linemenu {
+	height: 50px;
+	text-align: center;
+	margin-top: 15px;
+}
+
+.tablemenu {
+	padding: 15px;
+	margin: 0 auto;
+	background: white;
+	width : 60%;
+}
+
+.detailbody {
+	border: none;
+}
+
+.detail{
+	width: 90%;
+	height : 250px;
+	background-color: #DDE0E1;
+	
+}
+
+.table_con {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.cont_img {
+	width: 15%;
+}
+
+.patientlist {
+	text-align: center;
+}
+
+.pnamein {
+	width: 80%;
+}
+.table{
+}
+
+.table tr{
+	text-align: left;
+}
+
+.but{
+	background: #205B8A;
+	color: white;
+}
+
+.privateagree{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<section>
+			<div class="wrap">
+				<div class="cont">
+					<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+						<div class="col-md-10 headwrap">
+ 							<form th:action="'/reservation/sendqr'" method="post" name = "resvform" th:object="${quickReservationDto}">
+							<div class="col-md-12 viewhead">
+								<h1>비회원 진료 빠른예약</h1>
+							</div>
+							<div class="col-md-12 viewlineboxup">
+							<span ><i class="fa-solid fa-headset"></i></span>
+						 	<span class="t"> 비회원 진료 빠른 예약이란 </span>
+						 	<span>
+						 	처음 오시는 고객의 편의를 위하여 전문 상담원이 전화를 통해 진료 예약을 도와드리는 서비스입니다.
+						 	<br>
+							서비스를 원하는 경우 아래 사항을 입력해주시면 상담 시간에 연락드리겠습니다.
+						 	</span>
+							</div>
+							<div class="col-md-12 viewlinebox">
+								<div>
+									<h2>주의 사항</h2>
+								</div>
+								<div>
+									<ul>
+										<li> 
+										<span class="num"> 1.</span> 
+											상담시간 : 평일 08:30 - 17:00 토요일 08:30 - 12:00 (일요일 및 공휴일 제외)
+										</li>
+										<li> 
+										<span class="num"> 2.</span> 
+											공휴일 다음날은 신청자가 많은 관계로 오후에 연락드릴 수 있습니다
+										</li>
+										<li> 
+										<span class="num"> 3.</span> 
+											1577-0075 번호로 상담 전화가 수신되며 연결 2회 이상 실패 시 예약의뢰가 자동 취소됩니다.
+										</li>
+										<li> 
+										<span class="num"> 4.</span> 
+											처음 오시는 분이 아닐 경우 상담이 자동 취소됩니다.<br>
+											(처음 오시는 분이 아닐 경우 인터넷진료예약, 모바일앱, 콜센터 진료예약으로 직접 예약하실 수 있으니 이용 바랍니다.)
+										</li>
+								
+									</ul>
+								</div>		
+								<div class="privateagree">
+									<div><h2> 개인정보 수집 및 이용동의</h2></div>
+									<div> 
+										<textarea class="detail" readonly="readonly"> 
+											개인정보 수집 및 이용 동의(비회원 진료 빠른예약)
+
+												1. 개인정보의 수집 및 이용 목적
+												서울대학교병원운영 서울특별시보라매병원은 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적 이외의 용도로는 사용되지 않으며, 이용 목적이 변경될 시에는 사전 동의를 구할 예정입니다.
+												
+												○ 민원사무처리
+												민원인의 신원 확인, 민원사항 확인, 사실조사를 위한 연락•통지, 처리결과 통보 등을 목적으로 개인정보를 처리합니다.
+												
+												2.수집하는 개인정보의 항목
+												
+												○ 처음진료 빠른예약
+												1. 필수항목: 고객이름, 전화번호, 통화요청시간
+												2. 선택항목: 비고
+												
+												3. 개인정보의 처리 및 보유기간
+												
+												서울대학교병원운영 서울특별시보라매병원 홈페이지는 법령에 따른 개인정보 보유•이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의 받은 개인정보 보유•이용기간 내에서 개인정보를 처리•보유합니다.
+												
+												○ 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
+												
+												1) 민원사무 처리 : 민원처리 종료 후 2년
+												
+												4. 동의를 거부할 권리가 있다는 사실과 동의 거부에 따른 불이익 내용
+												이용자는 서울대학교병원운영 서울특별시보라매병원에서 수집하는 개인정보에 대해 동의를 거부할 권리가 있으며 동의 거부 시에는 홈페이지 민원등록(처음진료 빠른예약)서비스가 제한됩니다.
+										 </textarea> 
+									</div>
+								<div>
+									<input class="form-check-input" id = "checkok" type="checkbox">
+						 			<label class="form-check-label" for="flexCheckDefault"> 개인정보 수집 및 이용에 동의합니다. </label>											  						
+									</div>
+								</div>				
+								<div class="col-md-12 tablemenu">
+								<table class="table table-bordered table_con">
+									<tbody>
+										<tr>
+											<th scope="row">고객이름</th>
+										</tr>
+										<tr>
+										<td><input type="text" class="form-control inputarea" placeholder="실명을 입력해주세요." th:field="*{cusname}"></td>
+										</tr>
+										<tr>
+											<th scope="row">전화번호</th>
+										</tr>
+										<tr>
+										<td><input type="text" class="form-control inputarea" placeholder="전화번호를 입력해주세요."th:field="*{custel}"></td>
+										</tr>
+										<tr>
+										<th scope="row">통화요청시간</th>
+										</tr>
+										<tr>
+										<td>
+											<select class="form-select" aria-label="Default select example" th:field="*{requesttime}">
+												<option value="0830" selected> 08:30 ~ 12:00 </option>
+												<option value="1300"> 13:00 ~ 17:30 </option>
+											</select>
+										</td>
+										</tr>
+										<tr>
+											<th scope="row">증상</th>
+										</tr>
+										<tr>
+											<td><select class="form-select" aria-label="Default select example" th:field = "*{symptom}" style="width: 100%">
+												<option th:each ="dis : ${DL}" th:value="${dis.diseaseName}"> [[${dis.diseaseName}]] </option>
+											</select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="col-md-12 linemenu">
+									<button type="button" onclick="check()" class="but" style="height: 75%; width: 95%;">예약 신청</button>
+								</div>
+							</div>
+							</div>			
+							</form>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>
