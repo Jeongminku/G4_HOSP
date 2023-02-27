@@ -39,9 +39,6 @@ public class ChatRoom {
 	
 	private String chatRoomName;
 	
-//	@Transient
-//	private Set<WebSocketSession> sessions = new HashSet<>();
-	
 	public static ChatRoom createChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
 		ChatRoom chatRoom = new ChatRoom();
 		chatRoom.setChatRoomAccess(chatRoomAccess);
@@ -52,18 +49,4 @@ public class ChatRoom {
 	public void updateChatRoom (String chatRoomName) {
 		this.chatRoomName = chatRoomName;
 	}
-	
-//	public void handlerActions(WebSocketSession session, ChatMessageDto chatMessageDto, ChatService chatService) {
-//        if (chatMessageDto.getType().equals(MessageType.ENTER)) {
-//            sessions.add(session);
-//            chatMessageDto.setMessage(chatMessageDto.getSender() + "님이 입장했습니다.");
-//        }
-//        sendMessage(chatMessageDto, chatService);
-//
-//    }
-//
-//    private <T> void sendMessage(T message, ChatService chatService) {
-//        sessions.parallelStream()
-//                .forEach(session -> chatService.sendMessage(session, message));
-//    }
 }

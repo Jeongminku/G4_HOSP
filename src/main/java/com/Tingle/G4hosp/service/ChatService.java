@@ -67,7 +67,7 @@ public class ChatService {
     	}
     	return accessListMap;
     }
-    
+
     public boolean checkChatRoomAccess (Long roomAccessId, Member sender) {
     	ChatRoomAccess chatRoomAccess = chatRoomAccessRepository.findById(roomAccessId).orElseThrow(EntityNotFoundException::new);
     	if(chatRoomAccess.getChatRoomAccessMedId() == null) {
@@ -77,7 +77,7 @@ public class ChatService {
     		return chatRoomAccess.getChatRoomAccessMedId() == memberMed.getMedId() ? true : false;
     	}
     }
-    
+
     public Map<Long, String> enterChatRoom (Long roomId, Long roomAccessId, String memberLoginId) throws AccessDeniedException {
     	Member sender = memberService.findByLoginid(memberLoginId);
     	if(checkChatRoomAccess(roomAccessId, sender)) {
@@ -93,9 +93,7 @@ public class ChatService {
         try{
         	session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
         } catch (IOException e) {
-        	System.err.println("error: " + e.getMessage());
             log.error(e.getMessage(), e);
-            
         }
     }
 }

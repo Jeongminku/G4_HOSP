@@ -32,7 +32,6 @@ public class ChatController {
 	
     private final ChatService chatService;
     private final MedService medService;
-    private final MemberService memberService;
 
     @PostMapping
     public String createRoom(ChatRoomDto chatRoomDto, Model model) {
@@ -65,10 +64,4 @@ public class ChatController {
     	}
     	return "ChatPage/WebChatTesting";
     }
-    
-//    @PostMapping("/send")
-//    public void test (ChatMessageDto chatMessageDto, WebSocketSession webSocketSession) {
-//    	System.err.println(chatMessageDto);
-//    	chatService.sendMessage(webSocketSession, chatMessageDto);
-//    }
 }

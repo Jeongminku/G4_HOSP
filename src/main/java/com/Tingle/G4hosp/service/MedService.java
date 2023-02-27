@@ -12,20 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.entity.Med;
-import com.Tingle.G4hosp.repository.ChatRoomAccessRepository;
 import com.Tingle.G4hosp.repository.MedRepository;
 
 import lombok.RequiredArgsConstructor;
 
+// 진료과 서비스 담당
 @Service
 @RequiredArgsConstructor
 @Transactional
-
-// 진료과 서비스 담당
-
 public class MedService {
 	
 	private final MedRepository medRepository;
+	private final MedRepository medRepository2;
 	private final ChatRoomAccessService chatRoomAccessService;
 	
 	// 진료과 등록
@@ -34,6 +32,7 @@ public class MedService {
 		Med med = medFormDto.createMed();
 		Med savedMed = medRepository.save(med);
 		chatRoomAccessService.createChatRoomAccess(savedMed);
+		
 		return med.getMedId();
 	}
 
@@ -52,4 +51,7 @@ public class MedService {
 		return medRepository.findMedbyDocid(doctorid);
 	}
 	
+	public List<Med> getTesListNotMy(Long medId) {
+		return medRepository2.getMedListNotMyMed(medId);
+	}
 }

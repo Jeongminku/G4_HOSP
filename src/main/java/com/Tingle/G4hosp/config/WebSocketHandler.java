@@ -59,14 +59,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
         sendMessage(chatMessage);
     }
     
-//    public void handlerActions(WebSocketSession webSocketSession, ChatMessageDto chatMessageDto) {
-//        if (StringUtils.equals(chatMessageDto.getType(), MessageType.ENTER)) {
-//            sessions.add(webSocketSession);
-//            chatMessageDto.setMessage(chatMessageDto.getSender() + "님이 입장했습니다.");
-//        }
-//        sendMessage(chatMessageDto, chatService);
-//    }
-    
     private <T> void sendMessage(T message) {
         sessions.parallelStream().forEach(session -> {
         	chatService.sendMessage(session, message);
@@ -79,12 +71,5 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			if(roomSeesionList.get(roomId).contains(session)) roomSeesionList.get(roomId).remove(session);
 		}
 	}
-
-
-//	@Override
-//	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-//		System.err.println("handler : " + session);
-//	}
-    
 	
 }

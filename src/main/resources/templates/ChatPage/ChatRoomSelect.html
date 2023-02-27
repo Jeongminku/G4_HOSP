@@ -14,7 +14,7 @@
 </head>
 <body>
     <section class="d-flex flex-column align-items-center" layout:fragment="content">
-        <form th:action="@{/chat}" method="post" class="d-flex justify-content-around align-items-end w-100 mb-5" id="newChatRoom">
+		<form th:action="@{/chat}" method="post" class="d-flex justify-content-around align-items-end w-100 mb-5" id="newChatRoom">
             <div class="d-flex flex-column justify-content-start" id="newChatAccess">
                 <p class="text-muted mb-2">공개범위</p>
                 <select class="p-3 rounded" name="chatRoomAccess">
@@ -35,7 +35,6 @@
             </th:block>
             <button type="submit" class="w-100 text-center p-3 mb-2 btn btn-primary">입장</button>
         </form>
-        <!-- <script src="../../js/ChatTest.js"></script> -->
     </section>
 </body>
 </html>

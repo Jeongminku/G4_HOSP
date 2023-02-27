@@ -38,6 +38,9 @@
     box-sizing: border-box;
 }
 
+/* 클래스 */
+.c-bg-primary {background-color: #B2B2B2;}
+
 /* 헤더 */
 .navbar > ul {flex-direction: row;}
 .offcanvas-header {padding: 0 10px;}
