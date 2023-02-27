@@ -73,7 +73,7 @@
 	text-align: center;
 	border-bottom: 3px solid; 
 	margin-bottom: 10px;
-	height: 15%;
+	height: 80px;
 	}
 	
 .viewlineboxup {
@@ -90,7 +90,7 @@
 	height: 35px;
 	text-align: center;
 	display: table;
-	margin-top: 10px;
+	margin-top: 15px;
 }
 .tablemenu{
 	border: 1px solid
@@ -119,6 +119,13 @@ a:hover {
 .but{
 	height: 30px;
 	width: 80px;
+	background: #205B8A;
+	color: white;
+}
+
+.table{
+	margin-top: 10px;
+	width: 90%;
 }
 
 </style>
@@ -154,31 +161,33 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-12 viewlineboxup"></div>
-					<div class="col-md-12 tablemenu" th:each="archive : ${ArchiveList}">
+					<div class="col-md-12 tablemenu" th:each="archive : ${AVDlist}">
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
 									<th scope="row">진료내역번호</th>
-									<td>[[${archive.id}]]</td>
-									<th scope="row">진료일</th>
-									<td>[[${archive.ArchiveCreatedtime}]]</td>
-								</tr>
-								<tr>
-									<!--질병명?  -->
+									<td>[[${archive.ARid}]]</td>
+									<th scope="row">진료목적 (병명)</th>
+									<td>[[${archive.ARdiseasename}]]</td>
+
 								</tr>
 								<tr>
 									<th scope="row">담당의</th>
-									<td>[[${archive.doctorname}]]</td>
-									<th th:if = "archive.ArchiveModifiedtime != null" scope="row">차트 수정일</th>
-									<td th:if = "archive.ArchiveModifiedtime != null" >[[${archive.ArchiveModifiedtime}]]</td>
+									<td>[[${archive.ARdoctorname}]]</td>
+									<th scope="row">진료일</th>
+									<td>[[${archive.ARcreatedtime}]]</td>
+								</tr>
+								<tr>
+									<th th:if = "archive.ARmodifiedtime != null" scope="row">차트 수정일</th>
+									<td th:if = "archive.ARmodifiedtime != null" >[[${archive.ARmodifiedtime}]]</td>
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">
 										<div>세부 진료 사항</div>
-										<p> [[${archive.detail}]] </p>
+										<p> [[${archive.ARdetail}]] </p>
 										<span th:each="AI : ${ArchiveImgList}">
 											<span th:each = "IMGLIST : ${AI}">
-	 												<span th:if="${IMGLIST.getArchive().getId()} == ${archive.id}">
+	 												<span th:if="${IMGLIST.getArchive().getId()} == ${archive.ARid}">
 													<img th:alt="${IMGLIST.imgname}" th:src="${IMGLIST.imgurl}" style="width: 20%">
 												</span>
 											</span>
@@ -188,8 +197,8 @@ a:hover {
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<a th:href="'/archive/update/'+${archive.id}"> 진료내역수정 </a>
-						<a th:onclick="deletearchive([[${archive.id}]])" > 진료내역삭제 </a>
+						<a th:href="'/archive/update/'+${archive.ARid}"> 진료내역수정 </a>
+						<a th:onclick="deletearchive([[${archive.ARid}]])" > 진료내역삭제 </a>
 					</div>
 					</div>
 				</div>

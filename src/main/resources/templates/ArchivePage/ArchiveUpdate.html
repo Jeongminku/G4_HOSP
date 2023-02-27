@@ -8,7 +8,7 @@
 	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8" />
-<title>진료 내역 작성페이지입니다.</title>
+<title>진료 내역 수정페이지입니다.</title>
 
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
@@ -86,7 +86,18 @@
 .but{
 	height: 30px;
 	width: 80px;
+	background: #205B8A;
+	color: white;	
 }
+.inspace{
+	padding: 5px;
+	margin: 1px;
+}
+
+.table{
+	margin-top: 10px;
+}
+
 </style>
 </th:block>
 </head>
@@ -98,7 +109,7 @@
 					<div class="col-md-10 headwrap">
 					
 					<div class="col-md-12 viewhead">
-						<h1>진료 내역 작성</h1>
+						<h1>진료 내역 수정</h1>
 					</div>
 					
 					<form th:action="'/archive/update/'+${archive.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">		
@@ -131,7 +142,7 @@
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">
-										<div>세부 진료 사항</div>
+										<div class="inspace" >세부 진료 사항</div>
 										<p> <textarea class="detail" th:field = "*{detail}" placeholder="작성예시">  </textarea> </p>
 											<img th:id = "preview1" th:name = "1" class="cont_img" onclick="change(this)">									
 											<img th:id = "preview2" th:name = "2" class="cont_img" onclick="change(this)">									
@@ -141,7 +152,7 @@
 								</tr>
 								<tr>
 									<td colspan="4">
-									사진첨부
+									<p class="inspace">사진첨부</p> 
 											<input type="file" class="form-control" th:id="1" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 											<input type="file" class="form-control" th:id="2" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 											<input type="file" class="form-control" th:id="3" onchange="readURL(this)" name="PostImgFile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
