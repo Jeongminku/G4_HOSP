@@ -59,6 +59,9 @@ footer > *:not(:first-child) {margin-top: 10px;}
 
 /* 공통섹션 */
 section {width: 80%; min-height: calc(100vh - 50px); margin: 0 auto; padding: 3rem 0; max-width: 1200px;}
+input:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);}
+.rounded {border: 1px solid #113F67;}
+.c-bg-primary {background-color: #B2B2B2;}
 
 @media screen and (max-width: 991.98px) {
     /* custom class */

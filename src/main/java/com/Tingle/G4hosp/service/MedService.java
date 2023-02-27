@@ -16,21 +16,22 @@ import com.Tingle.G4hosp.repository.MedRepository;
 
 import lombok.RequiredArgsConstructor;
 
+// 진료과 서비스 담당
 @Service
 @RequiredArgsConstructor
 @Transactional
-
-// 진료과 서비스 담당
-
 public class MedService {
 	
 	private final MedRepository medRepository;
 	private final MedRepository medRepository2;
+	private final ChatRoomAccessService chatRoomAccessService;
+	
 	// 진료과 등록
 	public Long saveMed(MedFormDto medFormDto) throws Exception {
 
 		Med med = medFormDto.createMed();
-		medRepository.save(med);
+		Med savedMed = medRepository.save(med);
+		chatRoomAccessService.createChatRoomAccess(savedMed);
 		
 		return med.getMedId();
 	}
@@ -48,15 +49,6 @@ public class MedService {
 	
 	public Med findMedbyDocid(Long doctorid) {
 		return medRepository.findMedbyDocid(doctorid);
-	}
-	
-	public Map<Long, String> findAllMedListToMap () {
-		List<Med> medList = getMedList();
-		Map<Long, String> medListMap = new HashMap<>();
-		for(Med med : medList) {
-			medListMap.put(med.getMedId(), med.getMedName());
-		}
-		return medListMap;
 	}
 	
 	public List<Med> getTesListNotMy(Long medId) {
