@@ -25,6 +25,7 @@ public class BoardListDto {
 	
 	private LocalDateTime regTime; //게시글 등록 시간
 	
+	
 	//쿼리dsl사용
 	@QueryProjection
 	public BoardListDto(Long id, Member member, String title, int view, LocalDateTime regTime) {

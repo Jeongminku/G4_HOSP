@@ -52,6 +52,8 @@ public class BoardController {
 	public String boardView(BoardSerchDto boardserchDto,Optional<Integer> page,Model model) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
 		Page<BoardListDto> list = boardSerivce.getBoardMain(boardserchDto, pageable);
+		
+		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
