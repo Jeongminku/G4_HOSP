@@ -98,6 +98,10 @@ public class MemberService implements UserDetailsService{
 		 return memberRepository.findDocbyMid(doctorid);
 	 }
 	 
+	 public Member findMembymemid(String memid) {
+		 return memberRepository.findByLoginid(memid);
+	 }
+	 
 	 public String deleteMember(Long memberId) {
 			Member member = memberRepository.getReferenceById(memberId);
 			try {
