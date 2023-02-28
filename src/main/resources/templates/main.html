@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
+      
       
 <head>
 <meta charset="UTF-8">
@@ -12,7 +14,7 @@
 <body>
 	<div layout:fragment="content">
 	<section>	
-		  <div class="swiper mySwiper">
+		<div class="swiper mySwiper">
 		    <div class="swiper-wrapper">
 		      <div class="swiper-slide"><img class="slide-img" src="/images/slider01.jpg"></div>
 		      <div class="swiper-slide"><img class="slide-img" src="/images/slider02.jpg"></div>
@@ -24,30 +26,55 @@
 		    <div class="swiper-button-next"></div>
 		    <div class="swiper-button-prev"></div>
 		    <div class="swiper-pagination"></div>
-		  </div>
-	
-	
-		<hr><hr><hr><hr><hr><hr><hr><hr><hr>
-		<div class="container">
-			<div id="mainMap">
-				<div class="mainMap">
-				    <ul id="category" class="row">
-						<li id="BK9" data-order="0" class="btn btn-outline-primary"> 
-			    		<span class="bk1">가까운 은행찾기</span>
-				        <!-- <span class="category_bg bank"></span> -->
-				       	</li>
-				        <li id="PM9" data-order="2" class="btn btn-outline-primary"> 
-				        <span class="pm9">가까운 약국찾기</span>
-				        <!-- <span class="category_bg pharmacy"></span> -->
-				        </li>
-					    <li id="come9" class="btn btn-outline-primary">
-				        <!-- <span><i class="fa-sharp fa-solid fa-car-side"></i></span> -->
-				        <span style="top:35%; left:20%;">오시는길<a href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=,,499778,1133330&rt1=&rt2=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90%EB%B3%91%EC%9B%90&rtIds=,13565525" target="_blank"></a></span>
-				        </li>
-			    	</ul>
-	    		</div>
-	    	</div>
 		</div>
+		<div class="container text-center">
+		    <div class="row">
+			    <div class="col-xl-6 box_reservation">
+			      <div class="reservation_h3">
+			      	<h3><span>쉽고 빠른 예약 </span></h3>
+			      	<i class="fa-solid fa-mobile-screen"></i>	      
+			      	<h3 class="reservation_call"><span class="reservation_call">02-123-4567</span></h3>
+			      </div>
+			      <div class="reservation_btn_list">
+			      	<a href="#" sec:authorize="isAnonymous()"><span>비회원 빠른예약</span></a>
+			      	<a href="/reservation/selectDoc"><span>온라인 진료예약</span></a>
+			      	<a href="/reservation/listView/" sec:authorize="isAuthenticated()"><span>내 예약 확인</span></a>			    
+			      </div>
+			    </div>
+			    <div class="col-xl-6 box_search">
+			    	<div class="doc_search_h3">
+			    	<h3>&nbsp&nbsp의료진/진료과 검색</h3>
+			    	</div>
+			    	<div class="doc_search">
+				    <form class="doc_search" action="">
+	  					<input type="search" name="searchQuery" class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요." required>
+  						<button type="submit" class="doc_search_btn">검색하기</button>
+					</form>
+					</div>
+			      <img class="doc_search_img" src="/images/male_doc.png">
+			    </div>
+			  </div>
+		</div>
+	
+		
+		<div id="mainMap">
+			<div class="mainMap">
+			    <ul id="category" class="row">
+					<li id="BK9" data-order="0" class="btn btn-outline-primary"> 
+		    		<span class="bk1">가까운 은행찾기</span>
+			        <!-- <span class="category_bg bank"></span> -->
+			       	</li>
+			        <li id="PM9" data-order="2" class="btn btn-outline-primary"> 
+			        <span class="pm9">가까운 약국찾기</span>
+			        <!-- <span class="category_bg pharmacy"></span> -->
+			        </li>
+				    <li id="come9" class="btn btn-outline-primary">
+			        <!-- <span><i class="fa-sharp fa-solid fa-car-side"></i></span> -->
+			        <span style="top:35%; left:20%;">오시는길<a href="https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=,,499778,1133330&rt1=&rt2=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90%EB%B3%91%EC%9B%90&rtIds=,13565525" target="_blank"></a></span>
+			        </li>
+		    	</ul>
+    		</div>
+    	</div>
 	<!-- 카카오 지도 -->
 	<div id="map" style="width:100%;height:400px;"></div>
 	</section>

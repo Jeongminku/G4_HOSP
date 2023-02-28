@@ -55,3 +55,167 @@
   height: 100%;
   object-fit: cover;
 }
+
+.box_reservation {
+	position: relative;
+	height: 195px;
+	padding: 10px;
+	background: #205B8A;
+	color: #fff;
+	font-size: 18px;
+	box-sizing: border-box;
+	overflow:hidden;
+}
+
+.reservation_btn_list {
+	display: flex;
+	margin-top: 28px;
+}
+
+.reservation_h3 h3 {
+	display: inline-block;
+	color:#fff;
+	font-weight: 500;
+	font-size:32px;
+	letter-spacing: -1.5px;
+	vertical-align:middle;
+	
+	padding-top: 23px;
+}
+
+.reservation_h3 .fa-solid {
+	font-size: 26px;
+	vertical-align:middle;
+	padding-left:10px;
+	padding-top: 23px;
+}
+
+@media screen and (max-width: 1076px) {
+	.reservation_h3 .fa-solid {
+	display: none;
+	}
+	.reservation_call {
+	display: none;
+	}
+}
+
+
+
+.reservation_btn_list a {
+	display: inline-block;
+	height: 45px;
+	padding: 0 3px;
+	background: #fff;
+	text-align: center;
+	flex:1;
+	box-sizing: border-box;
+}
+.reservation_btn_list a + a {
+	margin-left: 7px;
+}
+
+.reservation_btn_list span {
+	display: inline-block;
+	color: #205B8A;
+	font-weight: 500;
+	font-size: 16px;
+	text-align: center;
+	word-break: keep-all;
+}
+.reservation_btn_list a:before {
+	display: inline-block;
+	height: 100%;
+	content: '';
+	vertical-align: middle;
+}
+
+
+.box_search {
+	position: relative;
+	height: 195px;
+	padding: 10px;
+	background: #108ccf;
+	color: #fff;
+	font-size: 18px;
+	box-sizing: border-box;
+	overflow:hidden;
+}
+
+.doc_search_img {
+    position: absolute;
+    height: 200px;
+    right: -28px;
+    top: 10px;
+    z-index: 1;
+}
+
+
+.doc_search_h3 h3 {
+	display: block;
+	text-align:left;
+	color:#fff;
+	font-weight: 500;
+	font-size:32px;
+	letter-spacing: -1.5px;
+	vertical-align:middle;
+	padding-top: 23px;
+}
+
+.doc_search {
+	margin-top: 28px;
+	z-index: 3;
+}
+
+/* .doc_search_btn {
+	display: absolute;
+	z-index: 100;
+} */
+
+.search {
+  width: 500px;
+  height: 40px;
+  margin: 150px auto;
+  background: #444;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  border: 1px solid #fff;
+}
+.doc_searchbar {
+  width: 270px;
+  padding: 10px 5px;
+  float: left;
+  color: #fff;
+  border: 0;
+  background: #159fea;
+  border-radius: 3px;
+}
+.doc_searchbar::placeholder {
+	color: #fff;
+}
+.doc_searchbar:focus {
+  outline: 0;
+}
+.doc_search_btn {
+  position: relative;
+  float: left;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  height: 40px;
+  width: 120px;
+  color: black;
+  background: #fff;
+  border-radius: 3px;
+  z-index:2;
+  height:46px;
+}
+.doc_search_btn:hover {
+  background: #fff;
+  color: #444;
+}
+.doc_search_btn:active {
+  box-shadow: 0px 0px 12px 0px #e1e1e1;
+}
+.doc_search_btn:focus {
+  outline: 0;
+}
