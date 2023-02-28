@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -59,18 +60,19 @@ public class ChatController {
     }
     
     @PostMapping("/room")
-    public String enterChatRoom (@RequestParam("roomAccessId") Long roomAccessId, 
-    							 @RequestParam("roomId") Long roomId, Model model,
-    							 Principal principal) {
+    public String enterChatRoom (@RequestParam Map<String, String> roomData, Model model, Principal principal) {
+    	Long roomId = Long.parseLong(roomData.get("roomId"));
+    	Long roomAccessId = Long.parseLong(roomData.get("roomAccessId"));
+    	System.err.println(roomId + ", " + roomAccessId);
     	try {
-    		Map<Long, String> senderMap = chatService.enterChatRoom(roomId, roomAccessId, principal.getName());
-    		model.addAttribute("SenderData", senderMap);
+    		Map<String, ChatRoomDto> roomInfo = chatService.enterChatRoom(roomId, roomAccessId, principal.getName());
+    		model.addAttribute("RoomInfo", roomInfo);
     	} catch (Exception e) {
     		model.addAttribute("ErrorMsg", e.getMessage());
-    		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-        	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-            return "ChatPage/ChatRoomSelect";
+//    		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
+//        	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
+            return "ChatPage/ChatRoomSelect :: chatRoomFrag";
     	}
-    	return "ChatPage/WebChatTesting";
+    	return "ChatPage/ChatRoomSelect :: chatRoomFrag";
     }
 }

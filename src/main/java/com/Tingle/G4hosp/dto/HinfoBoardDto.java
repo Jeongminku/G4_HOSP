@@ -36,6 +36,10 @@ public class HinfoBoardDto {
 	
 	private LocalDateTime regTime;
 	
+	
+	private int pn;
+
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
 	public HinfoBoard createHinfoBoard() {
@@ -45,6 +49,7 @@ public class HinfoBoardDto {
 	public static HinfoBoardDto of(HinfoBoard hinfoBoard) {
 		return modelMapper.map(hinfoBoard, HinfoBoardDto.class);
 	}
+	
 	
 
 }

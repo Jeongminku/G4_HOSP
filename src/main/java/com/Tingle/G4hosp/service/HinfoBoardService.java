@@ -133,4 +133,5 @@ public class HinfoBoardService {
 		
 		hinfoBoardRepository.delete(hinfoboard);
 	}
+
 }

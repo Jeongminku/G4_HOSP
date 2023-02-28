@@ -27,14 +27,47 @@
             </div>
             <button type="submit" class="text-center p-3 btn btn-primary">생성</button>
         </form>
-        <form th:action="@{/chat/room}" method="post" class="d-flex flex-column justify-content-around w-100" th:if="${AllChatRoom}">
-            <th:block th:each="room : ${AllChatRoom}">
-                <input type="hidden" th:value="${room.chatRoomAccess}" name="roomAccessId">
-                <input class="d-none" type="radio" th:id="${room.id}" th:value="${room.id}" name="roomId">
-                <label class="w-100 text-center p-3 mb-2 btn btn-outline-secondary" th:for="${room.id}" th:text="'[' + ${room.chatRoomAccessName} + '] ' + ${room.chatRoomName}"></label>
-            </th:block>
-            <button type="submit" class="w-100 text-center p-3 mb-2 btn btn-primary">입장</button>
-        </form>
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex flex-column justify-content-around" th:if="${AllChatRoom}">
+                <div th:each="room : ${AllChatRoom}">
+                    <input type="hidden" th:value="${room.chatRoomAccess}" name="roomAccessId">
+                    <input class="d-none" type="radio" th:id="${room.id}" th:value="${room.id}" name="roomId">
+                    <label class="w-100 text-center p-3 mb-2 btn btn-outline-secondary" th:for="${room.id}" th:text="'[' + ${room.chatRoomAccessName} + '] ' + ${room.chatRoomName}"></label>
+                </div>
+                <button type="button" id="enterRoom" class="w-100 text-center p-3 mb-2 btn btn-primary">입장</button>
+            </div>
+            <div id="chatRoom" th:fragment="chatRoomFrag">
+                <div th:unless="${RoomInfo}">방선택하세요</div>
+                <th:block th:if="${RoomInfo}" th:each="map : ${RoomInfo}">
+                    <div class="d-flex align-items-center justify-content-between" id="roomHeader">
+                        <button class="btn" id="exitRoom" title="나가기">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                        <span class="h4" th:text="'[' + ${map.value.chatRoomAccessName} + '] ' + ${map.value.chatRoomName}"></span>
+                        <div class="position-relative">
+                            <button class="btn" id="joined" title="대화상대">
+                                <i class="fa-solid fa-user-group"></i>
+                            </button>
+                            <button class="btn" id="clearHist" title="이력 지우기">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            <ul class="d-flex flex-column position-absolute bottom-0 end-0 rounded d-none" id="joinedMemList">
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="messageView"></div>
+                    <div class="d-flex align-items-center mt-2" id="messageInput">
+                        <input type="hidden" th:value="${map.value.id}" name="roomId">
+                        <input type="hidden" th:value="${map.key}" name="senderName">
+                        <input class="p-md-3 btn btn-outline-secondary w-75" type="text" name="message" placeholder="메세지를 입력하세요">
+                        <button class="btn btn-primary w-25" type="button" id="messageSend">
+                            <i class="fa-solid fa-paper-plane fs-5"></i>
+                        </button>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        <script src="../../js/ChatTest.js"></script>
     </section>
 </body>
 </html>
