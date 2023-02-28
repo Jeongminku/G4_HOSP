@@ -1,13 +1,8 @@
 package com.Tingle.G4hosp.controller;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import javax.validation.Valid;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

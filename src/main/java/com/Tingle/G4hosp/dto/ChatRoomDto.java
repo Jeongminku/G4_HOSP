@@ -11,6 +11,7 @@ public class ChatRoomDto {
 	private Long id;
 	private Long chatRoomAccess;
 	private String chatRoomName;
+	private String chatRoomAccessName;
 	
 	public static List<ChatRoomDto> createChatRoomDtoList (List<ChatRoom> chatRoomList) {
 		List<ChatRoomDto> chatRoomDtoList = new ArrayList<>();

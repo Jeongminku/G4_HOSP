@@ -34,33 +34,36 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatService {
     private final ObjectMapper objectMapper;
     private final ChatRoomRepository chatRoomRepository;
-    private final ChatRoomAccessRepository chatRoomAccessRepository;
+    private final ChatRoomAccessService chatRoomAccessService;
     private final MemberService memberService;
-    private final MemberMedService memberMedService;
-    
+
     public ChatRoom createChatRoom (ChatRoomDto chatRoomDto) {
-    	ChatRoomAccess chatRoomAccess = chatRoomAccessRepository.findById(chatRoomDto.getChatRoomAccess()).orElseThrow(EntityNotFoundException::new);
+    	ChatRoomAccess chatRoomAccess = chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess());
     	ChatRoom chatRoom = ChatRoom.createChatRoom(chatRoomAccess, chatRoomDto.getChatRoomName());
     	return chatRoomRepository.save(chatRoom);
     }
     
     public void changeName (Long chatRoomId, String name) {
-    	ChatRoom currentRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(EntityNotFoundException::new);
+    	ChatRoom currentRoom = findbyId(chatRoomId);
     	currentRoom.updateChatRoom(name);
     }
     
     public void deleteChatRoom (Long chatRoomId) {
-    	ChatRoom currentRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(EntityNotFoundException::new);
+    	ChatRoom currentRoom = findbyId(chatRoomId);
     	chatRoomRepository.delete(currentRoom);
     }
     
     public List<ChatRoomDto> findAllChatRoom () {
     	List<ChatRoom> allChatRoom = chatRoomRepository.findAll();
-    	return ChatRoomDto.createChatRoomDtoList(allChatRoom);
+    	List<ChatRoomDto> allChatRoomDto = ChatRoomDto.createChatRoomDtoList(allChatRoom);
+    	for(ChatRoomDto chatRoomDto : allChatRoomDto) {
+    		chatRoomDto.setChatRoomAccessName(chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess()).getChatRoomAccessName());
+    	}
+    	return allChatRoomDto;
     }
     
     public Map<Long, String> findAllAccessListToMap () {
-    	List<ChatRoomAccess> accessList = chatRoomAccessRepository.findAll();
+    	List<ChatRoomAccess> accessList = chatRoomAccessService.findAll();
     	Map<Long, String> accessListMap = new HashMap<>();
     	for(ChatRoomAccess access : accessList) {
     		accessListMap.put(access.getId(), access.getChatRoomAccessName());
@@ -68,25 +71,19 @@ public class ChatService {
     	return accessListMap;
     }
 
-    public boolean checkChatRoomAccess (Long roomAccessId, Member sender) {
-    	ChatRoomAccess chatRoomAccess = chatRoomAccessRepository.findById(roomAccessId).orElseThrow(EntityNotFoundException::new);
-    	if(chatRoomAccess.getChatRoomAccessMedId() == null) {
-    		return true;
-    	} else {
-    		MemberMed memberMed = memberMedService.findMemberMed(sender.getId());
-    		return chatRoomAccess.getChatRoomAccessMedId() == memberMed.getMedId() ? true : false;
-    	}
-    }
-
-    public Map<Long, String> enterChatRoom (Long roomId, Long roomAccessId, String memberLoginId) throws AccessDeniedException {
-    	Member sender = memberService.findByLoginid(memberLoginId);
-    	if(checkChatRoomAccess(roomAccessId, sender)) {
+    public Map<Long, String> enterChatRoom (Long chatRoomId, Long roomAccessId, String memberLoginId) throws AccessDeniedException {
+    	Member enterMember = memberService.findByLoginid(memberLoginId);
+    	if(chatRoomAccessService.checkChatRoomAccess(roomAccessId, enterMember)) {
     		Map<Long, String> senderMap = new HashMap<>();
-    		senderMap.put(roomId, sender.getName());
+    		senderMap.put(chatRoomId, enterMember.getName());
     		return senderMap;
     	} else {
     		throw new AccessDeniedException("공개범위 다름");
     	}    	
+    }
+    
+    public ChatRoom findbyId (Long id) {
+    	return chatRoomRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
     
     public <T> void sendMessage(WebSocketSession session, T message) {
