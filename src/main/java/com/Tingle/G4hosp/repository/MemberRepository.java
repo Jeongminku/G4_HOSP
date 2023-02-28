@@ -25,7 +25,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	
 	@Query(value = "select * from member where member.name = :MNAME and member.tel = :MTEL", nativeQuery = true)
 	Member findbtMnameandMtel(@Param("MNAME") String mname, @Param("MTEL") String mtel);
-	
 
 	//입원상태인 환자의 정보 가져오기.
 	@Query(value = "select * from member b join hospitalize a on b.member_id = a.member_id where a.hospyn = 'Y'" , nativeQuery = true)

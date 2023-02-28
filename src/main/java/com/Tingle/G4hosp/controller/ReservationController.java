@@ -16,6 +16,7 @@ import com.Tingle.G4hosp.dto.QuickReservationDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Disease;
+
 import com.Tingle.G4hosp.entity.Reservation;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.QuickReservationService;
@@ -118,8 +119,6 @@ public class ReservationController {
 	@PostMapping("/sendqr")
 	public String sendReservation(Model model, QuickReservationDto quickReservationDto)  {
 		Long res = quickReservationService.saveQR(quickReservationDto);	
-		
 		return "redirect:/";
 	}
-	
 }
