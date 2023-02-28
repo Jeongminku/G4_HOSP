@@ -1,33 +1,100 @@
-let socket = new WebSocket("ws://localhost/ws/chat");
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+let chatHistory = [];
+let socket = null;
 let messageTextArea = $('#messageTextArea').val();
 let messageData = {
-        roomId: $('input[name="roomId"]').val(),
-        sender: $('input[name="senderName"]').val(),
+        roomId: '',
+        sender: '',
         type: 'TALK',
         message: '',
 };
 
-socket.onopen = () => {
-    console.log('Socket [ ' + socket.url + ' ] CONNECTED');
-    messageData.type = 'ENTER';
-    socket.send(JSON.stringify(messageData))
-}
+console.log(messageData.sender)
 
-socket.onmessage = message => {
-    appendMsg(message);
-    scrollDown();
-}
+// 이벤트 핸들
+$(document).on('click', '#joined', () => {
+    $('#joinedMemList').toggleClass('d-none');
+})
+
+$(document).on('click', '#exitRoom', () => {
+    socket.close();
+    location.href = '/chat';
+})
+
+$(document).on('click', '#clearHist', () => {
+    // localStorage.clear();
+    sessionStorage.clear();
+    chatHistory = [];
+    $('#messageView').empty();
+})
 
 $(document).on('click', 'button[name="chatRoomBtn"]', function () {
     $('#rommId').val($(this).attr('id'));
 })
 
-$('#messageSend').on('click', function () {
+$(document).on('click', '#messageSend', function () {
+    sendMsgToServer();
+    scrollToBottom();
+})
+
+$(document).on('keyup', 'input[name="message"]', function (e) {
+    if (e.keyCode == 13) {
+        sendMsgToServer();
+        scrollToBottom();
+    }
+})
+
+$()
+
+$('#enterRoom').on('click', () => {
+    const checkedRadio = $('input[name="roomId"]:checked');
+    const accessId = checkedRadio.parents('div').children('input[name="roomAccessId"]').val();
+   
+    $.ajax({
+        url: '/chat/room',
+        type: 'POST',
+        dataType: 'text',
+        data: {
+            roomAccessId: accessId,
+            roomId: checkedRadio.val(),
+        },
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+        cache: false,
+        success: function (frag) {
+            $('#chatRoom').replaceWith(frag);
+            socket = new WebSocket("ws://localhost/ws/chat");
+            
+            socket.onopen = () => {
+                console.log('Socket [ ' + socket.url + ' ] CONNECTED');
+                messageData.type = 'ENTER';
+                socket.send(JSON.stringify(messageData))
+                getSavedChatHistory(messageData.roomId);
+            }
+
+            socket.onmessage = message => {
+                const getMessage = JSON.parse(message.data)
+                appendMsg(getMessage, true);
+                scrollToBottom();
+                saveChatHistoryToSession(getMessage);
+            }
+
+            messageData.sender = $('input[name="senderName"]').val();
+            messageData.roomId = checkedRadio.val();
+        },
+        error: function(jqXHR, status, error) {
+            alert('error')
+            console.log(jqXHR)
+        },
+    })
+})
+
+// 기능
+function scrollToBottom() {
     $('#messageView').scrollTop($('#messageView').prop('scrollHeight'));
-})
-$('input[name="message"]').on('keyup', function (e) {
-    if (e.keyCode == 13) sendMsgToServer();
-})
+}
 
 function sendMsgToServer() {
     messageData.type = 'TALK'
@@ -37,13 +104,11 @@ function sendMsgToServer() {
     $('input[name="message"]').val('')
 }
 
-function appendMsg (message) {
-    const getMessage = JSON.parse(message.data)
+function appendMsg (getMessage, isMessage) {
     const messageOut = $('#messageView');
     const currentUserName = $('input[name="senderName"]').val();
     const senderName = getMessage.sender;
-    
-    const $div = $('<div></div>');  
+    const $div = $('<div></div>'); 
     
     if (getMessage.type == 'TALK') {
         const time = new Date();
@@ -74,5 +139,37 @@ function appendMsg (message) {
         $div.text(getMessage.message);
         $div.addClass('entry text-center');
         messageOut.append($div)
+        if (isMessage) {
+            const joinedMemUl = $('#joinedMemList').empty();
+            getMessage.joinedMember.forEach(member => {
+                let memLi = $('<li></li>').text(member);
+                joinedMemUl.append(memLi)
+            })
+        }
     }
 }
+
+function saveChatHistoryToSession(msgData) {
+    // const prevList = JSON.parse(localStorage.getItem(msgData.roomId));
+    const prevList = JSON.parse(sessionStorage.getItem(msgData.roomId));
+    if (prevList != null && prevList.length != 0) {
+        chatHistory = prevList;
+    }
+    if (chatHistory.length > 100) {
+        chatHistory.slice(0, 1);
+    }
+    chatHistory.push(msgData);
+    // localStorage.setItem(msgData.roomId, JSON.stringify(chatHistory));
+    sessionStorage.setItem(msgData.roomId, JSON.stringify(chatHistory));
+}
+
+function getSavedChatHistory (roomId) {
+    // let chatMsg = JSON.parse(localStorage.getItem(roomId));
+    let chatMsg = JSON.parse(sessionStorage.getItem(roomId));
+    if (chatMsg != null) {
+        chatMsg.forEach(msg => {
+            appendMsg(msg, false)
+        });
+    }
+}
+

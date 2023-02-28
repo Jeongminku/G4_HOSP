@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class MemberMedService {
 	private final MemberMedRepository memberMedRepository;
 	
-	
 	public MemberMed findMemberMed(Long memberId) {
 		MemberMed memberMed = memberMedRepository.findByMemberid(memberId);
 		return memberMed;
