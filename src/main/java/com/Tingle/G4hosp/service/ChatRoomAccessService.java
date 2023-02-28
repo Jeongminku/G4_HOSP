@@ -7,6 +7,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ObjectUtils;
 
+import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.entity.ChatRoomAccess;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
@@ -46,6 +47,7 @@ public class ChatRoomAccessService {
     }
     
     public boolean checkChatRoomAccess (Long roomAccessId, Member enterMember) {
+    	if(enterMember.getRole() == Role.ADMIN) return true;
     	ChatRoomAccess chatRoomAccess = findById(roomAccessId);
     	if(chatRoomAccess.getChatRoomAccessMedId() == null) {
     		return true;

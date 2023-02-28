@@ -48,14 +48,5 @@ public class ChatRoom {
 	public void updateChatRoom (String chatRoomName) {
 		this.chatRoomName = chatRoomName;
 	}
-	
-	public Set<WebSocketSession> addSession (WebSocketSession session) {
-		this.sessions.add(session);
-		return this.sessions;
-	}
-	
-	public Set<WebSocketSession> removeSession (WebSocketSession session) {
-		this.sessions.remove(session);
-		return this.sessions;
-	}
+
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,6 +21,7 @@ import com.Tingle.G4hosp.entity.HospitalizeDisease;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
+import com.Tingle.G4hosp.entity.QuickReservation;
 import com.Tingle.G4hosp.repository.HospitalizeDiseaseRepository;
 import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
@@ -28,6 +30,7 @@ import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
+import com.Tingle.G4hosp.service.QuickReservationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +43,7 @@ public class AdminController {
 	private final MedService medService;
 	private final DiseaseService diseaseService;
 	private final HospitalizeService hospitalizeService;
+	private final QuickReservationService quickReservationService;
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
@@ -153,8 +157,26 @@ public class AdminController {
 	}
 	
 	// 비회원 예약환자 조회
-	@GetMapping(value="nonMemberSearch")
-	public String nonMemberSearch() {
-		return "adminPage/nonMemberSearch";
+	@GetMapping("/qlist")
+	public String qrlist(Model model) {
+		List<QuickReservation> QRlist = quickReservationService.QRList();
+		model.addAttribute("QRlist",QRlist);
+		return "adminPage/QuickReservationList";
+	}
+	// 비회원 예약환자 처리 (N -> Y)
+	@GetMapping("/updateqr/{id}")
+	public String updateqr(Model model, @PathVariable("id")Long qrid) {
+		quickReservationService.updateQR(qrid);
+		List<QuickReservation> QRlist = quickReservationService.QRList();
+		model.addAttribute("QRlist",QRlist);
+		return "adminPage/QuickReservationList";
+	}
+	// 비회원 예약 환자 삭제
+	@GetMapping("/deleteqr/{id}")
+	public String deleteqr(Model model, @PathVariable("id")Long qrid) {
+		quickReservationService.deleteQR(qrid);
+		List<QuickReservation> QRlist = quickReservationService.QRList();
+		model.addAttribute("QRlist",QRlist);
+		return "adminPage/QuickReservationList";
 	}
 }

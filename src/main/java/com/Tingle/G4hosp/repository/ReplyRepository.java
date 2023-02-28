@@ -19,7 +19,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long>, ReplyReposi
 	@Query(value = "Update Reply set reply_content = :content  where reply_id = :id",nativeQuery = true)
 	int upDateReply(@Param("content") String content,@Param("id") Long id);
 	
-    
+    Long countByBoardId(Long id);
 
 
 }

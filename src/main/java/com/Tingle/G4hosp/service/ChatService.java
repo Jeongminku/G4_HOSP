@@ -3,8 +3,10 @@ package com.Tingle.G4hosp.service;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -71,11 +73,12 @@ public class ChatService {
     	return accessListMap;
     }
 
-    public Map<Long, String> enterChatRoom (Long chatRoomId, Long roomAccessId, String memberLoginId) throws AccessDeniedException {
+    public Map<String, ChatRoomDto> enterChatRoom (Long chatRoomId, Long roomAccessId, String memberLoginId) throws AccessDeniedException {
     	Member enterMember = memberService.findByLoginid(memberLoginId);
     	if(chatRoomAccessService.checkChatRoomAccess(roomAccessId, enterMember)) {
-    		Map<Long, String> senderMap = new HashMap<>();
-    		senderMap.put(chatRoomId, enterMember.getName());
+    		Map<String, ChatRoomDto> senderMap = new HashMap<>();
+    		ChatRoomDto currentRoomDto = ChatRoomDto.createChatRoomDto(chatRoomRepository.findById(chatRoomId).orElseThrow(EntityNotFoundException::new));
+    		senderMap.put(enterMember.getName(), currentRoomDto);
     		return senderMap;
     	} else {
     		throw new AccessDeniedException("공개범위 다름");

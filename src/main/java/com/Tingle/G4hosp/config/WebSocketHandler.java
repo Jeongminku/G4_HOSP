@@ -13,8 +13,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.Tingle.G4hosp.constant.MessageType;
 import com.Tingle.G4hosp.dto.ChatMessageDto;
 import com.Tingle.G4hosp.entity.ChatRoom;
+import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.repository.ChatRoomRepository;
 import com.Tingle.G4hosp.service.ChatService;
+import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,6 +32,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     private final ChatService chatService;
 	private final ChatRoomRepository chatRoomRepository;
 	private final MemberService memberService;
+	private final MemberMedService memberMedService;
 
 	private Map<Long, Set<WebSocketSession>> roomSeesionList = new HashMap<>();
 	private Set<WebSocketSession> sessions = new HashSet<>();
@@ -51,6 +55,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
         	sessions.add(session);
             roomSeesionList.put(connectedRoom.getId(), sessions);
             connectedRoom.setSessions(sessions);
+            for(WebSocketSession s : sessions) {
+            	Member member = memberService.findByLoginid(s.getPrincipal().getName());
+            	MemberMed med = memberMedService.findMemberMed(member.getId());
+            	String division = "관리자";
+            	if(med != null) division = med.getMedId().getMedName();
+            	chatMessage.getJoinedMember().add("[" + division + "] " + member.getName());
+            }
             chatMessage.setMessage(chatMessage.getSender() + " 님이 입장하셨습니다.");
         }
         
