@@ -50,10 +50,9 @@ public class BoardController {
 	//현재 환자정보게시판의 메인화면을 보여줍니다.
 	@GetMapping(value = "/main")
 	public String boardView(BoardSerchDto boardserchDto,Optional<Integer> page,Model model) {
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
 		Page<BoardListDto> list = boardSerivce.getBoardMain(boardserchDto, pageable);
-		
-		
+					
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
@@ -123,6 +122,7 @@ public class BoardController {
 		
 		    BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
 		    //List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
+		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
 		    
 		    
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
@@ -131,8 +131,6 @@ public class BoardController {
 			model.addAttribute("lists" , list);
 			model.addAttribute("pageSerchDto" , pageSerchDto);
 			model.addAttribute("maxPage", 5);
-			
-		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
 		    
 		    model.addAttribute("boardFormDto",boardFormDto);
 		    
@@ -167,7 +165,7 @@ public class BoardController {
 		model.addAttribute("lists" , list);
 		model.addAttribute("pageSerchDto" , pageSerchDto);
 		model.addAttribute("maxPage", 5);
-		 model.addAttribute("boardFormDto",boardFormDto);
+		model.addAttribute("boardFormDto",boardFormDto);
 		 
 		return "boardPage/BoardDtl :: reply";
 	}
@@ -201,47 +199,47 @@ public class BoardController {
 	
 	//게시글 삭제
 	@RequestMapping(value = "/delBoard/{boardId}")
-	public String deleteBoard(@PathVariable("boardId") Long boardId,BoardSerchDto boardserchDto,Optional<Integer> page,Model model) {
+	public String deleteBoard(@PathVariable("boardId") Long boardId,BoardSerchDto boardserchDto,Optional<Integer> page,Model model,HttpServletResponse resp) {
 		boardSerivce.delBoard(boardId);
 		
 		
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
+		
+		
 		Page<BoardListDto> list = boardSerivce.getBoardMain(boardserchDto, pageable);
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
 		
-		
-		return "redirect:/board/main";
+		return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",  "/board/main" , resp);
 	}
 	
 	//게시글 수정페이지로 가기
 	@GetMapping(value = "/upDateForm/{boardId}")
 	public String boardUpdateForm(@PathVariable("boardId") Long boardId,Model model) {
-	 BoardFormDto boardFormDto	= boardSerivce.getboardDto(boardId);
+		BoardFormDto boardFormDto	= boardSerivce.getboardDto(boardId);
+		System.out.println(boardFormDto.getId());
 		model.addAttribute("boardFormDto", boardFormDto);
 		return "boardpage/boardForm";
 	}
 	
 	//게시글 수정하기
 	@PostMapping(value = "/updateB")
-	public String boardUpdate(@Valid BoardFormDto boardFormDto,BindingResult bindingResult,Model model ) {
-		
+	public String boardUpdate(@Valid BoardFormDto boardFormDto,BindingResult bindingResult,Model model,HttpServletResponse resp ) {
+	
 		if(bindingResult.hasErrors()) {
 			return "boardpage/boardForm";
 		}
 		
 		try {
-			int succes = boardSerivce.upDateBoard(boardFormDto);
+			boardSerivce.upDateBoard(boardFormDto);
 			
 		} catch (Exception e) {
-			model.addAttribute("errorMessage", "게시글 수정에 실패했습니다");
-			return "redirect:/board/" + boardFormDto.getId();
+			
+			return MemberCheckMethod.redirectAfterAlert("게시글을 수정을 실패 했습니다.",  "/board/" + boardFormDto.getId() , resp);
 		}
 		
-		
-		
-		return "redirect:/board/" + boardFormDto.getId();
+		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/board/" + boardFormDto.getId() , resp);
 	}
 }

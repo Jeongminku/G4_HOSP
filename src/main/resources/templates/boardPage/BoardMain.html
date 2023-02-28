@@ -219,7 +219,7 @@ a:hover {
 								</div>
 								<div class="inbox-message">
 									<ul th:each="list , i : ${lists.getContent()}">
-											
+				
 										<li>
 										<a href="#">
 												<div class="message-avatar">
@@ -241,7 +241,7 @@ a:hover {
 														<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 													</div>
 													<p class="p-content"></p><br>
-													<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]]</p>
+													<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]] &nbsp; 댓글 : [[${list.replyCount}]]</p>
 												</div>
 										</a>
 										</li>
@@ -249,7 +249,7 @@ a:hover {
 									</ul>
 								</div>
 							</div>
-				
+				<button style="float: right;" class="btn btn-primary" onClick="location.href='/board/write'" sec:authorize="isAuthenticated()">글쓰기</button>
 							<nav
 			th:with="start=${(lists.number/maxPage)*maxPage + 1}
 			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
@@ -272,10 +272,11 @@ a:hover {
 				</li>
 			</ul>
 		</nav>
-
+			
+			
 		</section>
 		
-		<button onClick="location.href='/board/write'">글쓰기</button>
+
 		
 	</div>
 </body>

@@ -50,7 +50,14 @@ public class BoardService {
 	//게시판에 게시글을 뿌려줌
 	public Page<BoardListDto> getBoardMain(BoardSerchDto boardserchDto
 			, Pageable pageable){
-		return boardRepository.getMainBoard(boardserchDto, pageable);
+		Page<BoardListDto> result = boardRepository.getMainBoard(boardserchDto, pageable);
+		
+		//리플곗수 
+		result.forEach(dto -> {
+			Long count = replyRepository.countByBoardId(dto.getId());
+			dto.setReplyCount(count);
+		});
+		return result;
 	}
 	
 	//게시글조회수 업데이트
