@@ -7,6 +7,20 @@
 </head>
 <body>
 	<header th:fragment="header">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	var socket = new WebSocket("ws://localhost:80/websocket");
+	
+	socket.onopen = () => {
+		console.log(socket)
+	}
+
+	socket.onmessage = function(event) {
+		// WebSocket으로 전달받은 알람을 header에 띄움
+		$("#alert-icon").css("display", "inline");
+		$("#nonalert-icon").css("display","none");
+	};
+	</script>	
         <button class="btn btn-openCanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
@@ -57,6 +71,19 @@
                 </nav>
 				<nav class="navbar justify-content-center">
 					<ul class="d-flex">
+						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+							<a href="/admin/qlist">
+								<span id="alert-icon" style="display: none;">
+								<img alt="" src="/images/icons8-bell.gif" width="30px">
+								<i class="fa-sharp fa-solid fa-bell" style="color: red;"></i></span>
+								<span id="nonalert-icon"><i class="fa-sharp fa-solid fa-bell"></i> </span>
+							</a>	
+						</li>
+						<li class="nav-item w-100" sec:authorize="hasRole('CLIENT')">
+							<a href="/members/login">
+								<p>나의 예약</p>
+							</a>
+						</li>
 						<li class="nav-item w-100" sec:authorize="isAnonymous()">
 							<a href="/members/login">
 								<p>로그인</p>

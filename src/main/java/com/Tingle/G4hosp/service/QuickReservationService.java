@@ -1,5 +1,7 @@
 package com.Tingle.G4hosp.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -30,9 +32,20 @@ public class QuickReservationService {
 		return quickReservation.getId();
 	}
 	
-	public void updateQR() {
+	public void updateQR(Long qrid) {
+		QuickReservation qr = quickReservationRepository.getReferenceById(qrid);
 		String callyn = "Y";
-		
+		qr.updateqryn(callyn);
+	}
+	
+	public void deleteQR(Long qrid) {
+		QuickReservation qr = quickReservationRepository.getReferenceById(qrid);
+		quickReservationRepository.delete(qr);
+	}
+	
+	public List<QuickReservation> QRList(){
+		List<QuickReservation> qrlist = quickReservationRepository.qrListN();
+		return qrlist;
 	}
 	
 }
