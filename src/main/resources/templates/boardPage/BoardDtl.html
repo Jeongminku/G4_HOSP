@@ -8,6 +8,56 @@
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
+<style>
+
+	section {
+		line-height: 25px;
+	}
+
+	.title-box {
+		/* background-color: #226597; */
+		border:1px solid ;
+		border-color: #226597;
+		padding: 5px;
+		padding-bottom: 12px;
+		
+	}
+	
+	.title-box > h4 {
+		padding: 10px;
+		/* color: white; */
+		color: black;
+		margin: 0 auto;
+		text-align: center;
+		color: #226597;
+	}
+
+	.title-box > p {
+		margin: 0 auto;
+		text-align: center;
+		padding: 3px;
+		line-height: 18px;
+	}
+	.board-content {
+		margin: 10px;
+	}
+	
+	.board-content p {
+		padding: 40px 0px;
+	}
+	
+	.button2 {
+		display: flex;
+		justify-content: space-between;
+		justify-content: flex-end;
+	}
+	
+	.button2 a {
+		margin: 3px;
+	}
+	
+</style>
+
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
 	   
@@ -44,6 +94,8 @@
             },
             cache   : false,
             success  : function(result, status){
+            	alert("댓글을 입력했습니다.");
+            	
          		document.getElementById("replyContent").value ='';
                
                 postPageReload()
@@ -177,7 +229,8 @@
 	function createinput(e) {
 	
 	var replyIdIndex = $(event.target).attr("id");
-
+	console.log(replyIdIndex);
+	
 	 var content = $("#con"+replyIdIndex.substr(2)).val();
 		
 	 //댓글창 none
@@ -199,7 +252,6 @@
 	 
 	 
 	 let button = document.getElementById(replyIdIndex)
-	 console.log(button);
 	 button.setAttribute("onClick","upRe()") 
 	
 	 
@@ -268,56 +320,95 @@
 </head>
 <body>
 	<div layout:fragment="content">
-
-		<table style="text-align: center;">
-			<tr>
-				<td>제목</td>	
-				<td>[[${boardFormDto.title}]] 	[[${h}]]</td>	
-			</tr>
-			<tr>
-				<td>글쓴이</td>	
-				<td>[[${boardFormDto.member.loginid}]]</td>	
-			</tr>
-			<tr>
-				<td>작성일</td>
-				<td><div th:text="${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></div></td>
-			</tr>
-			<tr>
-				<td>조회수</td>
-				<td>[[${boardFormDto.view}]]</td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td>[[${boardFormDto.content}]]</td>
-			</tr>
-			<tr>
-				<td><a th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a></td>
-				<td><a th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a></td>
-			</tr>
-		</table>
+<section>
+	
+	<div class="title-box">
+	
+		<h4 class="title">[[${boardFormDto.title}]]</h4>
+		<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 : [[${boardFormDto.view}]]  | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
+		<p th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
+	
+	</div>
 		
-		댓글입력
-		<input type="text" id="replyContent" name="replyContent">
-		<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
-		<button onclick="saveReply()">댓글입력</button>
+				
+		<table class="table table align-middle">
+  <thead>
+    <tr style="text-align: center;">
+      <td><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+    </tr>
+
+  </thead>
+  <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">
+
+      </th>
+    </tr>
+
+    <tr>
+      <th scope="row">
+
+
+
+      </th>
+    </tr>
+    
+  </tbody>
+</table>
+		
+		
 		
 		<!-- 댓글 -->
 		<div class="reply" id="reply" th:fragment="reply">
 		
-				<div th:each="reply , i : ${lists}"> 
-				<div th:id="Replyup+${i.index+1}" th:name="Replyup+${i.index+1}">
-				<img alt="" th:src="${reply.member.imgUrl}" style="width: 100px"> 
-				    <span th:id="ReId+${i.index+1}">아이디 : <span th:text="${reply.member.loginid}"></span></span>
-					<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">내용 : <span th:text="${reply.replyContent}"></span></span>
-					<input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
-					 <button onclick="deletReply()" th:id="${i.index+1}" class="del-btn">삭제</button> 
-					 <button onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}">수정</button>
-				<input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
-				</div>
-
-			</div>	
+		<div class="float-right" style="padding-bottom: 30px;">
+			<a class="btn btn-primary" th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a>
+			<a class="btn btn-primary" th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+		</div>
+		
+		
+		<div class="card mb-2">
+	<div class="card-header bg-light">
+	        <i class="fa fa-comment fa"></i> REPLY
+	</div>
+	<div class="card-body">
+		<ul class="list-group list-group-flush">
+		    <li class="list-group-item">
+			<textarea class="form-control" id="replyContent" name="replyContent" rows="2"></textarea>
+			<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
+			<button type="button" class="btn btn-dark mt-3" onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
+		    </li>
+		</ul>
+	</div>
+	</div>
+		
+	<div th:each="reply , i : ${lists}"> 
 			
-	
+		<!-- 댓글폼  -->
+		 <div class="card-body">
+              <div class="d-flex">
+               <div class="flex-shrink-0" ><img class="rounded-circle" th:src="${reply.member.imgUrl}" th:alt="${reply.member.imgOri}"  style="width: 100px"/></div>
+                     <div class="ms-3">
+                        <div>
+                        <div class="fw-bold" th:text="${reply.member.loginid}"></div>
+                        <a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+                        <a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
+                        </div> 
+                         <span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}"> <span th:text="${reply.replyContent}"></span> </span> <span th:id="ReId+${i.index+1}"></span>
+                         <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
+                         <input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
+               		</div>
+               		
+          	 <div> 
+          	 </div>
+          	 
+          	</div>
+           </div> 
+		<!-- 댓글폼  -->
+		        
+	</div>	
+			
+			
 			<!-- 페이징 -->
 			<nav
 			th:with="start=${(lists.number/maxPage)*maxPage + 1}
@@ -346,7 +437,7 @@
 		<!-- 댓글 -->
 		
 
-				
+</section>		
 	</div>
 	
 	
