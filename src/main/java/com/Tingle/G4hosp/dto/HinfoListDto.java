@@ -27,6 +27,8 @@ public class HinfoListDto {
 	
 	private String content;
 	
+	private HinfoBoardDto hinfoBoardDto;
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
 	public HinfoBoard HinfoListview(HinfoBoard hinfoBoard) {

@@ -10,6 +10,13 @@
 <body>
 	<div layout:fragment="content">
 
+<script th:inline="javascript">
+	function send_pn(){
+		var yaho = $("#pn").val();
+		console.log(yaho);
+		$("#pn_form").submit();
+	}
+</script>
 		<style>
 
 /*================================
@@ -193,7 +200,6 @@ a:hover {
  	line-height: 22px;
 }
 </style>
-
 		<section>
 
 			<h3>건강정보 게시판</h3><br><hr><br>
@@ -202,14 +208,28 @@ a:hover {
 								<div class="job-box-filter">
 									<div class="row">
 										<div class="col-md-6 col-sm-6">
-											<label>Show <select name="datatable_length"
-												class="form-control input-sm">
-													<option value="10">10</option>
-													<option value="25">25</option>
-													<option value="50">50</option>
-													<option value="100">100</option>
+										
+						<!-- 					<label>Show 
+											<select name="datatable_length" class="form-control input-sm">
+													<option name="pn" value="5">5</option>
+													<option name="pn" value="10">10</option>
+													<option name="pn" value="15">15</option>
+													<option name="pn" value="20">20</option>
 											</select> entries
-											</label>
+											</label> -->
+											
+											<form id="pn_form" method="post" action="/Hinfo/HinfoMain">
+												<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+												
+												<select id="pn" name="pn" onchange="send_pn()" class="form-control input-sm">
+													<option hidden="hidden" value="">[[${lists.size}]]</option>
+													<option value="2">2</option>
+													<option value="4">4</option>
+													<option value="6">6</option>
+													<option value="10">10</option>
+												</select>
+											</form>
+											
 										</div>
 										<div class="col-md-6 col-sm-6">
 											<div class="filter-search-box text-right">
@@ -294,5 +314,6 @@ a:hover {
 		</section>
 
 	</div>
+
 </body>
 </html>

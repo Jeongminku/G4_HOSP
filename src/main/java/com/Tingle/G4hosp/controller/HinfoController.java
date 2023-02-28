@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.dto.HinfoBoardDto;
 import com.Tingle.G4hosp.dto.HinfoListDto;
 import com.Tingle.G4hosp.dto.HinfoSerchDto;
+import com.Tingle.G4hosp.entity.HinfoBoard;
+import com.Tingle.G4hosp.repository.HinfoBoardRepository;
 import com.Tingle.G4hosp.service.HinfoBoardService;
 
 import javassist.expr.NewArray;
@@ -39,13 +42,39 @@ public class HinfoController {
 	private final HinfoBoardService hinfoBoardService;
 	
 	//메인페이지를 보여줌
+//	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
-	public String viewHinfoList(HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
+	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Long pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+		
+		System.err.println(hinfoBoardDto.getPn()+"sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
-
+		System.err.println(hinfoBoardDto.getPn()+"popopopopopopopopopo");
+		
 				
+		model.addAttribute("lists", list);
+		model.addAttribute("maxPage",5);
+		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
+
+		return "HinfoPage/HinfoMain";
+		
+	}
+	
+
+	@PostMapping(value = "/HinfoMain")
+	public String viewHinfoList(HttpServletRequest request, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+
+		System.err.println(hinfoBoardDto.getPn() + "lllllllllllllllllllllllllllllll");
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , hinfoBoardDto.getPn());
+		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
+		
+		System.err.println(list.getSize() + "!@$!@$!@$!@$!@$!@$!@$!@$!@$!@");
+		
+		final int pageNum = hinfoBoardDto.getPn();
+		System.err.println(pageNum);
+		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
