@@ -1,0 +1,70 @@
+@charset "UTF-8";
+.search_gap {
+	display: block;
+	clear: both;
+	height: 50px;
+}
+.search_sec {
+	padding-bottom: 70px;
+	margin-bottom: 70px;
+	border-bottom: 1px solid #d7d7d7;
+}
+
+.search_title .sub_title_h4 {
+	float: left;
+}
+
+.sub_title_h4 {
+	position: relative;
+	padding-top: 15px;
+	padding-bottom: 25px;
+	margin-left: 20px;
+	color: black;
+	font-weight: 500;
+	font-size: 30px;
+	line-height: 1;
+	letter-spacting: -0.25px;
+}
+
+.sub_title_h4::before {
+	display:block;
+	position: absoulute;
+	width: 20px;
+	height: 20px;
+	margin-top: -18px;
+	margin-left: -20px;
+	content: '';
+}
+
+.fix::after {
+	display:block;
+	clear: both;
+	content: '';
+}
+
+.in_w {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.gray_bg {
+	background-color: #f2f2f2;
+}
+
+.gray_bg > .cont_no {
+	height: 410px;
+	margin-top: -10px;
+}
+
+.cont_no {
+	display: table;
+	width: 100%;
+	
+}
+
+.doctor_info_wrap .doctor_info_inner {
+	padding: 20px 60px 60px;
+	border: 0;
+	background: #f9f9f9;
+}
+

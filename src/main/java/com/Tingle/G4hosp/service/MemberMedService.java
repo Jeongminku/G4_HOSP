@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.repository.MemberMedRepository;

@@ -54,4 +54,8 @@ public class MedService {
 	public List<Med> getTesListNotMy(Long medId) {
 		return medRepository2.getMedListNotMyMed(medId);
 	}
+	
+	public Med findbyid(Long id) {
+		return medRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+	}
 }

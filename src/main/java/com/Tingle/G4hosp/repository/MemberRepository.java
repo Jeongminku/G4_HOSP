@@ -34,5 +34,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	@Query(value = "select * from member where member.role = 'client' and member.name = :MNAME",nativeQuery = true)
 	List<Member> findMListbyMname(@Param("MNAME") String mname);
 
+	Member findByName(String name);
 	
 }

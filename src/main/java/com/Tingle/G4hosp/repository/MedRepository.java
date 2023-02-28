@@ -1,6 +1,7 @@
 package com.Tingle.G4hosp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,5 @@ public interface MedRepository extends JpaRepository<Med, Long> {
 	@Query(value = "select * from med where med_id not in(:myMedId)", nativeQuery=true)
 	List<Med> getMedListNotMyMed(@Param("myMedId") Long medid);
 	
+	Optional<Med> findById(Long medid);
 }
