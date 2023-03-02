@@ -1,5 +1,7 @@
 package com.Tingle.G4hosp.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.thymeleaf.util.StringUtils;
 
@@ -50,6 +54,7 @@ public class Member {
 	private String tel; //전화번호 
 
 	@Column(nullable = false)
+	//@Length(min=8,max=8)
 	private String birth;  //생년월일 
 
 	@Enumerated(EnumType.STRING)

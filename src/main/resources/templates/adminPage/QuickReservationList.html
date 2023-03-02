@@ -5,13 +5,10 @@
 
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+	layout:decorate="~{layouts/adminLayout}">
 <head>
 <meta charset="UTF-8" />
 <title> (관리자) 비회원 예약 조회 페이지</title>
-
-<!-- THYMELEAF JS  -->
-<th:block layout:fragment="script">
 	<script th:inline="javascript">
 	$(document).ready(function(){
     	var errorMessage = [[${errorMessage}]];
@@ -21,96 +18,16 @@
     	}
 	return false;
 	});
-	function deleteqr(value){
-		var confir = confirm("취소된 예약이 맞습니까?");
-		if(confir){
-			alert("취소가 완료되었습니다.");
-			location.href = "/admin/deleteqr/"+value;
-		}else{
-			alert("현 상태를 유지합니다.");
-			return false;
-		}
-	}
-	
 	</script>
-</th:block>
-
-<!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-	<style>
-.wrap {
-	width: 100%;
-	margin: 0 auto;
-}
-
-.headwrap{
-	margin: 0 auto;
-}
-.viewhead{
-	text-align: center;
-	margin-bottom: 10px;
-}
-.viewlineboxup {
-	border-top: 3px solid black;
-}
-
-.viewlinebox {
-	border: 1px solid black;
-	text-align: center;
-}
-.linemenu{
-	height: 50px;
-	text-align: center;
-	display: table;
-}
-.tablemenu{
-	border: 1px solid
-}
-.detailbody {
-	border: none;
-}
-
-.table_con{
-margin-top: 10px;
-text-align: center;
-}
-
-.cont_img{
-	width: 15%;
-}
-
-.patientlist{
-	text-align: center;
-}
-
-.pnamein{
-	width: 80%
-}
-.but{
-	height: 30px;
-	width: 80px;
-	background: #205B8A;
-	color: white;
-}
-
-.nonQR{
-	margin-top: 30px;
-	text-align: center;
-}
-
-</style>
-</th:block>
 </head>
 <body>
-	<div layout:fragment="content">
-	<section>
-	
+	<section layout:fragment="content">
 		<div class="wrap">
 			<div class="cont">				
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-10 headwrap">
 					<div class="col-md-12 viewhead">
-						<h1>비회원 예약 신청자 조회 / 관리</h1>
+						<h2 class="b-line h3 mb-4">비회원 예약 신청자 조회 / 관리</h2>
 					</div>
 					<div class="col-md-12 viewhead"></div>
 					<div class="col-md-12 viewlineboxup"> </div>
@@ -148,6 +65,5 @@ text-align: center;
 			</div>
 		</div>
 	</section>
-	</div>
 </body>
 </html>

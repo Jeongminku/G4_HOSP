@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.entity.Disease;
@@ -25,6 +26,7 @@ import com.Tingle.G4hosp.entity.QuickReservation;
 import com.Tingle.G4hosp.repository.HospitalizeDiseaseRepository;
 import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
+import com.Tingle.G4hosp.service.ChatService;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MedService;
@@ -47,6 +49,7 @@ public class AdminController {
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
+	private final ChatService chatService;
 	
 	
 	// 관리자 페이지 화면
@@ -179,4 +182,32 @@ public class AdminController {
 		model.addAttribute("QRlist",QRlist);
 		return "adminPage/QuickReservationList";
 	}
+	
+	@GetMapping("/chat")
+	public String chatView (Model model) {
+		model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
+		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
+		return "adminPage/AdminChat";
+	}
+	
+	@PostMapping("/chat")
+    public String createRoom(ChatRoomDto chatRoomDto, Model model) {
+    	try {
+    		chatService.createChatRoom(chatRoomDto);
+    	} catch(Exception e) {
+    		model.addAttribute("ErrorMsg", e.getMessage());
+    	}
+        return "redirect:/admin/chat";
+    }
+	
+	@PostMapping("/chatDel")
+	public String deleteRoom (Long chatRoomId, Model model) {
+		try {
+			chatService.deleteChatRoom(chatRoomId);
+		} catch (Exception e) {
+			model.addAttribute("ErrorMsg", e.getMessage());			
+		}
+		return "redirect:/admin/chat";
+	}
+	
 }

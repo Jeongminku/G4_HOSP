@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.dto;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.Tingle.G4hosp.entity.ChatRoom;
@@ -13,6 +14,7 @@ public class ChatRoomDto {
 	private Long chatRoomAccess;
 	private String chatRoomName;
 	private String chatRoomAccessName;
+	private String chatRoomRegDate;
 	
 	public static List<ChatRoomDto> createChatRoomDtoList (List<ChatRoom> chatRoomList) {
 		List<ChatRoomDto> chatRoomDtoList = new ArrayList<>();
@@ -21,6 +23,7 @@ public class ChatRoomDto {
 			chatRoomDto.setId(room.getId());
 			chatRoomDto.setChatRoomAccess(room.getChatRoomAccess().getId());
 			chatRoomDto.setChatRoomName(room.getChatRoomName());
+			chatRoomDto.setChatRoomRegDate(room.getRegDatetime().format(DateTimeFormatter.ofPattern("yyyy-mm-dd")));
 			chatRoomDtoList.add(chatRoomDto);
 		}
 		return chatRoomDtoList;

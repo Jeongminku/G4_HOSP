@@ -64,6 +64,20 @@ public class WebSocketHandler extends TextWebSocketHandler {
             }
             chatMessage.setMessage(chatMessage.getSender() + " 님이 입장하셨습니다.");
         }
+
+//        if (chatMessage.getType().equals(MessageType.LEAVE)) {
+//        	sessions.remove(session);
+//        	roomSeesionList.put(connectedRoom.getId(), sessions);
+//        	connectedRoom.setSessions(sessions);
+//        	for(WebSocketSession s : sessions) {
+//        		Member member = memberService.findByLoginid(s.getPrincipal().getName());
+//        		MemberMed med = memberMedService.findMemberMed(member.getId());
+//        		String division = "관리자";
+//        		if(med != null) division = med.getMedId().getMedName();
+//        		chatMessage.getJoinedMember().add("[" + division + "] " + member.getName());
+//        	}
+//        	chatMessage.setMessage(chatMessage.getSender() + " 님이 퇴장하셨습니다.");
+//        }
         
         sendMessage(chatMessage);
     }
@@ -76,19 +90,26 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		String disConUserName = memberService.findByLoginid(session.getPrincipal().getName()).getName();
 		for(Long roomId : roomSeesionList.keySet()) {
 			if(roomSeesionList.get(roomId).contains(session)) {
-				ChatMessageDto chatMessage = new ChatMessageDto();
-				chatMessage.setRoomId(roomId);
-				chatMessage.setSender(disConUserName);
-				chatMessage.setType(MessageType.LEAVE);
-				chatMessage.setMessage(chatMessage.getSender() + " 님이 퇴장하셨습니다.");
 				roomSeesionList.get(roomId).remove(session);
 				sessions = roomSeesionList.get(roomId);
-				sendMessage(chatMessage);
 			}
 		}
+		
+//		String disConUserName = memberService.findByLoginid(session.getPrincipal().getName()).getName();
+//		for(Long roomId : roomSeesionList.keySet()) {
+//			if(roomSeesionList.get(roomId).contains(session)) {
+//				ChatMessageDto chatMessage = new ChatMessageDto();
+//				chatMessage.setRoomId(roomId);
+//				chatMessage.setSender(disConUserName);
+//				chatMessage.setType(MessageType.LEAVE);
+//				chatMessage.setMessage(chatMessage.getSender() + " 님이 퇴장하셨습니다.");
+//				roomSeesionList.get(roomId).remove(session);
+//				sessions = roomSeesionList.get(roomId);
+//				sendMessage(chatMessage);
+//			}
+//		}
 	}
 	
 }

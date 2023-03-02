@@ -91,7 +91,7 @@ public class MemberController {
 	}
 
 	// ID찾기화면
-	@GetMapping(value = "/find")
+	@GetMapping(value = "/FindId")
 	public String memberFindId(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "member/memberFindId";
@@ -99,7 +99,7 @@ public class MemberController {
 	}
 
 	// ID찾기
-	@PostMapping(value = "/find")
+	@PostMapping(value = "/FindId")
 	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 
 		try {
@@ -116,15 +116,13 @@ public class MemberController {
 	}
 
 	// id찾기 결과화면
-	@GetMapping(value = "/findResult")
+	@GetMapping(value = "/FindIdResult")
 	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
 
 		return "member/memberFindIdResult";
 	}
-
 	
-	
-	@PostMapping(value = "/findResult")
+	@PostMapping(value = "/FindIdResult")
 	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 		Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
 		System.out.println("llllllllllllllll"+ memberFindID.getPwd());
@@ -165,6 +163,7 @@ public class MemberController {
 			return "member/memberFindPwdResult";
 		}
 	
+		
 	
 	@GetMapping("/myReservation")
 	public String reservationListView (Model model, Principal principal) {

@@ -51,17 +51,19 @@ public class MyWebSocketHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			List<QuickReservation> Qlist = quickReservationService.QRList();
-			Member member = memberService.findByLoginid(session.getPrincipal().getName());
-	        if(member.getRole().equals(Role.ADMIN)) {
-	        	for (QuickReservation QR : Qlist){
-	        		if(QR.getQryn().equals("N")) {
-	                    String alertMessage = "처리되지 않은 비회원 예약건이 있습니다.";
-	                    session.sendMessage(new TextMessage(alertMessage));
-	        		}
-	        	}
-	        }else {
-	        	session.close();
-	        }
+			if(session.getPrincipal() != null) {
+				Member member = memberService.findByLoginid(session.getPrincipal().getName());
+				if(member.getRole().equals(Role.ADMIN)) {
+					for (QuickReservation QR : Qlist){
+						if(QR.getQryn().equals("N")) {
+							String alertMessage = "처리되지 않은 비회원 예약건이 있습니다.";
+							session.sendMessage(new TextMessage(alertMessage));
+						}
+					}
+				}else {
+					session.close();
+				}				
+			}
 		}
 	}
 

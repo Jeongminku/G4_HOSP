@@ -41,7 +41,8 @@ public class MainController {
 	
 	@GetMapping(value ="/searchresult")
 	public String searchresult(Model model, SearchInputDto searchInputDto) {
-		System.err.println(searchInputDto.getSearchQuery());
+		 String searchABC = searchInputDto.getSearchQuery();
+		 model.addAttribute("searchABC",searchABC);
 		 List<SearchDocListDto> docList = searchDocService.getDocList(searchInputDto);
 		 
 		 for(SearchDocListDto Doctorlist : docList) {
@@ -58,6 +59,12 @@ public class MainController {
 		 //System.err.println("닥메드 : " + docList.get(0).getDocMed());
 		 List<SearchMedListDto> medList = searchDocService.getMedlist(searchInputDto);
 		 model.addAttribute("medList", medList);
+		 Integer searchSize = docList.size() + medList.size();
+		 Integer searchDocSize = docList.size();
+		 Integer searchMedSize = medList.size();
+		 model.addAttribute("searchSize", searchSize);
+		 model.addAttribute("searchDocSize", searchDocSize);
+		 model.addAttribute("searchMedSize", searchMedSize);
 		 
 		return "searchPage/SearchResult";
 	}

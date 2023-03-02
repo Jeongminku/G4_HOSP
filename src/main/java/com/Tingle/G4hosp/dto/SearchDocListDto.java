@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class SearchDocListDto {
 
+	private Long docId;
 	
 	private String docName;
 	
@@ -22,7 +23,8 @@ public class SearchDocListDto {
 	private String docImgUrl;
 	
 	@QueryProjection
-	public SearchDocListDto(String docName, String docImg, String docImgUrl) {
+	public SearchDocListDto(Long docId, String docName, String docImg, String docImgUrl ) {
+		this.docId = docId;
 		this.docName = docName;
 		this.docImg = docImg;
 		this.docImgUrl = docImgUrl;

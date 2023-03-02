@@ -219,7 +219,14 @@ a:hover {
 								</div>
 								<div class="inbox-message">
 									<ul th:each="list , i : ${lists.getContent()}">
-				
+							<!-- 			<li>[[${list.boardSecret}]] 글쓴이: [[${list.member.loginid}]] 현재 로그인: [[${#authentication.name}]] [[${#authentication.Authorities}]]</li>
+										<li>
+ 											<div th:if="${#authorization.expression('hasAnyRole(''ROLE_DOCTOR'',''ROLE_ADMIN'')') ? true : false} 
+											and ${list.boardSecret.name() == 'True'} and ${list.member.loginid == #authentication.name}">
+											비밀글입니다.
+											</div>  -->
+								
+										</li>
 										<li>
 										<a href="#">
 												<div class="message-avatar">
@@ -230,13 +237,21 @@ a:hover {
 												<div class="message-body">
 													<div class="message-body-heading">
 													
-														<h5 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
-															[[${list.title}]] </a>
-															
-															<span th:if="${i.first}" class="unread" style="margin-top:1px">New</span>
-															<span th:if="${list.view} >= 5" class="important" style="margin-top:1px">Hot</span>
-														
+														<h5 th:if= "${list.boardSecret.name() == 'False'}"
+														 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
+															[[${list.title}]]</a>
 														</h5>
+														
+														<h5 th:unless= "${list.boardSecret.name() == 'False'}"
+														 th:href="'/Hinfo/' +${list.id}">
+											
+														 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
+														 
+														
+														 <a  th:unless="${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">[[${list.title}]]</a>
+														 
+														</h5>
+														
 
 														<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 													</div>
