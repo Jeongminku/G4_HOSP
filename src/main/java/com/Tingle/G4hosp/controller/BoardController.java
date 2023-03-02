@@ -2,6 +2,7 @@ package com.Tingle.G4hosp.controller;
 
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Tingle.G4hosp.constant.BoardSecret;
+import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.BoardFormDto;
 import com.Tingle.G4hosp.dto.BoardListDto;
 import com.Tingle.G4hosp.dto.BoardSerchDto;
@@ -52,7 +57,8 @@ public class BoardController {
 	public String boardView(BoardSerchDto boardserchDto,Optional<Integer> page,Model model) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
 		Page<BoardListDto> list = boardSerivce.getBoardMain(boardserchDto, pageable);
-					
+		
+		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
@@ -89,7 +95,9 @@ public class BoardController {
 	//게시글 상세 보기
 	@GetMapping(value = "/{boardId}")
 	public String boardview(Model model, @PathVariable("boardId") Long boardId,
-			HttpServletRequest request, HttpServletResponse response , PageSerchDto pageSerchDto,Optional<Integer> page) {
+			HttpServletRequest request, HttpServletResponse response ,
+			PageSerchDto pageSerchDto,Optional<Integer> page, HttpServletResponse resp,
+			Authentication authentication) {
 
 		//쿠키를 통한 게시글 조회수 중복 카운트 방지
 		 Cookie oldCookie = null;
@@ -124,6 +132,16 @@ public class BoardController {
 		    //List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
 		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
 		    
+		    if(boardFormDto.getSecret().equals(BoardSecret.True)
+		    	&&	!boardFormDto.getMember().getLoginid().equals(authentication.getName())
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+		    	
+		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main" , resp);
+		    }
+		    
+
+		
 		    
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
 			Page<ReplyDto> list = replyService.getReplyPage(pageSerchDto, pageable,boardId);
@@ -133,7 +151,7 @@ public class BoardController {
 			model.addAttribute("maxPage", 5);
 		    
 		    model.addAttribute("boardFormDto",boardFormDto);
-		    
+
 		    
 		    return "boardpage/boardDtl";
 	}

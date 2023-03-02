@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.modelmapper.ModelMapper;
 
+import com.Tingle.G4hosp.constant.BoardSecret;
 import com.Tingle.G4hosp.entity.Board;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.Reply;
@@ -16,6 +17,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 public class BoardFormDto {
 	
 	private Long id; //게시글 번호
@@ -27,6 +29,8 @@ public class BoardFormDto {
 	private String content;
 	
 	private int view;  //게시글의 조회수
+	
+	private BoardSecret secret;
 	
 	private Member member; // 게시글을 쓴 회원의 정보가 담길 필드
 	
