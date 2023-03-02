@@ -1,16 +1,27 @@
+let chatSocket = new WebSocket("ws://localhost/ws/chat");
 const token = $("meta[name='_csrf']").attr("content");
 const header = $("meta[name='_csrf_header']").attr("content");
-let chatHistory = [];
-let socket = null;
-let messageTextArea = $('#messageTextArea').val();
 let messageData = {
-        roomId: '',
-        sender: '',
-        type: 'TALK',
-        message: '',
+    roomId: '',
+    sender: '',
+    type: 'TALK',
+    message: '',
 };
 
-console.log(messageData.sender)
+chatSocket.onopen = () => {
+    console.log('chatSocket [ ' + chatSocket.url + ' ] CONNECTED');
+}
+
+chatSocket.onmessage = message => {
+    const getMessage = JSON.parse(message.data)
+    appendMsg(getMessage, true);
+    scrollToBottom();
+    saveChatHistoryToSession(getMessage);
+}
+
+chatSocket.onclose = () => {
+    console.log('chatSocket [ ' + chatSocket.url + ' ] CLOSED');
+}
 
 // 이벤트 핸들
 $(document).on('click', '#joined', () => {
@@ -18,14 +29,14 @@ $(document).on('click', '#joined', () => {
 })
 
 $(document).on('click', '#exitRoom', () => {
-    socket.close();
-    location.href = '/chat';
+    console.log('chatSocket [ ' + chatSocket.url + ' ] CLOSED');
 })
 
 $(document).on('click', '#clearHist', () => {
     // localStorage.clear();
-    sessionStorage.clear();
-    chatHistory = [];
+    const currnetUserSession = JSON.parse(sessionStorage.getItem(messageData.sender));
+    currnetUserSession[messageData.roomId] = [];
+    sessionStorage.setItem(messageData.sender, JSON.stringify(currnetUserSession));
     $('#messageView').empty();
 })
 
@@ -38,19 +49,20 @@ $(document).on('click', '#messageSend', function () {
     scrollToBottom();
 })
 
-$(document).on('keyup', 'input[name="message"]', function (e) {
+$(document).on('keyup', 'input[name="sendMessage"]', function (e) {
     if (e.keyCode == 13) {
         sendMsgToServer();
         scrollToBottom();
     }
 })
 
-$()
-
-$('#enterRoom').on('click', () => {
+$('input[name="roomId"]').on('change', () => {
     const checkedRadio = $('input[name="roomId"]:checked');
     const accessId = checkedRadio.parents('div').children('input[name="roomAccessId"]').val();
-   
+
+    // console.log(chatSocket.readyState)
+    // if (chatSocket.readyState != 1) chatSocket = new WebSocket("ws://localhost/ws/chat");
+
     $.ajax({
         url: '/chat/room',
         type: 'POST',
@@ -65,24 +77,12 @@ $('#enterRoom').on('click', () => {
         cache: false,
         success: function (frag) {
             $('#chatRoom').replaceWith(frag);
-            socket = new WebSocket("ws://localhost/ws/chat");
             
-            socket.onopen = () => {
-                console.log('Socket [ ' + socket.url + ' ] CONNECTED');
-                messageData.type = 'ENTER';
-                socket.send(JSON.stringify(messageData))
-                getSavedChatHistory(messageData.roomId);
-            }
-
-            socket.onmessage = message => {
-                const getMessage = JSON.parse(message.data)
-                appendMsg(getMessage, true);
-                scrollToBottom();
-                saveChatHistoryToSession(getMessage);
-            }
-
-            messageData.sender = $('input[name="senderName"]').val();
+            messageData.sender = $('input[name="sendName"]').val();
             messageData.roomId = checkedRadio.val();
+            messageData.type = 'ENTER';
+            chatSocket.send(JSON.stringify(messageData))
+            getSavedChatHistory(messageData.sender, messageData.roomId);
         },
         error: function(jqXHR, status, error) {
             alert('error')
@@ -98,16 +98,17 @@ function scrollToBottom() {
 
 function sendMsgToServer() {
     messageData.type = 'TALK'
-    messageData.message = $('input[name="message"]').val();
+    messageData.message = $('input[name="sendMessage"]').val();
     if (messageData.message == '') return false;
-    socket.send(JSON.stringify(messageData));
-    $('input[name="message"]').val('')
+        
+    chatSocket.send(JSON.stringify(messageData));
+    $('input[name="sendMessage"]').val('')
 }
 
 function appendMsg (getMessage, isMessage) {
     const messageOut = $('#messageView');
-    const currentUserName = $('input[name="senderName"]').val();
-    const senderName = getMessage.sender;
+    const currentUserName = $('input[name="sendName"]').val();
+    const sendName = getMessage.sender;
     const $div = $('<div></div>'); 
     
     if (getMessage.type == 'TALK') {
@@ -119,9 +120,9 @@ function appendMsg (getMessage, isMessage) {
         const msgText = $div.clone().text(getMessage.message);
         const msgTextTime = $div.clone().addClass('d-flex align-items-end');
         
-        if (currentUserName != senderName) {
+        if (currentUserName != sendName) {
             const msgBox = $div.clone().addClass('mb-2');
-            const msgUserName = $('<p>' + senderName + '</p>').addClass('senderName');
+            const msgUserName = $('<p>' + sendName + '</p>').addClass('sendName');
             msgText.addClass('msg reciveMsg rounded');
             msgBox.append(msgUserName);
             msgTextTime.append(msgText);
@@ -150,24 +151,33 @@ function appendMsg (getMessage, isMessage) {
 }
 
 function saveChatHistoryToSession(msgData) {
-    // const prevList = JSON.parse(localStorage.getItem(msgData.roomId));
-    const prevList = JSON.parse(sessionStorage.getItem(msgData.roomId));
-    if (prevList != null && prevList.length != 0) {
-        chatHistory = prevList;
+    let chatHistory = [];
+    const roomId = msgData.roomId;
+    const currentUser = msgData.sender;
+    let storageByUser = JSON.parse(sessionStorage.getItem(currentUser)) == null ? {} : JSON.parse(sessionStorage.getItem(currentUser));
+    
+    if (roomId == '') return false;
+    if (storageByUser != null) {
+        if (storageByUser[roomId] != null && storageByUser[roomId].length != 0) {
+            chatHistory = storageByUser[roomId];
+        }
     }
     if (chatHistory.length > 100) {
         chatHistory.slice(0, 1);
     }
-    chatHistory.push(msgData);
+    chatHistory.push(msgData)
+    storageByUser[roomId] = chatHistory; 
     // localStorage.setItem(msgData.roomId, JSON.stringify(chatHistory));
-    sessionStorage.setItem(msgData.roomId, JSON.stringify(chatHistory));
+    sessionStorage.setItem(currentUser, JSON.stringify(storageByUser));
 }
 
-function getSavedChatHistory (roomId) {
+function getSavedChatHistory (sender, roomId) {
     // let chatMsg = JSON.parse(localStorage.getItem(roomId));
-    let chatMsg = JSON.parse(sessionStorage.getItem(roomId));
-    if (chatMsg != null) {
-        chatMsg.forEach(msg => {
+    const allHistoryByUser = JSON.parse(sessionStorage.getItem(sender));
+    if (allHistoryByUser == null) return false;
+    const currentRoomHistory = allHistoryByUser[roomId];
+    if (currentRoomHistory != null) {
+        currentRoomHistory.forEach(msg => {
             appendMsg(msg, false)
         });
     }

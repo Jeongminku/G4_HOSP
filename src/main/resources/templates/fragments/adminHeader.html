@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header id="adminHeader" class="d-flex flex-column w-25 align-items-center" th:fragment="adminHeader">
+        <h1 class="mb-2 h3">병원 관리페이지</h1>
+        <nav class="w-100">
+            <div class="h5">회원 관리</div>
+            <ul>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/memberList">회원 환자 목록</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/hospitalizeList">입원 환자 목록</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/qlist">비회원 환자 목록</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/doctorList">의사 목록</button>
+                </li>
+            </ul>
+            <div class="h5">게시판 관리</div>
+            <ul>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/board/main">고객 게시판</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/Hinfo/HinfoMain">건강정보 게시판</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/qa/">Q&A 게시판</button>
+                </li>
+            </ul>
+            <div class="h5">병원 관리</div>
+            <ul>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/med">진료과 관리</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/disease">병명 관리</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/chat">채팅방 관리</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

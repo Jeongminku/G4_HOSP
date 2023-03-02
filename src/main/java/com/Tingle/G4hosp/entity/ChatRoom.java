@@ -22,7 +22,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "chatRoom")
-public class ChatRoom {
+public class ChatRoom extends BaseTime {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

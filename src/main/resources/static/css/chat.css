@@ -1,12 +1,12 @@
 /* 채팅방 선택페이지 */
 select.rounded {height: 58px;} 
-#newChatRoom > div {margin-right: 10px;}
-#newChatAccess {width: 15%;}
-#newChatName {width: 65%;}
-#newChatRoom > button {width: 20%;}
 
 /* 채팅방 페이지 */
-#chatRoom {width: 70%;}
+#roomList {width: 20%;}
+#roomListHeader {height: 50px; padding: 6px 0; box-sizing: border-box; margin: 0;}
+#roomListBody {height: calc(670px + 66px);}
+
+#chatRoom {margin-left: 20px;}
 #roomHeader .btn {font-size: 1.5rem;}
 #roomHeader span {cursor: default;}
 .btn#exitRoom i {transform: rotate(180deg);}
@@ -14,16 +14,16 @@ select.rounded {height: 58px;}
 #joinedMemList::-webkit-scrollbar {display: none;}
 #joinedMemList li {color: #ffffff; text-align: center; padding: 15px; width: 100%;}
 
-#messageView {overflow-y: scroll; border: 1px solid #226597; padding: 10px; height: 685px;}
+#messageView {overflow-y: scroll; border: 1px solid #226597; padding: 10px; height: 670px;}
 .entry {padding: 1rem;}
 .info {font-size: 0.8rem; margin: 0 10px;}
-.senderName {margin-bottom: 5px;}
+.sendName {margin-bottom: 5px;}
 .msg {padding: 10px 1rem; width: fit-content; box-sizing: border-box;}
 .msg.sendMsg {background-color: #226597; color: #ffffff; border: none;}
 .msg.reciveMsg {background-color: #ffffff;}
 
-#messageInput input[name="message"] {color: #000000; cursor: text; text-align: left;}
-#messageInput input[name="message"]:hover {background-color: #ffffff; color: #000000; box-shadow: none;}
-#messageInput input[name="message"]:active,
-#messageInput input[name="message"]:focus-visible {background-color: #ffffff; color: #000000; box-shadow: none;}
+#messageInput input[name="sendMessage"] {color: #000000; cursor: text; text-align: left;}
+#messageInput input[name="sendMessage"]:hover {background-color: #ffffff; color: #000000; box-shadow: none;}
+#messageInput input[name="sendMessage"]:active,
+#messageInput input[name="sendMessage"]:focus-visible {background-color: #ffffff; color: #000000; box-shadow: none;}
 #messageSend {padding: 1rem 0; box-sizing: border-box; margin-left: 10px;}
