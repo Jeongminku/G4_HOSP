@@ -59,6 +59,8 @@ public class MainController {
 		 //System.err.println("닥메드 : " + docList.get(0).getDocMed());
 		 List<SearchMedListDto> medList = searchDocService.getMedlist(searchInputDto);
 		 model.addAttribute("medList", medList);
+		 
+		 
 		 Integer searchSize = docList.size() + medList.size();
 		 Integer searchDocSize = docList.size();
 		 Integer searchMedSize = medList.size();

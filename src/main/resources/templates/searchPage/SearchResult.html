@@ -114,11 +114,21 @@
 									</div>
 								</div>
 								
-
+								<div class="doctor_info_inner" th:each="medList : ${medList}" th:unless ="${searchMedSize} == 0">						
+								<div class="doctor_inner_left">
+								<ul class="doctor_top fix">
+								<li class="doctor_top_left">
+								<li class="doctor_top_right">
+									<a class="search_doc_resv">[[${medList.medName}]]</a> 
+								</li>
+								</ul>
+								</div>
+								<div class="doctor_inner_right">
+									<p>${medList.medInfo}</p>
+								</div>
+								</div>
 								<ul class="fix" th:unless="${searchMedSize == 0}">
-								
-								<li>진료과 소개</li>
-								<li th:each="medList : ${medList}">[[${medList.medName}]]</li>
+									<li th:each="medList : ${medList}">[[${medList.medName}]]</li>
 								</ul>
 
 							</div>	

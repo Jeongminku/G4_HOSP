@@ -49,7 +49,7 @@ public class SearchDocRepositoryCustomImpl implements SearchDocRepositoryCustom 
 	public List<SearchMedListDto> getMedList(SearchInputDto searchDocDto) {
 		QMed med = QMed.med;
 		
-		List<SearchMedListDto> content = queryFactory.select(new QSearchMedListDto(med.medName))
+		List<SearchMedListDto> content = queryFactory.select(new QSearchMedListDto(med.medName,med.medInfo))
 										.from(med)
 										.where(SearchMedNmLike(searchDocDto.getSearchQuery()))
 										.fetch();
