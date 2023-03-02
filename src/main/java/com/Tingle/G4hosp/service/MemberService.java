@@ -3,6 +3,7 @@ package com.Tingle.G4hosp.service;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -78,9 +79,33 @@ public class MemberService implements UserDetailsService{
 	 }
 	
 	 public Member findByMnameMtel(String memberName, String memberTel) {
-		 return memberRepository.findbtMnameandMtel(memberName, memberTel);
+		 return memberRepository.findbyMnameandMtel(memberName, memberTel);
 	 }
 	 
+	// find PWD
+		 public Member findByPwd(String loginId, String memberName, String memberTel) {
+			 return memberRepository.findPwd(loginId, memberName, memberTel);
+		 }
+		 
+		 public String updatenewPwd(MemberFormDto memberFormDto, String loginId, String memberName, String memberTel) {
+			 Member member = findByPwd(loginId, memberName, memberTel);
+			 String randomPwd = UUID.randomUUID().toString();
+			 member.updatePwd(randomPwd, passwordEncoder);
+			 return randomPwd;
+		 }
+	 
+	
+	//아이디중복체크
+		 /*
+		 private void validateDuplicateMember(Member member) {
+			 Member findMember = memberRepository.findByLoginid(member.getLoginid());
+			 if (findMember != null) {
+				 throw new IllegalStateException("이미 존재하는 아이디입니다.");
+			 }
+		 }
+		 */
+		 
+		 
 	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
 		 Member member = memberRepository.findByLoginid(loginId);
 		 if (member.getRole() == Role.DOCTOR) {

@@ -18,33 +18,78 @@
 		<div class="wrap">
 			<div class="cont">				
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
-						<h1>의료진/진료과 검색</h1>
-					<form class="doc_search" action="/searchresult">
-					<input type="search" name="searchQuery" class="doc_searchbar" placeholder="검색어입력" required>
-					<div class="col-md-12 linemenu">
-						<button type="submit" class="doc_search_btn">검색</button>
+					<div class="doc_search_wrap">
+						<div class="doc_search_form_h1">
+							<h1>의료진/진료과 검색</h1>
+						</div>
+						<hr>
+						<div class="doc_search_form">
+							<form class="doc_search" action="/searchresult" method="get">
+							<div class="col-md-12 linemenu">
+								<input type="search" name="searchQuery" class="doc_searchbar" placeholder="의료진/진료과 검색" required>
+								<button type="submit" class="doc_search_btn">검색</button>
+							</div>
+							</form>						
+						</div>
 					</div>
-					</form>
 					<div class="search_cont">
-						<p class="search_txt"><span>"검색결과"</span>에 관한 검색결과가 총<span>"XX"</span>건이 검색되었습니다.</p>
+						<p class="search_txt"><span>'[[${searchABC}]]'</span>에 관한 검색결과가 총<span>'[[${searchSize}]]'</span>건이 검색되었습니다.</p>
 					</div>
 						<div class="search_gap">
 						</div>
 					<!-- [의료진 검색결과] -->
 					<div class="search_sec">
 						<div class="search_title">
-							<h4 class="sub_title_h4 fix">의료진<span>XX</span><em>건</em></h4>
+							<h4 class="sub_title_h4 fix">의료진<span> [[${searchDocSize}]]</span>건</h4>
 						</div>
 						<div class="doctor_info_wrap fix">
-							<div class="in_w">
+							<div class="in_w" th:if="${searchDocSize} == 0">
 								<div class="gray_bg">
 									<div class="cont_no">
+										<img src="/images/docTeam.png">
 										<p class="doctor_no_txt">등록된 의료진이 없습니다.</p>
 									</div>
 								</div>
 							</div>
-							<div class="doctor_info_inner" th:each="docList : ${docList}">						
-								[[${docList.docName}]]								
+							<div class="doctor_info_inner" th:each="docList : ${docList}" th:if ="${searchDocSize} != 0">						
+								<div class="doctor_inner_left">
+								<ul class="doctor_top fix">
+								<li class="doctor_top_left"><img th:src="${docList.docImgUrl}" th:alt="의사사진"></li>
+								<li class="doctor_top_right">
+									<p class="doctor_name">
+										<span>[[${docList.docMed}]]</span>
+										[[${docList.docName}]]
+										
+										   
+									</p>
+										<a class="search_doc_resv" th:href="'/reservation/' + ${docList.docId}">예약하기</a> 
+								</li>
+								</ul>
+								</div>
+								<div class="doctor_inner_right">
+								<table class="tb_calendar">
+									<tr>
+									<th></th>
+									<td class="tb_sun">일</td>
+									<td class="tb_mon">월</td>
+									<td class="tb_tue">화</td>
+									<td class="tb_wed">수</td>
+									<td class="tb_thu">목</td>
+									<td class="tb_fri">금</td>
+									<td class="tb_sat">토</td>
+									</tr>
+									<tr>
+									<th>휴무</th>
+									<td class="tb_sun_holi"></td>
+									<td class="tb_mon_holi"></td>
+									<td class="tb_tue_holi"></td>
+									<td class="tb_wed_holi"></td>
+									<td class="tb_thu_holi"></td>
+									<td class="tb_fri_holi"></td>
+									<td class="tb_sat_holi"></td>
+									</tr>
+								</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -57,29 +102,33 @@
 					<!-- [진료과 검색결과] -->
 					<div class="search_sec">
 						<div class="search_title">
-							<h4 class="sub_title_h4">진료과<span>XX</span><em>건</em></h4>
+							<h4 class="sub_title_h4 fix">진료과<span> [[${searchMedSize}]]</span>건</h4>
+						</div>
 							<div class="med_cont">
-								<div class="in_w">
+								<div class="in_w" th:if="${searchMedSize == 0}">
 									<div class="gray_bg">
 										<div class="cont_no">
+											<img src="/images/docTeam.png">
 											<p class="doctor_no_txt">등록된 진료과가 없습니다.</p>
 										</div>
 									</div>
 								</div>
 								
 
-								<ul class="fix">
+								<ul class="fix" th:unless="${searchMedSize == 0}">
+								
 								<li>진료과 소개</li>
 								<li th:each="medList : ${medList}">[[${medList.medName}]]</li>
 								</ul>
 
 							</div>	
 						</div>
-					</div>
-					</div>
 				</div>
 			</div>
+		</div>
 	</section>
 	</div>
+	
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
 </body>
 </html>

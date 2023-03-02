@@ -9,7 +9,6 @@
 </head>
 <body>
 	<div layout:fragment="content">
-<<<<<<< HEAD
 
 <script th:inline="javascript">
 	function send_pn(){
@@ -17,11 +16,15 @@
 		console.log(yaho);
 		$("#pn_form").submit();
 	}
+	
+	function send_pbn(){
+		var mu = $("#pbn").val();
+		console.log(mu);
+		$("#pbn_form").submit();
+	}
 </script>
 		<style>
-=======
 <style>
->>>>>>> 6f40d6393fb08e4da9d6ff9e345681da6371ce1e
 
 /*================================
 Filter Box Style
@@ -286,31 +289,30 @@ a:hover {
 			
 			<br>
 			
-			<nav
-				th:with="start=${(lists.number/maxPage)*maxPage + 1}
-			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
-				aria-label="Page navigation example">
-				<ul class="pagination d-flex justify-content-center">
-					<li class="page-item" th:classappend="${lists.first}?'disabled'">
-						<a
-						th:href="@{'/Hinfo/HinfoMain' + '?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number-1}}"
-						class="page-link"> <span>이전</span>
-					</a>
-					</li>
-					<li class="page-item"
-						th:each="page: ${#numbers.sequence(start, end)}"
-						th:classappend="${lists.number eq page-1}?'active':''"><a
-						class="page-link" th:inline="text"
-						th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
-					</li>
-					<li class="page-item" th:classappend="${lists.last}?'disabled'">
-						<a class="page-link"
-						th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
-					</li>
-				</ul>
-			</nav>
-
-			<button style="float: right;" class="btn btn-primary" onClick="location.href='/Hinfo/write'" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')">글쓰기</button>
+			<form id="pbn_form" method="post" action="/Hinfo/HinfoMain">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				
+				<nav
+					th:with="start=${(lists.number/maxPage)*maxPage + 1}, end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
+					aria-label="Page navigation example">
+					<ul class="pagination d-flex justify-content-center" id="pbn" name="pbn" onchange="send_pbn()">
+						<li class="page-item" th:classappend="${lists.first}?'disabled'">
+							<a th:href="@{'/Hinfo/HinfoMain' + '?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+							<span>이전</span>
+						</a>
+						</li>
+						<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${lists.number eq page-1}?'active':''">
+							<a class="page-link" th:inline="text" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${page-1} + '&pn=' + ${hinfoBoardDto.pn}}">[[${page}]]</a>
+						</li>
+						<li class="page-item" th:classappend="${lists.last}?'disabled'">
+							<a class="page-link" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+						</li>
+					</ul>
+				</nav>
+			
+			</form>
+			<div></div>
+			<button style="float: right;" class="btn btn-primary" onClick="location.href='/Hinfo/write'" sec:authorize="hasAnyAuthority('ROLE_DOCTOR','ROLE_ADMIN')">글쓰기</button>
 
 		</section>
 

@@ -37,7 +37,7 @@ public class SearchDocRepositoryCustomImpl implements SearchDocRepositoryCustom 
 	public List<SearchDocListDto> getDocList(SearchInputDto searchDocDto) {
 		QMember member = QMember.member;
 				
-		List<SearchDocListDto> content = queryFactory.select(new QSearchDocListDto(member.name,member.imgOri,member.imgUrl))
+		List<SearchDocListDto> content = queryFactory.select(new QSearchDocListDto(member.id,member.name,member.imgOri,member.imgUrl))
 										.from(member)
 										.where(SearchDocNmLike(searchDocDto.getSearchQuery()))
 										.where(member.role.eq(Role.DOCTOR))

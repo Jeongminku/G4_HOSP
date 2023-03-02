@@ -91,7 +91,7 @@ public class MemberController {
 	}
 
 	// ID찾기화면
-	@GetMapping(value = "/find")
+	@GetMapping(value = "/FindId")
 	public String memberFindId(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "member/memberFindId";
@@ -99,7 +99,7 @@ public class MemberController {
 	}
 
 	// ID찾기
-	@PostMapping(value = "/find")
+	@PostMapping(value = "/FindId")
 	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 
 		try {
@@ -116,13 +116,13 @@ public class MemberController {
 	}
 
 	// id찾기 결과화면
-	@GetMapping(value = "/findResult")
+	@GetMapping(value = "/FindIdResult")
 	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
 
 		return "member/memberFindIdResult";
 	}
-
-	@PostMapping(value = "/findResult")
+	
+	@PostMapping(value = "/FindIdResult")
 	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 		Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
 		System.out.println("llllllllllllllll"+ memberFindID.getPwd());
@@ -130,6 +130,40 @@ public class MemberController {
 		System.out.println(memberFindID.getLoginid());
 		return "member/memberFindIdResult";
 	}
+	
+	// 비밀번호 찾기(변경)화면
+		@GetMapping(value="/FindPwd")
+		public String memberFindPwd(Model model) {
+			model.addAttribute("memberFormDto", new MemberFormDto());
+			return "member/memberFindPwd";
+		}
+		// 비밀번호 찾기(변경)
+		@PostMapping(value="/FindPwd")
+		public String memberFindPwd(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+			try {
+				Member memberFindPwd = memberService.findByPwd(memberFormDto.getLoginid(), memberFormDto.getName(), memberFormDto.getTel());
+				System.out.println("pppppp" + memberFindPwd.getPwd());
+				model.addAttribute("findPwd", memberFindPwd);
+			} catch (Exception e) {
+				return "member/memberFindPwd";
+			}
+			return "member/memberFindPwdResult";
+		}
+		
+		// 비번찾기 결과
+		@GetMapping(value="/FindPwdResult")
+		public String memberFindPwdResult(MemberFormDto memberFormDto, Model model) {
+			return "member/memberFindPwdResult";
+		}
+	
+		@PostMapping(value="/FindPwdResult")
+		public String memberFindPwdResult2(MemberFormDto memberFormDto,Model model) {
+			String newPwd = memberService.updatenewPwd(memberFormDto, memberFormDto.getLoginid(), memberFormDto.getName(), memberFormDto.getTel());
+			model.addAttribute("newPwd",newPwd);
+			return "member/memberFindPwdResult";
+		}
+	
+		
 	
 	@GetMapping("/myReservation")
 	public String reservationListView (Model model, Principal principal) {
