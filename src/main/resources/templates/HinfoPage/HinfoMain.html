@@ -311,8 +311,8 @@ a:hover {
 				</nav>
 			
 			</form>
-
-			<button style="float: right;" class="btn btn-primary" onClick="location.href='/Hinfo/write'" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')">글쓰기</button>
+			<div></div>
+			<button style="float: right;" class="btn btn-primary" onClick="location.href='/Hinfo/write'" sec:authorize="hasAnyAuthority('ROLE_DOCTOR','ROLE_ADMIN')">글쓰기</button>
 
 		</section>
 

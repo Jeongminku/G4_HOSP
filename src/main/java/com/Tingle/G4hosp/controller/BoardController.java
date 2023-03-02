@@ -137,7 +137,7 @@ public class BoardController {
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
 		    	
-		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main" , resp);
+		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main?searchQuery=&page=1" , resp);
 		    }
 		    
 
