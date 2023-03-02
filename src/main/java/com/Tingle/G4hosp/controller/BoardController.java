@@ -63,7 +63,6 @@ public class BoardController {
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
 		
-		
 		return "boardpage/BoardMain";
 	}
 	
@@ -98,7 +97,7 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response ,
 			PageSerchDto pageSerchDto,Optional<Integer> page, HttpServletResponse resp,
 			Authentication authentication) {
-
+		
 		//쿠키를 통한 게시글 조회수 중복 카운트 방지
 		 Cookie oldCookie = null;
 		 Cookie[] cookies = request.getCookies();
@@ -137,7 +136,7 @@ public class BoardController {
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
 		    	
-		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main?searchQuery=&page=1" , resp);
+		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main" , resp);
 		    }
 		    
 

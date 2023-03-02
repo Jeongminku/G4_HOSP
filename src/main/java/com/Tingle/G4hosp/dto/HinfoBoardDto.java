@@ -37,7 +37,7 @@ public class HinfoBoardDto {
 	private LocalDateTime regTime;
 	
 	
-	private int pn;
+	private Integer pn;
 
 	
 	private static ModelMapper modelMapper = new ModelMapper();

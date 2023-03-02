@@ -45,14 +45,19 @@ public class HinfoController {
 //	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
 	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+	
 		
 		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
 		
-		int pbn = 6;
+		Integer pbn = 6;
 		
 		if (pn != null) {
 			pbn = pn;
+		} else if (pn == null) {
+			pbn = 6;
 		}
+		
+		System.err.println("if 문 변환 후 :" + pbn);
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);	

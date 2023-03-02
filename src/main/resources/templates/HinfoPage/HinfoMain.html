@@ -302,7 +302,7 @@ a:hover {
 						</a>
 						</li>
 						<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${lists.number eq page-1}?'active':''">
-							<a class="page-link" th:inline="text" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${page-1} + '&pn=' + ${hinfoBoardDto.pn}}">[[${page}]]</a>
+							<a class="page-link" th:inline="text" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${page-1} + '&pn=' + ${(hinfoBoardDto.pn == null ? 6 : hinfoBoardDto.pn)}}">[[${page}]]</a>
 						</li>
 						<li class="page-item" th:classappend="${lists.last}?'disabled'">
 							<a class="page-link" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
