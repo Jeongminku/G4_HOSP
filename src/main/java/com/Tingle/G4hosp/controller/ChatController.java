@@ -31,17 +31,17 @@ public class ChatController {
     private final ChatRoomAccessService chatRoomAccessService;
     private final MemberService memberService;
 
-    @PostMapping
-    public String createRoom(ChatRoomDto chatRoomDto, Model model) {
-    	try {
-    		chatService.createChatRoom(chatRoomDto);
-    	} catch(Exception e) {
-    		model.addAttribute("ErrorMsg", e.getMessage());
-    	}
-    	model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-    	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-        return "redirect:/chat";
-    }
+//    @PostMapping
+//    public String createRoom(ChatRoomDto chatRoomDto, Model model) {
+//    	try {
+//    		chatService.createChatRoom(chatRoomDto);
+//    	} catch(Exception e) {
+//    		model.addAttribute("ErrorMsg", e.getMessage());
+//    	}
+//    	model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
+//    	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
+//        return "redirect:/chat";
+//    }
 
     @GetMapping
     public String findAllRoom(Model model, Principal principal, HttpServletResponse resp) throws IOException {
