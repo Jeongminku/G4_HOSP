@@ -35,11 +35,27 @@ public class BoardService {
 	
 	
 	//게시판에 글을 저장하는 메소드
+//	public Long saveBoardForm(BoardFormDto boardFormDto,Principal principal) {
+//		//게시글을 작성한 멤버엔티티 생성
+//		Member member = memberRepository.findByLoginid(principal.getName());
+//		//Dto로 엔티티 생성
+//		System.out.println(boardFormDto);
+//		Board board = boardFormDto.createBoard();
+//		
+//		board.setMember(member);
+//		
+//		boardRepository.save(board);
+//		
+//		return board.getId();
+//	}
+	
 	public Long saveBoardForm(BoardFormDto boardFormDto,Principal principal) {
 		//게시글을 작성한 멤버엔티티 생성
 		Member member = memberRepository.findByLoginid(principal.getName());
 		//Dto로 엔티티 생성
-		Board board = boardFormDto.createBoard();
+		System.out.println(boardFormDto);
+		Board board = Board.createBoard(boardFormDto);
+		
 		board.setMember(member);
 		
 		boardRepository.save(board);
