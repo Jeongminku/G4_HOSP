@@ -218,14 +218,7 @@ a:hover {
 									</div>
 								</div>
 								<div class="inbox-message">
-									<ul th:each="list , i : ${lists.getContent()}">
-							<!-- 			<li>[[${list.boardSecret}]] 글쓴이: [[${list.member.loginid}]] 현재 로그인: [[${#authentication.name}]] [[${#authentication.Authorities}]]</li>
-										<li>
- 											<div th:if="${#authorization.expression('hasAnyRole(''ROLE_DOCTOR'',''ROLE_ADMIN'')') ? true : false} 
-											and ${list.boardSecret.name() == 'True'} and ${list.member.loginid == #authentication.name}">
-											비밀글입니다.
-											</div>  -->
-								
+									<ul th:each="list , i : ${lists.getContent()}">							
 										</li>
 										<li>
 										<a href="#">
@@ -286,6 +279,7 @@ a:hover {
 					th:href="@{'/board/main' +'?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
 				</li>
 			</ul>
+		
 		</nav>
 			
 			
