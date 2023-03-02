@@ -23,10 +23,16 @@ $(document).on('click', '#chatRoomDel', function () {
 
 $(document).on('click', '#chatRoomEdit', function () {
     const currentLi = $(this).parent().parent();
-
     const currentAccessId = currentLi.children('input[name="chatRoomAccessId"]').val();
     const currentRoomId = currentLi.children('input[name="chatRoomId"]').val();
-    
-    console.log(currentAccessId)
-    console.log(currentRoomName)
+    const currentRoomName = currentLi.children('div[name="chatRoomName"]').text();
+    const editForm = $('#chatRoomEditModal').find('form');
+
+    editForm.find('option').each((idx, item) => {
+        if ($(item).val() == currentAccessId){
+            $(item).prop('selected', true);
+        }    
+    })
+    editForm.find('input[name="eidtChatName"]').val(currentRoomName);
+    editForm.find('input[name="editchatRoomId"]').val(currentRoomId);
 })

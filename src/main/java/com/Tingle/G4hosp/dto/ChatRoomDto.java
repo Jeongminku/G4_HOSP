@@ -36,4 +36,12 @@ public class ChatRoomDto {
 		chatRoomDto.setId(chatRoom.getId());
 		return chatRoomDto;
 	}
+	
+	public static ChatRoomDto createChatRoomDto (Long roomId, Long accessId, String roomName) {
+		ChatRoomDto chatRoomDto = new ChatRoomDto();
+		chatRoomDto.setId(roomId);
+		chatRoomDto.setChatRoomAccess(accessId);
+		chatRoomDto.setChatRoomName(roomName);
+		return chatRoomDto;
+	}
 }

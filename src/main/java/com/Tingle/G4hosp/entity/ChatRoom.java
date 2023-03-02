@@ -17,6 +17,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.Tingle.G4hosp.dto.ChatRoomDto;
+
 import lombok.Data;
 
 @Data
@@ -45,8 +47,9 @@ public class ChatRoom extends BaseTime {
 		return chatRoom;
 	}
 	
-	public void updateChatRoom (String chatRoomName) {
+	public void updateChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
 		this.chatRoomName = chatRoomName;
+		this.chatRoomAccess = chatRoomAccess;		
 	}
 
 }

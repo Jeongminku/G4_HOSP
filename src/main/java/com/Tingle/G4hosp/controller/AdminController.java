@@ -210,4 +210,15 @@ public class AdminController {
 		return "redirect:/admin/chat";
 	}
 	
+	@PostMapping("/chatEdit")
+	public String editRoom (Long editchatRoomId, Long editChatAccess, String eidtChatName, Model model) {
+		ChatRoomDto chatRoomDto = ChatRoomDto.createChatRoomDto(editchatRoomId, editChatAccess, eidtChatName);
+		try {
+			chatService.updateChatRoom(chatRoomDto);
+		} catch (Exception e) {
+			model.addAttribute("ErrorMsg", e.getMessage());		
+		}
+		return "redirect:/admin/chat";
+	}
+	
 }

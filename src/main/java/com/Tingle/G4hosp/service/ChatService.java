@@ -45,9 +45,10 @@ public class ChatService {
     	return chatRoomRepository.save(chatRoom);
     }
     
-    public void changeName (Long chatRoomId, String name) {
-    	ChatRoom currentRoom = findbyId(chatRoomId);
-    	currentRoom.updateChatRoom(name);
+    public void updateChatRoom (ChatRoomDto chatRoomDto) {
+    	ChatRoom currentRoom = findbyId(chatRoomDto.getId());
+    	ChatRoomAccess newAccess = chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess());
+    	currentRoom.updateChatRoom(newAccess, chatRoomDto.getChatRoomName());
     }
     
     public void deleteChatRoom (Long chatRoomId) {
