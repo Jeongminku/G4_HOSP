@@ -24,7 +24,11 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	Member findDocbyMid(@Param("MID") String doctorid);
 	
 	@Query(value = "select * from member where member.name = :MNAME and member.tel = :MTEL", nativeQuery = true)
-	Member findbtMnameandMtel(@Param("MNAME") String mname, @Param("MTEL") String mtel);
+	Member findbyMnameandMtel(@Param("MNAME") String mname, @Param("MTEL") String mtel);
+
+	//비밀번호찾기(변경)
+	@Query(value = "select * from member where member.member_loginid = :MID and member.name = :MNAME and member.tel = :MTEL", nativeQuery = true)
+	Member findPwd(@Param("MID") String mid, @Param("MNAME") String mname, @Param("MTEL") String mtel);
 
 	//입원상태인 환자의 정보 가져오기.
 	@Query(value = "select * from member b join hospitalize a on b.member_id = a.member_id where a.hospyn = 'Y'" , nativeQuery = true)

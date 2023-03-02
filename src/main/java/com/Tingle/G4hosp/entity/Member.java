@@ -84,6 +84,12 @@ public class Member {
 		this.imgOri = imgOri;
 	}
 	
+	public void updatePwd(String randomPwd, PasswordEncoder passwordEncoder) {
+		String newPwd = passwordEncoder.encode(randomPwd);
+		System.out.println("==============="+newPwd);
+		this.pwd = newPwd;
+	}
+	
 	public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		if(!StringUtils.equals(memberFormDto.getPwd(), "")) { //빈값이면 True -> ! false
 			String pwd = passwordEncoder.encode(memberFormDto.getPwd());
