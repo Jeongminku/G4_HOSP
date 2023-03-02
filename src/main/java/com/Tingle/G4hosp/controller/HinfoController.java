@@ -44,19 +44,24 @@ public class HinfoController {
 	//메인페이지를 보여줌
 //	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
-	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Long pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
 		
-		System.err.println(hinfoBoardDto.getPn()+"sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
-		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
-		System.err.println(hinfoBoardDto.getPn()+"popopopopopopopopopo");
+		int pbn = 6;
 		
+		if (pn != null) {
+			pbn = pn;
+		}
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
+		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);	
 				
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
-
+		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
+		
 		return "HinfoPage/HinfoMain";
 		
 	}
@@ -64,16 +69,9 @@ public class HinfoController {
 
 	@PostMapping(value = "/HinfoMain")
 	public String viewHinfoList(HttpServletRequest request, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
-
-		System.err.println(hinfoBoardDto.getPn() + "lllllllllllllllllllllllllllllll");
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , hinfoBoardDto.getPn());
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
-		
-		System.err.println(list.getSize() + "!@$!@$!@$!@$!@$!@$!@$!@$!@$!@");
-		
-		final int pageNum = hinfoBoardDto.getPn();
-		System.err.println(pageNum);
 		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
