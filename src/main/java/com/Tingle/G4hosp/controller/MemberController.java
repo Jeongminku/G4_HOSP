@@ -165,6 +165,7 @@ public class MemberController {
 			return "member/memberFindPwdResult";
 		}
 	
+		
 	
 	@GetMapping("/myReservation")
 	public String reservationListView (Model model, Principal principal) {

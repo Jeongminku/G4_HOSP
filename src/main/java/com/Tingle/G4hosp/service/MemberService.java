@@ -94,6 +94,18 @@ public class MemberService implements UserDetailsService{
 			 return randomPwd;
 		 }
 	 
+	
+	//아이디중복체크
+		 /*
+		 private void validateDuplicateMember(Member member) {
+			 Member findMember = memberRepository.findByLoginid(member.getLoginid());
+			 if (findMember != null) {
+				 throw new IllegalStateException("이미 존재하는 아이디입니다.");
+			 }
+		 }
+		 */
+		 
+		 
 	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
 		 Member member = memberRepository.findByLoginid(loginId);
 		 if (member.getRole() == Role.DOCTOR) {
