@@ -96,7 +96,12 @@ public class BoardController {
 	public String boardview(Model model, @PathVariable("boardId") Long boardId,
 			HttpServletRequest request, HttpServletResponse response ,
 			PageSerchDto pageSerchDto,Optional<Integer> page, HttpServletResponse resp,
-			Authentication authentication) {
+			Authentication authentication
+			,Principal principal) {
+		
+		System.err.println("왜여기서 부터 안찍힐까?");
+		System.err.println(authentication == null);
+		System.err.println("왜여기서 부터 안찍힐까?2222222222222222222222222222");
 		
 		//쿠키를 통한 게시글 조회수 중복 카운트 방지
 		 Cookie oldCookie = null;
@@ -126,15 +131,21 @@ public class BoardController {
 		        newCookie.setMaxAge(60 * 60 * 24);
 		        response.addCookie(newCookie);
 		    }
+		 
 		
 		    BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
 		    //List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
 		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
 		    
+		    if(boardFormDto.getSecret().equals(BoardSecret.True) && authentication == null) {
+		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다 로그인을 해주세요.",  "/members/login" , resp);
+		    }
+		    
 		    if(boardFormDto.getSecret().equals(BoardSecret.True)
 		    	&&	!boardFormDto.getMember().getLoginid().equals(authentication.getName())
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
-		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")
+		    	&& authentication.getAuthorities() != null) {
 		    	
 		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main" , resp);
 		    }
