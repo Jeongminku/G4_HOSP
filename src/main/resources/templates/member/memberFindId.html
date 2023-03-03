@@ -36,7 +36,7 @@
 				<div>
 					<!-- <p th:if="${ErrorMsg}" class="error" th:text="${ErrorMsg}"></p>  -->
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					<button type="submit" class="btn btn-primary w-100" id="findid">아이디찾기</button>
+					<button type="submit" class="btn btn-primary w-100" id="findid" onclick="location.href='/members/FindIdResult'">아이디찾기</button>
 				</div>
 			</form>
 		</section>

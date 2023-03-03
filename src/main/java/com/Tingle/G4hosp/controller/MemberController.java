@@ -119,7 +119,7 @@ public class MemberController {
 			return "member/memberFindIdResult";
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
-			return "member/memberFindId";
+			return "member/memberFindIdResult";
 		}
 
 //		return "member/memberFindIdResult";		
