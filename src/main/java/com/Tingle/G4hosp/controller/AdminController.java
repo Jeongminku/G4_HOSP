@@ -10,7 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
@@ -59,6 +61,9 @@ public class AdminController {
 		
 	}
 	
+//	@ResponseBody
+	
+
 //	===================================================================================
 	
 	// 진료과 입력 화면
