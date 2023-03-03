@@ -39,6 +39,7 @@ import com.Tingle.G4hosp.dto.BoardSerchDto;
 import com.Tingle.G4hosp.dto.PageSerchDto;
 import com.Tingle.G4hosp.dto.ReplyDto;
 import com.Tingle.G4hosp.dto.ReplyJsonDto;
+import com.Tingle.G4hosp.entity.Board;
 import com.Tingle.G4hosp.service.BoardService;
 import com.Tingle.G4hosp.service.ReplyService;
 
@@ -98,6 +99,7 @@ public class BoardController {
 			PageSerchDto pageSerchDto,Optional<Integer> page, HttpServletResponse resp,
 			Authentication authentication) {
 		
+		
 		//쿠키를 통한 게시글 조회수 중복 카운트 방지
 		 Cookie oldCookie = null;
 		 Cookie[] cookies = request.getCookies();
@@ -126,15 +128,21 @@ public class BoardController {
 		        newCookie.setMaxAge(60 * 60 * 24);
 		        response.addCookie(newCookie);
 		    }
+		 
 		
 		    BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
 		    //List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
 		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
 		    
+		    if(boardFormDto.getSecret().equals(BoardSecret.True) && authentication == null) {
+		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다 로그인을 해주세요.",  "/members/login" , resp);
+		    }
+		    
 		    if(boardFormDto.getSecret().equals(BoardSecret.True)
 		    	&&	!boardFormDto.getMember().getLoginid().equals(authentication.getName())
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
-		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")
+		    	&& authentication.getAuthorities() != null) {
 		    	
 		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main" , resp);
 		    }
@@ -175,7 +183,7 @@ public class BoardController {
 	@PostMapping("/reload/{boardId}")
 	public String replacePost (@PathVariable("boardId") Long boardId , Model model,PageSerchDto pageSerchDto,Optional<Integer> page) {
 		
-		 BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
+		BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
 		Page<ReplyDto> list = replyService.getReplyPage(pageSerchDto, pageable,boardId);
 		
@@ -216,9 +224,10 @@ public class BoardController {
 	
 	//게시글 삭제
 	@RequestMapping(value = "/delBoard/{boardId}")
-	public String deleteBoard(@PathVariable("boardId") Long boardId,BoardSerchDto boardserchDto,Optional<Integer> page,Model model,HttpServletResponse resp) {
-		boardSerivce.delBoard(boardId);
+	public String deleteBoard(@PathVariable("boardId") Long boardId,BoardSerchDto boardserchDto,Optional<Integer> page,Model model,
+			HttpServletResponse resp, Authentication authentication) {	
 		
+		boardSerivce.delBoard(boardId, resp, authentication, model);
 		
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
@@ -234,9 +243,23 @@ public class BoardController {
 	
 	//게시글 수정페이지로 가기
 	@GetMapping(value = "/upDateForm/{boardId}")
-	public String boardUpdateForm(@PathVariable("boardId") Long boardId,Model model) {
+	public String boardUpdateForm(@PathVariable("boardId") Long boardId,Model model,
+			Authentication authentication, HttpServletResponse resp) {
+		
 		BoardFormDto boardFormDto	= boardSerivce.getboardDto(boardId);
-		System.out.println(boardFormDto.getId());
+		System.err.println(authentication == null);
+		
+		if(authentication == null) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
+		}
+		
+		
+		if(!boardFormDto.getMember().getLoginid().equals(authentication.getName())
+			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다.",   "/board/" + boardFormDto.getId() , resp);
+		}
+		
 		model.addAttribute("boardFormDto", boardFormDto);
 		return "boardpage/boardForm";
 	}
