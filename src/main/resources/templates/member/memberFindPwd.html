@@ -5,46 +5,30 @@
   layout:decorate="~{layouts/layout}"
 >
   <head>
-    <meta charset="UTF-8" />
-    <title> Insert title here </title> 
-
-    <!-- THYMELEAF JS  -->
-    <th:block layout:fragment="script">
-      <script th:inline="javascript">
-      </script>
-    </th:block>
-
-    <!-- THYMELEAF CSS -->
-    <th:block layout:fragment="css">
-      <style> </style>
-    </th:block>
+      <meta charset="UTF-8" />
+      <title> Insert title here </title> 
   </head>
   <body>
-    <div layout:fragment="content">
-    <section>
-    	<form class="row g-3" action="/members/FindPwdResult" method="post" th:object="${memberFormDto}">
-
-			<div>
-			<h3>찾으려는 비밀번호의 정보를 입력해주세요.</h3>
-			<br>
-			<br>
-				<label th:for="id">아이디</label> 
-				<input type="text" name="id" id="id" th:field="*{loginid}"class="form-control">
-			</div>
-			<div>
-				<label th:for="name">이름</label> 
-				<input type="text" name="name" id="name" th:field="*{name}"class="form-control">
-			</div>
-			<div>
-				<label th:for="tel">전화번호</label> 
-				<input type="text" name="tel" id="tel"  th:field="*{tel}"class="form-control">
-			</div>
-			<div>
-			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-				<button type="submit" class="btn btn-primary mb-3" id="loginbtn">비밀번호 찾기</button>
-			</div>
-			</form>
-</section>
-    </div>
+    <section layout:fragment="content"  class="d-flex flex-column align-items-center justify-content-center max-w-50">
+        <form class="row g-3 d-flex flex-column align-items-end w-100" action="/members/FindPwdResult" method="post" th:object="${memberFormDto}">
+          <h3 class="mb-5">찾으려는 비밀번호의 정보를 입력해주세요.</h3>
+          <div>
+            <label class="h4" th:for="id">아이디</label> 
+            <input type="text" name="id" id="id" th:field="*{loginid}"class="form-control">
+          </div>
+          <div>
+            <label class="h4" th:for="name">이름</label> 
+            <input type="text" name="name" id="name" th:field="*{name}"class="form-control">
+          </div>
+          <div class="mb-2">
+            <label class="h4" th:for="tel">전화번호</label> 
+            <input type="text" name="tel" id="tel"  th:field="*{tel}"class="form-control">
+          </div>
+          <div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="btn btn-primary w-100" id="loginbtn">비밀번호 찾기</button>
+          </div>
+        </form>
+    </section>
   </body>
 </html>

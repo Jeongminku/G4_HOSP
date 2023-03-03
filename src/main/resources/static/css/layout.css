@@ -41,6 +41,7 @@
 
 /* 클래스 */
 .c-bg-primary {background-color: #B2B2B2;}
+.c-alert-color {color: #C1474F;}
 
 /* 헤더 */
 .navbar {padding: 0;}
@@ -63,7 +64,9 @@ footer > *:not(:first-child) {margin-top: 10px;}
 section {width: 80%; min-height: calc(100vh - 90px); margin: 0 auto; padding: 3rem 0; max-width: 1200px; box-sizing: border-box;}
 input:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs-btn-hover-color);}
 .rounded {border: 1px solid #113F67;}
-.c-bg-primary {background-color: #B2B2B2;}
+
+/* 일부 예외 */
+.max-w-50 {max-width: 50%;}
 
 @media screen and (max-width: 991.98px) {
     /* custom class */
