@@ -44,7 +44,6 @@ public class MainController {
 		 String searchABC = searchInputDto.getSearchQuery();
 		 model.addAttribute("searchABC",searchABC);
 		 List<SearchDocListDto> docList = searchDocService.getDocList(searchInputDto);
-		 
 		 for(SearchDocListDto Doctorlist : docList) {
 			 Long loginid = memberService.findByName(Doctorlist.getDocName()).getId();
 			 //System.err.println(memberMedService.findMemberMed(loginid));
@@ -55,7 +54,7 @@ public class MainController {
 		 
 		 //System.err.println(memlist); //의사인 사람의 이름으로 member객체를 집어온 List값.
 		 model.addAttribute("docList", docList);
-		 System.err.println("docList의 객체: " + docList);
+		 //System.err.println("docList의 객체: " + docList);
 		 //System.err.println("닥메드 : " + docList.get(0).getDocMed());
 		 List<SearchMedListDto> medList = searchDocService.getMedlist(searchInputDto);
 		 model.addAttribute("medList", medList);

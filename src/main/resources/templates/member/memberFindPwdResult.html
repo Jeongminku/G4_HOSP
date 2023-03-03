@@ -31,17 +31,18 @@
   				</div>
   				
   				<form class="row g-3" action="/members/login" method="post">
-					<div>
-					<label th:for="loginid">아이디</label> 
-					<input type="text" name="loginid" id="loginid" class="form-control">
+  					<div>
+						<label class="h4" th:for="loginid">아이디</label> 
+						<input type="text" name="loginid" id="loginid" class="form-control">
 					</div>
 					<div>
-					<label th:for="password">비밀번호</label> 
-					<input type="password" name="password" id="password" class="form-control" th:value="${newPwd}">
+						<label class="h4" th:for="password">비밀번호</label> 
+						<input type="password" name="password" id="password" th:value="${newPwd}" class="form-control">
 					</div>
+					
 		
 					<div>
-					<button type="submit" class="btn btn-primary mb-3" id="loginbtn" onclick="location.href='/'">로그인</button>
+					<button type="submit" class="btn btn-primary mb-3 me-2 w-50" id="loginbtn" onclick="location.href='/'">로그인</button>
 					</div>
 			 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				</form>

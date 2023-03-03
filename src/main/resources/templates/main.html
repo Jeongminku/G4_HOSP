@@ -10,6 +10,14 @@
 <title>메인페이지 title입니다.</title>
 <link rel="stylesheet" href="../../css/main.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<script th:inline="javascript">
+	/*$(function(){
+		var searchStr = $('.doc_searchbar').val();
+		if(searchStr.length<2) {
+			$('.doc_searchbar').attr('oninvalid',"this.setCustomValidity('2글자 이상 입력하라')")
+		}
+	})*/
+</script>
 </head>
 <body>
 	<section layout:fragment="content" id="mainPage">	
@@ -45,10 +53,11 @@
 			    		<h3>&nbsp&nbsp의료진/진료과 검색</h3>
 			    	</div>
 			    	<div class="doc_search">
-						<form class="doc_search" action="/searchresult" th:object="${searchInputDto}" role="search">
-							<input type="search" th:field="*{searchQuery}" name="searchQuery" class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요." required>
-							<button type="submit" class="doc_search_btn">검색하기</button>
-						</form>
+				    <form class="doc_search" action="/searchresult" th:object="${searchInputDto}" role="search">
+	  					<input type="text" th:field="*{searchQuery}" name="searchQuery" class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요." oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="2" required>
+  						<button type="submit" class="doc_search_btn">검색하기</button>
+					</form>
+
 					</div>
 			      <img class="doc_search_img" src="/images/male_doc.png">
 			    </div>
