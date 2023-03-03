@@ -55,7 +55,7 @@ public class AdminController {
 	
 	
 	// 관리자 페이지 화면
-	@GetMapping(value="/adminpage")
+	@GetMapping
 	public String adminPage() {
 		return "adminPage/adminPage";
 		

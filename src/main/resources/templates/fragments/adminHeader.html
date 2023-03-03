@@ -9,7 +9,7 @@
 </head>
 <body>
     <header id="adminHeader" class="d-flex flex-column w-25 align-items-center" th:fragment="adminHeader">
-        <h1 class="mb-2 h3">병원 관리페이지</h1>
+        <h1 class="mb-2 h3"><a href="/admin">병원 관리페이지</a></h1>
         <nav class="w-100">
             <div class="h5">회원 관리</div>
             <ul>
@@ -48,6 +48,9 @@
                 </li>
                 <li class="w-100">
                     <button type="button" class="btn btn-secondary w-100 text-end" id="/admin/chat">채팅방 관리</button>
+                </li>
+                <li class="w-100">
+                    <button type="button" class="btn btn-secondary w-100 text-end" id="/">메인 페이지</button>
                 </li>
             </ul>
         </nav>

@@ -361,9 +361,9 @@
 		<!-- 댓글 -->
 		<div class="reply" id="reply" th:fragment="reply">
 		
-		<div class="float-right" style="padding-bottom: 30px;">
-			<a class="btn btn-primary" th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a>
-			<a class="btn btn-primary" th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+		<div sec:authorize="isAuthenticated()" class="float-right" style="padding-bottom: 30px;">
+			<a  class="btn btn-primary" th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a>
+			<a  class="btn btn-primary" th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
 		</div>
 		
 		
@@ -391,8 +391,11 @@
                      <div class="ms-3">
                         <div>
                         <div class="fw-bold" th:text="${reply.member.loginid}"></div>
-                        <a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
-                        <a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
+         
+                        <div th:if="${reply.member.loginid == #authentication.name}">
+                        	<a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+                        	<a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
+                        </div>
                         </div> 
                          <span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}"> <span th:text="${reply.replyContent}"></span> </span> <span th:id="ReId+${i.index+1}"></span>
                          <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">

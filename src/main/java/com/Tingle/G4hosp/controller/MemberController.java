@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
@@ -89,6 +92,13 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	@GetMapping("/new/{loginid}")
+	public @ResponseBody ResponseEntity<Integer> idCheck(@PathVariable("loginid") String loginid) {
+		Integer result = memberService.vaildateDuplicateId(loginid);
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 
 	// ID찾기화면
 	@GetMapping(value = "/FindId")
@@ -109,7 +119,7 @@ public class MemberController {
 			return "member/memberFindIdResult";
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
-			return "member/memberFindId";
+			return "member/memberFindIdResult";
 		}
 
 //		return "member/memberFindIdResult";		

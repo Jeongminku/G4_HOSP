@@ -3,13 +3,17 @@ package com.Tingle.G4hosp.service;
 import java.security.Principal;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.Tingle.G4hosp.controller.MemberCheckMethod;
 import com.Tingle.G4hosp.dto.BoardFormDto;
 import com.Tingle.G4hosp.dto.BoardListDto;
 import com.Tingle.G4hosp.dto.BoardSerchDto;
@@ -105,7 +109,7 @@ public class BoardService {
 		
 		Board board = boardRepository.findById(BoardId)
 				.orElseThrow(EntityNotFoundException::new);
-		System.out.println(replyJsonDto.getReplyContent());
+		
 		Reply reply = new Reply();
 		
 		reply.createReply(replyJsonDto.getReplyContent(), board, member);
@@ -115,10 +119,23 @@ public class BoardService {
 	
 	//게시글삭제
 	@Transactional
-	public void delBoard(Long boardId) {
+	public String delBoard(Long boardId , HttpServletResponse resp, Authentication authentication, Model model) {
 		Board board = boardRepository.findById(boardId).orElseThrow(EntityNotFoundException::new);
 		
+		if(authentication == null) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
+		}
+		
+		
+		if(!board.getMember().getLoginid().equals(authentication.getName())
+			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다.",   "/board/" + board.getId() , resp);
+		}
+		
 		 boardRepository.delete(board);
+		 
+		 return board.getMember().getLoginid();
 	}
 	
 	//수정할 게시판정보를 넘겨줌
