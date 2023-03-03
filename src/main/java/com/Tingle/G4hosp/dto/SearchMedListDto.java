@@ -13,9 +13,12 @@ public class SearchMedListDto {
 	
 	private String medInfo;
 	
+	private Long medId;
+	
 	@QueryProjection
-	public SearchMedListDto(String medName, String medInfo) {
+	public SearchMedListDto(String medName, String medInfo, Long medId) {
 		this.medName = medName;
 		this.medInfo = medInfo;
+		this.medId = medId;
 	}
 }
