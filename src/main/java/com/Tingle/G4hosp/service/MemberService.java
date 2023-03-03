@@ -96,14 +96,30 @@ public class MemberService implements UserDetailsService{
 	 
 	
 	//아이디중복체크
-		 /*
-		 private void validateDuplicateMember(Member member) {
-			 Member findMember = memberRepository.findByLoginid(member.getLoginid());
-			 if (findMember != null) {
-				 throw new IllegalStateException("이미 존재하는 아이디입니다.");
-			 }
-		 }
-		 */
+		 private void vaildateDuplicateMember(Member member) {
+				Member findMember = memberRepository.findByLoginid(member.getLoginid());
+				if (findMember != null) {
+					throw new IllegalStateException("중복된 아이디입니다.");
+				}
+			}
+			
+			@org.springframework.transaction.annotation.Transactional(readOnly = true)
+			public Member getMember(String loginid) {
+				Member member = memberRepository.findByLoginid(loginid);
+				return member;
+			}
+			
+			@org.springframework.transaction.annotation.Transactional(readOnly = true)
+			public int vaildateDuplicateId(String loginid) {
+				Member member = memberRepository.findByLoginid(loginid);
+				int chk;
+				
+				if (member == null) {
+					return chk = 0;
+				}
+				return chk = 1;
+			}
+		
 		 
 		 
 	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
