@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>순양병원</title>
 <th:block layout:fragment="script">
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
@@ -52,26 +52,21 @@
 		
 	    if(dateStr.length<8 || dateStr.length>8){
 	    	$('#birth_check').text('생년월일은 19990909형식의 8자로 작성해주세요.');
-			$('#birth_check').css('color', 'red');	    	
 		}else if(dateStr.length = 8){
 	    	$('#birth_check').text('생년월일 형식이 일치합니다.');
-			$('#birth_check').css('color', 'red');	    	
 		}	// 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환합니다.
 			else  if (1900 > year || year > yearNow){	
 		  	  }else if (month < 1 || month > 12) {
 		    			
 		    	$('#birth_check').text('생년월일을 확인해주세요.');
-				$('#birth_check').css('color', 'red'); 
 		    
 		  	  }else if (day < 1 || day > 31) {
 		    	
 		    	$('#birth_check').text('생년월일을 확인해주세요.');
-				$('#birth_check').css('color', 'red'); 
 		    	
 		    	}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
 		    	 
 		    	$('#birth_check').text('생년월일을 확인해주세요.');
-				$('#birth_check').css('color', 'red'); 
 		    	 
 		    	}else if (month == 2) {
 		    	 
@@ -80,7 +75,6 @@
 		     	if (day>29 || (day==29 && !isleap)) {
 		     		
 		     		$('#birth_check').text('생년월일을 확인해주세요.');
-					$('#birth_check').css('color', 'red'); 
 		    	
 				}else{
 					$('#birth_check').text('');
@@ -140,28 +134,28 @@
 						<div class="form-textbox row mb-3">
 							<label class="h5" th:for="nickname">아이디</label>
 							<input type="text" th:field="*{loginid}" class="form-control" placeholder="아이디 입력" style="padding-left: 100px;" />
-							<p th:if="${#fields.hasErrors('loginid')}" th:errors="loginid" class="fieldError">잘못된 LoginId 입력</p>
+							<p th:if="${#fields.hasErrors('loginid')}" th:errors="*{loginid}" class="py-2 c-alert-color">잘못된 LoginId 입력</p>
 						</div>
 						<div class="form-textbox row mb-3">
 							<label class="h5" for="password">비밀번호</label>
 							<input type="password" th:field="*{pwd}" class="form-control" placeholder="패스워드 입력" style="padding-left: 100px;" />
-							<p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" class="fieldError">잘못된 password 입력</p>
+							<p th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}" class="py-2 c-alert-color">잘못된 password 입력</p>
 						</div>
 						<div class="form-textbox row mb-3">
 							<label class="h5" th:for="name">이름</label>
 							<input type="text" th:field="*{name}" class="form-control" placeholder="홍길동" style="padding-left: 100px;" />
-							<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">잘못된 이름 입력</p>
+							<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="py-2 c-alert-color">잘못된 이름 입력</p>
 						</div>
 						<div class="form-textbox row mb-3">
 							<label class="h5" th:for="tel">전화번호</label>
 							<input type="text" th:field="*{tel}" class="form-control" placeholder="01012349876" style="padding-left: 100px;" />
-							<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError">잘못된 전화번호 입력</p>
+							<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="py-2 c-alert-color">잘못된 전화번호 입력</p>
 						</div>
 						<div class="form-textbox row mb-3">
 							<label class="h5" th:for="birth">생년월일</label>
 							<input type="number" th:field="*{birth}" class="form-control" placeholder="19990101" style="padding-left: 100px;" onkeyup="test()" />
-							<p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="fieldError">잘못된 생년월일 입력</p>
-							<div class="check_font" id=birth_check></div>
+							<p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="py-2 c-alert-color">잘못된 생년월일 입력</p>
+							<div class="check_font c-alert-color py-2" id=birth_check></div>
 						</div>
 						<div class="form-textbox row form-bottom d-none mb-3" id = "profile">
 							<div class="col-3 d-flex align-items-center">

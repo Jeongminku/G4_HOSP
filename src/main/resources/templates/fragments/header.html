@@ -3,7 +3,7 @@
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>순양병원</title>
 </head>
 <body>
 	<header th:fragment="header">
@@ -29,25 +29,14 @@
         <div class="offcanvas offcanvas-end c-offcanvas" tabindex="-1" id="offcanvasRight">
             <div class="offcanvas-header">
 				<h1 class="offcanvas-title h5 fw-bold ">
-					<a href="/"><i class="fa-solid fa-house"></i>로고자리</a>
-					
+					<a href="/"><i class="fa-solid fa-house"></i></a>					
 				</h1>
                 <button class="btn btn-close" type="button" data-bs-dismiss="offcanvas"></button>
             </div>
             <div class="offcanvas-body d-flex justify-content-between">
 				<nav class="navbar justify-content-center">
 					<ul class="d-flex">
-						<li class="nav-item w-100" >
-							<a href="/">
-								<p>메뉴</p>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100">
-							<a href="/qa/">
-								<p>FAQ(QA)</p>
-                            </a>
-                        </li>
-                       	<li class="nav-item w-100">
+						<li class="nav-item w-100">
 							<a href="/Hinfo/HinfoMain">
 								<p>건강정보</p>
                             </a>
@@ -55,11 +44,6 @@
                         <li class="nav-item w-100">
 							<a href="/reservation/selectDoc">
 								<p>진료예약</p>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-							<a href="/admin/adminpage">
-								<p>관리자 페이지</p>
                             </a>
                         </li>
                         <li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_DOCTOR')">
@@ -72,23 +56,15 @@
 								<p>고객게시판</p>
                             </a>
                         </li>
+						<li class="nav-item w-100">
+							<a href="/qa/">
+								<p>FAQ(QA)</p>
+							</a>
+						</li>
                     </ul>
                 </nav>
 				<nav class="navbar justify-content-center">
 					<ul class="d-flex">
-						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-							<a href="/admin/qlist">
-								<span id="alert-icon" style="display: none;">
-								<img alt="" src="/images/icons8-bell.gif" width="30px">
-								<i class="fa-sharp fa-solid fa-bell" style="color: red;"></i></span>
-								<span id="nonalert-icon"><i class="fa-sharp fa-solid fa-bell"></i> </span>
-							</a>	
-						</li>
-						<li class="nav-item w-100" sec:authorize="hasRole('CLIENT')">
-							<a href="/members/login">
-								<p>나의 예약</p>
-							</a>
-						</li>
 						<li class="nav-item w-100" sec:authorize="isAnonymous()">
 							<a href="/members/login">
 								<p>로그인</p>
@@ -107,10 +83,28 @@
 								<p>마이페이지</p>
 							</a>
 						</li>
-						<li class="nav-item w-100" sec:authorize="isAuthenticated()">
-							<a href="/members/##">
-								<p>내 예약</p>
+						<li class="nav-item w-100" sec:authorize="hasRole('CLIENT')">
+							<a href="/members/login">
+								<p>나의 예약</p>
 							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="hasRole('DOCTOR')">
+							<a href="/members/##">
+								<p>진료일정</p>
+							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="hasRole('ADMIN')">
+							<a href="/admin">
+								<p>시스템관리</p>
+                            </a>
+                        </li>
+						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+							<a href="/admin/qlist">
+								<span id="alert-icon" style="display: none;">
+								<img alt="" src="/images/icons8-bell.gif" width="30px">
+								<i class="fa-sharp fa-solid fa-bell" style="color: red;"></i></span>
+								<span id="nonalert-icon"><i class="fa-sharp fa-solid fa-bell"></i> </span>
+							</a>	
 						</li>
 					</ul>
 				</nav>
