@@ -60,6 +60,11 @@
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
 	<style>
+
+section{
+	background-color: #eeeeee;
+}
+
 .wrap {
 	margin: 0 auto;
 }
@@ -92,8 +97,10 @@
 	margin-top: 15px;
 }
 .tablemenu{
-	border: 1px solid
+	border: 1px solid;
+	background-color: white;
 }
+
 .detailbody {
 	border: none;
 }
@@ -123,8 +130,28 @@ a:hover {
 }
 
 .table{
-	margin-top: 10px;
+	margin-top: 20px;
 	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+tr{
+	border-bottom: 1px solid;
+}
+
+.inhead{
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.inbody{
+	margin-bottom: 15px;
+	padding: 5px;
+}
+
+.imgbody{
+	padding: 5px;
 }
 
 </style>
@@ -141,7 +168,7 @@ a:hover {
 					<div class="col-md-10 headwrap">
 					
 					<div class="col-md-12 viewhead">
-						<h1> [[${patientinfo.name}]]님 진료 내역</h1>
+						<span style="color: #205B8A; font-size: 2.5rem; font-weight: bold;">[[${patientinfo.name}]]</span><span style="font-size: 2.5rem; font-weight: bold;">님 진료 내역</span>
 					</div>
 					<div class="col-md-12 viewlinebox">
 						<div class="boxcont">
@@ -155,10 +182,10 @@ a:hover {
 					</div>
 					<div class="col-md-12 linemenu">
 						<div>
-						<a th:href="'/archive/write/'+${patientinfo.id}"> 신규작성 </a>
-						<a th:if ="${hospYN} == N" th:href="'/hospitalize/'+${patientinfo.id}"> 입원수속 </a>
-						<a th:if ="${hospYN} == Y" th:href="'/hospitalize/view/'+${patientinfo.id}"> 입원정보확인 </a>
-						<a th:if ="${hospYN} == Y" th:onclick = "discharge([[${patientinfo.id}]])"> 퇴원수속 </a>						
+						<a th:href="'/archive/write/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 신규작성 </a>
+						<a th:if ="${hospYN} == N" th:href="'/hospitalize/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 입원수속 </a>
+						<a th:if ="${hospYN} == Y" th:href="'/hospitalize/view/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 입원정보확인 </a>
+						<a th:if ="${hospYN} == Y" th:onclick = "discharge([[${patientinfo.id}]])" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 퇴원수속 </a>						
 						</div>
 					</div>
 					<div class="col-md-12 viewlineboxup"></div>
@@ -184,22 +211,25 @@ a:hover {
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">
-										<div>세부 진료 사항</div>
-										<p> [[${archive.ARdetail}]] </p>
+										<div class="inhead first">세부 진료 사항</div>
+										<div class="inbody"> [[${archive.ARdetail}]] </div>
+										<div class="inhead"> 이미지 첨부 </div>
+										<div class="imgbody">
 										<span th:each="AI : ${ArchiveImgList}">
 											<span th:each = "IMGLIST : ${AI}">
 	 												<span th:if="${IMGLIST.getArchive().getId()} == ${archive.ARid}">
 													<img th:alt="${IMGLIST.imgname}" th:src="${IMGLIST.imgurl}" style="width: 20%">
 												</span>
 											</span>
-										</span>									
+										</span>																			
+										</div> 
 									</td>	
 								</tr>
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<a th:href="'/archive/update/'+${archive.ARid}"> 진료내역수정 </a>
-						<a th:onclick="deletearchive([[${archive.ARid}]])" > 진료내역삭제 </a>
+						<a th:href="'/archive/update/'+${archive.ARid}" style="font-weight: bold; color: #205B8A;"> 진료내역수정 </a>
+						<a th:onclick="deletearchive([[${archive.ARid}]])" style="font-weight: bold; color: #205B8A;"> 진료내역삭제 </a>
 					</div>
 					</div>
 				</div>

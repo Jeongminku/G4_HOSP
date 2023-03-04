@@ -40,8 +40,6 @@ public class MyWebSocketHandler extends TextWebSocketHandler{
             Member admin = memberService.findByLoginid(authentication.getName());
              if(admin.getRole().equals(Role.ADMIN)) {
                 // WebSocketSession을 이용하여 클라이언트에게 알람 전송
-            	System.err.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            	System.err.println("test!!!!!!");
                 String alertMessage = "처리되지 않은 비회원 예약건이 있습니다.";
                 session.sendMessage(new TextMessage(alertMessage));
             }

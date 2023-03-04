@@ -101,7 +101,7 @@ public class HospitalizeController {
 		hospitalize = hospitalizeService.FindHosbymemid(patientid);
 		hospYN = hospitalize.getHospYN().toString();
 		model.addAttribute("hospYN",hospYN);
-
+		
 		// FIND DISEASE IF HOSPITALIZED BY DISEASE
 		String disease;
 		if(hospitalize.getHasdisease().equals(Hosp.Y)) {
@@ -110,7 +110,8 @@ public class HospitalizeController {
 			model.addAttribute("med",med);
 		}else {
 			disease = "질병없음";
-			hospitalize.setDoctor("담당 의사 미지정");
+			//
+			hospitalize.setDoctor(null);
 		}
 		
 		// CALCULATE AGE BY MEMBER BIRTH

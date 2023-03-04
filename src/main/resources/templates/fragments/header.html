@@ -16,10 +16,35 @@
 	}
 
 	socket.onmessage = function(event) {
+		cleartest();
+		
 		// WebSocket으로 전달받은 알람을 header에 띄움
 		$("#alert-icon").css("display", "inline");
 		$("#nonalert-icon").css("display","none");
+
+	
+	// 관리자 로그인 전용 알림
+/* 	var msgTimer = 0;
+	var test = $("#alert-message")
+		setTimeout(function() {
+           test.fadeIn(500, function() {
+               msgTimer = setTimeout(function() {
+                   test.fadeOut(500);
+               }, 1000);
+           });
+           
+       }, 200);
+	function cleartest() {
+        if(msgTimer != 0) {
+            clearTimeout(msgTimer);
+            msgTimer = 0;
+        }
+    }
+	$("#alert-message").text(event.data); */
+	
 	};
+	
+	
 	</script>	
         <button class="btn btn-openCanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
@@ -100,9 +125,9 @@
                         </li>
 						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
 							<a href="/admin/qlist">
+								<span id ="alert-message" class="alertbox" style="color: #205B8A; font-weight: bold; display: none; position: absolute; top: 10px;"></span>
 								<span id="alert-icon" style="display: none;">
-								<img alt="" src="/images/icons8-bell.gif" width="30px">
-								<i class="fa-sharp fa-solid fa-bell" style="color: red;"></i></span>
+								<img alt="" src="/images/icons8-bell.gif" width="30px"></span>
 								<span id="nonalert-icon"><i class="fa-sharp fa-solid fa-bell"></i> </span>
 							</a>	
 						</li>

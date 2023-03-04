@@ -17,4 +17,8 @@ public interface MemberMedRepository extends JpaRepository<MemberMed, Long> {
 	
 	@Query(value = "select * from membermed where member_id = :memberId", nativeQuery = true)
 	MemberMed findByMemberid(@Param("memberId") Long memberId);
+	
+	@Query(value = "select * from membermed a join med b on a.med_id = b.med_id where b.med_name like %:medname%", nativeQuery = true)
+	List<MemberMed> findMembermedbymedname(@Param("medname") String searchquery);
+	
 }

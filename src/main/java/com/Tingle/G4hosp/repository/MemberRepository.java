@@ -10,7 +10,7 @@ import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.Member;
 
-public interface MemberRepository extends JpaRepository<Member, Long>{
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom{
 	Member findByLoginid(String loginid);
 	
 	// select * from member where role = ?
@@ -39,5 +39,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	List<Member> findMListbyMname(@Param("MNAME") String mname);
 
 	Member findByName(String name);
+
 	
 }

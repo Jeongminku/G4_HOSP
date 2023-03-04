@@ -35,6 +35,7 @@ public class HospitalizeService {
 	
 	public Long CreateHospitalize(HospitalizeFormDto hospitalizeFormDto, Long patientid) {
 		Member patient = memberService.findByMemberid(patientid);
+		Member doctor = memberService.findDoctorbydoctorname(hospitalizeFormDto.getDoctorname());
 		String getward = hospitalizeFormDto.getWard();
 		Hospitalize hospitalize;
 		HospitalizeDisease hospitalizeDisease;
@@ -46,11 +47,12 @@ public class HospitalizeService {
 		
 		if(hospitalizeFormDto.getNonsymptom() == true) {
 			hosp = Hosp.N;
-			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, hospitalizeFormDto.getDoctorname());
+			
+			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, doctor);
 			hospitalizeRepository.save(hospitalize);
 		}else {
 			hosp = Hosp.Y;
-			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, hospitalizeFormDto.getDoctorname());
+			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, doctor);
 			hospitalizeRepository.save(hospitalize);
 			disease = diseaseRepository.findDiseasebyDiseasename(hospitalizeFormDto.getSymptom());
 			hospitalizeDisease = HospitalizeDisease.createHospitalize(disease, hospitalize);

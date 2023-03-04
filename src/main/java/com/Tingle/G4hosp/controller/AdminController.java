@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
@@ -27,7 +29,9 @@ import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.entity.QuickReservation;
 import com.Tingle.G4hosp.repository.HospitalizeDiseaseRepository;
 import com.Tingle.G4hosp.repository.HospitalizeRepository;
+import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
+import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.ChatService;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.HospitalizeService;
@@ -51,6 +55,11 @@ public class AdminController {
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
+	
+	//for test
+	private final MemberRepository memberRepository;
+	private final MedRepository medRepository;
+	
 	private final ChatService chatService;
 	
 	
@@ -225,5 +234,63 @@ public class AdminController {
 		}
 		return "redirect:/admin/chat";
 	}
+	
+	//=========================================== 기능 테스트
+	//////test
+	@GetMapping("/test")
+	public String test(){
+		
+//		AdminMainDto adminMainDto = memberRepository.getdoctorcount();
+//		System.err.println("현재 의사 수 : "+adminMainDto.getDoctorcount());
+//		AdminMainDto adminMainDto1 = memberRepository.gethospitalizedcount();
+//		System.err.println("현재 입원 환자 수 : "+adminMainDto1.getHospitalizecount());
+//		AdminMainDto adminMainDto2 = memberRepository.getpatientcount();
+//		System.err.println("총 환자 수 : "+adminMainDto2.getPatientcount());
+
+		String test = "내";
+	
+		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
+		
+		// 이름으로 의사 검색 
+		List<Member> list = memberRepository.getdoctorbysearch(test);
+		System.err.println("'과'가 이름에 들어가있는 의사 list : "+list);
+		// 의사가 속해있는 과 검색 및 dto 추가
+		for(int i=0; i<list.size(); i++) {
+			AdminMainDto adminMainDto = new AdminMainDto();
+			Med med = medRepository.findMedbyDocid(list.get(i).getId());
+			adminMainDto.setSearchdoctorname(list.get(i).getName());
+			adminMainDto.setSearchdoctormedname(med.getMedName());
+			adminMainDtolist.add(adminMainDto);
+		}
+	
+		// 주어진 검색 태그로 과 검색
+		List<MemberMed> Medlist = memberMedRepository.findMembermedbymedname(test);		
+		
+		for(int i=0; i<Medlist.size(); i++) {
+			// 해당 과의 의사 검색
+			Member mem = memberRepository.getReferenceById(Medlist.get(i).getMemberId().getId());
+			for(int j=0; j<adminMainDtolist.size(); j++) {
+				// 중복여부 점검 (중복이 아닐시 dto에 값 추)
+				if(mem.getName() == adminMainDtolist.get(j).getSearchdoctorname()) {
+					System.err.println("중복입니다!!!"+mem.getName()+"랑"+adminMainDtolist.get(j).getSearchdoctorname()+"!!!!!!");
+					AdminMainDto adminMainDto = new AdminMainDto();
+					adminMainDto.setSearchdoctormedname(Medlist.get(i).getMedId().getMedName());
+					adminMainDto.setSearchdoctorname(mem.getName());
+					//adminMainDtolist.add(adminMainDto);
+				}else {
+					System.err.println("중복이 아닙니다!");
+				}
+			}
+		}
+		
+		for(AdminMainDto m : adminMainDtolist) {
+			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
+			System.err.println("의사명 : "+m.getSearchdoctorname());
+			System.err.println("진료과명 : "+m.getSearchdoctormedname());
+		}
+		
+		return "adminPage/adminPage"; 
+	}
+
 	
 }
