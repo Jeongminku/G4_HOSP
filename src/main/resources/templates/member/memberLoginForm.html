@@ -7,34 +7,36 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title> 순양병원 </title> 
+		<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
 		<!-- THYMELEAF JS  -->
 		<th:block>
 			<script th:inline="javascript">
-				//쿠키를 이용한 아이디 기억
-				$(document).ready(function(){
-					var userInputId = getCookie("userInputId"); //쿠키의 기로 값을 가져온다.
-					var setCookieYN = getCookie("setCookieYN");
-					
-					if (setCookieYN == "Y") {
-						$("#id_save").prop("checked", true); //체크박스에 체크
-						$("#email").val(userInputId);
+			//쿠키를 이용한 아이디 기억
+			$(document).ready(function() {
+				var userInputId = getCookie("userInputId");
+				var setCookieYN = getCookie("setCookieYN");
+
+				if (setCookieYN == 'Y') {
+					$("#id_save").prop("checked", true);
+					$("#loginid").val(userInputId);
+				} else {
+					$("#id_save").prop("checked", false);
+				}
+
+				//로그인 버튼 클릭
+				$('#loginbtn').click(function() {
+					if ($("#id_save").is(":checked")) {
+						var userInputId = $("#loginid").val();
+						setCookie("userInputId", userInputId, 30);
+						setCookie("setCookieYN", "Y", 30);
 					} else {
-						$("#id_save").prop("checked", false); //체크 체크해제
-						
+						deleteCookie("userInputId");
+						deleteCookie("setCookieYN");
 					}
-					
-					$('#loginbtn').click(function() {
-						//아이디를 쿠키에 저장
-						if($("#id_save").is(":checked")) { //is_save가 체크되어있으면 true를 리턴
-							var userInputId = $("#email").val(); //이메일 값을 가져온다
-							setCookie("userInputId", userInputId, 60); //60일동안 쿠키저장
-							setCookie("setCookieYN", "Y", 60); 
-						} else {
-							deleteCookie("userInputId");
-							deleteCookie("setCookieYN");
-						}
-					});
 				});
+			});
+	
+				
 			</script>
 		</th:block>
 	</head>
