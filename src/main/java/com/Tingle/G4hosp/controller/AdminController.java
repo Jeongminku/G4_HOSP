@@ -239,21 +239,36 @@ public class AdminController {
 	//////test
 	@GetMapping("/test")
 	public String test(){
+		AdminMainDto adminMainDtot = new AdminMainDto();
 		
-//		AdminMainDto adminMainDto = memberRepository.getdoctorcount();
-//		System.err.println("현재 의사 수 : "+adminMainDto.getDoctorcount());
-//		AdminMainDto adminMainDto1 = memberRepository.gethospitalizedcount();
-//		System.err.println("현재 입원 환자 수 : "+adminMainDto1.getHospitalizecount());
-//		AdminMainDto adminMainDto2 = memberRepository.getpatientcount();
-//		System.err.println("총 환자 수 : "+adminMainDto2.getPatientcount());
+		List<Med> medlist = medRepository.findAll();
+		System.err.println("test + " + medlist);
+				
+		memberRepository.viewHosptalizedlistMed(medlist, adminMainDtot);	
+		memberRepository.getdoctorcount(adminMainDtot);
+		memberRepository.gethospitalizedcount(adminMainDtot);
+		memberRepository.getpatientcount(adminMainDtot);
 
+		// 	과별 입원 환자수 넣기	
+		//	병상 가동률 넣기, 각 병상은 최대 10명씩 들어갈 수 있다?
+
+		System.err.println("의사수 확인 테스트 : "+adminMainDtot.getDoctorcount());
+		System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
+		System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
+		System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
+		
+		for(int i=0; i<adminMainDtot.getHosptalizedEachMedname().size(); i++) {
+			System.err.println("입원 과 목록 테스트 : "+adminMainDtot.getHosptalizedEachMedname().get(i));
+			System.err.println("과별 입원 환자 목록 테스트 : "+adminMainDtot.getHosptalizedEachMed().get(i));
+		}
+				
 		String test = "내";
 	
 		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
 		
 		// 이름으로 의사 검색 
 		List<Member> list = memberRepository.getdoctorbysearch(test);
-		System.err.println("'과'가 이름에 들어가있는 의사 list : "+list);
+		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
 		// 의사가 속해있는 과 검색 및 dto 추가
 		for(int i=0; i<list.size(); i++) {
 			AdminMainDto adminMainDto = new AdminMainDto();
@@ -263,25 +278,25 @@ public class AdminController {
 			adminMainDtolist.add(adminMainDto);
 		}
 	
-		// 주어진 검색 태그로 과 검색
-		List<MemberMed> Medlist = memberMedRepository.findMembermedbymedname(test);		
-		
-		for(int i=0; i<Medlist.size(); i++) {
-			// 해당 과의 의사 검색
-			Member mem = memberRepository.getReferenceById(Medlist.get(i).getMemberId().getId());
-			for(int j=0; j<adminMainDtolist.size(); j++) {
-				// 중복여부 점검 (중복이 아닐시 dto에 값 추)
-				if(mem.getName() == adminMainDtolist.get(j).getSearchdoctorname()) {
-					System.err.println("중복입니다!!!"+mem.getName()+"랑"+adminMainDtolist.get(j).getSearchdoctorname()+"!!!!!!");
-					AdminMainDto adminMainDto = new AdminMainDto();
-					adminMainDto.setSearchdoctormedname(Medlist.get(i).getMedId().getMedName());
-					adminMainDto.setSearchdoctorname(mem.getName());
-					//adminMainDtolist.add(adminMainDto);
-				}else {
-					System.err.println("중복이 아닙니다!");
-				}
-			}
-		}
+//		// 주어진 검색 태그로 과 검색
+//		List<MemberMed> Medlist = memberMedRepository.findMembermedbymedname(test);		
+//		
+//		for(int i=0; i<Medlist.size(); i++) {
+//			// 해당 과의 의사 검색
+//			Member mem = memberRepository.getReferenceById(Medlist.get(i).getMemberId().getId());
+//			for(int j=0; j<adminMainDtolist.size(); j++) {
+//				// 중복여부 점검 (중복이 아닐시 dto에 값 추)
+//				if(mem.getName() == adminMainDtolist.get(j).getSearchdoctorname()) {
+//					System.err.println("중복입니다!!!"+mem.getName()+"랑"+adminMainDtolist.get(j).getSearchdoctorname()+"!!!!!!");
+//					AdminMainDto adminMainDto = new AdminMainDto();
+//					adminMainDto.setSearchdoctormedname(Medlist.get(i).getMedId().getMedName());
+//					adminMainDto.setSearchdoctorname(mem.getName());
+//					//adminMainDtolist.add(adminMainDto);
+//				}else {
+//					System.err.println("중복이 아닙니다!");
+//				}
+//			}
+//		}
 		
 		for(AdminMainDto m : adminMainDtolist) {
 			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");

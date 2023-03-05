@@ -20,6 +20,10 @@ public class AdminMainDto {
 	
 	private Long hospitalizecount;
 	
+	private List<Long> HosptalizedEachMed;
+	
+	private List<String> HosptalizedEachMedname;
+	
 	private String searchdoctorname;
 	
 	private String searchdoctormedname;
