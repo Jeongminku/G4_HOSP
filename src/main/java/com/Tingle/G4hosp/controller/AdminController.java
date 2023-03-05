@@ -258,8 +258,8 @@ public class AdminController {
 		System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
 		
 		for(int i=0; i<adminMainDtot.getHosptalizedEachMedname().size(); i++) {
-			System.err.println("입원 과 목록 테스트 : "+adminMainDtot.getHosptalizedEachMedname().get(i));
-			System.err.println("과별 입원 환자 목록 테스트 : "+adminMainDtot.getHosptalizedEachMed().get(i));
+			System.err.println("과 이름 목록 테스트 : "+adminMainDtot.getHosptalizedEachMedname().get(i));
+			System.err.println(adminMainDtot.getHosptalizedEachMedname().get(i)+"의 입원 환자 수 테스트 : "+adminMainDtot.getHosptalizedEachMed().get(i));
 		}
 				
 		String test = "내";
