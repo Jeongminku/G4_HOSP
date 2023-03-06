@@ -11,9 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.AdminMainDto;
@@ -21,7 +19,6 @@ import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.entity.Disease;
-import com.Tingle.G4hosp.entity.Hospitalize;
 import com.Tingle.G4hosp.entity.HospitalizeDisease;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
@@ -36,7 +33,6 @@ import com.Tingle.G4hosp.service.ChatService;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MedService;
-import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
 import com.Tingle.G4hosp.service.QuickReservationService;
 
@@ -59,7 +55,6 @@ public class AdminController {
 	//for test
 	private final MemberRepository memberRepository;
 	private final MedRepository medRepository;
-	
 	private final ChatService chatService;
 	
 	
@@ -67,7 +62,6 @@ public class AdminController {
 	@GetMapping
 	public String adminPage() {
 		return "adminPage/adminPage";
-		
 	}
 	
 //	@ResponseBody

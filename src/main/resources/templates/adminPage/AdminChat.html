@@ -39,7 +39,7 @@
                     <input type="hidden" th:value="${chatRoom.chatRoomAccess}" name="chatRoomAccessId">
                     <div class="w-25" th:text="${chatRoom.chatRoomAccessName}"></div>
                     <div class="w-25" th:text="${chatRoom.chatRoomName}" name="chatRoomName"></div>
-                    <div class="w-25"></div>
+                    <div class="w-25" th:text="${chatRoom.chatRoomRegDate}"></div>
                     <div class="w-25">
                         <button class="btn" type="button" id="chatRoomEdit" title="수정" data-bs-toggle="modal" data-bs-target="#chatRoomEditModal">
                             <i class="fa-solid fa-pen-to-square"></i>

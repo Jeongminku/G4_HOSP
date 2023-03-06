@@ -7,35 +7,11 @@
 <title>순양병원</title>
 </head>
 <body>
+  <section layout:fragment="content">
+    <div id="chart_div"></div>
+    <div id="chart_div2"></div>
 
-<div layout:fragment="content">
-	<section>
-
-	<h1>관리자 페이지</h1><br><hr>
-
-	<br>
-	<br>
-
-	<div class="d-grid gap-2 col-6 mx-auto">
-		<button onclick = "location.href = '/admin/memberList' " class="btn btn-primary" type="button">고객목록</button>
-		<button onclick = "location.href = '/admin/hospitalizeList' " class="btn btn-primary" type="button">입원환자목록</button>
-		<button onclick = "location.href = '/admin/doctorList' " class="btn btn-primary" type="button">의사목록</button>
-		<button onclick = "location.href = '/board/main' " class="btn btn-primary" type="button">고객게시판</button>
-		<button onclick = "location.href = '/qa/' " class="btn btn-primary" type="button">자주묻는질문</button>
-		<button onclick = "location.href = '/Hinfo/HinfoMain' " class="btn btn-primary" type="button">건강정보게시판</button>
-		<button onclick = "location.href = '/admin/med' " class="btn btn-primary" type="button">진료과 개설 페이지</button>
-		<button onclick = "location.href = '/admin/disease' " class="btn btn-primary" type="button">병명 기입 페이지</button>
-		<button onclick = "location.href = '/admin/qlist' " class="btn btn-primary" type="button">비회원 환자 목록 조회</button>
-	</div>
-    
-</section>
-
-  	
-</div>
-
-<div layout:fragment="content-chart">
-
-	<!--Load the AJAX API-->
+    <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
@@ -64,8 +40,8 @@
 
         // Set chart options
         var options = {'title':'진료과별 입원 환자 수',
-                       'width':500,
-                       'height':400};
+                        'width':500,
+                        'height':400};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -103,11 +79,6 @@
           }
       
     </script>
-
-	<div id="chart_div"></div>
-  	<div id="chart_div2"></div>
-
-</div>
-
+  </section>
 </body>
 </html>
