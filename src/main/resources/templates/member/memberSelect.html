@@ -1,9 +1,63 @@
+<!-- 회원가입선택화면 -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
+<!-- THYMELEAF CSS -->
+    <th:block layout:fragment="css">
+      <style> 
+      div.title, .sel_top, .member_client, .member_doctor, .member_admin {
+       border: 1px solid #000000;
+      
+      }
+      
+   .title, .sel_top {
+   text-align: center;
+   }
+   
+   .member_client {
+   display : flex;
+   float: left;
+    width:28%;
+    margin-left : 4%;
+    margin-top : 15%;
+    box-sizing: border-box;
+    height: 50%;
+    
+   }
+   
+   .member_doctor {
+   float: left;
+ display : flex;
+    width:28%;
+    margin-left : 4%;
+    margin-top : 15%;
+    height: 50%;
+    box-sizing: border-box;
+   }
+   
+   .member_admin {
+   display : flex;
+   float: right;
+    width:28%;
+    margin-right : 4%;
+    margin-top : 15%;
+    height: 50%;
+    box-sizing: border-box;
+   }
+      
+      .seli {
+     margin : auto;
+    height: 60%;
+    background-color: #205B8A;
+    border-radius: 50%;
+    width: 90%;
+      }
+      </style>
+    </th:block>
 <title>메인페이지 title입니다.</title>
 </head>
 <body>
@@ -13,7 +67,28 @@
 <!-- memberformADMIN : 관리자 -->
 <div layout:fragment="content">
 	<div class="row">
-	
+		<section>
+			<div class="title">
+				<h3>회원가입</h3>
+			</div>
+			<hr>
+			<div class="sel_top">
+				<h4>홈페이지 회원가입을 위한 회원 선택</h4>
+				<!--  >icon -->
+				<p><i class="fa-solid fa-caret-right">홈페이지 회원은 일반인, 의료진, 직원으로 구분됩니다.</i></p>
+			</div>
+			<div class="member_client">
+			<p>일반회원가입</p><div class="seli"><i class="fa-solid fa-user"></i></div>
+			<a th:href="'/members/new/client'">회원가입</a>
+			</div>
+			<div class="member_doctor">
+				<p>의료진 회원가입</p><div class="seli"><i class="fa-solid fa-user-doctor"></i></i><a th:href="'/members/new/doctor'">회원가입</a></div>
+			</div>
+			<div class="member_admin">
+				<p>직원 회원가입</p><div class="seli"><i class="fa-solid fa-user-gear"></i><a th:href="'/members/new/admin'">회원가입</a></div>	
+			</div>
+		
+		</section>
 	</div>
 </div>
 </body>
