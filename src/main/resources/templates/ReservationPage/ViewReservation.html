@@ -21,6 +21,9 @@
 </head>
 <body>
     <section id="selectDate" layout:fragment="content">
+        <div class="w-100 d-flex justify-content-end" sec:authorize="hasRole('DOCTOR')">
+            <a class="btn btn-primary mb-2" href="/reservation/setNotAvailDay">휴일설정</a>
+        </div>
         <div id="Fcalendar"></div>
         <script src="../../js/SelectDate.js"></script>
     </section>

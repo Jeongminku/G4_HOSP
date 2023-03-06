@@ -53,42 +53,39 @@
 							</div>
 							<div class="doctor_info_inner" th:each="docList : ${docList}" th:if ="${searchSize} != 0">						
 								<div class="doctor_inner_left">
-								<ul class="doctor_top fix">
-								<li class="doctor_top_left"><img th:src="${docList.getSearchdoctor().getImgUrl()}" th:alt="의사사진"></li>
-								<li class="doctor_top_right">
-									<p class="doctor_name">
-										<span>[[${docList.getSearchdoctormedname()}]]</span>
-										[[${docList.getSearchdoctor().getName()}]]
-										
-										   
-									</p>
-										<a class="search_doc_resv" th:href="'/reservation/' + ${docList.getSearchdoctor().getId()}">예약하기</a> 
-								</li>
-								</ul>
+									<ul class="doctor_top fix">
+										<li class="doctor_top_left"><img th:src="${docList.searchDocImgUrl}" th:alt="${docList.searchDocImgOri}"></li>
+										<li class="doctor_top_right">
+											<p class="doctor_name">
+												<span>[[${docList.searchDocMedName}]]</span>
+												[[${docList.searchDocName}]]
+											</p>
+											<a class="search_doc_resv" th:href="'/reservation/' + ${docList.searchDocId}">예약하기</a> 
+										</li>
+									</ul>
 								</div>
 								<div class="doctor_inner_right">
-								<table class="tb_calendar">
-									<tr>
-									<th></th>
-									<td class="tb_sun">일</td>
-									<td class="tb_mon">월</td>
-									<td class="tb_tue">화</td>
-									<td class="tb_wed">수</td>
-									<td class="tb_thu">목</td>
-									<td class="tb_fri">금</td>
-									<td class="tb_sat">토</td>
-									</tr>
-									<tr>
-									<th>휴무</th>
-									<td class="tb_sun_holi"></td>
-									<td class="tb_mon_holi"></td>
-									<td class="tb_tue_holi"></td>
-									<td class="tb_wed_holi"></td>
-									<td class="tb_thu_holi"></td>
-									<td class="tb_fri_holi"></td>
-									<td class="tb_sat_holi"></td>
-									</tr>
-								</table>
+									<table class="tb_calendar">
+										<tr>
+											<th></th>
+											<td class="tb_sun">일</td>
+											<td class="tb_mon">월</td>
+											<td class="tb_tue">화</td>
+											<td class="tb_wed">수</td>
+											<td class="tb_thu">목</td>
+											<td class="tb_fri">금</td>
+											<td class="tb_sat">토</td>
+										</tr>
+										<tr>
+											<th>휴무</th>
+											<th:block th:each="notAvail : ${docList.searchDocNotAvail}">
+												<td th:if="${notAvail}">
+													<div><i class="fa-solid fa-check c-alert-color"></i></div>
+												</td>
+												<td th:unless="${notAvail}"></td>
+											</th:block>
+										</tr>
+									</table>
 								</div>
 							</div>
 						</div>

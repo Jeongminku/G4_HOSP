@@ -69,8 +69,6 @@ public class ChatController {
     		model.addAttribute("RoomInfo", roomInfo);
     	} catch (Exception e) {
     		model.addAttribute("ErrorMsg", e.getMessage());
-//    		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-//        	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
             return "ChatPage/ChatRoomSelect :: chatRoomFrag";
     	}
     	return "ChatPage/ChatRoomSelect :: chatRoomFrag";

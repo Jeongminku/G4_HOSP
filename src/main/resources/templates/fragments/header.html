@@ -114,13 +114,18 @@
 							</a>
 						</li>
 						<li class="nav-item w-100" sec:authorize="hasRole('DOCTOR')">
-							<a href="/members/##">
+							<a href="/reservation/listView">
 								<p>진료일정</p>
 							</a>
 						</li>
 						<li class="nav-item w-100" sec:authorize="hasRole('ADMIN')">
 							<a href="/admin">
 								<p>시스템관리</p>
+                            </a>
+                        </li>
+						<li class="nav-item w-100" sec:authorize="hasAnyRole('ADMIN', 'DOCTOR')">
+							<a href="/chat">
+								<p>채팅</p>
                             </a>
                         </li>
 						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">

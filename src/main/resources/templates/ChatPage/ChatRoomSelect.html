@@ -17,7 +17,7 @@
         <div class="d-flex justify-content-between w-100">
             <div id="roomList">
                 <div class="d-flex align-items-center justify-content-center h5" id="roomListHeader">채팅방 리스트</div>
-                <div class="d-flex flex-column justify-content-around overflow-y-scroll" id="roomListBody" th:if="${AllChatRoom}">
+                <div class="d-flex flex-column overflow-y-scroll" id="roomListBody" th:if="${AllChatRoom}">
                     <div th:each="room : ${AllChatRoom}">
                         <input type="hidden" th:value="${room.chatRoomAccess}" name="roomAccessId">
                         <input class="d-none" type="radio" th:id="${room.id}" th:value="${room.id}" name="roomId">

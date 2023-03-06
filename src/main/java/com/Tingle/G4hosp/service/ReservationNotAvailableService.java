@@ -6,6 +6,7 @@ import java.util.stream.*;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.ReservationNotAvailable;
@@ -53,5 +54,20 @@ public class ReservationNotAvailableService {
 		List<ReservationNotAvailable> notAvailList = reservationNotAvailableRepository.findByDoctor(doctor);
 		List<String> notAvailStr = notAvailList.stream().map(entity -> entity.getNotAvailableDay()).collect(Collectors.toList());
 		return notAvailStr;
+	}
+	
+	public Boolean[] notAvailByDoctorTF (Member doctor) {
+		List<String> notAvailStr = findAllNotAvailByDoctor(doctor);
+		Boolean[] notAvailByDoc = new Boolean[7];
+		for(String str : notAvailStr) {
+			if(StringUtils.equals(str, "sun")) notAvailByDoc[0] = true;
+			if(StringUtils.equals(str, "mon")) notAvailByDoc[1] = true;
+			if(StringUtils.equals(str, "tue")) notAvailByDoc[2] = true;
+			if(StringUtils.equals(str, "wed")) notAvailByDoc[3] = true;
+			if(StringUtils.equals(str, "thu")) notAvailByDoc[4] = true;
+			if(StringUtils.equals(str, "fri")) notAvailByDoc[5] = true;
+			if(StringUtils.equals(str, "sat")) notAvailByDoc[6] = true;
+		}
+		return notAvailByDoc;
 	}
 }
