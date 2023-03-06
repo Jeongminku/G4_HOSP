@@ -108,6 +108,7 @@
 									$('#chk_result').css('color', 'green');
 								} else {
 									$('#chk_result').text('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
+									$('#chk_result').css('color', 'red');
 								}
 							},
 							error : function(a,b,c) {
@@ -116,6 +117,7 @@
 						});
 					} else {
 						$('#chk_result').text('아이디는 필수입력값입니다.');
+						$('#chk_result').css('color', 'red');
 						$('#loginid').focus();
 					}
 				};

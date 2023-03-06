@@ -87,7 +87,7 @@ public class MemberController {
 
 		// 일반인회원가입 버튼 클릭
 		@PostMapping(value = "/new/client")
-		public String memberclientForm(@Valid MemberFormDto memberFormDto,HttpServletResponse resp, BindingResult bindingResult, Model model,
+		public String memberclientForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
 				@RequestParam("profileImg") MultipartFile file) {
 			//System.err.println(memberFormDto.getMedId());
 			if (bindingResult.hasErrors()) {
@@ -158,37 +158,6 @@ public class MemberController {
 					return "redirect:/";
 				}
 		
-		
-//	회원가입선택테스트 끝	
-
-				/*
-	// 회원가입 화면
-	@GetMapping(value = "/new")
-	public String memberForm(Model model) {
-		MemberFormDto dto = new MemberFormDto();
-		dto.setMed(medService.getMedList());
-		model.addAttribute("memberFormDto", dto);
-		return "member/memberForm";
-	}
-
-	// 회원가입 버튼 클릭
-	@PostMapping(value = "/new")
-	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-			@RequestParam("profileImg") MultipartFile file) {
-		//System.err.println(memberFormDto.getMedId());
-		if (bindingResult.hasErrors()) {
-			return "member/memberForm";
-		}
-		try {
-			memberService.saveMember(memberFormDto, file);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", e.getMessage());
-			return "member/memberForm";
-		}
-		return "redirect:/";
-	}
-	*/
 	
 	@GetMapping("/new/{loginid}")
 	public @ResponseBody ResponseEntity<Integer> idCheck(@PathVariable("loginid") String loginid) {
