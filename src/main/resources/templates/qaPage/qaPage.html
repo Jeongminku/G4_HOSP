@@ -5,59 +5,16 @@
 <head>
   <meta charset="UTF-8">
   <title>순양병원</title>
-  <script th:inline="javascript">
-  // $(function(){
-  // 	$('.qa_question').each(function(){
-  // 		($(this).click(function(){				
-  // 			$(this).next().slideToggle("slow");	
-  // 		}));
-  // 		})
-  // 	});
-  // $(document).ready(function() {
-  // 	  $('.accordion .button').click(function() {
-  // 	    if (!$(this).hasClass('active')) {
-  // 	      $('.accordion .qaContent').slideUp();
-  // 	      $('.accordion button').removeClass('active');
-  // 	      $(this).next().slideDown();
-  // 	      $(this).addClass('active');
-  // 	    }
-  // 	    else {
-  // 	      $(this).next().slideUp();
-  // 	      $(this).removeClass('active');
-  // 	    }
-  // 	  });
-  // 	});	
 
-  // $(document).ready(function(){
-  // 	$('.qaMod').click(function(){
-  // 		$(location).attr("href", "/qa/mod/"+ $(this).attr('id'))
-  // 	})
-  // });
-
-  // $(function(){
-  // 	$('.qaDel').click(function(){
-  // 		$(location).attr("href", "/qa/del/"+ $(this).attr('id'))
-  // 	})
-  // });
-
-  // $(function(){
-  // 	var delMessage = [[${delMessage}]]
-  // 	console.log(delMessage);
-  // 	if(delMessage != null) {
-  // 		alert(delMessage);
-  // 		location.href = "/qa/";
-  // 	}
-  // })
-  </script>
   <link rel="stylesheet" href="../../css/qa.css">
 </head>
 <body>
 	<section layout:fragment="content">
-    <div>
-      <button type="button" class="btn btn-primary" onclick="location.href='/qa/new'">등록</button>
-      <button type="button" class="btn btn-primary" onclick="location.href='/qa/'">전체보기</button>
-      <button type="button" class="btn btn-primary" onclick="location.href='/qa/pay'">페이</button>
-      <button type="button" class="btn btn-primary" onclick="location.href='/qa/hspdsc'">입/퇴원</button>
+    <div class="qa_btn">
+      <button type="button" class="btn btn-primary qa_btn0" onclick="location.href='/qa/new'">등록</button>
+      <button type="button" class="btn btn-primary qa_btn0" onclick="location.href='/qa/'">전체보기</button>
+      <button type="button" class="btn btn-primary qa_btn0" onclick="location.href='/qa/pay'">페이</button>
+      <button type="button" class="btn btn-primary qa_btn0" onclick="location.href='/qa/hspdsc'">입/퇴원</button>
     </div>
     <div class="accordion" id="accordionExample">
       <div class="accordion-item">

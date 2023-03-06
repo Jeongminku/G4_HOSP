@@ -88,3 +88,8 @@ input:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs
 }
 
 
+.soonyang {
+	width: 80px;
+	position: relative;
+	top: 4px;
+}

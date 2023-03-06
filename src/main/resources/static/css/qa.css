@@ -26,3 +26,29 @@
 	.test {
 		text-align:right;
 	}
+	
+	.qa_btn {
+	margin-top: -1px;
+	position: relative;
+	max-width: 1200px;
+	margin: 0 auto;
+	border: 1px solid #e0e0e0;
+	border-top: 0;
+	border-bottom: 0;
+	border-right: 0;
+	z-index: 10;
+	display: flex;
+	flex-wrap: wrap;
+	}
+	
+	.qa_btn0 {
+	width: calc((100%/5) - 0px);
+	float: left;
+	border-bottom: 1px solid #01348b;
+	background: #01348b;
+	}
+	
+	
+	
+	
+	

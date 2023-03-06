@@ -33,6 +33,11 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+header {
+	width: 80%;
+	margin: 0 auto;
+}
+
 body {
 	line-height: 1;
 }
