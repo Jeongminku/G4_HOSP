@@ -16,16 +16,7 @@
 
 		});
 	
-		function medListEvent() {
-			var doctor = $('#doctor');
-			if(doctor.is(":checked")) {
-				$('.medList').removeClass('d-none');
-				$('#profile').removeClass('d-none');
-			} else {
-				$('.medList').addClass('d-none');
-				$('#profile').addClass('d-none');
-			}
-		}
+
 //이용약관 동의
 function check(){
 		var form = document.resvform;
@@ -36,7 +27,7 @@ function check(){
 			alert("서비스 이용약관 및 개인정보 취급방침에 동의하셔야 회원가입을 진행할 수 있습니다.");
 			return false;
 		}else{
-			
+			/* alert("11"); */
 			form.submit();
 		}
 		
@@ -67,14 +58,17 @@ function check(){
 				}else if (month < 1 || month > 12) {
 							
 					$('#birth_check').text('생년월일을 확인해주세요.');
+					$('#birth_check').css('color', 'red');
 				
 				}else if (day < 1 || day > 31) {
 					
 					$('#birth_check').text('생년월일을 확인해주세요.');
+					$('#birth_check').css('color', 'red');
 					
 					}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
 					
 					$('#birth_check').text('생년월일을 확인해주세요.');
+					$('#birth_check').css('color', 'red');
 					
 					}else if (month == 2) {
 					
@@ -83,6 +77,7 @@ function check(){
 					if (day>29 || (day==29 && !isleap)) {
 						
 						$('#birth_check').text('생년월일을 확인해주세요.');
+						$('#birth_check').css('color', 'red');
 					
 					}else{
 						$('#birth_check').text('');
@@ -118,6 +113,7 @@ function check(){
 									$('#chk_result').css('color', 'green');
 								} else {
 									$('#chk_result').text('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
+									$('#chk_result').css('color', 'red');
 								}
 							},
 							error : function(a,b,c) {
@@ -126,6 +122,7 @@ function check(){
 						});
 					} else {
 						$('#chk_result').text('아이디는 필수입력값입니다.');
+						$('#chk_result').css('color', 'red');
 						$('#loginid').focus();
 					}
 				};
@@ -236,8 +233,7 @@ function check(){
 								* 하기 약관 내용이 변경되는 경우 별도 변경 사항에 대해 전 홈페이지 고객 대상 이메일로 안내해 드리며,
   									변경된 내용에 동의를 원치 않으실 경우 회원에서 탈퇴하실 수 있습니다.
 								</span>
-								<br>
-								<br>
+							
 							</div>
 							<div class="col-md-12 viewlinebox">
 								<div class="privateagree">
@@ -245,7 +241,7 @@ function check(){
 									<h3>서비스 이용약관</h3>
 									<p>서비스 이용약관에 동의하셔야만 회원가입을 하실 수 있습니다.</p>
 									</div>
-									<br>
+									
 									
 									<div>
 <textarea class="detail" readonly="readonly"> 
@@ -365,20 +361,10 @@ function check(){
 ② 병원과 이용자간에 제기된 전자거래 소송에는 한국법을 적용합니다.
 </textarea>
 									</div>
-									<br>
-								
-									<div>
-										<input class="form-check-input" id = "checkok" type="checkbox">
-										<label class="form-check-label" for="flexCheckDefault"> 이용약관에 동의합니다. </label>											  						
-									</div>
-								</div>	
-					
-								<div class="privateagree">
+
 									<div><h3> 개인정보 취급방침</h3>
 									<p>개인정보 취급방침에 동의하셔야만 회원가입을 하실 수 있습니다.</p>
-									</div>
-									<br>
-									
+									</div>								
 									<div> 
 <textarea class="detail" readonly="readonly">
 
@@ -397,11 +383,11 @@ function check(){
 병원은 회원님이 '홈페이지'에서 제공하는 서비스를 받는 동안 회원님의 개인 정보는 '홈페이지'에서 계속 보유하며 서비스 제공을 위해 이용하게 됩니다. 단, 탈퇴를 하거나 회원자격 상실 사유에 의해 회원 자격을 제한 및 정지시키는 경우에는 해당 개인의 정보는 재생할 수 없는 기술적 방법에 의해 삭제되며 어떠한 용도로도 열람 또는 이용될 수 없도록 처리됩니다.								
 </textarea> 
 									</div>
-									<br>
+									
 									
 									<div>
-										<input class="form-check-input" id = "checkok" type="checkbox">
-										<label class="form-check-label" for="flexCheckDefault"> 개인정보 수집 및 이용에 동의합니다. </label>											  						
+										<input class="form-check-input" id = "checkok" type="checkbox" />
+										<label class="form-check-label" for="flexCheckDefault"> 서비스 이용약관 및 개인정보 취급방침에 동의합니다. </label>											  						
 									</div>
 								</div>	
 										
@@ -413,8 +399,7 @@ function check(){
 								<div class="privateagree">
 					<div class="signup">
 						<div class="form-radio mb-4">               	             	
-							<input class="d-none" type="hidden" name="role" value="CLIENT" id="client" checked="checked" onclick="medListEvent()"/>
-							<!-- <label class="h4 btn btn-outline-secondary" for="client">환자</label>  -->
+							<input class="d-none" type="hidden" name="role" value="CLIENT" id="client" checked="checked" />
 						</div>
 				
 						<div class="form-textbox row mb-3">
@@ -444,20 +429,14 @@ function check(){
 							<p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="py-2 c-alert-color">잘못된 생년월일 입력</p>
 							<div class="check_font c-alert-color py-2" id=birth_check></div>
 						</div>
-						<div class="form-textbox row form-bottom d-none mb-3" id = "profile">
-							<div class="col-3 d-flex align-items-center">
-								<label class="h5 m-0" for="profile">프로필 사진</label>
-							</div>
-							<div class="col-9 d-flex flex-column align-items-start">
-								<div id="image_container">
-									<img id="preview" class="w-50"/>
-								</div>
-								<div class="input-group mb-3">
-									<input type="file" class="form-control profile" name ="profileImg" id="profileImg"  onchange="readURL(this);">
-									<label class="input-group-text" for="profileImg">Upload</label>
-								</div>
-							</div>
-						</div> 
+						 
+	                             <div class="form-textbox row mb-3">
+											<label class ="h5"for="profile">프로필사진</label>
+											<div id="image_container">
+	                                <img id="preview" style="width: 50%;"/>
+	                            </div>
+											<input type="file" onchange="readURL(this);" class="form-control profile bg-white" name ="profileImg" id="profileImg" style="padding-left: 100px;">
+											</div>
 						<div class="form-textbox row signWrap w-100 flex-nowrap" style="text-align:center;">
 							<button type="submit" onclick="check()" class="submitSign w-50 btn btn-primary">회원가입</button>
 							<button type="button" onclick="location.href='/'" class="submitSign w-50 ms-2 btn btn-primary">가입취소</button>
@@ -471,9 +450,6 @@ function check(){
 					</div>
 				</div>
 			</div>
-		<!-- 회원가입야ㅑㄱ관 끝 -->	
-			
-		<!-- </div> -->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="js/main.js"></script>
 	</section>
