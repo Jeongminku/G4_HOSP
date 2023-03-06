@@ -48,10 +48,8 @@ public class ChatRoom extends BaseTime {
 	}
 	
 	public void updateChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
-		System.err.println(this);
 		this.chatRoomName = chatRoomName;
 		this.chatRoomAccess = chatRoomAccess;
-		System.err.println(this);
 	}
 
 }

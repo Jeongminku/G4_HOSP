@@ -37,7 +37,7 @@ public class ChatController {
     			chatRoomAccessService.checkInit();
     			model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
     			model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-    			return "ChatPage/ChatRoomSelect";    		    			
+    			return "ChatPage/WebChat";    		    			
     		} else {
     			return MemberCheckMethod.redirectAfterAlert("사용 권한이 없습니다.", "/", resp);
     		}
@@ -56,8 +56,8 @@ public class ChatController {
     		model.addAttribute("RoomInfo", roomInfo);
     	} catch (Exception e) {
     		model.addAttribute("ErrorMsg", e.getMessage());
-            return "ChatPage/ChatRoomSelect :: chatRoomFrag";
+            return "ChatPage/WebChat :: chatRoomFrag";
     	}
-    	return "ChatPage/ChatRoomSelect :: chatRoomFrag";
+    	return "ChatPage/WebChat :: chatRoomFrag";
     }
 }

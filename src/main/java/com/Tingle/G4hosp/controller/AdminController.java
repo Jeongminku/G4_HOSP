@@ -1,7 +1,6 @@
 package com.Tingle.G4hosp.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -29,7 +28,7 @@ import com.Tingle.G4hosp.repository.HospitalizeDiseaseRepository;
 import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
-import com.Tingle.G4hosp.repository.MemberRepository;
+import com.Tingle.G4hosp.repository.MemberRepositoryCustom;
 import com.Tingle.G4hosp.service.AdminService;
 import com.Tingle.G4hosp.service.ChatService;
 import com.Tingle.G4hosp.service.DiseaseService;
@@ -51,12 +50,14 @@ public class AdminController {
 	private final HospitalizeService hospitalizeService;
 	private final QuickReservationService quickReservationService;
 	private final AdminService adminService;
+	private final ChatService chatService;
 	
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
 
-	private final ChatService chatService;
+	private final MedRepository medRepository;
+	private final MemberRepositoryCustom memberRepositoryCustom;
 	
 	
 	// 관리자 페이지 화면
@@ -319,7 +320,7 @@ public class AdminController {
 		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
 		
 		// 이름으로 의사 검색 
-		List<Member> list = memberRepository.getdoctorbysearch(test);
+		List<Member> list = memberRepositoryCustom.getdoctorbysearch(test);
 		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
 
 		// 의사가 속해있는 과 검색 및 dto 추가

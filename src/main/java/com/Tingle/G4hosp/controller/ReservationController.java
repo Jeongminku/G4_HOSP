@@ -118,7 +118,7 @@ public class ReservationController {
 	
 	@PostMapping("/sendqr")
 	public String sendReservation(Model model, QuickReservationDto quickReservationDto)  {
-		Long res = quickReservationService.saveQR(quickReservationDto);	
+		quickReservationService.saveQR(quickReservationDto);	
 		return "redirect:/";
 	}
 }

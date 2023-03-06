@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.Tingle.G4hosp.entity.ChatRoom;
-import com.Tingle.G4hosp.entity.Member;
 
 import lombok.Data;
 
