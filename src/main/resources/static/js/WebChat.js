@@ -56,13 +56,14 @@ $(document).on('keyup', 'input[name="sendMessage"]', function (e) {
     }
 })
 
+
 $('input[name="roomId"]').on('change', () => {
     const checkedRadio = $('input[name="roomId"]:checked');
     const accessId = checkedRadio.parents('div').children('input[name="roomAccessId"]').val();
-
+    
     // console.log(chatSocket.readyState)
     // if (chatSocket.readyState != 1) chatSocket = new WebSocket("ws://localhost/ws/chat");
-
+    
     $.ajax({
         url: '/chat/room',
         type: 'POST',
@@ -78,11 +79,15 @@ $('input[name="roomId"]').on('change', () => {
         success: function (frag) {
             $('#chatRoom').replaceWith(frag);
             
-            messageData.sender = $('input[name="sendName"]').val();
-            messageData.roomId = checkedRadio.val();
-            messageData.type = 'ENTER';
-            chatSocket.send(JSON.stringify(messageData))
-            getSavedChatHistory(messageData.sender, messageData.roomId);
+            if ($('#chatRoom > div').length == 3) {
+                messageData.sender = $('input[name="sendName"]').val();
+                messageData.roomId = checkedRadio.val();
+                messageData.type = 'ENTER';
+                chatSocket.send(JSON.stringify(messageData))
+                getSavedChatHistory(messageData.sender, messageData.roomId);
+            } else {
+                $('#chatRoom > div').text('접근이 허용되지 않은 방입니다.');
+            }
         },
         error: function(jqXHR, status, error) {
             alert('error')
@@ -153,7 +158,7 @@ function appendMsg (getMessage, isMessage) {
 function saveChatHistoryToSession(msgData) {
     let chatHistory = [];
     const roomId = msgData.roomId;
-    const currentUser = msgData.sender;
+    const currentUser = $('input[name="sendName"]').val();
     let storageByUser = JSON.parse(sessionStorage.getItem(currentUser)) == null ? {} : JSON.parse(sessionStorage.getItem(currentUser));
     
     if (roomId == '') return false;

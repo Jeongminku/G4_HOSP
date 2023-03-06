@@ -281,16 +281,19 @@ public class AdminController {
 		for(int i=0; i<list.size(); i++) {
 			AdminMainDto adminMainDto = new AdminMainDto();
 			Med med = medRepository.findMedbyDocid(list.get(i).getId());
-			adminMainDto.setSearchdoctor(list.get(i));
-			adminMainDto.setSearchdoctormedname(med.getMedName());
+			adminMainDto.setSearchDocId(list.get(i).getId());
+			adminMainDto.setSearchDocImgOri(list.get(i).getImgOri());
+			adminMainDto.setSearchDocImgUrl(list.get(i).getImgUrl());
+			adminMainDto.setSearchDocName(list.get(i).getName());
+			adminMainDto.setSearchDocMedName(med.getMedName());
 			adminMainDtolist.add(adminMainDto);
 		}
 	
 		
 		for(AdminMainDto m : adminMainDtolist) {
 			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
-			System.err.println("의사명 : "+m.getSearchdoctor().getName());
-			System.err.println("진료과명 : "+m.getSearchdoctormedname());
+			System.err.println("의사명 : "+m.getSearchDocName());
+			System.err.println("진료과명 : "+m.getSearchDocMedName());
 		}
 		
 		return "adminPage/adminPage"; 

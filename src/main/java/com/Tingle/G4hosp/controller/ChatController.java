@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,18 +29,6 @@ public class ChatController {
     private final ChatService chatService;
     private final ChatRoomAccessService chatRoomAccessService;
     private final MemberService memberService;
-
-//    @PostMapping
-//    public String createRoom(ChatRoomDto chatRoomDto, Model model) {
-//    	try {
-//    		chatService.createChatRoom(chatRoomDto);
-//    	} catch(Exception e) {
-//    		model.addAttribute("ErrorMsg", e.getMessage());
-//    	}
-//    	model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-//    	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-//        return "redirect:/chat";
-//    }
 
     @GetMapping
     public String findAllRoom(Model model, Principal principal, HttpServletResponse resp) throws IOException {

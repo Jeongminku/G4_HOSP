@@ -3,10 +3,8 @@ package com.Tingle.G4hosp.service;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -14,17 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.Tingle.G4hosp.constant.MessageType;
-import com.Tingle.G4hosp.dto.ChatMessageDto;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.entity.ChatRoom;
 import com.Tingle.G4hosp.entity.ChatRoomAccess;
-import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
-import com.Tingle.G4hosp.entity.MemberMed;
-import com.Tingle.G4hosp.repository.ChatRoomAccessRepository;
 import com.Tingle.G4hosp.repository.ChatRoomRepository;
-import com.Tingle.G4hosp.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -55,7 +47,6 @@ public class ChatService {
     
     public void deleteChatRoom (Long chatRoomId) {
     	ChatRoom currentRoom = findbyId(chatRoomId);
-    	System.err.println(chatRoomId);
     	chatRoomRepository.delete(currentRoom);
     }
     
