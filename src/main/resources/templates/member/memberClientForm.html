@@ -36,7 +36,7 @@ function check(){
 			alert("서비스 이용약관 및 개인정보 취급방침에 동의하셔야 회원가입을 진행할 수 있습니다.");
 			return false;
 		}else{
-			alert("회원가입이 완료되었습니다!");
+			
 			form.submit();
 		}
 		
@@ -61,6 +61,7 @@ function check(){
 				$('#birth_check').text('생년월일은 19990909형식의 8자로 작성해주세요.');
 			}else if(dateStr.length = 8){
 				$('#birth_check').text('생년월일 형식이 일치합니다.');
+				$('#birth_check').css('color', 'green');
 			}	// 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환합니다.
 				else  if (1900 > year || year > yearNow){	
 				}else if (month < 1 || month > 12) {
