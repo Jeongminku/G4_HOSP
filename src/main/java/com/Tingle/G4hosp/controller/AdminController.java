@@ -1,7 +1,6 @@
 package com.Tingle.G4hosp.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -51,12 +50,14 @@ public class AdminController {
 	private final HospitalizeService hospitalizeService;
 	private final QuickReservationService quickReservationService;
 	private final AdminService adminService;
+	private final ChatService chatService;
 	
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
 
-	private final ChatService chatService;
+	private final MedRepository medRepository;
+	private final MemberRepository memberRepository;
 	
 	
 	// 관리자 페이지 화면
@@ -314,6 +315,32 @@ public class AdminController {
 
 			
 		
+		String test = "내";
+	
+		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
+		
+		// 이름으로 의사 검색 
+		List<Member> list = memberRepository.getdoctorbysearch(test);
+		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
+
+		// 의사가 속해있는 과 검색 및 dto 추가
+		for(int i=0; i<list.size(); i++) {
+			AdminMainDto adminMainDto = new AdminMainDto();
+			Med med = medRepository.findMedbyDocid(list.get(i).getId());
+			adminMainDto.setSearchDocId(list.get(i).getId());
+			adminMainDto.setSearchDocImgOri(list.get(i).getImgOri());
+			adminMainDto.setSearchDocImgUrl(list.get(i).getImgUrl());
+			adminMainDto.setSearchDocName(list.get(i).getName());
+			adminMainDto.setSearchDocMedName(med.getMedName());
+			adminMainDtolist.add(adminMainDto);
+		}
+	
+		
+		for(AdminMainDto m : adminMainDtolist) {
+			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
+			System.err.println("의사명 : "+m.getSearchDocName());
+			System.err.println("진료과명 : "+m.getSearchDocMedName());
+		}
 		
 		return "adminPage/adminPage"; 
 	}

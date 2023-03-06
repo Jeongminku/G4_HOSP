@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,18 +30,6 @@ public class ChatController {
     private final ChatRoomAccessService chatRoomAccessService;
     private final MemberService memberService;
 
-//    @PostMapping
-//    public String createRoom(ChatRoomDto chatRoomDto, Model model) {
-//    	try {
-//    		chatService.createChatRoom(chatRoomDto);
-//    	} catch(Exception e) {
-//    		model.addAttribute("ErrorMsg", e.getMessage());
-//    	}
-//    	model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-//    	model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-//        return "redirect:/chat";
-//    }
-
     @GetMapping
     public String findAllRoom(Model model, Principal principal, HttpServletResponse resp) throws IOException {
     	if(principal != null) {
@@ -50,7 +37,7 @@ public class ChatController {
     			chatRoomAccessService.checkInit();
     			model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
     			model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-    			return "ChatPage/ChatRoomSelect";    		    			
+    			return "ChatPage/WebChat";    		    			
     		} else {
     			return MemberCheckMethod.redirectAfterAlert("사용 권한이 없습니다.", "/", resp);
     		}
@@ -69,8 +56,8 @@ public class ChatController {
     		model.addAttribute("RoomInfo", roomInfo);
     	} catch (Exception e) {
     		model.addAttribute("ErrorMsg", e.getMessage());
-            return "ChatPage/ChatRoomSelect :: chatRoomFrag";
+            return "ChatPage/WebChat :: chatRoomFrag";
     	}
-    	return "ChatPage/ChatRoomSelect :: chatRoomFrag";
+    	return "ChatPage/WebChat :: chatRoomFrag";
     }
 }

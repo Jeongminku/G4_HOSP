@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.ObjectUtils;
 
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.entity.ChatRoomAccess;
