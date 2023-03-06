@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.SearchDocListDto;
 import com.Tingle.G4hosp.dto.SearchInputDto;
 import com.Tingle.G4hosp.dto.SearchMedListDto;
@@ -39,34 +40,60 @@ public class MainController {
 		return "main";
 	}
 	
-	@GetMapping(value ="/searchresult")
-	public String searchresult(Model model, SearchInputDto searchInputDto) {
-		 String searchABC = searchInputDto.getSearchQuery();
-		 model.addAttribute("searchABC",searchABC);
-		 List<SearchDocListDto> docList = searchDocService.getDocList(searchInputDto);
-		 for(SearchDocListDto Doctorlist : docList) {
-			 Long loginid = memberService.findByName(Doctorlist.getDocName()).getId();
-			 //System.err.println(memberMedService.findMemberMed(loginid));
-			 String medName = memberMedService.findMemberMed(loginid).getMedId().getMedName();
-			 System.err.println("@@@@@@@@@@string test  : "+ medName);
-			 Doctorlist.setDocMed(medName);
-		 }
-		 
-		 //System.err.println(memlist); //의사인 사람의 이름으로 member객체를 집어온 List값.
-		 model.addAttribute("docList", docList);
-		 //System.err.println("docList의 객체: " + docList);
-		 //System.err.println("닥메드 : " + docList.get(0).getDocMed());
-		 List<SearchMedListDto> medList = searchDocService.getMedlist(searchInputDto);
-		 model.addAttribute("medList", medList);
-		 
-		 
-		 Integer searchSize = docList.size() + medList.size();
-		 Integer searchDocSize = docList.size();
-		 Integer searchMedSize = medList.size();
-		 model.addAttribute("searchSize", searchSize);
-		 model.addAttribute("searchDocSize", searchDocSize);
-		 model.addAttribute("searchMedSize", searchMedSize);
-		 
-		return "searchPage/SearchResult";
+//	@GetMapping(value ="/searchresult")
+//	public String searchresult(Model model, SearchInputDto searchInputDto) {
+//		 String searchABC = searchInputDto.getSearchQuery();
+//		 model.addAttribute("searchABC",searchABC);
+//		 List<SearchDocListDto> docList = searchDocService.getDocList(searchInputDto);
+//		 for(SearchDocListDto Doctorlist : docList) {
+//			 Long loginid = memberService.findByName(Doctorlist.getDocName()).getId();
+//			 //System.err.println(memberMedService.findMemberMed(loginid));
+//			 String medName = memberMedService.findMemberMed(loginid).getMedId().getMedName();
+//			 System.err.println("@@@@@@@@@@string test  : "+ medName);
+//			 Doctorlist.setDocMed(medName);
+//		 }
+//		 
+//		 //System.err.println(memlist); //의사인 사람의 이름으로 member객체를 집어온 List값.
+//		 model.addAttribute("docList", docList);
+//		 //System.err.println("docList의 객체: " + docList);
+//		 //System.err.println("닥메드 : " + docList.get(0).getDocMed());
+//		 List<SearchMedListDto> medList = searchDocService.getMedlist(searchInputDto);
+//		 model.addAttribute("medList", medList);
+//		 
+//		 
+//		 Integer searchSize = docList.size() + medList.size();
+//		 Integer searchDocSize = docList.size();
+//		 Integer searchMedSize = medList.size();
+//		 model.addAttribute("searchSize", searchSize);
+//		 model.addAttribute("searchDocSize", searchDocSize);
+//		 model.addAttribute("searchMedSize", searchMedSize);
+//		 
+//		return "searchPage/SearchResult";
+//	}
+	
+	@GetMapping("/searchresult")
+	public String searchresult(SearchInputDto searchInputDto, Model model){
+		
+		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
+		String searchABC = searchInputDto.getSearchQuery();
+		
+		// 이름으로 의사 검색 
+		List<Member> docList = searchDocService.getDoctoryBySearch(searchABC);
+		// 의사가 속해있는 과 검색 및 dto 추가
+		for(int i=0; i<docList.size(); i++) {
+			AdminMainDto adminMainDto = new AdminMainDto();
+			Med med = searchDocService.findMedByDocid(docList.get(i).getId());
+			adminMainDto.setSearchdoctor(docList.get(i));
+			adminMainDto.setSearchdoctormedname(med.getMedName());
+			adminMainDtolist.add(adminMainDto);
+		}
+		model.addAttribute("docList", adminMainDtolist);
+		
+		Integer searchSize = adminMainDtolist.size();
+		model.addAttribute("searchABC", searchABC);
+		model.addAttribute("searchSize", searchSize);
+		
+		return "searchPage/SearchResult"; 
 	}
+	
 }

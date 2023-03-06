@@ -40,10 +40,10 @@
 					<!-- [의료진 검색결과] -->
 					<div class="search_sec">
 						<div class="search_title">
-							<h4 class="sub_title_h4 fix">의료진<span> [[${searchDocSize}]]</span>건</h4>
+							<h4 class="sub_title_h4 fix">의료진<span> [[${searchSize}]]</span>건</h4>
 						</div>
 						<div class="doctor_info_wrap fix">
-							<div class="in_w" th:if="${searchDocSize} == 0">
+							<div class="in_w" th:if="${searchSize} == 0">
 								<div class="gray_bg">
 									<div class="cont_no">
 										<img src="/images/docTeam.png">
@@ -51,18 +51,18 @@
 									</div>
 								</div>
 							</div>
-							<div class="doctor_info_inner" th:each="docList : ${docList}" th:if ="${searchDocSize} != 0">						
+							<div class="doctor_info_inner" th:each="docList : ${docList}" th:if ="${searchSize} != 0">						
 								<div class="doctor_inner_left">
 								<ul class="doctor_top fix">
-								<li class="doctor_top_left"><img th:src="${docList.docImgUrl}" th:alt="의사사진"></li>
+								<li class="doctor_top_left"><img th:src="${docList.getSearchdoctor().getImgUrl()}" th:alt="의사사진"></li>
 								<li class="doctor_top_right">
 									<p class="doctor_name">
-										<span>[[${docList.docMed}]]</span>
-										[[${docList.docName}]]
+										<span>[[${docList.getSearchdoctormedname()}]]</span>
+										[[${docList.getSearchdoctor().getName()}]]
 										
 										   
 									</p>
-										<a class="search_doc_resv" th:href="'/reservation/' + ${docList.docId}">예약하기</a> 
+										<a class="search_doc_resv" th:href="'/reservation/' + ${docList.getSearchdoctor().getId()}">예약하기</a> 
 								</li>
 								</ul>
 								</div>
