@@ -51,11 +51,11 @@ public class ChatService {
     	System.err.println(chatRoomDto);
     	ChatRoomAccess newAccess = chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess());
     	currentRoom.updateChatRoom(newAccess, chatRoomDto.getChatRoomName());
-    	chatRoomRepository.
     }
     
     public void deleteChatRoom (Long chatRoomId) {
     	ChatRoom currentRoom = findbyId(chatRoomId);
+    	System.err.println(chatRoomId);
     	chatRoomRepository.delete(currentRoom);
     }
     

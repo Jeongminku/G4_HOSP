@@ -35,7 +35,6 @@
             </div>
             <ul class="overflow-y-scroll w-100" id="chatRoomList" th:if="${AllChatRoom}">
                 <li class="d-flex align-items-center w-100" th:each="chatRoom : ${AllChatRoom}">
-                    <input type="hidden" th:value="${chatRoom.id}" name="chatRoomId">
                     <input type="hidden" th:value="${chatRoom.chatRoomAccess}" name="chatRoomAccessId">
                     <div class="w-25" th:text="${chatRoom.chatRoomAccessName}"></div>
                     <div class="w-25" th:text="${chatRoom.chatRoomName}" name="chatRoomName"></div>
@@ -47,7 +46,7 @@
                         <button class="btn" type="button" id="chatRoomDel" title="삭제">
                             <i class="fa-solid fa-trash-can"></i>
                             <form th:action="@{/admin/chatDel}" method="post" class="d-none" name="deleteId">
-                                <input type="hidden" name="chatRoomId">
+                                <input type="hidden" th:value="${chatRoom.id}" name="chatRoomId">
                             </form>
                         </button>
                     </div>
