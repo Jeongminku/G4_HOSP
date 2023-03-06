@@ -1,6 +1,7 @@
 package com.Tingle.G4hosp.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -243,66 +244,60 @@ public class AdminController {
 		
 		List<Med> medlist = medRepository.findAll();
 		System.err.println("test + " + medlist);
-				
-		memberRepository.viewHosptalizedlistMed(medlist, adminMainDtot);	
+		
+		//  의사 수, 환자수, 입원 환자 수, 과별 입원환자 카운트 리스트 
 		memberRepository.getdoctorcount(adminMainDtot);
 		memberRepository.gethospitalizedcount(adminMainDtot);
 		memberRepository.getpatientcount(adminMainDtot);
-
-		// 	과별 입원 환자수 넣기	
-		//	병상 가동률 넣기, 각 병상은 최대 10명씩 들어갈 수 있다?
-
+		memberRepository.viewHosptalizedlistMed(medlist, adminMainDtot);	
+		memberRepository.viewHosptalizedwardlist(adminMainDtot);
+		
 		System.err.println("의사수 확인 테스트 : "+adminMainDtot.getDoctorcount());
 		System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
 		System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
 		System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
-		
+
+		// 중간길 : 각 호실별 입원 인원 현황 	
+				
 		for(int i=0; i<adminMainDtot.getHosptalizedEachMedname().size(); i++) {
 			System.err.println("과 이름 목록 테스트 : "+adminMainDtot.getHosptalizedEachMedname().get(i));
 			System.err.println(adminMainDtot.getHosptalizedEachMedname().get(i)+"의 입원 환자 수 테스트 : "+adminMainDtot.getHosptalizedEachMed().get(i));
 		}
-				
-		String test = "내";
-	
-		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
 		
-		// 이름으로 의사 검색 
-		List<Member> list = memberRepository.getdoctorbysearch(test);
-		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
-		// 의사가 속해있는 과 검색 및 dto 추가
-		for(int i=0; i<list.size(); i++) {
-			AdminMainDto adminMainDto = new AdminMainDto();
-			Med med = medRepository.findMedbyDocid(list.get(i).getId());
-			adminMainDto.setSearchdoctorname(list.get(i).getName());
-			adminMainDto.setSearchdoctormedname(med.getMedName());
-			adminMainDtolist.add(adminMainDto);
+		for(int i=0; i<adminMainDtot.getHosptalizedEachWard().size(); i++) {
+			System.err.println("호실별 입원 환자 현황 테스트 : " + adminMainDtot.getHosptalizedEachWardname().get(i));
+			System.err.println(adminMainDtot.getHosptalizedEachWardname().get(i)+"호실 현재 입원 환자 수 : "+adminMainDtot.getHosptalizedEachWard().get(i));
 		}
-	
-//		// 주어진 검색 태그로 과 검색
-//		List<MemberMed> Medlist = memberMedRepository.findMembermedbymedname(test);		
+		
+		
+		
+		
+		
+		
+		
+//		String test = "내";
+//	
+//		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
 //		
-//		for(int i=0; i<Medlist.size(); i++) {
-//			// 해당 과의 의사 검색
-//			Member mem = memberRepository.getReferenceById(Medlist.get(i).getMemberId().getId());
-//			for(int j=0; j<adminMainDtolist.size(); j++) {
-//				// 중복여부 점검 (중복이 아닐시 dto에 값 추)
-//				if(mem.getName() == adminMainDtolist.get(j).getSearchdoctorname()) {
-//					System.err.println("중복입니다!!!"+mem.getName()+"랑"+adminMainDtolist.get(j).getSearchdoctorname()+"!!!!!!");
-//					AdminMainDto adminMainDto = new AdminMainDto();
-//					adminMainDto.setSearchdoctormedname(Medlist.get(i).getMedId().getMedName());
-//					adminMainDto.setSearchdoctorname(mem.getName());
-//					//adminMainDtolist.add(adminMainDto);
-//				}else {
-//					System.err.println("중복이 아닙니다!");
-//				}
-//			}
+//		// 이름으로 의사 검색 
+//		List<Member> list = memberRepository.getdoctorbysearch(test);
+//		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
+//
+//		// 의사가 속해있는 과 검색 및 dto 추가
+//		for(int i=0; i<list.size(); i++) {
+//			AdminMainDto adminMainDto = new AdminMainDto();
+//			Med med = medRepository.findMedbyDocid(list.get(i).getId());
+//			adminMainDto.setSearchdoctorname(list.get(i).getName());
+//			adminMainDto.setSearchdoctormedname(med.getMedName());
+//			adminMainDtolist.add(adminMainDto);
 //		}
-		
-		for(AdminMainDto m : adminMainDtolist) {
-			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
-			System.err.println("의사명 : "+m.getSearchdoctorname());
-			System.err.println("진료과명 : "+m.getSearchdoctormedname());
-		}
+//	
+//		
+//		for(AdminMainDto m : adminMainDtolist) {
+//			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
+//			System.err.println("의사명 : "+m.getSearchdoctorname());
+//			System.err.println("진료과명 : "+m.getSearchdoctormedname());
+//		}
 		
 		return "adminPage/adminPage"; 
 	}
