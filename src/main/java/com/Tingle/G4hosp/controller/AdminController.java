@@ -35,6 +35,7 @@ import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberService;
 import com.Tingle.G4hosp.service.QuickReservationService;
 import lombok.RequiredArgsConstructor;
+
 @RequestMapping("/admin")
 @Controller
 @RequiredArgsConstructor

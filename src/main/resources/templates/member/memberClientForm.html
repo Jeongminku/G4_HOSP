@@ -22,10 +22,16 @@ function check(){
 		var form = document.resvform;
 		var checkbox = document.getElementById('checkok');
 		console.log(checkbox.checked);
+		var form = document.resvform;
+		
 		
 		if(checkbox.checked == false){
 			alert("서비스 이용약관 및 개인정보 취급방침에 동의하셔야 회원가입을 진행할 수 있습니다.");
-			return false;
+			form.action ="/members/new/client"
+			form.method = "get"
+			//form.submit(); 
+				
+			//return false;
 		}else{
 			/* alert("11"); */
 			form.submit();

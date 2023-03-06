@@ -175,18 +175,31 @@ public class HinfoController {
 	
 
 	@GetMapping("/deletepage/{hinfoId}")
-	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId,HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
+	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page, HinfoBoardDto hinfoBoardDto, Model model) {
 
+		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
+		
+		Integer pbn = 6;
+		
+		if (pn != null) {
+			pbn = pn;
+		} else if (pn == null) {
+			pbn = 6;
+		}
+		
+		System.err.println("if 문 변환 후 :" + pbn);
+		
 		hinfoBoardService.HinfoDelete(hinfoId);
 		
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
 
 				
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
+		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
 		
 		return "HinfoPage/hinfoMain";
 	}
