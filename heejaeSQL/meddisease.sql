@@ -1,6 +1,5 @@
 ------------------------------------------------------------
 CREATE DATABASE hosp DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 use hosp;
 
 drop table archive_disease;
