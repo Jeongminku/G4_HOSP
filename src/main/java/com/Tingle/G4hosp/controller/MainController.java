@@ -75,7 +75,7 @@ public class MainController {
 	public String searchresult(SearchInputDto searchInputDto, Model model){
 		List<AdminMainDto> adminMainDtolist = searchDocService.getDoctoryBySearch(searchInputDto);
 		model.addAttribute("docList", adminMainDtolist);
-		model.addAttribute("searchABC", searchInputDto.getSearchBy());
+		model.addAttribute("searchABC", searchInputDto.getSearchQuery());
 		model.addAttribute("searchSize", adminMainDtolist.size());
 		
 		return "searchPage/SearchResult"; 
