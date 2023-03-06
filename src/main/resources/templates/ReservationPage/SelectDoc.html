@@ -20,7 +20,10 @@
                         <img th:src="${doctor.imgUrl}" class="card-img-top" th:alt="${doctor.imgName}">
                         <div class="card-body">
                             <h5 class="card-title text-center" th:text="${doctor.name}">의사 이름</h5>
-                            <p class="card-text"><small class="text-muted" th:text="${doctor.tel}">000-0000-0000</small></p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-mobile"></i>
+                                <small class="text-muted" th:text="${doctor.tel}">000-0000-0000</small>
+                            </p>
                         </div>
                     </a>
                 </div>
