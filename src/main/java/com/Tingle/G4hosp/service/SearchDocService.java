@@ -1,6 +1,6 @@
 package com.Tingle.G4hosp.service;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,7 @@ public class SearchDocService {
 	private final SearchDocRepository searchDocRepository;
 	private final MedRepository medRepository;
 	private final MemberRepository memberRepository;
+	private final ReservationNotAvailableService reservationNotAvailableService;
 	
 	public List<SearchDocListDto> getDocList(SearchInputDto searchDocDto) {
 		return searchDocRepository.getDocList(searchDocDto);
@@ -32,8 +33,22 @@ public class SearchDocService {
 		return searchDocRepository.getMedList(searchDocDto);
 	}
 	
-	public List<Member> getDoctoryBySearch(String searchQuery){
-		return memberRepository.getdoctorbysearch(searchQuery);
+	public List<AdminMainDto> getDoctoryBySearch(SearchInputDto searchInputDto){
+		List<Member> searchDocList = memberRepository.getdoctorbysearch(searchInputDto.getSearchQuery());
+		List<AdminMainDto> searchDocDtoList = new ArrayList<>();
+		for(Member member : searchDocList) {
+			AdminMainDto adminMainDto = new AdminMainDto();
+			adminMainDto.setSearchDocId(member.getId());
+			adminMainDto.setSearchDocImgOri(member.getImgOri());
+			adminMainDto.setSearchDocImgUrl(member.getImgUrl());
+			adminMainDto.setSearchDocName(member.getName());
+			
+			adminMainDto.setSearchDocMedName(findMedByDocid(member.getId()).getMedName());
+			
+			adminMainDto.setSearchDocNotAvail(reservationNotAvailableService.notAvailByDoctorTF(member));
+			searchDocDtoList.add(adminMainDto);
+		}
+		return searchDocDtoList;
 	}
 	
 	public Med findMedByDocid(Long doctorId) {

@@ -26,8 +26,11 @@ public class AdminMainDto {
 	private List<String> HosptalizedEachWardname;
 	private List<Long> HosptalizedEachWard;
 	
-	private Member searchdoctor;
-	
-	private String searchdoctormedname;
-	
+//	검색용
+	private String searchDocMedName;
+	private Long searchDocId;
+	private String searchDocName;
+	private String searchDocImgUrl;
+	private String searchDocImgOri;
+	private Boolean[] searchDocNotAvail;
 }

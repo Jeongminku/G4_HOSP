@@ -73,25 +73,10 @@ public class MainController {
 	
 	@GetMapping("/searchresult")
 	public String searchresult(SearchInputDto searchInputDto, Model model){
-		
-		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
-		String searchABC = searchInputDto.getSearchQuery();
-		
-		// 이름으로 의사 검색 
-		List<Member> docList = searchDocService.getDoctoryBySearch(searchABC);
-		// 의사가 속해있는 과 검색 및 dto 추가
-		for(int i=0; i<docList.size(); i++) {
-			AdminMainDto adminMainDto = new AdminMainDto();
-			Med med = searchDocService.findMedByDocid(docList.get(i).getId());
-			adminMainDto.setSearchdoctor(docList.get(i));
-			adminMainDto.setSearchdoctormedname(med.getMedName());
-			adminMainDtolist.add(adminMainDto);
-		}
+		List<AdminMainDto> adminMainDtolist = searchDocService.getDoctoryBySearch(searchInputDto);
 		model.addAttribute("docList", adminMainDtolist);
-		
-		Integer searchSize = adminMainDtolist.size();
-		model.addAttribute("searchABC", searchABC);
-		model.addAttribute("searchSize", searchSize);
+		model.addAttribute("searchABC", searchInputDto.getSearchBy());
+		model.addAttribute("searchSize", adminMainDtolist.size());
 		
 		return "searchPage/SearchResult"; 
 	}
