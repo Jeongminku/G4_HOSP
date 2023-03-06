@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Tingle.G4hosp.dto.HinfoBoardDto;
 import com.Tingle.G4hosp.dto.HinfoListDto;
 import com.Tingle.G4hosp.dto.HinfoSerchDto;
+import com.Tingle.G4hosp.entity.HinfoBoard;
+import com.Tingle.G4hosp.repository.HinfoBoardRepository;
 import com.Tingle.G4hosp.service.HinfoBoardService;
 
 import javassist.expr.NewArray;
@@ -39,18 +42,48 @@ public class HinfoController {
 	private final HinfoBoardService hinfoBoardService;
 	
 	//메인페이지를 보여줌
+//	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
-	public String viewHinfoList(HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
+	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+	
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
-		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
-
+		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
+		
+		Integer pbn = 6;
+		
+		if (pn != null) {
+			pbn = pn;
+		} else if (pn == null) {
+			pbn = 6;
+		}
+		
+		System.err.println("if 문 변환 후 :" + pbn);
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
+		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);	
 				
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
+		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
 		
-		return "HinfoPage/hinfoMain";
+		return "HinfoPage/HinfoMain";
+		
+	}
+	
+
+	@PostMapping(value = "/HinfoMain")
+	public String viewHinfoList(HttpServletRequest request, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , hinfoBoardDto.getPn());
+		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
+		
+		model.addAttribute("lists", list);
+		model.addAttribute("maxPage",5);
+		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
+		
+		return "HinfoPage/HinfoMain";
+		
 	}
 	
 	//글쓰기 페이지 입장
@@ -83,33 +116,34 @@ public class HinfoController {
 	@GetMapping(value={"/{hinfoId}"})
 	public String hinfoview(Model model, @PathVariable("hinfoId") Long hinfoIdId,HttpServletRequest request, HttpServletResponse response) {
 		
-		 Cookie oldCookie = null;
-		 Cookie[] cookies = request.getCookies();
-		 
-		    if (cookies != null) {
-		        for (Cookie cookie : cookies) {
-		            if (cookie.getName().equals("postView")) {
-		                oldCookie = cookie;
-		            }
-		        }
-		    }
-
-		    if (oldCookie != null) {
-		        if (!oldCookie.getValue().contains("[" + hinfoIdId.toString() + "]")) {
-		        	hinfoBoardService.updateViewtest(hinfoIdId);
-		            oldCookie.setValue(oldCookie.getValue() + "_[" + hinfoIdId + "]");
-		            oldCookie.setPath("/");
-		            oldCookie.setMaxAge(60 * 60 * 24);
-		            response.addCookie(oldCookie);
-		        }
-		    } else {
-		    	hinfoBoardService.updateViewtest(hinfoIdId);
-		        Cookie newCookie = new Cookie("postView","[" + hinfoIdId + "]");
-		        newCookie.setPath("/");
-		        newCookie.setMaxAge(60 * 60 * 24);
-		        response.addCookie(newCookie);
-		    }// 쿠키를 이용한 게시글 중복조회 방지 
+//		 Cookie oldCookie = null;
+//		 Cookie[] cookies = request.getCookies();
+//		 
+//		    if (cookies != null) {
+//		        for (Cookie cookie : cookies) {
+//		            if (cookie.getName().equals("postView")) {
+//		                oldCookie = cookie;
+//		            }
+//		        }
+//		    }
+//
+//		    if (oldCookie != null) {
+//		        if (!oldCookie.getValue().contains("[" + hinfoIdId.toString() + "]")) {
+//		        	hinfoBoardService.updateViewtest(hinfoIdId);
+//		            oldCookie.setValue(oldCookie.getValue() + "_[" + hinfoIdId + "]");
+//		            oldCookie.setPath("/");
+//		            oldCookie.setMaxAge(60 * 60 * 24);
+//		            response.addCookie(oldCookie);
+//		        }
+//		    } else {
+//		    	hinfoBoardService.updateViewtest(hinfoIdId);
+//		        Cookie newCookie = new Cookie("postView","[" + hinfoIdId + "]");
+//		        newCookie.setPath("/");
+//		        newCookie.setMaxAge(60 * 60 * 24);
+//		        response.addCookie(newCookie);
+//		    }// 쿠키를 이용한 게시글 중복조회 방지 
 		
+		hinfoBoardService.updateViewtest(hinfoIdId);
 		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
 		model.addAttribute("HinfoBoard",hinfoBoardDto);
@@ -122,17 +156,16 @@ public class HinfoController {
 	@GetMapping("/updatepage/{hinfoId}")
 	public String HinfoUpdateForm(@PathVariable("hinfoId") Long hinfoIdId,Model model) {
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
-		model.addAttribute("HinfoBoardDto",hinfoBoardDto);
+		model.addAttribute("hinfoBoardDto",hinfoBoardDto);
 		return "HinfoPage/HinfoForm";
 	}
 	
 	//의학정보게시판 글내용 수정
 	@PostMapping("/updatepage/{hinfoId}")
 	public String HinfoUpdate(@PathVariable("hinfoId") Long hinfoId,@Valid HinfoBoardDto hinfoBoardDto,@RequestParam("HinfoImg") List<MultipartFile> itemImgFileList,BindingResult bindingResult,Model model) {
-		System.out.println(hinfoBoardDto);
 
 		try {
-			hinfoBoardService.HinfoUpdate(hinfoId,itemImgFileList, hinfoBoardDto);
+			 hinfoBoardService.HinfoUpdate(hinfoId,itemImgFileList, hinfoBoardDto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,6 +173,7 @@ public class HinfoController {
 		return  "redirect:/Hinfo/{hinfoId}";
 	}
 	
+
 	@GetMapping("/deletepage/{hinfoId}")
 	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId,HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
 
@@ -156,4 +190,8 @@ public class HinfoController {
 		
 		return "HinfoPage/hinfoMain";
 	}
+	
+
+
+	
 }

@@ -1,8 +1,10 @@
 package com.Tingle.G4hosp.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
@@ -30,9 +32,10 @@ public class MemberFormDto {
 	private String pwd; //비밀번호 
 	
 	@NotBlank(message="전화번호는 필수 입력값입니다.")
+	//@Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "[01012345678] 형식의 전화번호로 입력해주세요.")
 	private String tel;
 	
-	@NotBlank(message="생년월일은 필수 입력값입니다.")
+	//@NotBlank(message="생년월일은 필수 입력값입니다. [19990909]형식의 8자리로 입력해주세요.")
 	private String birth;
 	
 	private Role role;
@@ -45,12 +48,11 @@ public class MemberFormDto {
 
 	private List<Med> med;
 	
-	private String medId;
+	private Long medId;
 	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
-	 public Member createMember() {
-	 	return modelMapper.map(this, Member.class);
-	 }
-	 
+	public Member createMember() {
+		return modelMapper.map(this, Member.class);
+	}
 }

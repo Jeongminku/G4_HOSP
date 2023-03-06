@@ -6,4 +6,5 @@ import com.Tingle.G4hosp.entity.HinfoBoard;
 
 public interface HinfoBoardRepository extends JpaRepository<HinfoBoard, Long>,HinfoBoardRepositoryCustum{
 	//건강정보게시판 Repository
+	
 }

@@ -56,7 +56,7 @@ public class QaBoardController {
 	}
 	
 	
-	//로그인아이디 안넣고 글세이브하는 기능(테스트용) 
+	//로그인아이디 안넣고 글세이브하는 기능 
 	@PostMapping(value="/new")
 	public String newQaBoard(QaBoardDto qaBoardDto, Model model) {
 		
@@ -74,8 +74,6 @@ public class QaBoardController {
 		qaBoardDto.setTitle(qaBoard.getQaTitle());
 		qaBoardDto.setContent(qaBoard.getQaContent());
 		qaBoardDto.setCategory(qaBoard.getQaCategory());
-		System.out.println(qaBoard);
-		System.out.println("@@@@@@@@@@ "+qaBoard.getId());
 		return "qaPage/qaModify";
 	}
 	
@@ -98,20 +96,5 @@ public class QaBoardController {
 		model.addAttribute("qaList", QaBoardAllList);
 		return "qaPage/qaPage";
 	}
-	
-	
-	
-	
-	//	@PostMapping(value="/new2")
-//	public String newQaBoard2(QaBoardDto qaBoardDto, Model model) {
-//		
-//		String loginid = SecurityContextHolder.getContext().getAuthentication().getName();
-//		Member member = memberService.findByLoginid(loginid);
-//		QaBoard qaBoard = QaBoard.createQaBoard(qaBoardDto, member);
-//		qaBoardService.saveQaBoard(qaBoard);
-//
-//		return "redirect:/qa/";
-//	}
-	
 	
 }

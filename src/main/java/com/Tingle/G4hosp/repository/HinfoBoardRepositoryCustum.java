@@ -12,7 +12,6 @@ public interface HinfoBoardRepositoryCustum {
 	//건강정보게시판에 뿌려줄 게시글, 페이징
 	Page<HinfoListDto> getMainHinfoMain(HinfoSerchDto hinfoSerchDto,Pageable pageable);
 	
-	
 	//조회수 증가
 	long updateView(Long HinfoId);
 	

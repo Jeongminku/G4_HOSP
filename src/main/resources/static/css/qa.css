@@ -1,0 +1,115 @@
+	.accordion {
+	list-style: none;
+	margin-bottom: 20px;
+	padding: 0;
+
+	}
+	
+	.accordion .button {
+	width: 100%;
+	text-align: left;
+	display: block;
+	font-weight: bold;
+	padding: 5px 10px;
+	background-color: #ddd;
+	color: #333;
+	text-decoration: none;
+	}
+	
+	.accordion .qaContent {
+	display: none;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	}
+
+	.test {
+		text-align:right;
+	}
+	
+	.qa_btn {
+	margin-top: -1px;
+	position: relative;
+	max-width: 1200px;
+	margin: 0 auto;
+	border: 1px solid #e0e0e0;
+	border-top: 0;
+	border-bottom: 0;
+	border-right: 0;
+	border-left: 0;
+	z-index: 10;
+	display: flex;
+	justify-content: space-around;
+	padding-bottom: 20px;
+	flex-wrap: wrap;
+	}
+	
+	.qa_btn0 {
+	width: calc((100%/5) - 0px);
+	float: left;
+
+	height: 50px;
+	}
+	
+	
+	.answer_txt{
+	color: black;
+	font-weight: 500;
+	font-size: 17px;
+	line-height: 24px;
+	word-break: keep-all;
+	}
+	
+	.answer_txt > p {
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	}
+	
+	.fa-q-span{
+	display: block;
+	float: left;
+	width: calc(100% - 35px);
+	font-weight: 600;
+	}
+	
+	.formbox{
+	padding: 10px;
+	}
+	
+	.accordion {
+	--bs-accordion-inner-border-radius: 0;
+	}
+	
+	.accordion-button {
+	color:black;
+	border-bottom: 1px solid #dee2e6;
+	background-color: #f9f9f9;
+	}
+	
+	.accordion-button:not(.collapsed){
+	color: black;
+	background-color: #f9f9f9;
+	}
+	
+	#content {
+	min-height: 300px;
+	}
+	
+	.signWrap {
+	display:flex;
+	justify-content: space-around;
+	padding: 20px;
+	}
+	
+	.submitSign {
+	height: 50px;
+	}
+	
+	.qa_h1 > h1 {
+	display: flex;
+	justify-content: space-around;
+	padding-bottom: 50px;
+	}

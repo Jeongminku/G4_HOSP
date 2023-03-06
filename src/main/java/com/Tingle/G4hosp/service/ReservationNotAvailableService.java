@@ -6,6 +6,7 @@ import java.util.stream.*;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.ReservationNotAvailable;
@@ -22,13 +23,21 @@ public class ReservationNotAvailableService {
 	
 	public List<ReservationNotAvailable> createReservationNotAvailable (String doctorLoginId, List<String> notAvailDateList, List<String> notAvailDayList) {
 		Member doctor = memberRepository.findByLoginid(doctorLoginId);
+		List<ReservationNotAvailable> prevSetting = reservationNotAvailableRepository.findByDoctor(doctor);
+		reservationNotAvailableRepository.deleteAll(prevSetting);
+		notAvailDateList = notAvailDateList == null ? new ArrayList<>() : notAvailDateList;
+		notAvailDayList = notAvailDayList == null ? new ArrayList<>() : notAvailDayList;
 		List<String> notAvailableStrList = Stream.concat(notAvailDateList.stream(), notAvailDayList.stream()).collect(Collectors.toList());
-		List<ReservationNotAvailable> reservationNotAvailableList = new ArrayList<>();
-		for(String dateDayStr : notAvailableStrList) {
-			ReservationNotAvailable reservationNotAvailable = ReservationNotAvailable.createReservationNotAvailable(doctor, dateDayStr);
-			reservationNotAvailableList.add(reservationNotAvailable);
+		if(notAvailableStrList.isEmpty()) {
+			return new ArrayList<>();
+		} else {
+			List<ReservationNotAvailable> reservationNotAvailableList = new ArrayList<>();
+			for(String dateDayStr : notAvailableStrList) {
+				ReservationNotAvailable reservationNotAvailable = ReservationNotAvailable.createReservationNotAvailable(doctor, dateDayStr);
+				reservationNotAvailableList.add(reservationNotAvailable);					
+			}
+			return reservationNotAvailableRepository.saveAll(reservationNotAvailableList);			
 		}
-		return reservationNotAvailableRepository.saveAll(reservationNotAvailableList);
 	}
 	
 	public List<String> findAllNotAvailByDoctor (Long DocotrId) {
@@ -43,10 +52,22 @@ public class ReservationNotAvailableService {
 	
 	private List<String> findAllNotAvailByDoctor (Member doctor) {
 		List<ReservationNotAvailable> notAvailList = reservationNotAvailableRepository.findByDoctor(doctor);
-		List<String> notAvailStr = new ArrayList<>();
-		for(ReservationNotAvailable notAvail : notAvailList) {
-			notAvailStr.add(notAvail.getNotAvailableDay());
-		}
+		List<String> notAvailStr = notAvailList.stream().map(entity -> entity.getNotAvailableDay()).collect(Collectors.toList());
 		return notAvailStr;
+	}
+	
+	public Boolean[] notAvailByDoctorTF (Member doctor) {
+		List<String> notAvailStr = findAllNotAvailByDoctor(doctor);
+		Boolean[] notAvailByDoc = new Boolean[7];
+		for(String str : notAvailStr) {
+			if(StringUtils.equals(str, "sun")) notAvailByDoc[0] = true;
+			if(StringUtils.equals(str, "mon")) notAvailByDoc[1] = true;
+			if(StringUtils.equals(str, "tue")) notAvailByDoc[2] = true;
+			if(StringUtils.equals(str, "wed")) notAvailByDoc[3] = true;
+			if(StringUtils.equals(str, "thu")) notAvailByDoc[4] = true;
+			if(StringUtils.equals(str, "fri")) notAvailByDoc[5] = true;
+			if(StringUtils.equals(str, "sat")) notAvailByDoc[6] = true;
+		}
+		return notAvailByDoc;
 	}
 }

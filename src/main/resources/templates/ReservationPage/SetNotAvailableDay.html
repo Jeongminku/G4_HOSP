@@ -7,33 +7,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <script src="../../lib/Bootstrap_5.3.0a/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css">
-    <script src="../../lib/jquery-3.6.3.min.js"></script>
-    <link rel="stylesheet" href="../../css/reset.css"> -->
     <link rel="stylesheet" href="../../css/reservation.css">
     <script src="../../lib/FulCal_6.1.1/local/index.global.min.js"></script>
     <script src="../../lib/FulCal_6.1.1/index.global.min.js"></script>
+    <script th:inline="javascript">
+        const notAvail = [[${NotAvail}]];
+    </script>
 </head>
 <body>
     <section id="selectNotAvail" class="d-flex justify-content-between" layout:fragment="content">
         <div id="Fcalendar"></div>
-        <form class="d-flex flex-column align-items-center position-relative  justify-content-center" th:action="@{/reservation/setNotAvailDay}" method="post">
+        <form class="d-flex flex-column align-items-center position-relative justify-content-center" th:action="@{/reservation/setNotAvailDay}" method="post">
             <p class="h4 text-start w-100">정기 휴무</p>
             <div class="d-flex flex-wrap align-items-center w-100">
-                <input class="d-none" type="checkbox" id="mon" name="dayCheck" value="MON">
+                <input class="d-none" type="checkbox" id="mon" name="dayCheck" value="mon">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="mon">매주 월요일</label>
-                <input class="d-none" type="checkbox" id="tue" name="dayCheck" value="TUE">
+                <input class="d-none" type="checkbox" id="tue" name="dayCheck" value="tue">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="tue">매주 화요일</label>
-                <input class="d-none" type="checkbox" id="wed" name="dayCheck" value="WED">
+                <input class="d-none" type="checkbox" id="wed" name="dayCheck" value="wed">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="wed">매주 수요일</label>
-                <input class="d-none" type="checkbox" id="thu" name="dayCheck" value="THU">
+                <input class="d-none" type="checkbox" id="thu" name="dayCheck" value="thu">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="thu">매주 목요일</label>
-                <input class="d-none" type="checkbox" id="fri" name="dayCheck" value="FRI">
+                <input class="d-none" type="checkbox" id="fri" name="dayCheck" value="fri">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="fri">매주 금요일</label>
-                <input class="d-none" type="checkbox" id="sat" name="dayCheck" value="SAT">
+                <input class="d-none" type="checkbox" id="sat" name="dayCheck" value="sat">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="sat">매주 토요일</label>
-                <input class="d-none" type="checkbox" id="sun" name="dayCheck" value="SUN">
+                <input class="d-none" type="checkbox" id="sun" name="dayCheck" value="sun">
                 <label class="text-center p-md-3 mb-2 btn btn-outline-secondary" for="sun">매주 일요일</label>
             </div>
             <p class="h4 text-start w-100">임의 휴무</p>
@@ -42,7 +41,7 @@
             </div> 
             <button class="btn btn-primary position-absolute bottom-0" type="submit">설정</button>
         </form>
-        <script src="../../js/SelectDate.js"></script>
+        <script src="../../js/Reservation.js"></script>
     </section>
 </body>
 </html>

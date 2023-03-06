@@ -3,10 +3,49 @@
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>순양병원</title>
 </head>
 <body>
 	<header th:fragment="header">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	var socket = new WebSocket("ws://localhost:80/websocket");
+	
+	socket.onopen = () => {
+		console.log(socket)
+	}
+
+	socket.onmessage = function(event) {
+		cleartest();
+		
+		// WebSocket으로 전달받은 알람을 header에 띄움
+		$("#alert-icon").css("display", "inline");
+		$("#nonalert-icon").css("display","none");
+
+	
+	// 관리자 로그인 전용 알림
+/* 	var msgTimer = 0;
+	var test = $("#alert-message")
+		setTimeout(function() {
+           test.fadeIn(500, function() {
+               msgTimer = setTimeout(function() {
+                   test.fadeOut(500);
+               }, 1000);
+           });
+           
+       }, 200);
+	function cleartest() {
+        if(msgTimer != 0) {
+            clearTimeout(msgTimer);
+            msgTimer = 0;
+        }
+    }
+	$("#alert-message").text(event.data); */
+	
+	};
+	
+	
+	</script>	
         <button class="btn btn-openCanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
@@ -15,22 +54,16 @@
         <div class="offcanvas offcanvas-end c-offcanvas" tabindex="-1" id="offcanvasRight">
             <div class="offcanvas-header">
 				<h1 class="offcanvas-title h5 fw-bold ">
-					<i class="fa-solid fa-house"></i>
-					로고자리
+					<a href="/"><img src="/img/SOONYANG.png" class="soonyang"></a>					
 				</h1>
                 <button class="btn btn-close" type="button" data-bs-dismiss="offcanvas"></button>
             </div>
             <div class="offcanvas-body d-flex justify-content-between">
 				<nav class="navbar justify-content-center">
 					<ul class="d-flex">
-						<li class="nav-item w-100" >
-							<a href="/">
-								<p>메뉴</p>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100">
-							<a href="/">
-								<p>메뉴</p>
+						<li class="nav-item w-100">
+							<a href="/Hinfo/HinfoMain">
+								<p>건강정보</p>
                             </a>
                         </li>
                         <li class="nav-item w-100">
@@ -38,11 +71,21 @@
 								<p>진료예약</p>
                             </a>
                         </li>
-                        <li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-							<a href="/admin/adminpage">
-								<p>관리자 페이지</p>
+                        <li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_DOCTOR')">
+							<a href="/archive/">
+								<p>진료내역</p>
                             </a>
                         </li>
+                        <li class="nav-item w-100">
+							<a href="/board/main">
+								<p>고객게시판</p>
+                            </a>
+                        </li>
+						<li class="nav-item w-100">
+							<a href="/qa/">
+								<p>FAQ(QA)</p>
+							</a>
+						</li>
                     </ul>
                 </nav>
 				<nav class="navbar justify-content-center">
@@ -55,15 +98,49 @@
 						<li class="nav-item" sec:authorize="isAuthenticated()">
 							<a class="nav-link" href="/members/logout">로그아웃</a>
 						</li>
-						<li class="nav-item w-100">
+						<li class="nav-item w-100" sec:authorize="isAnonymous()">
 							<a href="/members/new">
 								<p>회원가입</p>
 							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="isAuthenticated()">
+							<a href="/members/modify">
+								<p>마이페이지</p>
+							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="hasRole('CLIENT')">
+							<a href="/members/login">
+								<p>나의 예약</p>
+							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="hasRole('DOCTOR')">
+							<a href="/reservation/listView">
+								<p>진료일정</p>
+							</a>
+						</li>
+						<li class="nav-item w-100" sec:authorize="hasRole('ADMIN')">
+							<a href="/admin">
+								<p>시스템관리</p>
+                            </a>
+                        </li>
+						<li class="nav-item w-100" sec:authorize="hasAnyRole('ADMIN', 'DOCTOR')">
+							<a href="/chat">
+								<p>채팅</p>
+                            </a>
+                        </li>
+						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+							<a href="/admin/qlist">
+								<span id ="alert-message" class="alertbox" style="color: #205B8A; font-weight: bold; display: none; position: absolute; top: 10px;"></span>
+								<span id="alert-icon" style="display: none;">
+								<img alt="" src="/images/icons8-bell.gif" width="30px"></span>
+								<span id="nonalert-icon"><i class="fa-sharp fa-solid fa-bell"></i> </span>
+							</a>	
 						</li>
 					</ul>
 				</nav>
             </div>
         </div>
 	</header>
+
 </body>
 </html>

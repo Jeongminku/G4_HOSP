@@ -5,39 +5,446 @@
 <head>
 <meta charset="UTF-8">
 <title>메인페이지 title입니다.</title>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+<style>
+
+	section {
+		line-height: 25px;
+	}
+
+	.title-box {
+		/* background-color: #226597; */
+		border:1px solid ;
+		border-color: #226597;
+		padding: 5px;
+		padding-bottom: 12px;
+		
+	}
+	
+	.title-box > h4 {
+		padding: 10px;
+		/* color: white; */
+		color: black;
+		margin: 0 auto;
+		text-align: center;
+		color: #226597;
+	}
+
+	.title-box > p {
+		margin: 0 auto;
+		text-align: center;
+		padding: 3px;
+		line-height: 18px;
+	}
+	.board-content {
+		margin: 10px;
+	}
+	
+	.board-content p {
+		padding: 40px 0px;
+	}
+	
+	.button2 {
+		display: flex;
+		justify-content: space-between;
+		justify-content: flex-end;
+	}
+	
+	.button2 a {
+		margin: 3px;
+	}
+	
+</style>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	   
+
+	
+	function saveReply() {
+		
+	       if(!$("#replyContent").val()) {
+	        	alert("댓글을 입력하세요");
+	        	return false;
+	        }
+		
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url = "/board/saveReply";
+        
+        var paramData = {
+        		replyContent : $("#replyContent").val(),
+        		board :  $("#boardId").val(),       		
+                         };
+        console.log(paramData);
+        var param = JSON.stringify(paramData);
+        
+        $.ajax({
+            url      : url,
+            type     : "POST",
+            contentType : "application/json",
+            data     : param,
+            async:false,
+            beforeSend : function(xhr){
+                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                xhr.setRequestHeader(header, token);
+            },
+            cache   : false,
+            success  : function(result, status){
+            	alert("댓글을 입력했습니다.");
+            	
+         		document.getElementById("replyContent").value ='';
+               
+                postPageReload()
+           
+               // test()
+                
+            },
+            error : function(jqXHR, status, error){
+            		alert("로그인을 해주세요");
+                    location.href='/members/login';
+            }
+        });
+        
+		
+	}
+	//=========================================================================
+	
+ 	function test() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url = "/board/test/" + [[${boardFormDto.id}]];
+        
+        $.ajax({
+        	url : url,
+        	type : 'POST',
+        	data : {
+            
+        	},
+            beforeSend : function(xhr){
+                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                xhr.setRequestHeader(header, token);
+            },
+        	success : function(data) { // controllor에서 list를 return 받았음
+            			alert(data);
+                     console.log(data[0].member.imgUrl)
+                   	let str = JSON.stringify(data); // <> parse()
+					alert(str); 
+
+                     //location.href='/board/' + [[${boardFormDto.id}]];
+                         
+             },
+        	error : function() {
+        		alert("error");
+        	}
+        });
+	} 
+	//페이지 리로딩
+	function postPageReload() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");	
+    url = "/board/reload/" + [[${boardFormDto.id}]];
+    
+    
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'text',
+        beforeSend: function (xhr) {
+        	console.log('리로드')
+            xhr.setRequestHeader(header, token);
+        },
+        success:function(frag){
+        	console.log(frag)
+            //frag - 받아온 프래그먼트 태그
+            $('#reply').replaceWith(frag);
+        }
+        ,
+        error: function (jqXHR, status, error) {
+            console.log(jqXHR);
+            console.log(status);
+            console.log(error);
+        }
+    })
+    }
+	///////////////////
+	
+
+	
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function deletReply(e) {
+	
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		url = "/board/replydel"
+		
+		var replyIdIndex = $(event.target).attr("id");
+		
+		console.log(replyIdIndex);	
+		
+		var replyId = $("#replyId"+replyIdIndex).val();
+		
+		
+	    var paramData = {
+	    		id : replyId,    		
+	                     };
+	    console.log(paramData);
+	    var param = JSON.stringify(paramData);
+	    console.log(param);
+		
+	      $.ajax({
+	            url      : url,
+	            type     : "POST",
+	            contentType : "application/json",
+	            data     : param,
+	            async:false,
+	            beforeSend : function(xhr){
+	                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+	                xhr.setRequestHeader(header, token);
+	            },
+	            cache   : false,
+	            success  : function(result, status){
+	            	postPageReload();
+	           		alert("댓글 삭제를 완료 했습니다.");
+	            },
+	            error : function(jqXHR, status, error){
+	            	alert("error");
+	            	  console.log(jqXHR);
+	                  console.log(status);
+	                  console.log(error);
+	                    location.href='/members/login';
+	            }
+	        });
+}
+//수정창만들기
+	function createinput(e) {
+	
+	var replyIdIndex = $(event.target).attr("id");
+	console.log(replyIdIndex);
+	
+	 var content = $("#con"+replyIdIndex.substr(2)).val();
+		
+	 //댓글창 none
+	$("#conview"+replyIdIndex.substr(2)).css('display', 'none');
+	 
+	//버튼 none
+	$("[class*='btn']").not("[class*=" + replyIdIndex.substr(2) + "]").css('display', 'none');
+	
+	
+	 //인풋창 생성
+	 let input = document.createElement("input")
+	 input.setAttribute("type","text")
+	 input.setAttribute("class","upContent")
+	 input.setAttribute("id","upContent")
+	 input.setAttribute("value", content )
+	 document.querySelector("#ReId"+replyIdIndex.substr(2)).append(input);
+	
+	$("#upRe").css('display', 'block');
+	 
+	 
+	 let button = document.getElementById(replyIdIndex)
+	 button.setAttribute("onClick","upRe()") 
+	
+	 
+	}
+///댓글수정
+	function upRe(e) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        
+        var url = "/board/upRe";
+        
+        
+        if(!$("#upContent").val()) {
+        	alert("수정할 댓글을 입력하세요");
+        	return false;
+        }
+        
+ 	
+		var replyIdIndex = $(event.target).attr("id");
+		replyIdIndex = replyIdIndex.substr(2)
+		
+		var replyId = $("#replyId"+replyIdIndex).val();
+        
+        var paramData = {
+        		id :  replyId,       		
+        		replyContent : $("#upContent").val(),
+                         };
+        console.log(paramData);
+        var param = JSON.stringify(paramData);
+        
+        $.ajax({
+            url      : url,
+            type     : "POST",
+            contentType : "application/json",
+            data     : param,
+            async:false,
+            beforeSend : function(xhr){
+                /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                xhr.setRequestHeader(header, token);
+            },
+            cache   : false,
+            success  : function(result, status){
+            	alert("댓글이 수정 되었습니다")
+            	postPageReload()
+                
+            },
+            error : function(jqXHR, status, error){
+            		alert("회원가입을 해주세요");
+                    alert(jqXHR.responseText);
+                    location.href='/members/login';
+            }
+        });
+        
+        
+
+
+  
+ 	
+     
+}
+
+	
+	</script>
+</th:block>
+
 </head>
 <body>
 	<div layout:fragment="content">
-		
-		<table style="text-align: center;">
-			<tr>
-				<td>제목</td>	
-				<td>[[${boardFormDto.title}]]</td>	
-			</tr>
-			<tr>
-				<td>글쓴이</td>	
-				<td>[[${boardFormDto.member.loginid}]]</td>	
-			</tr>
-			<tr>
-				<td>작성일</td>
-				<td><div th:text="${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></div></td>
-			</tr>
-			<tr>
-				<td>조회수</td>
-				<td>[[${boardFormDto.view}]]</td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td>[[${boardFormDto.content}]]</td>
-			</tr>
-		</table>
-		<form action="">
-		댓글입력
-		<input type="text">
-		</form>
-		<button>댓글입력</button>
-		
-		
+<section>
+	
+	<div class="title-box">
+	
+		<h4 class="title">[[${boardFormDto.title}]]</h4>
+		<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 : [[${boardFormDto.view}]]  | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
+		<p th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
+	
 	</div>
+		
+				
+		<table class="table table align-middle">
+  <thead>
+    <tr style="text-align: center;">
+      <td><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+    </tr>
+
+  </thead>
+  <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">
+
+      </th>
+    </tr>
+
+    <tr>
+      <th scope="row">
+
+
+
+      </th>
+    </tr>
+    
+  </tbody>
+</table>
+		
+		
+		
+		<!-- 댓글 -->
+		<div class="reply" id="reply" th:fragment="reply">
+		
+		<div sec:authorize="isAuthenticated()" class="float-right" style="padding-bottom: 30px;">
+			<a  class="btn btn-primary" th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a>
+			<a  class="btn btn-primary" th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+		</div>
+		
+		
+		<div class="card mb-2">
+	<div class="card-header bg-light">
+	        <i class="fa fa-comment fa"></i> REPLY
+	</div>
+	<div class="card-body">
+		<ul class="list-group list-group-flush">
+		    <li class="list-group-item">
+			<textarea class="form-control" id="replyContent" name="replyContent" rows="2"></textarea>
+			<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
+			<button type="button" class="btn btn-dark mt-3" onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
+		    </li>
+		</ul>
+	</div>
+	</div>
+		
+	<div th:each="reply , i : ${lists}"> 
+			
+		<!-- 댓글폼  -->
+		 <div class="card-body">
+              <div class="d-flex">
+               <div class="flex-shrink-0" ><img class="rounded-circle" th:src="${reply.member.imgUrl}" th:alt="${reply.member.imgOri}"  style="width: 100px"/></div>
+                     <div class="ms-3">
+                        <div>
+                        <div class="fw-bold" th:text="${reply.member.loginid}"></div>
+         
+                        <div th:if="${reply.member.loginid == #authentication.name}">
+                        	<a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+                        	<a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
+                        </div>
+                        </div> 
+                         <span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}"> <span th:text="${reply.replyContent}"></span> </span> <span th:id="ReId+${i.index+1}"></span>
+                         <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
+                         <input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
+               		</div>
+               		
+          	 <div> 
+          	 </div>
+          	 
+          	</div>
+           </div> 
+		<!-- 댓글폼  -->
+		        
+	</div>	
+			
+			
+			<!-- 페이징 -->
+			<nav
+			th:with="start=${(lists.number/maxPage)*maxPage + 1}
+			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
+			aria-label="Page navigation example">
+			<ul class="pagination d-flex justify-content-center">
+				<li class="page-item" th:classappend="${lists.first}?'disabled'">
+					<a th:href="@{'/board/'+ ${boardFormDto.id} + '?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+						<span>이전</span>
+					</a>
+				</li>
+				<li class="page-item"
+					th:each="page: ${#numbers.sequence(start, end)}"
+					th:classappend="${lists.number eq page-1}?'active':''">
+					<a class="page-link" th:inline="text"
+					th:href="@{'/board/' +${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
+				</li>
+				<li class="page-item" th:classappend="${lists.last}?'disabled'">
+					<a class="page-link"
+					th:href="@{'/board/'+${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+				</li>
+			</ul>
+		</nav>
+		<!-- 페이징 -->		
+		</div>
+		<!-- 댓글 -->
+		
+
+</section>		
+	</div>
+	
+	
+	
+	
 </body>
 </html>

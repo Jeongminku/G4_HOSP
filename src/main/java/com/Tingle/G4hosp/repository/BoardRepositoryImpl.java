@@ -47,7 +47,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustum{
 								board.member,
 								board.title,
 								board.view,
-								board.regDatetime
+								board.regDatetime,
+								board.secret
 								)
 						).from(board)
 						.join(board.member,member)

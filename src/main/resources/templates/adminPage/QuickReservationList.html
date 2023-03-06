@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminLayout}">
+<head>
+<meta charset="UTF-8" />
+<title> (관리자) 비회원 예약 조회 페이지</title>
+	<script th:inline="javascript">
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	console.log(errorMessage);
+    	if(errorMessage != null){
+        	alert(errorMessage);
+    	}
+	return false;
+	});
+	</script>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="wrap">
+			<div class="cont">				
+				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+					<div class="col-md-10 headwrap">
+					<div class="col-md-12 viewhead">
+						<h2 class="b-line h3 mb-4">비회원 예약 신청자 조회 / 관리</h2>
+					</div>
+					<div class="col-md-12 tablemenu">
+					<div class="QuickResevationlist" th:if = "${QRlist.size}">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">예약번호</th>
+									<th scope="row">예약자명</th>
+									<th scope="row">전화번호</th>
+									<th scope="row">희망전화시간</th>									
+									<th scope="row">증상</th>
+									<th scope="row">예약확정여부</th>
+								</tr>
+								<tr th:each ="qr : ${QRlist}">
+									<td> [[${qr.id}]]</td>
+									<td> [[${qr.cusname}]]</td>
+									<td> [[${qr.custel}]]</td>
+									<td> [[${qr.requesttime}]]</td>
+									<td> [[${qr.symptom}]]</td>
+									<td> [[${qr.qryn}]]</td>
+									<td><button class="but" th:onclick="|location.href='/admin/updateqr/'+${qr.id}|"> 예약완료 </button></td>								
+									<td><button class="but" type="button" th:onclick="deleteqr([[${qr.id}]])"> 예약취소 </button></td>								
+							</tbody>
+						</table>
+					</div>
+					</div>
+					<div class="nonQR" th:unless = "${QRlist.size}">
+						<h2> 비회원 예약 신청자가 없습니다. </h2>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

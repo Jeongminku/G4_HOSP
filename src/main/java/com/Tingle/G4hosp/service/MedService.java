@@ -16,21 +16,22 @@ import com.Tingle.G4hosp.repository.MedRepository;
 
 import lombok.RequiredArgsConstructor;
 
+// 진료과 서비스 담당
 @Service
 @RequiredArgsConstructor
 @Transactional
-
-// 진료과 서비스 담당
-
 public class MedService {
 	
 	private final MedRepository medRepository;
-
+	private final MedRepository medRepository2;
+	private final ChatRoomAccessService chatRoomAccessService;
+	
 	// 진료과 등록
 	public Long saveMed(MedFormDto medFormDto) throws Exception {
 
 		Med med = medFormDto.createMed();
-		medRepository.save(med);
+		Med savedMed = medRepository.save(med);
+		chatRoomAccessService.createChatRoomAccess(savedMed);
 		
 		return med.getMedId();
 	}
@@ -42,4 +43,19 @@ public class MedService {
 		return medRepository.findAll();
 	}
 
+	public List<Med> getMedListNotMyMed(Long medId) {
+		return medRepository.getMedListNotMyMed(medId);
+	}
+	
+	public Med findMedbyDocid(Long doctorid) {
+		return medRepository.findMedbyDocid(doctorid);
+	}
+	
+	public List<Med> getTesListNotMy(Long medId) {
+		return medRepository2.getMedListNotMyMed(medId);
+	}
+	
+	public Med findbyid(Long id) {
+		return medRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+	}
 }

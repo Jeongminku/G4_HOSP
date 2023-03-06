@@ -4,8 +4,10 @@
       layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>순양병원</title>
+<link rel="stylesheet" href="../../css/qa.css">
 </head>
+
 <body>
 	<div layout:fragment="content">
     	<section>
@@ -15,20 +17,23 @@
                      <div class="qaBroadUp">
 	                    <div class="form-radio">               	
 	             			<p>카테고리 설정</p>
+	             		<br/>
 	                        <input type="radio" name="category" value="PAY" id="pay" checked="checked"/>
 	                        <label for="pay">결제</label>
 	
 	                        <input type="radio" name="category" value="HSPDSC" id="hspdsc" onclick="broadInfoEvent()" />
 	                        <label for="hspdsc">입/퇴원</label>
 	                    </div>
-	                    
+	                    <br/>
 						<div class="form-textbox row">
-	                        <label th:for="title">자주묻는 질문</label>
+						    <label th:for="title" class="formbox">자주묻는 질문</label>
 	                        <input type="text" th:field="*{title}" class="form-control" placeholder="자주묻는 질문 Q&A" style="padding-left: 100px;" />
 	                    </div>
-	
+						
+						<br/>
+	                    
 	                    <div class="form-textbox row">
-	                        <label th:for="content">질문 답변</label>
+	                        <label th:for="content" class="formbox">질문 답변</label>
 	                        <textarea class="form-control" th:field="*{content}" placeholder = "답변을 작성해주세요" style="padding-left: 100px; border-radius:inherit;"></textarea>
 	                    </div> 
 	                    
@@ -36,8 +41,8 @@
                     <br>
                     
                     <div class="form-textbox row signWrap" style="text-align:center;">
-                        <button type="submit" class="submitSign">등록</button>
-                        <button type="button" onclick="location.href='/'" class="submitSign">등록취소</button>
+                        <button type="submit" class="submitSign w-25 btn btn-primary">등록</button>
+                        <button type="button" onclick="location.href='/'" class="submitSign w-25 btn btn-primary">등록취소</button>
                     </div>
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">         
                      </div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>순양병원</title>
+<script th:inline="javascript">
+	window.onload = () => {
+		const message = [[${params.alertMessage}]]
+		if(message) {
+			alert(message);
+		}
+		const redirectUri = [[${params.returnUrl}]]
+		location.href = redirectUri;
+		console.log(redirectUri);
+	}
+</script>
+</head>
+
+<body>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.modelmapper.ModelMapper;
 
+import com.Tingle.G4hosp.constant.BoardSecret;
 import com.Tingle.G4hosp.entity.Board;
 import com.Tingle.G4hosp.entity.Member;
 import com.querydsl.core.annotations.QueryProjection;
@@ -25,14 +26,19 @@ public class BoardListDto {
 	
 	private LocalDateTime regTime; //게시글 등록 시간
 	
+	private BoardSecret boardSecret;
+	
+	private Long replyCount;
+	
 	//쿼리dsl사용
 	@QueryProjection
-	public BoardListDto(Long id, Member member, String title, int view, LocalDateTime regTime) {
+	public BoardListDto(Long id, Member member, String title, int view, LocalDateTime regTime, BoardSecret boardSecret) {
 		this.id = id;
 		this.member = member;
 		this.title = title;
 		this.view = view;
 		this.regTime = regTime;
+		this.boardSecret = boardSecret;
 	}
 	
 	public static ModelMapper modelMapper = new ModelMapper();

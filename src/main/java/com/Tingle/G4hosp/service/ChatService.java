@@ -1,15 +1,22 @@
 package com.Tingle.G4hosp.service;
 
 import java.io.IOException;
-import java.util.*;
+import java.nio.file.AccessDeniedException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.Tingle.G4hosp.dto.ChatRoomDto;
+import com.Tingle.G4hosp.entity.ChatRoom;
+import com.Tingle.G4hosp.entity.ChatRoomAccess;
+import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.repository.ChatRoomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -20,34 +27,65 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ChatService {
     private final ObjectMapper objectMapper;
-    private Map<String, ChatRoomDto> chatRooms;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRoomAccessService chatRoomAccessService;
+    private final MemberService memberService;
 
-    @PostConstruct
-    private void init() {
-        chatRooms = new LinkedHashMap<>();
+    public ChatRoom createChatRoom (ChatRoomDto chatRoomDto) {
+    	ChatRoomAccess chatRoomAccess = chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess());
+    	ChatRoom chatRoom = ChatRoom.createChatRoom(chatRoomAccess, chatRoomDto.getChatRoomName());
+    	return chatRoomRepository.save(chatRoom);
+    }
+    
+    public void updateChatRoom (ChatRoomDto chatRoomDto) {
+    	ChatRoom currentRoom = findbyId(chatRoomDto.getId());
+    	ChatRoomAccess newAccess = chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess());
+    	currentRoom.updateChatRoom(newAccess, chatRoomDto.getChatRoomName());
+    	chatRoomRepository.save(currentRoom);
+    }
+    
+    public void deleteChatRoom (Long chatRoomId) {
+    	ChatRoom currentRoom = findbyId(chatRoomId);
+    	chatRoomRepository.delete(currentRoom);
+    }
+    
+    public List<ChatRoomDto> findAllChatRoom () {
+    	List<ChatRoom> allChatRoom = chatRoomRepository.findAll();
+    	List<ChatRoomDto> allChatRoomDto = ChatRoomDto.createChatRoomDtoList(allChatRoom);
+    	for(ChatRoomDto chatRoomDto : allChatRoomDto) {
+    		chatRoomDto.setChatRoomAccessName(chatRoomAccessService.findById(chatRoomDto.getChatRoomAccess()).getChatRoomAccessName());
+    	}
+    	return allChatRoomDto;
+    }
+    
+    public Map<Long, String> findAllAccessListToMap () {
+    	List<ChatRoomAccess> accessList = chatRoomAccessService.findAll();
+    	Map<Long, String> accessListMap = new HashMap<>();
+    	for(ChatRoomAccess access : accessList) {
+    		accessListMap.put(access.getId(), access.getChatRoomAccessName());
+    	}
+    	return accessListMap;
     }
 
-    public List<ChatRoomDto> findAllRoom() {
-        return new ArrayList<>(chatRooms.values());
+    public Map<String, ChatRoomDto> enterChatRoom (Long chatRoomId, Long roomAccessId, String memberLoginId) throws AccessDeniedException {
+    	Member enterMember = memberService.findByLoginid(memberLoginId);
+    	if(chatRoomAccessService.checkChatRoomAccess(roomAccessId, enterMember)) {
+    		Map<String, ChatRoomDto> senderMap = new HashMap<>();
+    		ChatRoomDto currentRoomDto = ChatRoomDto.createChatRoomDto(chatRoomRepository.findById(chatRoomId).orElseThrow(EntityNotFoundException::new));
+    		senderMap.put(enterMember.getName(), currentRoomDto);
+    		return senderMap;
+    	} else {
+    		throw new AccessDeniedException("공개범위 다름");
+    	}    	
     }
-
-    public ChatRoomDto findRoomById(String roomId) {
-        return chatRooms.get(roomId);
+    
+    public ChatRoom findbyId (Long id) {
+    	return chatRoomRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
-
-    public ChatRoomDto createRoom(String name) {
-        String randomId = UUID.randomUUID().toString();
-        ChatRoomDto chatRoom = ChatRoomDto.builder()
-                .roomId(randomId)
-                .name(name)
-                .build();
-        chatRooms.put(randomId, chatRoom);
-        return chatRoom;
-    }
-
+    
     public <T> void sendMessage(WebSocketSession session, T message) {
         try{
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+        	session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

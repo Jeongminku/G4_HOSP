@@ -25,6 +25,9 @@ public class HinfoListDto {
 	
 	private LocalDateTime regTime; //게시글 등록시간
 	
+	private String content;
+	
+	private HinfoBoardDto hinfoBoardDto;
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
@@ -37,11 +40,12 @@ public class HinfoListDto {
 	}
 	
 	@QueryProjection
-	public HinfoListDto(Long id,Member member,String title,int view,LocalDateTime regTime) {
+	public HinfoListDto(Long id,Member member,String title,int view,LocalDateTime regTime, String content) {
 		this.id =id;
 		this.member = member;
 		this.title = title;
 		this.view = view;
 		this.regTime = regTime;
+		this.content = content;
 	}
 }

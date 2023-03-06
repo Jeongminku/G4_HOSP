@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>입원 내역 확인 페이지</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<style>
+	
+	.wrap {
+	margin: 0 auto;
+	background-color: #eeeeee;
+	
+}
+
+.headwrap{
+	margin: 40px auto;
+}
+
+.viewhead{
+	border-bottom: 3px solid; 
+}
+
+.headhead{
+	margin-bottom: 10px;
+}
+
+.viewbody{
+	margin-top : 20px;
+	border: 1px solid;
+	background-color: white;
+}
+
+.linemenu{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.but{
+	height: 30px;
+	width: 80px;
+	background: #205B8A;
+	color: white;
+}
+
+.tablemenu{
+	margin: 10px;
+}
+
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+	<section>
+		<div class="wrap">
+			<div class="cont">
+				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
+					<div class="col-md-10 headwrap">
+
+						<div class="col-md-12 viewhead">
+						<div class="headhead">
+							<span style="color: #205B8A; font-size: 2.5rem; font-weight: bold;">[[${patient.name}]]</span><span style="font-size: 2.5rem; font-weight: bold;">님 진료 내역</span>						
+						</div>
+						</div>
+						<div class="col-md-12 viewbody">
+						<form enctype="multipart/form-data">
+							<div class="col-md-12 viewlineboxup"></div>
+							<div class="col-md-12 viewlinebox">
+							</div>
+
+							<div class="col-md-12 tablemenu">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th scope="row">환자명</th>
+											<td>[[${patient.name}]]</td>
+											<th scope="row">담당의</th>
+											<td th:if="${med}">[[${hospitalize.doctor.name}]] ([[${med.medName}]]) </td>
+
+										</tr>
+										<tr>
+											<th scope="row">나이</th>
+											<td>[[${age}]]</td>
+											<th scope="row">입원 사유</th>
+											<td>[[${disease}]] </td>
+
+										</tr>
+										<tr>
+											<th scope="row">병실</th>
+											<td>[[${hospitalize.ward}]]호 </td>
+											<th scope="row">입원일</th>
+											<td>[[${hospitalize.hospitalizeddate}]] </td>
+										</tr>
+
+										<tr>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
+						</div>
+							<div class="col-md-12 linemenu">
+							<button class="but" th:onclick = "|location.href='/archive/search/'+${patient.id}|" >뒤로가기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</div>
+</body>
+</html>

@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="../../css/reservation.css">
     <script src="../../lib/FulCal_6.1.1/local/index.global.min.js"></script>
     <script src="../../lib/FulCal_6.1.1/index.global.min.js"></script>
+    <script th:inline="javascript">
+        const reservationViewPatDto = [[${ReservationViewPatDto}]];
+    </script>
 </head>
 <body>
     <section id="selectDate" class="d-flex justify-content-between" layout:fragment="content">
@@ -44,7 +47,7 @@
             <label class="w-100 text-center p-md-3 mb-2 btn btn-outline-secondary" for="18:00">오후 6시</label>                
             <button class="btn btn-primary w-100" type="submit">예약하기</button>
         </form>
-        <script src="../../js/SelectDate.js"></script>
+        <script src="../../js/Reservation.js"></script>
     </section>
 </body>
 </html>

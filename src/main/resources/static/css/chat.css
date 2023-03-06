@@ -1,0 +1,29 @@
+/* 채팅방 선택페이지 */
+select.rounded {height: 58px;} 
+
+/* 채팅방 페이지 */
+#roomList {width: 20%;}
+#roomListHeader {height: 50px; padding: 6px 0; box-sizing: border-box; margin: 0;}
+#roomListBody {height: calc(670px + 66px);}
+
+#chatRoom {margin-left: 20px;}
+#roomHeader .btn {font-size: 1.5rem;}
+#roomHeader span {cursor: default;}
+.btn#exitRoom i {transform: rotate(180deg);}
+#joinedMemList {transform: translateY(100%); overflow-y: scroll; -ms-overflow-style: none; scrollbar-width: none; max-height: 450px; background-color: #226597; margin: 0 10px -10px 0; width: 200px;}
+#joinedMemList::-webkit-scrollbar {display: none;}
+#joinedMemList li {color: #ffffff; text-align: center; padding: 15px; width: 100%;}
+
+#messageView {overflow-y: scroll; border: 1px solid #226597; padding: 10px; height: 670px;}
+.entry {padding: 1rem;}
+.info {font-size: 0.8rem; margin: 0 10px;}
+.sendName {margin-bottom: 5px;}
+.msg {padding: 10px 1rem; width: fit-content; box-sizing: border-box;}
+.msg.sendMsg {background-color: #226597; color: #ffffff; border: none;}
+.msg.reciveMsg {background-color: #ffffff;}
+
+#messageInput input[name="sendMessage"] {color: #000000; cursor: text; text-align: left;}
+#messageInput input[name="sendMessage"]:hover {background-color: #ffffff; color: #000000; box-shadow: none;}
+#messageInput input[name="sendMessage"]:active,
+#messageInput input[name="sendMessage"]:focus-visible {background-color: #ffffff; color: #000000; box-shadow: none;}
+#messageSend {padding: 1rem 0; box-sizing: border-box; margin-left: 10px;}

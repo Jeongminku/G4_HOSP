@@ -7,10 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <script src="../../lib/Bootstrap_5.3.0a/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css">
-    <script src="../../lib/jquery-3.6.3.min.js"></script>
-    <link rel="stylesheet" href="../../css/reset.css"> -->
     <link rel="stylesheet" href="../../css/reservation.css">
 </head>
 <body>
@@ -18,46 +14,16 @@
         <div class="w-100">
             <h2 class="h1 text-center">진료예약</h2>
             <div th:each="divison : ${DocList}">
-                <h3 class="h2" th:text="${division.key}">과이름</h3>
-                <div class="d-flex flex-wrap w-100 docList" th:each="doctor : ${division.value}">
-                    <a th:href="@{/reservation/${doctor.id}}" class="card mb-3 d-flex flex-column align-items-center">
+                <h3 class="h2" th:text="${divison.key}">과이름</h3>
+                <div class="d-flex flex-wrap w-100 docList">
+                    <a th:href="@{${doctor.id}}" th:each="doctor : ${divison.value}" class="card mb-3 d-flex flex-column align-items-center">
                         <img th:src="${doctor.imgUrl}" class="card-img-top" th:alt="${doctor.imgName}">
                         <div class="card-body">
                             <h5 class="card-title text-center" th:text="${doctor.name}">의사 이름</h5>
-                            <p class="card-text"><small class="text-muted" th:text="${doctor.tel}">000-0000-0000</small></p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div>
-                <h3 class="h2">테스트 과이름</h3>
-                <div class="d-flex flex-wrap w-100 docList">
-                    <a th:href="@{/reservation/1}" class="card mb-3 d-flex flex-column align-items-center">
-                        <img src="https://1.bp.blogspot.com/-6dSaKA-5r0c/UZSs9HLyutI/AAAAAAAATBc/lxpq2MB3_mc/s800/doctor.png" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title text-center">의사 이름</h5>
-                            <p class="card-text"><small class="text-muted">000-0000-0000</small></p>
-                        </div>
-                    </a>
-                    <a th:href="@{/reservation/2}" class="card mb-3 d-flex flex-column align-items-center">
-                        <img src="https://1.bp.blogspot.com/-6dSaKA-5r0c/UZSs9HLyutI/AAAAAAAATBc/lxpq2MB3_mc/s800/doctor.png" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title text-center">의사 이름</h5>
-                            <p class="card-text"><small class="text-muted">000-0000-0000</small></p>
-                        </div>
-                    </a>
-                    <a th:href="@{/reservation/3}" class="card mb-3 d-flex flex-column align-items-center">
-                        <img src="https://1.bp.blogspot.com/-6dSaKA-5r0c/UZSs9HLyutI/AAAAAAAATBc/lxpq2MB3_mc/s800/doctor.png" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title text-center">의사 이름</h5>
-                            <p class="card-text"><small class="text-muted">000-0000-0000</small></p>
-                        </div>
-                    </a>
-                    <a th:href="@{/reservation/4}" class="card mb-3 d-flex flex-column align-items-center">
-                        <img src="https://1.bp.blogspot.com/-6dSaKA-5r0c/UZSs9HLyutI/AAAAAAAATBc/lxpq2MB3_mc/s800/doctor.png" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title text-center">의사 이름</h5>
-                            <p class="card-text"><small class="text-muted">000-0000-0000</small></p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-mobile"></i>
+                                <small class="text-muted" th:text="${doctor.tel}">000-0000-0000</small>
+                            </p>
                         </div>
                     </a>
                 </div>

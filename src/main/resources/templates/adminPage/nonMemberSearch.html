@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminLayout}">
+<head>
+<meta charset="UTF-8">
+<title>순양병원</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+<section>
+
+	<h1>비회원 예약 환자 목록</h1><br>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">성함</th>
+				<th scope="col">생년월일</th>
+				<th scope="col">전화번호</th>
+				<th scope="col">병명</th>		
+				<th scope="col">통화요청시간</th>
+				<th scope="col">비고</th>
+			</tr>
+		</thead><hr>
+		
+	<th:block th:each="memHosDis : ${memHosDis}">
+	
+		<tbody>
+			<tr>
+				<td>[[${memHosDis.hospitalize.member.name}]] </td>
+				<td>[[${memHosDis.hospitalize.member.birth}]] </td>
+				<td>[[${memHosDis.hospitalize.member.tel}]] </td>
+				<td>[[${memHosDis.disease.diseaseName}]] </td>
+				<td>[[${memHosDis.hospitalize.ward}]] </td>			
+				<td>[[${memHosDis.hospitalize.hospitalizeddate}]] </td>			
+			</tr>
+		</tbody>
+	</table>
+
+	</th:block>
+
+</section>
+
+</div>
+
+</body>
+</html>

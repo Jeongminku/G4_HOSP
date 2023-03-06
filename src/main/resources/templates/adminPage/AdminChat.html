@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminLayout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <h2 class="h3 b-line mb-4">채팅방 개설</h2>
+        <form th:action="@{/admin/chat}" method="post" class="d-flex flex-column align-items-end w-100 px-5" id="newChatRoom">
+            <div class="w-100 d-flex align-items-end mb-2">
+                <div class="d-flex flex-column justify-content-start" id="newChatAccess">
+                    <p class="text-muted mb-2">공개범위</p>
+                    <select class="p-3 rounded" name="chatRoomAccess">
+                        <option th:each="access : ${AllAccessList}" th:value="${access.key}" th:text="${access.value}" th:selected="${access.value} == '전체'"></option>
+                    </select>
+                </div>
+                <div class="d-flex flex-column justify-content-start ms-2" id="newChatName">
+                    <p class="text-muted mb-2">채팅방 이름</p>
+                    <input class="p-3 rounded" type="text" name="chatRoomName" placeholder="새로운 방 이름을 설정하세요">
+                </div>
+            </div>
+            <button type="submit" class="text-center p-3 btn btn-primary">생성</button>
+        </form>
+        <h2 class="h3 b-line mb-4">개설된 채팅방 목록</h2>
+        <div class="d-flex flex-column w-25 w-100 px-5">
+            <div class="d-flex align-items-center" id="chatRoomListHeader">
+                <div class="w-25 list-header-item h5">공개범위</div>
+                <div class="w-25 list-header-item h5">이름</div>
+                <div class="w-25 list-header-item h5">개설일자</div>
+            </div>
+            <ul class="overflow-y-scroll w-100" id="chatRoomList" th:if="${AllChatRoom}">
+                <li class="d-flex align-items-center w-100" th:each="chatRoom : ${AllChatRoom}">
+                    <input type="hidden" th:value="${chatRoom.chatRoomAccess}" name="chatRoomAccessId">
+                    <div class="w-25" th:text="${chatRoom.chatRoomAccessName}"></div>
+                    <div class="w-25" th:text="${chatRoom.chatRoomName}" name="chatRoomName"></div>
+                    <div class="w-25" th:text="${chatRoom.chatRoomRegDate}"></div>
+                    <div class="w-25">
+                        <button class="btn" type="button" id="chatRoomEdit" title="수정" data-bs-toggle="modal" data-bs-target="#chatRoomEditModal">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn" type="button" id="chatRoomDel" title="삭제">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <form th:action="@{/admin/chatDel}" method="post" class="d-none" name="deleteId">
+                                <input type="hidden" th:value="${chatRoom.id}" name="chatRoomId">
+                            </form>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal fade" id="chatRoomEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content p-5">
+                    <form class="d-flex flex-column align-items-end" th:action="@{/admin/chatEdit}" method="post">
+                        <div class="d-flex align-items-end justify-content-between w-100 mb-2">
+                            <div class="d-flex flex-column justify-content-start w-25" id="editChatAccess">
+                                <p class="text-muted mb-2">공개범위</p>
+                                <select class="p-3 rounded" name="editChatAccess">
+                                    <option th:each="access : ${AllAccessList}" th:value="${access.key}" th:text="${access.value}"></option>
+                                </select>
+                            </div>
+                            <div class="d-flex flex-column justify-content-start w-75 ms-2" id="eidtChatName">
+                                <p class="text-muted mb-2">채팅방 이름</p>
+                                <input class="p-3 rounded" type="text" name="eidtChatName" placeholder="새로운 방 이름을 설정하세요">
+                            </div>
+                        </div>
+                        <input type="hidden" name="editchatRoomId">
+                        <button type="submit" class="text-center p-3 btn btn-primary">수정</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/chat.css">
+    <script th:inline="javascript">
+        const errorMsg = [[${ErrorMsg}]];
+    </script>
+</head>
+<body>
+    <section class="d-flex flex-column align-items-center" layout:fragment="content">
+        <div class="d-flex justify-content-between w-100">
+            <div id="roomList">
+                <div class="d-flex align-items-center justify-content-center h5" id="roomListHeader">채팅방 리스트</div>
+                <div class="d-flex flex-column overflow-y-scroll" id="roomListBody" th:if="${AllChatRoom}">
+                    <div th:each="room : ${AllChatRoom}">
+                        <input type="hidden" th:value="${room.chatRoomAccess}" name="roomAccessId">
+                        <input class="d-none" type="radio" th:id="${room.id}" th:value="${room.id}" name="roomId">
+                        <label class="w-100 text-center p-3 mb-2 btn btn-outline-secondary" th:for="${room.id}" th:text="'[' + ${room.chatRoomAccessName} + '] ' + ${room.chatRoomName}"></label>
+                    </div>
+                </div>
+            </div>
+            <div id="chatRoom" class="flex-fill" th:fragment="chatRoomFrag">
+                <div th:unless="${RoomInfo}" class="h3 d-flex justify-content-center align-items-center h-100">방을 선택하세요</div>
+                <th:block th:if="${RoomInfo}" th:each="map : ${RoomInfo}">
+                    <div class="d-flex align-items-center justify-content-between" id="roomHeader">
+                        <span class="h4" th:text="'[' + ${map.value.chatRoomAccessName} + '] ' + ${map.value.chatRoomName}"></span>
+                        <div class="position-relative">
+                            <button class="btn" id="joined" title="대화상대">
+                                <i class="fa-solid fa-user-group"></i>
+                            </button>
+                            <button class="btn" id="clearHist" title="이력 지우기">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            <ul class="d-flex flex-column position-absolute bottom-0 end-0 rounded d-none" id="joinedMemList">
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="messageView"></div>
+                    <div class="d-flex align-items-center mt-2" id="messageInput">
+                        <input type="hidden" th:value="${map.key}" name="sendName">
+                        <input class="p-md-3 btn btn-outline-secondary w-75" type="text" name="sendMessage" placeholder="메세지를 입력하세요">
+                        <button class="btn btn-primary w-25" type="button" id="messageSend">
+                            <i class="fa-solid fa-paper-plane fs-5"></i>
+                        </button>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        <script src="../../js/WebChat.js"></script>
+    </section>
+</body>
+</html>

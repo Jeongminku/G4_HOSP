@@ -1,10 +1,14 @@
 package com.Tingle.G4hosp.service;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,11 +57,11 @@ public class MemberService implements UserDetailsService{
 		 memberImgService.saveMemberImg(member, file);
 		 Member doctor = memberRepository.save(member);
 		 if(memberFormDto.getMedId() != null) {
-			 Med med = medRepository.findById(Long.parseLong(memberFormDto.getMedId())).orElseThrow(EntityNotFoundException::new);
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);
 			 MemberMed memberMed = MemberMed.createMemberMed(doctor, med);
 			 memberMedRepository.save(memberMed);			 
 		 }
-		 System.out.println(member);
+		 //System.out.println(member);
 		 return doctor;
 	 }
 
@@ -67,7 +71,7 @@ public class MemberService implements UserDetailsService{
 	 }
 	
 	 public Member findByLoginid(String loginid) {
-			return memberRepository.findByLoginid(loginid);
+		return memberRepository.findByLoginid(loginid);
 	}	
 	 
 	 public Member findByMemberid(Long memid) {
@@ -75,7 +79,90 @@ public class MemberService implements UserDetailsService{
 	 }
 	
 	 public Member findByMnameMtel(String memberName, String memberTel) {
-		 return memberRepository.findbtMnameandMtel(memberName, memberTel);
+		 return memberRepository.findbyMnameandMtel(memberName, memberTel);
 	 }
 	 
+	 public Member findDoctorbydoctorname(String doctorname) {
+		 return memberRepository.findbyNameindoctor(doctorname);
+	 }
+	 
+	// find PWD
+		 public Member findByPwd(String loginId, String memberName, String memberTel) {
+			 return memberRepository.findPwd(loginId, memberName, memberTel);
+		 }
+		 
+		 public String updatenewPwd(MemberFormDto memberFormDto, String loginId, String memberName, String memberTel) {
+			 Member member = findByPwd(loginId, memberName, memberTel);
+			 String randomPwd = UUID.randomUUID().toString();
+			 member.updatePwd(randomPwd, passwordEncoder);
+			 return randomPwd;
+		 }
+	 
+	
+	//아이디중복체크
+		 private void vaildateDuplicateMember(Member member) {
+				Member findMember = memberRepository.findByLoginid(member.getLoginid());
+				if (findMember != null) {
+					throw new IllegalStateException("중복된 아이디입니다.");
+				}
+			}
+			
+			@org.springframework.transaction.annotation.Transactional(readOnly = true)
+			public Member getMember(String loginid) {
+				Member member = memberRepository.findByLoginid(loginid);
+				return member;
+			}
+			
+			@org.springframework.transaction.annotation.Transactional(readOnly = true)
+			public int vaildateDuplicateId(String loginid) {
+				Member member = memberRepository.findByLoginid(loginid);
+				int chk;
+				
+				if (member == null) {
+					return chk = 0;
+				}
+				return chk = 1;
+			}
+		
+		 
+		 
+	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
+		 Member member = memberRepository.findByLoginid(loginId);
+		 if (member.getRole() == Role.DOCTOR) {
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);//med값이 나옴.
+			 MemberMed memberMed = memberMedRepository.findByMemberid(member.getId());
+			 memberMed.updateMemberMed(med);
+		 }
+		 member.updateMember(memberFormDto, passwordEncoder);
+	 }
+	 public List<Member> findMListbyMname(String memberName){
+		 return memberRepository.findMListbyMname(memberName);
+	 }
+	 
+	 public Member findDocbyMid(String doctorid) {
+		 return memberRepository.findDocbyMid(doctorid);
+	 }
+	 
+	 public Member findMembymemid(String memid) {
+		 return memberRepository.findByLoginid(memid);
+	 }
+	 
+	 public String deleteMember(Long memberId) {
+			Member member = memberRepository.getReferenceById(memberId);
+			try {
+				memberRepository.delete(member);
+				return "정상적으로 탈퇴되었습니다.";
+			} catch (Exception e) {
+				return "탈퇴하지 못하였습니다.";
+			}
+	}
+	 
+	 public Member findByName(String name) {
+		 return memberRepository.findByName(name);
+		 
+	 }
+	 
+	 public Role getMemberRole (String loginId) {
+		 return findByLoginid(loginId).getRole();
+	 }
 }
