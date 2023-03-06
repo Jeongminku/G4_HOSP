@@ -81,6 +81,22 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 		
 		return memlist;
 	}
+	
+	// 검색어로 과 검색
+	@Override
+	public List<MemberMed> getMedDoctorbysearch(String searchquery) {
+		QMed med = QMed.med;
+		QMemberMed memberMed = QMemberMed.memberMed;
+		
+		List<MemberMed> memmedlist = queryFactory.select(memberMed).from(med).join(memberMed)
+							.on(med.medId.eq(memberMed.medId.medId))
+							.where(med.medName.like("%"+searchquery+"%"))
+							.fetch();
+				
+		return memmedlist;
+	}
+	
+	
 
 	//과별 입원 환자 현황 조회 
 	@Override
@@ -109,6 +125,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 		return adminMainDto;
 	}
 
+
+	// 호실별 입원 환자 현황 조회
 	@Override
 	public AdminMainDto viewHosptalizedwardlist(AdminMainDto adminMainDto) {
 		QHospitalize hospitalize = QHospitalize.hospitalize;
@@ -119,8 +137,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 		for(int i=301; i<=310; i++) {
 			try {
 				wardcount = queryFactory.select(hospitalize.ward.count()).from(hospitalize)
-							.where(hospitalize.ward.eq(Integer.toString(i)))
-							.fetchOne();
+						.where(hospitalize.ward.eq(Integer.toString(i)))
+						.fetchOne();
 			} catch (NullPointerException e) {
 				wardcount = (long) 0;
 			}
@@ -132,8 +150,6 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 		
 		return adminMainDto;
 	}
-
-	// 호실별 입원 환자 현황 조회
 	
 	
 	

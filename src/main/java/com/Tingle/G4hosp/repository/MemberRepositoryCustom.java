@@ -17,6 +17,8 @@ public interface MemberRepositoryCustom {
 	AdminMainDto gethospitalizedcount(AdminMainDto adminMainDto);
 	
 	List<Member> getdoctorbysearch(String searchquery);
+
+	List<MemberMed> getMedDoctorbysearch(String searchquery);
 	
 	AdminMainDto viewHosptalizedlistMed(List<Med> medlist, AdminMainDto adminMainDto);
 	
