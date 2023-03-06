@@ -275,29 +275,29 @@ public class AdminController {
 		
 		
 		
-//		String test = "내";
-//	
-//		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
-//		
-//		// 이름으로 의사 검색 
-//		List<Member> list = memberRepository.getdoctorbysearch(test);
-//		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
-//
-//		// 의사가 속해있는 과 검색 및 dto 추가
-//		for(int i=0; i<list.size(); i++) {
-//			AdminMainDto adminMainDto = new AdminMainDto();
-//			Med med = medRepository.findMedbyDocid(list.get(i).getId());
-//			adminMainDto.setSearchdoctorname(list.get(i).getName());
-//			adminMainDto.setSearchdoctormedname(med.getMedName());
-//			adminMainDtolist.add(adminMainDto);
-//		}
-//	
-//		
-//		for(AdminMainDto m : adminMainDtolist) {
-//			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
-//			System.err.println("의사명 : "+m.getSearchdoctorname());
-//			System.err.println("진료과명 : "+m.getSearchdoctormedname());
-//		}
+		String test = "내";
+	
+		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
+		
+		// 이름으로 의사 검색 
+		List<Member> list = memberRepository.getdoctorbysearch(test);
+		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
+
+		// 의사가 속해있는 과 검색 및 dto 추가
+		for(int i=0; i<list.size(); i++) {
+			AdminMainDto adminMainDto = new AdminMainDto();
+			Med med = medRepository.findMedbyDocid(list.get(i).getId());
+			adminMainDto.setSearchdoctor(list.get(i));
+			adminMainDto.setSearchdoctormedname(med.getMedName());
+			adminMainDtolist.add(adminMainDto);
+		}
+	
+		
+		for(AdminMainDto m : adminMainDtolist) {
+			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
+			System.err.println("의사명 : "+m.getSearchdoctor().getName());
+			System.err.println("진료과명 : "+m.getSearchdoctormedname());
+		}
 		
 		return "adminPage/adminPage"; 
 	}
