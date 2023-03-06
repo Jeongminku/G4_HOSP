@@ -10,6 +10,7 @@ import com.Tingle.G4hosp.dto.SearchDocListDto;
 import com.Tingle.G4hosp.dto.SearchMedListDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
+import com.Tingle.G4hosp.entity.MemberMed;
 import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.repository.SearchDocRepository;
@@ -42,12 +43,42 @@ public class SearchDocService {
 			adminMainDto.setSearchDocImgOri(member.getImgOri());
 			adminMainDto.setSearchDocImgUrl(member.getImgUrl());
 			adminMainDto.setSearchDocName(member.getName());
-			
-			adminMainDto.setSearchDocMedName(findMedByDocid(member.getId()).getMedName());
-			
+			adminMainDto.setSearchDocMedName(findMedByDocid(member.getId()).getMedName());		
 			adminMainDto.setSearchDocNotAvail(reservationNotAvailableService.notAvailByDoctorTF(member));
 			searchDocDtoList.add(adminMainDto);
 		}
+		
+		List<MemberMed> medlist1 = memberRepository.getMedDoctorbysearch(searchInputDto.getSearchQuery());
+		List<Member> medmemlist = new ArrayList<>();
+		List<Member> medmemlistc = new ArrayList<>();
+		for(MemberMed med : medlist1) {
+			Member memlist = memberRepository.getReferenceById(med.getMemberId().getId());
+			medmemlist.add(memlist);
+			medmemlistc.add(memlist);
+		}	
+		
+		// 이름 검색, 과 검색 중복제거 
+		for(int i=0; i<searchDocList.size(); i++) {
+			for(int j =0; j<medmemlist.size(); j++) {
+				if(searchDocList.get(i).getName() == medmemlist.get(j).getName()) {
+					medmemlistc.remove(j);
+				}				
+			}
+		}
+		
+		// 중복제거 된 멤버 list에 추가
+		for(Member member : medmemlistc) {
+			AdminMainDto adminMainDto = new AdminMainDto();
+			adminMainDto.setSearchDocId(member.getId());
+			adminMainDto.setSearchDocImgOri(member.getImgOri());
+			adminMainDto.setSearchDocImgUrl(member.getImgUrl());
+			adminMainDto.setSearchDocName(member.getName());
+			adminMainDto.setSearchDocMedName(findMedByDocid(member.getId()).getMedName());		
+			adminMainDto.setSearchDocNotAvail(reservationNotAvailableService.notAvailByDoctorTF(member));
+			searchDocDtoList.add(adminMainDto);
+		}
+		
+		
 		return searchDocDtoList;
 	}
 	

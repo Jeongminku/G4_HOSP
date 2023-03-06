@@ -30,6 +30,7 @@ import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
+import com.Tingle.G4hosp.service.AdminService;
 import com.Tingle.G4hosp.service.ChatService;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.HospitalizeService;
@@ -49,13 +50,12 @@ public class AdminController {
 	private final DiseaseService diseaseService;
 	private final HospitalizeService hospitalizeService;
 	private final QuickReservationService quickReservationService;
+	private final AdminService adminService;
+	
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
-	
-	//for test
-	private final MemberRepository memberRepository;
-	private final MedRepository medRepository;
+
 	private final ChatService chatService;
 	
 	
@@ -235,21 +235,13 @@ public class AdminController {
 	@GetMapping("/test")
 	public String test(){
 		AdminMainDto adminMainDtot = new AdminMainDto();
+		adminMainDtot = adminService.adminpagetest(adminMainDtot);
 		
-		List<Med> medlist = medRepository.findAll();
-		System.err.println("test + " + medlist);
-		
-		//  의사 수, 환자수, 입원 환자 수, 과별 입원환자 카운트 리스트 
-		memberRepository.getdoctorcount(adminMainDtot);
-		memberRepository.gethospitalizedcount(adminMainDtot);
-		memberRepository.getpatientcount(adminMainDtot);
-		memberRepository.viewHosptalizedlistMed(medlist, adminMainDtot);	
-		memberRepository.viewHosptalizedwardlist(adminMainDtot);
-		
-		System.err.println("의사수 확인 테스트 : "+adminMainDtot.getDoctorcount());
-		System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
-		System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
-		System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
+		//  의사 수, 환자수, 입원 환자 수, 과별 입원환자 카운트 리스트 		
+		 System.err.println("의사수 확인 테스트 : "+adminMainDtot.getDoctorcount());
+		 System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
+		 System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
+		 System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
 
 		// 중간길 : 각 호실별 입원 인원 현황 	
 				
@@ -263,11 +255,64 @@ public class AdminController {
 			System.err.println(adminMainDtot.getHosptalizedEachWardname().get(i)+"호실 현재 입원 환자 수 : "+adminMainDtot.getHosptalizedEachWard().get(i));
 		}
 		
+
 		
 		
-		
-		
-		
+//		String test = "내";
+//	
+//		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
+//		
+//		// 이름으로 의사 검색 
+//		List<Member> list = memberRepository.getdoctorbysearch(test);
+//
+//		// 의사가 속해있는 과 검색 및 dto 추가
+//		for(int i=0; i<list.size(); i++) {
+//			AdminMainDto adminMainDto = new AdminMainDto();
+//			Med med = medRepository.findMedbyDocid(list.get(i).getId());
+//			adminMainDto.setSearchdoctor(list.get(i));
+//			adminMainDto.setSearchdoctormedname(med.getMedName());
+//			adminMainDtolist.add(adminMainDto);
+//		}
+//	
+//		for(AdminMainDto ad : adminMainDtolist) {
+//			System.err.println("과로 검색 전 의사 정보 리스트 "+ ad.getSearchdoctormedname());
+//			System.err.println("과로 검색 전 의사 정보 리스트 "+ ad.getSearchdoctor().getName());		
+//		}
+//		
+//		//~ 과에 속해있는 의사 띄워주기
+//		// 주어진 키워드로 과를 찾아온다
+//		List<MemberMed> medlist1 = memberRepository.getMedDoctorbysearch(test);
+//		List<Member> medmemlist = new ArrayList<>();
+//		List<Member> medmemlistc = new ArrayList<>();
+//		for(MemberMed med : medlist1) {
+//			Member memlist = memberRepository.getReferenceById(med.getMemberId().getId());
+//			medmemlist.add(memlist);
+//			medmemlistc.add(memlist);
+//		}	
+//		
+//		// 이름 검색, 과 검색 중복제거 
+//		for(int i=0; i<list.size(); i++) {
+//			for(int j =0; j<medmemlist.size(); j++) {
+//				if(list.get(i).getName() == medmemlist.get(j).getName()) {
+//					medmemlistc.remove(j);
+//				}				
+//			}
+//		}
+//		
+//		for(int i = 0; i<medmemlistc.size(); i++) {
+//			AdminMainDto adminMainDto = new AdminMainDto();
+//			Med med = medRepository.findMedbyDocid(medmemlistc.get(i).getId());
+//			adminMainDto.setSearchdoctor(medmemlistc.get(i));
+//			adminMainDto.setSearchdoctormedname(med.getMedName());
+//			adminMainDtolist.add(adminMainDto);
+//		}
+//		
+//		for(AdminMainDto ad : adminMainDtolist) {
+//			System.err.println("과 검색 후 의사 정보 리스트 "+ ad.getSearchdoctormedname());
+//			System.err.println("과 검색 후 의사 정보 리스트 "+ ad.getSearchdoctor().getName());		
+//		}
+
+			
 		
 		String test = "내";
 	

@@ -69,7 +69,7 @@ public class MemberController {
 		
 	
 	//회원가입선택화면
-		@GetMapping(value = "/new/select")
+		@GetMapping(value = "/new")
 		public String memberFormSel() {
 			return "member/memberSelect";
 		}
