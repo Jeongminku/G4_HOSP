@@ -79,10 +79,11 @@ public class ReservationService {
 		List<Reservation> allReservation = new ArrayList<>();
 		if(member.getRole() == Role.CLIENT) {
 			allReservation = reservationRepository.findByReservationPatientOrderByReservationDate(member);
+			return ReservationViewDto.createReservationViewDtoList(allReservation, false);
 		} else {
 			allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(member);			
+			return ReservationViewDto.createReservationViewDtoList(allReservation, true);
 		}
-		return ReservationViewDto.createReservationViewDtoList(allReservation);
 	}
 	
 }

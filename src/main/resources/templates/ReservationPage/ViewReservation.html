@@ -21,6 +21,9 @@
             <a class="btn btn-primary mb-2" href="/reservation/setNotAvailDay">휴일설정</a>
         </div>
         <div id="Fcalendar"></div>
+        <form th:action="@{/reservation/delete}" id="deleteForm" class="d-none" method="post">
+            <input type="hidden" name="reservationId">
+        </form>
         <script src="../../js/Reservation.js"></script>
     </section>
 </body>
