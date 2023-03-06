@@ -264,9 +264,8 @@
 												class="py-2 c-alert-color">잘못된 이름 입력</p>
 										</div>
 										<div class="form-textbox row mb-3">
-											<label class="h5" th:for="tel">전화번호</label> <input
-												type="text" th:field="*{tel}" class="form-control"
-												placeholder="01012349876" style="padding-left: 100px;" />
+											<label class="h5" th:for="tel">전화번호</label> 
+											<input type="text" th:field="*{tel}" class="form-control" placeholder="01012349876" style="padding-left: 100px;" />
 											<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
 												class="py-2 c-alert-color">잘못된 전화번호 입력</p>
 										</div>
@@ -279,23 +278,17 @@
 												class="py-2 c-alert-color">잘못된 생년월일 입력</p>
 											<div class="check_font c-alert-color py-2" id=birth_check></div>
 										</div>
-										<div class="form-textbox row form-bottom d-none mb-3"
-											id="profile">
-											<div class="col-3 d-flex align-items-center">
-												<label class="h5 m-0" for="profile">프로필 사진</label>
+										
+										<div class="form-textbox row mb-3">
+											<label class ="h5"for="profile">프로필사진</label>
+											<div id="image_container">
+	                                <img id="preview" style="width: 50%;"/>
+	                            </div>
+											<input type="file" onchange="readURL(this);" class="form-control profile bg-white" name ="profileImg" id="profileImg" style="padding-left: 100px;">
 											</div>
-											<div class="col-9 d-flex flex-column align-items-start">
-												<div id="image_container">
-													<img id="preview" class="w-50" />
-												</div>
-												<div class="input-group mb-3">
-													<input type="file" class="form-control profile"
-														name="profileImg" id="profileImg"
-														onchange="readURL(this);"> <label
-														class="input-group-text" for="profileImg">Upload</label>
-												</div>
-											</div>
-										</div>
+										
+										
+										
 										<div class="form-textbox row signWrap w-100 flex-nowrap"
 											style="text-align: center;">
 											<button type="submit"
