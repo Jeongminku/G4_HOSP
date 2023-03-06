@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,7 @@ public class MemberController {
 	private final ReservationService reservationService;
 	private final MemberMedService memberMedService;
 	private final MedRepository medRepository;
+	
 
 	
 	// 로그인 화면
@@ -85,12 +87,13 @@ public class MemberController {
 
 		// 일반인회원가입 버튼 클릭
 		@PostMapping(value = "/new/client")
-		public String memberclientForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
+		public String memberclientForm(@Valid MemberFormDto memberFormDto,HttpServletResponse resp, BindingResult bindingResult, Model model,
 				@RequestParam("profileImg") MultipartFile file) {
 			//System.err.println(memberFormDto.getMedId());
 			if (bindingResult.hasErrors()) {
 				return "member/memberClientForm";
-			}
+			} 
+			
 			try {
 				memberService.saveMember(memberFormDto, file);
 			} catch (Exception e) {
