@@ -260,8 +260,8 @@ a:hover {
 													
 														<h5 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/Hinfo/' +${list.id}">
 															[[${list.title}]] </a>
-															
-															<span th:if="${i.first}" class="unread" style="margin-top:1px">New</span>
+											
+															<span th:if="${i.first} and ${lists.number == 0}" class="unread" style="margin-top:1px">New</span>
 															<span th:if="${list.view} >= 5" class="important" style="margin-top:1px">Hot</span>
 														
 														</h5>
@@ -288,7 +288,6 @@ a:hover {
 			<!-- totalPages: [[${lists.totalPages}]], -->
 			
 			<br>
-			
 			<form id="pbn_form" method="post" action="/Hinfo/HinfoMain">
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 				

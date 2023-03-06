@@ -11,9 +11,11 @@ import com.querydsl.core.annotations.QueryProjection;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class BoardListDto {
 	
 	private Long id;
@@ -29,6 +31,10 @@ public class BoardListDto {
 	private BoardSecret boardSecret;
 	
 	private Long replyCount;
+	
+	public BoardListDto() {
+		
+	}
 	
 	//쿼리dsl사용
 	@QueryProjection

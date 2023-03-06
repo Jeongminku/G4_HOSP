@@ -45,7 +45,7 @@ public class HinfoController {
 //	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
 	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
-	
+		
 		
 		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
 		
@@ -61,7 +61,7 @@ public class HinfoController {
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);	
-				
+		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);

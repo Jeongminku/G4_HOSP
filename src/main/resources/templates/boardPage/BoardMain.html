@@ -231,12 +231,12 @@ a:hover {
 													<div class="message-body-heading">
 												
 														<h5 th:if= "${list.boardSecret.name() == 'False'}"
-														 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
+														 th:href="'/board/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
 															[[${list.title}]]</a>
 														</h5>
 														
 														<h5 th:unless= "${list.boardSecret.name() == 'False'}"
-														 th:href="'/Hinfo/' +${list.id}">
+														 th:href="'/board/' +${list.id}">
 														
 														 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
 														 
