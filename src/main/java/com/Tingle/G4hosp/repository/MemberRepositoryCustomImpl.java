@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.COUNT;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.constant.Ward;
 import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
@@ -108,6 +109,31 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 		return adminMainDto;
 	}
 
+	@Override
+	public AdminMainDto viewHosptalizedwardlist(AdminMainDto adminMainDto) {
+		QHospitalize hospitalize = QHospitalize.hospitalize;
+		Long wardcount;	
+		List<Long> wardcountlist = new ArrayList<>();
+		List<String> wardnamelist = new ArrayList<>();
+		
+		for(int i=301; i<=310; i++) {
+			try {
+				wardcount = queryFactory.select(hospitalize.ward.count()).from(hospitalize)
+							.where(hospitalize.ward.eq(Integer.toString(i)))
+							.fetchOne();
+			} catch (NullPointerException e) {
+				wardcount = (long) 0;
+			}
+			wardnamelist.add(Integer.toString(i));
+			wardcountlist.add(wardcount);
+		}
+		adminMainDto.setHosptalizedEachWard(wardcountlist);
+		adminMainDto.setHosptalizedEachWardname(wardnamelist);
+		
+		return adminMainDto;
+	}
+
+	// 호실별 입원 환자 현황 조회
 	
 	
 	
