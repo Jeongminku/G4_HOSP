@@ -4,61 +4,57 @@
       
 <head>
 <meta charset="UTF-8">
-<title>메인페이지 title입니다.</title>
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>순양병원</title>
+	<style th:inline="text">
 
-<style>
+		section {
+			line-height: 25px;
+		}
 
-	section {
-		line-height: 25px;
-	}
-
-	.title-box {
-		/* background-color: #226597; */
-		border:1px solid ;
-		border-color: #226597;
-		padding: 5px;
-		padding-bottom: 12px;
+		.title-box {
+			/* background-color: #226597; */
+			border:1px solid ;
+			border-color: #226597;
+			padding: 5px;
+			padding-bottom: 12px;
+			
+		}
 		
-	}
-	
-	.title-box > h4 {
-		padding: 10px;
-		/* color: white; */
-		color: black;
-		margin: 0 auto;
-		text-align: center;
-		color: #226597;
-	}
+		.title-box > h4 {
+			padding: 10px;
+			/* color: white; */
+			color: black;
+			margin: 0 auto;
+			text-align: center;
+			color: #226597;
+		}
 
-	.title-box > p {
-		margin: 0 auto;
-		text-align: center;
-		padding: 3px;
-		line-height: 18px;
-	}
-	.board-content {
-		margin: 10px;
-	}
-	
-	.board-content p {
-		padding: 40px 0px;
-	}
-	
-	.button2 {
-		display: flex;
-		justify-content: space-between;
-		justify-content: flex-end;
-	}
-	
-	.button2 a {
-		margin: 3px;
-	}
-	
-</style>
+		.title-box > p {
+			margin: 0 auto;
+			text-align: center;
+			padding: 3px;
+			line-height: 18px;
+		}
+		.board-content {
+			margin: 10px;
+		}
+		
+		.board-content p {
+			padding: 40px 0px;
+		}
+		
+		.button2 {
+			display: flex;
+			justify-content: space-between;
+			justify-content: flex-end;
+		}
+		
+		.button2 a {
+			margin: 3px;
+		}
+		
+	</style>
 
-<th:block layout:fragment="script">
 	<script th:inline="javascript">
 	   
 
@@ -315,136 +311,128 @@
 
 	
 	</script>
-</th:block>
-
 </head>
 <body>
-	<div layout:fragment="content">
-<section>
-	
-	<div class="title-box">
-	
-		<h4 class="title">[[${boardFormDto.title}]]</h4>
-		<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 : [[${boardFormDto.view}]]  | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
-		<p th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
-	
-	</div>
+	<section layout:fragment="content">
 		
-				
-		<table class="table table align-middle">
-  <thead>
-    <tr style="text-align: center;">
-      <td><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
-    </tr>
-
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-      <th scope="row">
-
-      </th>
-    </tr>
-
-    <tr>
-      <th scope="row">
-
-
-
-      </th>
-    </tr>
-    
-  </tbody>
-</table>
+		<div class="title-box">
 		
+			<h4 class="title">[[${boardFormDto.title}]]</h4>
+			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 : [[${boardFormDto.view}]]  | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
+			<p th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
 		
-		
-		<!-- 댓글 -->
-		<div class="reply" id="reply" th:fragment="reply">
-		
-		<div sec:authorize="isAuthenticated()" class="float-right" style="padding-bottom: 30px;">
-			<a  class="btn btn-primary" th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a>
-			<a  class="btn btn-primary" th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
 		</div>
-		
-		
-		<div class="card mb-2">
-	<div class="card-header bg-light">
-	        <i class="fa fa-comment fa"></i> REPLY
-	</div>
-	<div class="card-body">
-		<ul class="list-group list-group-flush">
-		    <li class="list-group-item">
-			<textarea class="form-control" id="replyContent" name="replyContent" rows="2"></textarea>
-			<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
-			<button type="button" class="btn btn-dark mt-3" onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
-		    </li>
-		</ul>
-	</div>
-	</div>
-		
-	<div th:each="reply , i : ${lists}"> 
 			
-		<!-- 댓글폼  -->
-		 <div class="card-body">
-              <div class="d-flex">
-               <div class="flex-shrink-0" ><img class="rounded-circle" th:src="${reply.member.imgUrl}" th:alt="${reply.member.imgOri}"  style="width: 100px"/></div>
-                     <div class="ms-3">
-                        <div>
-                        <div class="fw-bold" th:text="${reply.member.loginid}"></div>
-         
-                        <div th:if="${reply.member.loginid == #authentication.name}">
-                        	<a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
-                        	<a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
-                        </div>
-                        </div> 
-                         <span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}"> <span th:text="${reply.replyContent}"></span> </span> <span th:id="ReId+${i.index+1}"></span>
-                         <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
-                         <input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
-               		</div>
-               		
-          	 <div> 
-          	 </div>
-          	 
-          	</div>
-           </div> 
-		<!-- 댓글폼  -->
-		        
-	</div>	
+					
+			<table class="table table align-middle">
+	  <thead>
+		<tr style="text-align: center;">
+		  <td><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+		</tr>
+	
+	  </thead>
+	  <tbody class="table-group-divider">
+		<tr>
+		  <th scope="row">
+	
+		  </th>
+		</tr>
+	
+		<tr>
+		  <th scope="row">
+	
+	
+	
+		  </th>
+		</tr>
+		
+	  </tbody>
+	</table>
 			
 			
-			<!-- 페이징 -->
-			<nav
-			th:with="start=${(lists.number/maxPage)*maxPage + 1}
-			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
-			aria-label="Page navigation example">
-			<ul class="pagination d-flex justify-content-center">
-				<li class="page-item" th:classappend="${lists.first}?'disabled'">
-					<a th:href="@{'/board/'+ ${boardFormDto.id} + '?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
-						<span>이전</span>
-					</a>
-				</li>
-				<li class="page-item"
-					th:each="page: ${#numbers.sequence(start, end)}"
-					th:classappend="${lists.number eq page-1}?'active':''">
-					<a class="page-link" th:inline="text"
-					th:href="@{'/board/' +${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
-				</li>
-				<li class="page-item" th:classappend="${lists.last}?'disabled'">
-					<a class="page-link"
-					th:href="@{'/board/'+${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+			
+			<!-- 댓글 -->
+			<div class="reply" id="reply" th:fragment="reply">
+			
+			<div sec:authorize="isAuthenticated()" class="float-right" style="padding-bottom: 30px;">
+				<a  class="btn btn-primary" th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a>
+				<a  class="btn btn-primary" th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+			</div>
+			
+			
+			<div class="card mb-2">
+		<div class="card-header bg-light">
+				<i class="fa fa-comment fa"></i> REPLY
+		</div>
+		<div class="card-body">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+				<textarea class="form-control" id="replyContent" name="replyContent" rows="2"></textarea>
+				<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
+				<button type="button" class="btn btn-dark mt-3" onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
 				</li>
 			</ul>
-		</nav>
-		<!-- 페이징 -->		
 		</div>
-		<!-- 댓글 -->
-		
-
-</section>		
-	</div>
+		</div>
+			
+		<div th:each="reply , i : ${lists}"> 
+				
+			<!-- 댓글폼  -->
+			 <div class="card-body">
+				  <div class="d-flex">
+				   <div class="flex-shrink-0" ><img class="rounded-circle" th:src="${reply.member.imgUrl}" th:alt="${reply.member.imgOri}"  style="width: 100px"/></div>
+						 <div class="ms-3">
+							<div>
+							<div class="fw-bold" th:text="${reply.member.loginid}"></div>
+			 
+							<div th:if="${reply.member.loginid == #authentication.name}">
+								<a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+								<a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
+							</div>
+							</div> 
+							 <span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}"> <span th:text="${reply.replyContent}"></span> </span> <span th:id="ReId+${i.index+1}"></span>
+							 <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
+							 <input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
+						   </div>
+						   
+				   <div> 
+				   </div>
+				   
+				  </div>
+			   </div> 
+			<!-- 댓글폼  -->
+					
+		</div>	
+				
+				
+				<!-- 페이징 -->
+				<nav
+				th:with="start=${(lists.number/maxPage)*maxPage + 1}
+				,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
+				aria-label="Page navigation example">
+				<ul class="pagination d-flex justify-content-center">
+					<li class="page-item" th:classappend="${lists.first}?'disabled'">
+						<a th:href="@{'/board/'+ ${boardFormDto.id} + '?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+							<span>이전</span>
+						</a>
+					</li>
+					<li class="page-item"
+						th:each="page: ${#numbers.sequence(start, end)}"
+						th:classappend="${lists.number eq page-1}?'active':''">
+						<a class="page-link" th:inline="text"
+						th:href="@{'/board/' +${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
+					</li>
+					<li class="page-item" th:classappend="${lists.last}?'disabled'">
+						<a class="page-link"
+						th:href="@{'/board/'+${boardFormDto.id} +'?searchQuery=' + ${pageSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+					</li>
+				</ul>
+			</nav>
+			<!-- 페이징 -->		
+			</div>
+			<!-- 댓글 -->
+			
 	
-	
-	
-	
+	</section>		
 </body>
 </html>
