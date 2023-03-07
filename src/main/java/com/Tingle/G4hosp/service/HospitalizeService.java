@@ -46,8 +46,7 @@ public class HospitalizeService {
 		
 		
 		if(hospitalizeFormDto.getNonsymptom() == true) {
-			hosp = Hosp.N;
-			
+			hosp = Hosp.N;	
 			hospitalize = Hospitalize.createHospitalize(patient, getward, hosp, now, doctor);
 			hospitalizeRepository.save(hospitalize);
 		}else {

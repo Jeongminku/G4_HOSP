@@ -85,17 +85,16 @@ width: 90%;
     border: 1px solid #e0e5ee;
     background-color: #fff;
 }
-.select {
 
-width: 50%;
-margin-left:23%;
-margin-top: 16px;
-padding:23px;
-text-align:center;
-padding:23px;
+.select {
+width: 80%;
+padding:40px;
+margin:64px;
+display:table-caption;
+text-align:center; 
 background-color: #eff3f7;
 border:1px solid #EEEEEE;
-margin: 24px;
+
 }
 
 
@@ -109,7 +108,7 @@ h3 {
     text-align: center;
 }
 h4 {
-margin-top: -65px;
+margin-top: -45px;
 text-align: center;
 }
 .in {
@@ -153,27 +152,27 @@ text-align: justify;
 		<div class="bg_blue">
 				<h3><i class="fa-solid fa-user-plus fa-1x"></i>&nbsp;회원가입</h3>
 			<div class="member_signup">
-			<div class="select_top">
 				<h4>홈페이지 회원가입을 위한 회원 선택</h4>
 				<!--  >icon -->
 				<p class="in"><i class="fa-solid fa-caret-right"></i>&nbsp;홈페이지 회원은 일반인, 의료진, 관리자로 구분됩니다.</p>
 				<!-- <div class="select_inner"> -->
-				
-			<div class="select mx-auto">
-						<p class="select_title">일반인 회원가입</p>
+			<div class="select_top">
+				<a class="select_signup" th:href="'/members/new/client'">
+			<div class="select"><p class="select_title">일반인 회원가입</p>
 						<p><img class="signup_img" src="/img/signup_client.jpg"></p>
-						<a class="select_signup" th:href="'/members/new/client'">회원가입</a>
-			</div>
-			<div class="select mx-auto">
-				<p class="select_title">의료진 회원가입</p>
+						회원가입</div></a>
+						
+			<a class="select_signup" th:href="'/members/new/doctor'">
+			<div class="select"><p class="select_title">의료진 회원가입</p>
 				<p><img class="signup_img" src="/img/signup_doctor.jpg"></p>
-				<a class="select_signup" th:href="'/members/new/doctor'">회원가입</a>			
-			</div>
-			<div class="select mx-auto">
-				<p class="select_title">관리자 회원가입</p>
+			회원가입		
+			</div></a>
+			
+			<a class="select_signup" th:href="'/members/new/admin'">	
+			<div class="select"><p class="select_title">관리자 회원가입</p>
 				<p><img class="signup_img" src="/img/signup_admin.jpg"></p>
-				<a class="select_signup" th:href="'/members/new/admin'">회원가입</a>
-			</div>
+				회원가입
+			</div></a>
 			</div>
 			</div>
 			</div>
