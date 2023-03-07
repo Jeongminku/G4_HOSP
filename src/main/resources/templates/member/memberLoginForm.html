@@ -63,7 +63,7 @@ body {
     min-height: 100vh;
 
 }
-.title_section h3 {
+h3 {
     padding: 40px 0;
     color: #0a0606;
     font-weight: 500;
@@ -79,7 +79,7 @@ body {
     background: #eff3f7;
 }
 .cont_login {
-    padding: 120px 30px 80px 30px;
+    padding: 20px 30px 70px 30px;
 }
 .cont_login .login_top {
     position: relative;
@@ -127,12 +127,17 @@ img, fieldset, iframe {
     background-color: #205B8A;
     box-sizing: border-box;
 }
-a, address, blockquote, br, fieldset, legend, label, form, input, select, textarea, button, table, th, td caption, cite, code, dl, dt, dd, h1, h2, h3, h4, h5, h6, p, div, iframe, ul, ol, li, hr, img {
+a, address, blockquote, br, fieldset, legend, label, form, input, select, textarea, button, table, th, td caption, cite, code, dl, dt, dd, h1, h2, h4, h5, h6, p, div, iframe, ol, hr, img {
     margin: 0;
     padding: 0;
 }
 ul, ol, li {
     list-style: none;
+}
+
+.w-25 {
+margin:auto;
+width: 40%!important;
 }
 
 .cont_login .login_bott ul li a {
@@ -157,7 +162,8 @@ ul, ol, li {
 .cont_login .login_bott ul li {
     float: left;
     width: calc(100% / 3);
-    padding: 40px;
+    padding: 17px;
+    border-right: 1px solid #e0e5ee;
     border-left: 1px solid #e0e5ee;
     box-sizing: border-box;
 }
@@ -166,17 +172,17 @@ ul, ol, li {
     font-weight: 700;
     font-size: 20px;
 }
+
        </style>
     </th:block>
 	</head>
 	<body>
 		<section layout:fragment="content" class="d-flex align-items-center justify-content-center">
 			<div class="container">
-				<div class="title_section">
-					<h3><i class="fa-solid fa-user fa-lg"></i>&nbsp;로그인</h3>
-				</div>
+			
 				<div class="in_w">
 					<div class="bg_blue">
+					<h3><i class="fa-solid fa-user fa-1x"></i>&nbsp;로그인</h3>
 						<div class="cont_login">
 							<div class="login_top">
 								<p class="p_txt center">
@@ -208,11 +214,11 @@ ul, ol, li {
 												<a th:href="'/members/new'" class="login_bott_tit"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;회원가입</a>
 												<p class="login_bott_txt">순양병원의 회원이 되시면<br> 홈페이지에서 제공하는 온라인 서비스를 이용하실 수 있습니다.</p>
 											</li>
-											<li>
+											<li class="find">
 												<a th:href="'/members/FindId'" class="login_bott_tit"><i class="fa-regular fa-envelope"></i>&nbsp;아이디 찾기</a>
 												<p class="login_bott_txt"> 이름과 전화번호를 통해 아이디를 찾을 수 있습니다.</p>
 											</li>
-											<li>
+											<li class="find">
 												<a th:href="'/members/FindPwd'" class="login_bott_tit"><i class="fa-solid fa-key"></i>&nbsp;비밀번호 찾기</a>
 												<p class="login_bott_txt">아이디,이름,전화번호를 통해 임시비밀번호를 발급받을 수 있습니다.<br></p>
 											</li>
