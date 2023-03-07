@@ -24,7 +24,7 @@
 		Filter Box Style
 		====================================*/
 		.job-box-filter label {
-			width: 100%;
+			/* width: 100%; */
 		}
 
 		.job-box-filter select.input-sm {
@@ -240,15 +240,16 @@
 			</div>
 			<div class="inbox-message">
 				<ul th:each="list , i : ${lists.getContent()}">
-					<li>
-						<a href="#">
+					<li th:onClick="|location.href='@{|/Hinfo/${list.id}|}'|" style="cursor:pointer;">
+						<a th:href="'/Hinfo/' +${list.id}">
 							<div class="message-avatar">
 								<img th:src="${list.member.imgUrl}"	th:alt="${list.member.imgOri}">
 							</div>
 							<div class="message-body">
 								<div class="message-body-heading">
+								
 									<h5 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/Hinfo/' +${list.id}">[[${list.title}]] </a>
-										<span th:if="${i.first}" class="unread" style="margin-top:1px">New</span>
+										<span th:if="${i.first} and ${lists.number==0}" class="unread" style="margin-top:1px">New</span>
 										<span th:if="${list.view} >= 5" class="important" style="margin-top:1px">Hot</span>
 									</h5>
 									<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
