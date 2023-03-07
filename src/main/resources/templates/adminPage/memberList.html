@@ -8,19 +8,31 @@
 </head>
 <body>
   <section layout:fragment="content">
-    <h2 class="h3 b-line mb-4">회원 환자 목록</h2>
-    <table class="table">
-      <thead>
+    <div class="d-flex justify-content-between align-items-center b-line">
+      <h2 class="h3">회원 환자 목록</h2>
+      <div class="btn-group">
+        <button type="button" class="btn btn-outline-primary" id="ALL">전체</button>
+        <button type="button" class="btn btn-outline-primary" id="CLIENT">일반회원</button>
+        <button type="button" class="btn btn-outline-primary" id="HOSPITALIZE">입원환자</button>
+        <button type="button" class="btn btn-outline-primary" id="DOCTOR">의사</button>
+        <button type="button" class="btn btn-outline-primary" id="ADMIN">관리자</button>
+      </div>
+    </div>
+    <table class="table" id="memberListTable" th:fragment="memberList_ALL">
+      <thead class="table-header">
         <tr>
           <th scope="col">성함</th>
           <th scope="col">생년월일</th>
           <th scope="col">전화번호</th>
+          <th scope="col">가입일</th>
+          <th scope="col">구분</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="members : ${members}">
           <td>[[${members.name}]]</td>
           <td>[[${members.birth}]]</td>
+          <td>[[${members.tel}]]</td>
           <td>[[${members.tel}]]</td>
         </tr>
       </tbody>

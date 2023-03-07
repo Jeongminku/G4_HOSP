@@ -1,9 +1,8 @@
 package com.Tingle.G4hosp.service;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -16,12 +15,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.dto.AdminMemberDto;
 import com.Tingle.G4hosp.dto.MemberFormDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
+import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
@@ -37,6 +39,7 @@ public class MemberService implements UserDetailsService{
 	 private final MemberImgService memberImgService;
 	 private final MedRepository medRepository;
 	 private final MemberMedRepository memberMedRepository;
+	 private final HospitalizeRepository hospitalizeRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
@@ -171,5 +174,20 @@ public class MemberService implements UserDetailsService{
 	 
 	 public Role getMemberRole (String loginId) {
 		 return findByLoginid(loginId).getRole();
+	 }
+	 
+	 public List<AdminMemberDto> findMember (String opt) {
+		 List<Member> matchedMember = new ArrayList<>();
+		 List<AdminMemberDto> adminMemberDtoList = new ArrayList<>();
+		 if(StringUtils.equals(opt, "ALL")) matchedMember = memberRepository.findAll();
+		 if(StringUtils.equals(opt, "CLIENT")) matchedMember = memberRepository.findByRole(Role.CLIENT);
+		 if(StringUtils.equals(opt, "HOSPITALIZE")) matchedMember = hospitalizeRepository.FindMemListByHosStatus();
+		 if(StringUtils.equals(opt, "DOCTOR")) matchedMember = memberRepository.findByRole(Role.DOCTOR);
+		 if(StringUtils.equals(opt, "ADMIN")) matchedMember = memberRepository.findByRole(Role.ADMIN);
+		 
+		for(Member member : matchedMember) {
+			
+		}
+		 return null;
 	 }
 }
