@@ -37,6 +37,10 @@
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
 	<style>
+section {
+	background-color: #eeeeee;
+}
+
 .wrap {
 	margin: 0 auto;
 }
@@ -62,7 +66,9 @@
 	margin-top: 10px;
 }
 .tablemenu{
-	border: 1px solid
+	border: 1px solid;
+	background-color: white;
+	padding: 15px;
 }
 .detailbody {
 	border: none;
@@ -111,10 +117,11 @@
 					<div class="col-md-10 headwrap">
 
 					<div class="col-md-12 viewhead">
-						<h1>진료 내역 작성</h1>
+						<h1 style="color: #205B8A; font-weight: bold;">진료 내역 작성</h1>
 					</div>
 					
-					<form th:action="'/archive/write/'+${patient.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">		
+					<form th:action="'/archive/write/'+${patient.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">	
+					<input type="hidden" th:value="${archiveFormDto.doctorname}">	
 					<div class="col-md-12 viewlineboxup"></div>
 					<div class="col-md-12 viewlinebox">
 					</div>
@@ -134,9 +141,8 @@
 												<option th:each ="dis : ${DL}" th:value="${dis.diseaseName}"> [[${dis.diseaseName}]] </option>
 											</select>
 											</td>
-<!-- 									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td> -->
 									<th scope="row">담당의</th>
-									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>
+									<td><input type="text" name ="doctorname" th:value="${doctor.name}" readonly="readonly" class="form-control inputarea"></td>
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">
@@ -162,7 +168,7 @@
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<button class="but" type="submit" > 작성 완료 </button>
+						<button class="btn btn-primary" type="submit" > 작성 완료 </button>
 					</div>
 					</div>
 					</form>

@@ -20,21 +20,29 @@
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
 	<style>
+	
 	.wrap {
 	margin: 0 auto;
+	background-color: #eeeeee;
+	
 }
 
 .headwrap{
-	margin: 0 auto;
+	margin: 40px auto;
 }
 
 .viewhead{
 	border-bottom: 3px solid; 
 }
 
+.headhead{
+	margin-bottom: 10px;
+}
+
 .viewbody{
 	margin-top : 20px;
 	border: 1px solid;
+	background-color: white;
 }
 
 .linemenu{
@@ -65,7 +73,9 @@
 					<div class="col-md-10 headwrap">
 
 						<div class="col-md-12 viewhead">
-							<h1>[[${patient.name}]]님 입원 내역</h1>
+						<div class="headhead">
+							<span style="color: #205B8A; font-size: 2.5rem; font-weight: bold;">[[${patient.name}]]</span><span style="font-size: 2.5rem; font-weight: bold;">님 입원 내역</span>						
+						</div>
 						</div>
 						<div class="col-md-12 viewbody">
 						<form enctype="multipart/form-data">
@@ -80,7 +90,7 @@
 											<th scope="row">환자명</th>
 											<td>[[${patient.name}]]</td>
 											<th scope="row">담당의</th>
-											<td th:if="${med}">[[${hospitalize.doctor}]] ([[${med.medName}]]) </td>
+											<td th:if="${med}">[[${hospitalize.doctor.name}]] ([[${med.medName}]]) </td>
 
 										</tr>
 										<tr>
@@ -104,20 +114,14 @@
 							</div>
 						</form>
 						</div>
-								<div class="col-md-12 linemenu">
-								<button class="but" th:onclick = "|location.href='/archive/search/'+${patient.id}|" >뒤로가기</button>
-								</div>
+							<div class="col-md-12 linemenu">
+							<button class="btn btn-primary" th:onclick = "|location.href='/archive/search/'+${patient.id}|" >뒤로가기</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	
 	</section>
-
-
-
-
-
 	</div>
 </body>
 </html>

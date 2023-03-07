@@ -1,84 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script th:inline="javascript">
-// $(function(){
-// 	$('.qa_question').each(function(){
-// 		($(this).click(function(){				
-// 			$(this).next().slideToggle("slow");	
-// 		}));
-// 		})
-// 	});
-// $(document).ready(function() {
-// 	  $('.accordion .button').click(function() {
-// 	    if (!$(this).hasClass('active')) {
-// 	      $('.accordion .qaContent').slideUp();
-// 	      $('.accordion button').removeClass('active');
-// 	      $(this).next().slideDown();
-// 	      $(this).addClass('active');
-// 	    }
-// 	    else {
-// 	      $(this).next().slideUp();
-// 	      $(this).removeClass('active');
-// 	    }
-// 	  });
-// 	});	
+  <meta charset="UTF-8">
+  <title>순양병원</title>
 
-// $(document).ready(function(){
-// 	$('.qaMod').click(function(){
-// 		$(location).attr("href", "/qa/mod/"+ $(this).attr('id'))
-// 	})
-// });
-
-// $(function(){
-// 	$('.qaDel').click(function(){
-// 		$(location).attr("href", "/qa/del/"+ $(this).attr('id'))
-// 	})
-// });
-
-// $(function(){
-// 	var delMessage = [[${delMessage}]]
-// 	console.log(delMessage);
-// 	if(delMessage != null) {
-// 		alert(delMessage);
-// 		location.href = "/qa/";
-// 	}
-// })
-	</script>
-<link rel="stylesheet" href="../../css/qa.css">
+  <link rel="stylesheet" href="../../css/qa.css">
 </head>
 <body>
-	<div layout:fragment="content">
-	<section>
-	<div>
-	<button type="button" class="btn btn-primary" onclick="location.href='/qa/new'">등록</button>
-	<button type="button" class="btn btn-primary" onclick="location.href='/qa/'">전체보기</button>
-	<button type="button" class="btn btn-primary" onclick="location.href='/qa/pay'">페이</button>
-	<button type="button" class="btn btn-primary" onclick="location.href='/qa/hspdsc'">입/퇴원</button>
-	</div>
-	<div class="accordion" id="accordionExample">
-  	<div class="accordion-item">
-  	
-  	<th:block th:each="qa : ${qaList}">
-    <h2 class="accordion-header" th:id="${qaStat.index}+10000">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="'#'+${qaStat.index}" aria-expanded="true" th:aria-controls="${qaStat.index}+10000">
-        [[${qa.qaTitle}]]																																							
-      </button>
-    </h2>
-    <div th:id="${qaStat.index}" class="accordion-collapse collapse show" th:aria-labelledby="${qaStat.index}" >
-      <div class="accordion-body">
-        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-      </div>
+	<section layout:fragment="content">
+	<div class="qa_h1"><h1>자주묻는 질문</h1></div>
+    <div class="qa_btn">
+      <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/new'" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">등록</button>
+      <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/'">전체보기</button>
+      <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/pay'">페이</button>
+      <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/hspdsc'">입/퇴원</button>
     </div>
-    </th:block>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <th:block th:each="qa : ${qaList}">
+          <h2 class="accordion-header" th:id="${qaStat.index}+10000">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="'#'+${qaStat.index}" aria-expanded="true" th:aria-controls="${qaStat.index}+10000">
+            <i class="fa-solid fa-q"></i><span class="fa-q-span">&nbsp [[${qa.qaTitle}]]</span>																																					
+            
+            </button>
+          </h2>
+          <div th:id="${qaStat.index}" class="accordion-collapse collapse" th:aria-labelledby="${qaStat.index}" >
+            <div class="accordion-body">
+		    <div class ="answer_txt">
+	             <p>[[${qa.qaContent}]]</p>		    
+	    	</div>
+            </div>
+            </div>
+          </div>
+        </th:block>
       </div>
-    </div>
 	</section>
-  	</div>
-	
 </body>
 </html>

@@ -26,3 +26,7 @@
 #selectDate .selectedDay {background-color: #226597;}
 .btn.taken {cursor: auto; background-color: #C1474F; border-color: #C1474F; color: #ffffff;}
 .btn.taken:active {background-color: #C1474F; border-color: #C1474F; color: #ffffff;}
+
+/* 예약확인 */
+.fc-h-event {cursor: pointer;}
+.fc-h-event:hover {background-color: #226597;}

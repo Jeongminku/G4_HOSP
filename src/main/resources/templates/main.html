@@ -9,8 +9,15 @@
 <meta charset="UTF-8">
 <title>메인페이지 title입니다.</title>
 <link rel="stylesheet" href="../../css/main.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<script th:inline="javascript">
+	/*$(function(){
+		var searchStr = $('.doc_searchbar').val();
+		if(searchStr.length<2) {
+			$('.doc_searchbar').attr('oninvalid',"this.setCustomValidity('2글자 이상 입력하라')")
+		}
+	})*/
+</script>
 </head>
 <body>
 	<section layout:fragment="content" id="mainPage">
@@ -38,6 +45,8 @@
 			<div class="swiper-button-next"></div>
 			<div class="swiper-button-prev"></div>
 			<div class="swiper-pagination"></div>
+			
+
 		</div>
 		<div class="container text-center">
 			<div class="row">
@@ -52,28 +61,26 @@
 						</h3>
 					</div>
 					<div class="reservation_btn_list">
-						<a href="#" sec:authorize="isAnonymous()"><span>비회원
-								빠른예약</span></a> <a href="/reservation/selectDoc"><span>온라인 진료예약</span></a>
-						<a href="/reservation/listView/" sec:authorize="isAuthenticated()"><span>내
-								예약 확인</span></a>
+						<a href="/reservation/quick" sec:authorize="isAnonymous()"><span>비회원 빠른예약</span></a>
+						<a href="/reservation/listView/" sec:authorize="isAuthenticated()"><span>내 예약 확인</span></a>	
+						<a href="/reservation/selectDoc"><span>온라인 진료예약</span></a>
 					</div>
 				</div>
 				<div class="col-xl-6 box_search">
-					<div class="doc_search_h3">
-						<h3>&nbsp&nbsp의료진/진료과 검색</h3>
+			    	<div class="doc_search_h3">
+			    		<h3>&nbsp&nbsp의료진/진료과 검색</h3>
+			    	</div>
+			    	<div class="doc_search">
+				    <form class="doc_search" action="/searchresult" th:object="${searchInputDto}" role="search">
+	  					<input type="text" th:field="*{searchQuery}" name="searchQuery" class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요." oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="2" required>
+  						<button type="submit" class="doc_search_btn">검색하기</button>
+					</form>
 					</div>
-					<div class="doc_search">
-						<form class="doc_search" action="/searchresult"
-							th:object="${searchInputDto}" role="search">
-							<input type="search" th:field="*{searchQuery}" name="searchQuery"
-								class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요." required>
-							<button type="submit" class="doc_search_btn">검색하기</button>
-						</form>
-					</div>
-					<img class="doc_search_img" src="/images/male_doc.png">
+			      <img class="doc_search_img" src="/img/male_doc.png">
 				</div>
 			</div>
-		</div>
+	    </div>
+
 
 		<div style="display: flex;">
 			<div class="container" style="width: 50%; background-color: white;">

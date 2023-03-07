@@ -110,7 +110,7 @@
 					<div class="col-md-10 headwrap">
 					
 					<div class="col-md-12 viewhead">
-						<h1>진료 내역 수정</h1>
+						<h1 style="color: #205B8A; font-weight: bold;">진료 내역 수정</h1>
 					</div>
 					
 					<form th:action="'/archive/update/'+${archive.id}" method="post" enctype="multipart/form-data" th:object="${archiveFormDto}">		
@@ -139,7 +139,7 @@
 									<th scope="row">질병병</th>
 									<td><input type="text" th:field="*{disease}" class="form-control inputarea"></td>
 									<th scope="row">담당의</th>
-									<td><input type="text" th:field="*{doctorname}" class="form-control inputarea"></td>
+									<td><input type="text" name ="doctorname" th:value="${archiveFormDto.doctorname}" readonly="readonly" class="form-control inputarea"></td>
 								</tr>
 								<tr class="detailhead">
 									<td colspan="4">
@@ -163,7 +163,7 @@
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<button class="but" type="submit"> 수정 완료 </button>
+						<button class="btn btn-primary" type="submit"> 수정 완료 </button>
 					</div>
 					</div>
 					</form>

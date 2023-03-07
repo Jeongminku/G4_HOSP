@@ -42,6 +42,7 @@
 /* 클래스 */
 .c-bg-primary {background-color: #B2B2B2;}
 .c-alert-color {color: #C1474F;}
+.c-primary-color {color: #226597;}
 
 /* 헤더 */
 .navbar {padding: 0;}
@@ -51,9 +52,10 @@
 
 /* 헤더 오프캔버스 */
 .offcanvas.c-offcanvas {transform: none; visibility: visible; position: relative; flex-direction: row; border-left: none; width: 100%; padding: 0; max-width: 1200px; margin: 0 auto;}
+.offcanvas .fa-solid {font-size: 25px;}
 .btn.btn-close {display: none;}
 .btn.btn-openCanvas {display: none; height: 90px;}
-.nav-item a {padding: 0 20px; height: 90px; display: flex; align-items: center; box-sizing: border-box;}
+.nav-item a {padding: 0 10px; height: 90px; display: flex; align-items: center; box-sizing: border-box;}
 .nav-item a:hover {color: #226597;}
 
 /* 푸터 */
@@ -83,7 +85,12 @@ input:checked + label {background-color: var(--bs-btn-hover-bg); color: var(--bs
     .btn.btn-close {width: fit-content;}
     .offcanvas.c-offcanvas {transform: translateX(100%); position: fixed; flex-direction: column; border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color); width: var(--bs-offcanvas-width);}
     .offcanvas-header {display: flex;}
-    .nav-item a {padding: 0 60px; max-width: 400px; width: 100%;}    
+    .nav-item a {padding: 0 60px; max-width: 400px; width: 100%; height: 65px;}    
 }
 
 
+.soonyang {
+	width: 80px;
+	position: relative;
+	top: 4px;
+}

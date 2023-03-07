@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
@@ -48,6 +52,7 @@ public class MemberController {
 	private final ReservationService reservationService;
 	private final MemberMedService memberMedService;
 	private final MedRepository medRepository;
+	
 
 	
 	// 로그인 화면
@@ -62,32 +67,103 @@ public class MemberController {
 		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
 		return "member/memberLoginForm";
 	}
-
-	// 회원가입 화면
-	@GetMapping(value = "/new")
-	public String memberForm(Model model) {
-		MemberFormDto dto = new MemberFormDto();
-		dto.setMed(medService.getMedList());
-		model.addAttribute("memberFormDto", dto);
-		return "member/memberForm";
-	}
-
-	// 회원가입 버튼 클릭
-	@PostMapping(value = "/new")
-	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-			@RequestParam("profileImg") MultipartFile file) {
-		//System.err.println(memberFormDto.getMedId());
-		if (bindingResult.hasErrors()) {
-			return "member/memberForm";
+	
+		
+	
+	//회원가입선택화면
+		@GetMapping(value = "/new")
+		public String memberFormSel() {
+			return "member/memberSelect";
 		}
-		try {
-			memberService.saveMember(memberFormDto, file);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", e.getMessage());
-			return "member/memberForm";
+		
+		// 일반인회원가입 화면
+		@GetMapping(value = "/new/client")
+		public String memberclientForm(Model model) {
+			MemberFormDto dto = new MemberFormDto();
+			dto.setMed(medService.getMedList());
+			model.addAttribute("memberFormDto", dto);
+			return "member/memberClientForm";
 		}
-		return "redirect:/";
+
+		// 일반인회원가입 버튼 클릭
+		@PostMapping(value = "/new/client")
+		public String memberclientForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
+				@RequestParam("profileImg") MultipartFile file) {
+			//System.err.println(memberFormDto.getMedId());
+			if (bindingResult.hasErrors()) {
+				return "member/memberClientForm";
+			} 
+			
+			try {
+				memberService.saveMember(memberFormDto, file);
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("errorMessage", e.getMessage());
+				return "member/memberClientForm";
+			}
+			return "redirect:/";
+		}
+		
+		// 의료진회원가입 화면
+				@GetMapping(value = "/new/doctor")
+				public String memberdocotrForm(Model model) {
+					MemberFormDto dto = new MemberFormDto();
+					dto.setMed(medService.getMedList());
+					model.addAttribute("memberFormDto", dto);
+					return "member/memberDoctorForm";
+				}
+
+				// 의료진회원가입 버튼 클릭
+				@PostMapping(value = "/new/doctor")
+				public String memberdocotrForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
+						@RequestParam("profileImg") MultipartFile file) {
+					//System.err.println(memberFormDto.getMedId());
+					if (bindingResult.hasErrors()) {
+						return "member/memberDoctorForm";
+					}
+					try {
+						memberService.saveMember(memberFormDto, file);
+					} catch (Exception e) {
+						e.printStackTrace();
+						model.addAttribute("errorMessage", e.getMessage());
+						return "member/memberDoctorForm";
+					}
+					return "redirect:/";
+				}
+				
+				//관리자 회원가입 화면
+				@GetMapping(value = "/new/admin")
+				public String memberadminForm(Model model) {
+					MemberFormDto dto = new MemberFormDto();
+					dto.setMed(medService.getMedList());
+					model.addAttribute("memberFormDto", dto);
+					return "member/memberAdminForm";
+				}
+
+				//관리자 회원가입 버튼 클릭
+				@PostMapping(value = "/new/admin")
+				public String memberadminForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
+						@RequestParam("profileImg") MultipartFile file) {
+					//System.err.println(memberFormDto.getMedId());
+					if (bindingResult.hasErrors()) {
+						return "member/memberAdminForm";
+					}
+					try {
+						memberService.saveMember(memberFormDto, file);
+					} catch (Exception e) {
+						e.printStackTrace();
+						model.addAttribute("errorMessage", e.getMessage());
+						return "member/memberAdminForm";
+					}
+					return "redirect:/";
+				}
+		
+	
+	@GetMapping("/new/{loginid}")
+	public @ResponseBody ResponseEntity<Integer> idCheck(@PathVariable("loginid") String loginid) {
+		Integer result = memberService.vaildateDuplicateId(loginid);
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
 	// ID찾기화면
@@ -109,7 +185,7 @@ public class MemberController {
 			return "member/memberFindIdResult";
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
-			return "member/memberFindId";
+			return "member/memberFindIdResult";
 		}
 
 //		return "member/memberFindIdResult";		

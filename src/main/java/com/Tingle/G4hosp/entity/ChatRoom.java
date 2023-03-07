@@ -17,12 +17,12 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.Tingle.G4hosp.dto.ChatRoomDto;
-
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "chatRoom")
 public class ChatRoom extends BaseTime {
 	
@@ -49,7 +49,7 @@ public class ChatRoom extends BaseTime {
 	
 	public void updateChatRoom (ChatRoomAccess chatRoomAccess, String chatRoomName) {
 		this.chatRoomName = chatRoomName;
-		this.chatRoomAccess = chatRoomAccess;		
+		this.chatRoomAccess = chatRoomAccess;
 	}
 
 }

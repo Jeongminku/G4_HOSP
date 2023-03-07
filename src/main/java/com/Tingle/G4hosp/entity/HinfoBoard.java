@@ -28,7 +28,7 @@ public class HinfoBoard extends BaseEntity{
 	@Column(name="hinfo_title")
 	private String Title;
 	
-	@Column(name="hinfo_content")
+	@Column(name="hinfo_content", columnDefinition = "MEDIUMTEXT")
 	private String Content;
 	
 	@Column(name="hinfo_content_view")

@@ -24,12 +24,17 @@
 	margin: 0 auto;
 }
 
+section{
+	background-color: #eeeeee;
+}
+
 .headwrap{
 	margin: 0 auto;
 }
 
 .viewhead{
 	border-bottom: 3px solid; 
+	padding: 10px;
 }
 
 .viewbody{
@@ -41,6 +46,7 @@
 	text-align: center;
 	height: 35px;
 	margin-top: 15px;
+	border-bottom: 3px solid;
 }
 
 .linemenu{
@@ -54,6 +60,8 @@
 
 .tablemenu{
 	border: 1px solid;
+	padding: 20px;
+	background-color: white;
 }
 
 .condivide{
@@ -84,12 +92,11 @@
 					<div class="col-md-10 headwrap">
 
 						<div class="col-md-12 viewhead">
-							<h1>입원 수속</h1>
+							<h1 style="color: #205B8A; font-weight: bold;">입원 수속</h1>
 						</div>
 
 						<form th:action="'/hospitalize/write/'+${patient.id}" method="post"
 							enctype="multipart/form-data" th:object="${hospitalizeFormDto}">
-							<div class="col-md-12 viewhead"></div>
 							<div class="col-md-12 viewlineboxup"></div>
 							<div class="col-md-12 viewlinebox">
 								<span> 환자명 :  </span> 
@@ -142,7 +149,7 @@
 								</table>
 							</div>
 							<div class="col-md-12 linemenu">
-								<button class="but" type="submit">입원</button>
+								<button class="btn btn-primary" type="submit">입원</button>
 							</div>							
 						</form>
 					</div>

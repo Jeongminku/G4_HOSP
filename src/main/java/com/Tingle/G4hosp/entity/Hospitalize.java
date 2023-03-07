@@ -51,16 +51,19 @@ public class Hospitalize {
 	//입원날짜
 	private String hospitalizeddate;
 	
-	private String doctor;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doctor_id")
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	private Member doctor;
 	
-	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate, String docname) {
+	public static Hospitalize createHospitalize(Member member, String ward, Hosp hosp, String nowdate, Member doctor) {
 		Hospitalize hos = new Hospitalize();
 		hos.setMember(member);
 		hos.setWard(ward);
 		hos.setHospYN(Hosp.Y);
 		hos.setHasdisease(hosp);
 		hos.setHospitalizeddate(nowdate);
-		hos.setDoctor(docname);
+		hos.setDoctor(doctor);
 		return hos;
 	}
 	

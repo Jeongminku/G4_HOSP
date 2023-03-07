@@ -19,6 +19,4 @@ public class QaBoardDto {
 	//QA 카테고리 enum
 	private QaCategory Category;
 	
-	//멤버객체안에서 불러올 이름.
-	private Member memberNm;
 }

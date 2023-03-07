@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -165,13 +166,16 @@ public class ArchiveController {
 	
 	// ARCHIVE WRITE PAGE
 	@GetMapping(value={"/write","/write/{id}"})
-	public String archivewrite(Model model,@PathVariable("id") Optional<Long> patientid) {
+	public String archivewrite(Model model,@PathVariable("id") Optional<Long> patientid, Principal principal) {
+		String loginId = principal.getName();
+		Member Doctor = memberService.findDocbyMid(loginId);
 		ArchiveFormDto archiveFormDto = new ArchiveFormDto();
 		Member patient = new Member();
 		if(patientid.isPresent()) {
 			patient = memberRepository.getReferenceById(patientid.get());	
 		}
-		
+		archiveFormDto.setDoctorname(Doctor.getName());
+
 		List<Disease> Diseaselist = diseaseRepository.findAll();
 		
 		// CALCULATE AGE BY MEMBER BIRTH
@@ -180,6 +184,7 @@ public class ArchiveController {
 		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
 		model.addAttribute("age",age);
 		
+		model.addAttribute("doctor", Doctor);
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("patient", patient);
 		model.addAttribute("DL",Diseaselist);
@@ -190,7 +195,8 @@ public class ArchiveController {
 	@PostMapping(value = {"/write","/write/{id}"})
 	public String writearchive(Model model,@PathVariable("id") Optional<Long> patientid,
 			@RequestParam("PostImgFile") List<MultipartFile> archiveImgFileList,
-			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult) {
+			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult,
+			@RequestParam("doctorname") String docname) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "값을 가져오는 중 에러가 발생했습니다!");
 			return "ArchivePage/ArchiveWrite/"+patientid.get();
@@ -212,7 +218,10 @@ public class ArchiveController {
 	
 	// ARCHIVE UPDATE PAGE
 	@GetMapping(value={"/update","/update/{id}"})
-	public String archiveupdate(Model model,@PathVariable("id") Optional<Long> arcid) {
+	public String archiveupdate(Model model,@PathVariable("id") Optional<Long> arcid, Principal principal) {
+		String loginId = principal.getName();
+		Member Doctor = memberService.findDocbyMid(loginId);
+		
 		ArchiveFormDto archiveFormDto = new ArchiveFormDto();		
 		Archive archive = new Archive();
 		if(arcid.isPresent()) {
@@ -220,11 +229,13 @@ public class ArchiveController {
 		}
 		Member patient = memberRepository.getReferenceById(archive.getMember().getId());
 		archiveFormDto.setId(patient.getId());
+		archiveFormDto.setDoctorname(Doctor.getName());
 		
 		// CALCULATE AGE BY MEMBER BIRTH
         String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
         String birth = patient.getBirth().substring(0, 4);
-		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
+		int age = Integer.parseInt(now)-Integer.parseInt(birth);	
+		
 		model.addAttribute("age",age);
 		model.addAttribute("patient",patient);
 		model.addAttribute("archiveFormDto",archiveFormDto);
@@ -236,7 +247,8 @@ public class ArchiveController {
 	@PostMapping(value="/update/{id}")
 	public String updatearchive(Model model,@PathVariable("id") Long arcid,
 			@RequestParam("PostImgFile") List<MultipartFile> archiveImgFileList,
-			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult) {		
+			@Valid ArchiveFormDto archiveFormDto, BindingResult bindingResult,
+			@RequestParam("doctorname") String docname) {		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "값을 가져오는 중 에러가 발생했습니다!");
 			return "/archive/update/"+arcid;

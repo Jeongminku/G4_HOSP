@@ -3,7 +3,12 @@ package com.Tingle.G4hosp.controller;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Tingle.G4hosp.dto.QuickReservationDto;
 import com.Tingle.G4hosp.dto.ReservationDto;
@@ -42,7 +48,8 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/{doctorId}")
-	public String selectDayPage (Model model, @PathVariable("doctorId") Long doctorId) {
+	public String selectDayPage (Model model, @PathVariable("doctorId") Long doctorId, Principal principal, HttpServletResponse resp) {
+		if(principal == null) return MemberCheckMethod.redirectAfterAlert("로그인이 필요한 서비스입니다.", "/members/login", resp);
 		model.addAttribute("ReservationViewPatDto", reservationService.initDto(doctorId));
 		model.addAttribute("ReservationDto", new ReservationDto());
 		return "ReservationPage/SelectDate";
@@ -58,6 +65,17 @@ public class ReservationController {
 			model.addAttribute("Error", e.getMessage());
 		}
 		return "ReservationPage/ReservationComplete";
+	}
+	
+	@PostMapping("/delete")
+	public String deleteReservation (@RequestParam("reservationId") Long reservationId, HttpServletResponse resp) {
+		System.err.println(reservationId);
+		try {
+			reservationService.deleteReservation(reservationId);			
+		} catch (Exception e) {
+			return MemberCheckMethod.redirectAfterAlert("오류가 발생했습니다.", "/reservation/listView", resp);
+		}
+		return MemberCheckMethod.redirectAfterAlert("예약을 취소했습니다.", "/reservation/listView", resp);
 	}
 	
 	@GetMapping("/listView")
@@ -118,7 +136,7 @@ public class ReservationController {
 	
 	@PostMapping("/sendqr")
 	public String sendReservation(Model model, QuickReservationDto quickReservationDto)  {
-		Long res = quickReservationService.saveQR(quickReservationDto);	
+		quickReservationService.saveQR(quickReservationDto);	
 		return "redirect:/";
 	}
 }

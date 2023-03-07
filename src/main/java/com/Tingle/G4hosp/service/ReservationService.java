@@ -57,11 +57,9 @@ public class ReservationService {
 		Map<String, List<ReservationDoctorDto>> doctorListByMed = new HashMap<>();
 		List<Med> medList = medRepository.findAll();
 		for(Med med : medList) {
-			System.err.println(med);
 			List<ReservationDoctorDto> docList = new ArrayList<>();
 			List<Member> medDoctorList = memberMedRepository.findDoctorsByMed(med);
 			for(Member doctor : medDoctorList) {
-				System.err.println(doctor.getName());
 				docList.add(ReservationDoctorDto.of(doctor));
 			}
 			doctorListByMed.put(med.getMedName(), docList);
@@ -81,10 +79,11 @@ public class ReservationService {
 		List<Reservation> allReservation = new ArrayList<>();
 		if(member.getRole() == Role.CLIENT) {
 			allReservation = reservationRepository.findByReservationPatientOrderByReservationDate(member);
+			return ReservationViewDto.createReservationViewDtoList(allReservation, false);
 		} else {
 			allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(member);			
+			return ReservationViewDto.createReservationViewDtoList(allReservation, true);
 		}
-		return ReservationViewDto.createReservationViewDtoList(allReservation);
 	}
 	
 }

@@ -78,9 +78,9 @@
 	
 <table class="table table align-middle">
   <thead>
-  <tr th:each="img, status:${HinfoBoard.hinfoImgDtoList}" ><img alt="" th:src="${img.imgUrl}"></tr>
-    <tr style="text-align: center;">
-      <td style="white-space: pre-line;"><p class="text-center text-break fs-5 lh-lg ">[[${HinfoBoard.content}]]</p></td>
+  <tr th:each="img, status:${HinfoBoard.hinfoImgDtoList}" ><img alt="${img.oriImgName}" th:src="${img.imgUrl}"></tr>
+    <tr>
+      <td style="white-space: pre-line;"><p class="text-start text-break fs-5 lh-base ">[[${HinfoBoard.content}]]</p></td>
     </tr>
 
   </thead>

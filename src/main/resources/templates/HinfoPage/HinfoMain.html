@@ -234,13 +234,18 @@ a:hover {
 													<option value="6">6</option>
 													<option value="10">10</option>
 												</select>
+												<label for="pn"> : 볼 게시물 갯수</label>
 											</form>
 											
 										</div>
 										<div class="col-md-6 col-sm-6">
 											<div class="filter-search-box text-right">
-												<label>Search:<input type="search"
-													class="form-control input-sm" placeholder=""></label>
+												
+												<form class="d-flex" role="search" th:action="@{/Hinfo/HinfoMain}" method="get">
+													<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
+													<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
+												</form>
+												
 											</div>
 										</div>
 									</div>

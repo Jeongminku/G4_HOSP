@@ -1,3 +1,5 @@
+<!-- 비밀번호찾기(강제변경) 정보 입력화면  -->
+
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
@@ -6,7 +8,7 @@
 >
   <head>
       <meta charset="UTF-8" />
-      <title> Insert title here </title> 
+      <title> 순양병원 </title> 
   </head>
   <body>
     <section layout:fragment="content"  class="d-flex flex-column align-items-center justify-content-center max-w-50">
@@ -26,7 +28,7 @@
           </div>
           <div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <button type="submit" class="btn btn-primary w-100" id="loginbtn">비밀번호 찾기</button>
+            <button type="submit" class="btn btn-primary w-100" id="loginbtn" onclick="location.href='/members/FindPwdResult'">비밀번호 찾기</button>
           </div>
         </form>
     </section>

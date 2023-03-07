@@ -12,21 +12,20 @@ import lombok.Data;
 public class ReservationViewDto {
 	private Long id;
 	private String title;
-	private String url;
 	private String start;
 	private String end;
 	private boolean allDay = true;
 	private boolean durationEditable = false;
 	
-	public static List<ReservationViewDto> createReservationViewDtoList (List<Reservation> reservationList) {
+	public static List<ReservationViewDto> createReservationViewDtoList (List<Reservation> reservationList, Boolean isDoctor) {
 		List<ReservationViewDto> reservationViewDtoList = new ArrayList<>();
 		DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		for(Reservation reservation : reservationList) {
 			ReservationViewDto reservationViewDto = new ReservationViewDto();
 			reservationViewDto.setId(reservation.getReservationId());
-			reservationViewDto.setTitle(reservation.getReservationDate().format(timeFormatter) + " " + reservation.getReservationPatient().getName());
-			reservationViewDto.setUrl("temp");
+			if(isDoctor) reservationViewDto.setTitle(reservation.getReservationDate().format(timeFormatter) + " " + reservation.getReservationPatient().getName());
+			else reservationViewDto.setTitle(reservation.getReservationDate().format(timeFormatter) + " " + reservation.getReservationDoctor().getName());
 			reservationViewDto.setStart(reservation.getReservationDate().format(dayFormatter));
 			LocalDateTime calcEndDay = reservation.getReservationDate().plusDays(1);
 			reservationViewDto.setEnd(calcEndDay.format(dayFormatter));

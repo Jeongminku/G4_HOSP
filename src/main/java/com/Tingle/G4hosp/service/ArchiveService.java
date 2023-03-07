@@ -92,11 +92,11 @@ public class ArchiveService {
 		List<ArchiveImg> archiveImglist = archiveImgRepository.findbyARCid(arcid);
 		
 		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-		
-		//UPDATE ARCHIVE & ARCHIVE IMG
+				
+		//UPDATE ARCHIVE
 		archive.updateArchive(docinfo, archiveFormDto, now);
 		
+		//save new imglist if saved imglist is none. 
 		if(archiveImglist.size() == 0) {
 			for(int i=0; i<archiveImgFileList.size(); i++) {
 				ArchiveImg archiveImg = new ArchiveImg();
@@ -105,13 +105,10 @@ public class ArchiveService {
 			}
 			return archive.getId();
 		}
+		
+		// update archive's img
 		try {
-			for(int i=0; i<archiveImgFileList.size(); i++) {
-				if(archiveImglist.get(i).getImgname().isEmpty()) {
-					ArchiveImg archiveImg = new ArchiveImg();
-					archiveImg.setArchive(archive);
-					archiveImgService.saveArchiveImg(archiveImg, archiveImgFileList.get(i));
-				}
+			for(int i=0; i<archiveImgFileList.size(); i++) {				
 				archiveImgService.updateArchiveImg(archiveImglist.get(i), archiveImglist.get(i).getId(), archiveImgFileList.get(i));
 			}			
 		} catch (IndexOutOfBoundsException e) {

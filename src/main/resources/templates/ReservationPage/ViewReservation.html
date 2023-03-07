@@ -7,10 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <script src="../../lib/Bootstrap_5.3.0a/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css">
-    <script src="../../lib/jquery-3.6.3.min.js"></script>
-    <link rel="stylesheet" href="../../css/reset.css"> -->
     <link rel="stylesheet" href="../../css/reservation.css">
     <script src="../../lib/FulCal_6.1.1/local/index.global.min.js"></script>
     <script src="../../lib/FulCal_6.1.1/index.global.min.js"></script>
@@ -21,8 +17,14 @@
 </head>
 <body>
     <section id="selectDate" layout:fragment="content">
+        <div class="w-100 d-flex justify-content-end" sec:authorize="hasRole('DOCTOR')">
+            <a class="btn btn-primary mb-2" href="/reservation/setNotAvailDay">휴일설정</a>
+        </div>
         <div id="Fcalendar"></div>
-        <script src="../../js/SelectDate.js"></script>
+        <form th:action="@{/reservation/delete}" id="deleteForm" class="d-none" method="post">
+            <input type="hidden" name="reservationId">
+        </form>
+        <script src="../../js/Reservation.js"></script>
     </section>
 </body>
 </html>

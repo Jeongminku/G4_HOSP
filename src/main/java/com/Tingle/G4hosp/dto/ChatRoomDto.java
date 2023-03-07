@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.Tingle.G4hosp.entity.ChatRoom;
-import com.Tingle.G4hosp.entity.Member;
 
 import lombok.Data;
 
@@ -23,7 +22,7 @@ public class ChatRoomDto {
 			chatRoomDto.setId(room.getId());
 			chatRoomDto.setChatRoomAccess(room.getChatRoomAccess().getId());
 			chatRoomDto.setChatRoomName(room.getChatRoomName());
-			chatRoomDto.setChatRoomRegDate(room.getRegDatetime().format(DateTimeFormatter.ofPattern("yyyy-mm-dd")));
+			chatRoomDto.setChatRoomRegDate(room.getRegDatetime().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일, HH시")));
 			chatRoomDtoList.add(chatRoomDto);
 		}
 		return chatRoomDtoList;

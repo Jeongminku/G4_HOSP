@@ -18,13 +18,14 @@ function deleteqr(value){
 
 $(document).on('click', '#chatRoomDel', function () {
     const selectForm = $(this).children('form[name="deleteId"]');
+    console.log(selectForm)
     selectForm.submit();
 })
 
 $(document).on('click', '#chatRoomEdit', function () {
     const currentLi = $(this).parent().parent();
     const currentAccessId = currentLi.children('input[name="chatRoomAccessId"]').val();
-    const currentRoomId = currentLi.children('input[name="chatRoomId"]').val();
+    const currentRoomId = currentLi.find('input[name="chatRoomId"]').val();
     const currentRoomName = currentLi.children('div[name="chatRoomName"]').text();
     const editForm = $('#chatRoomEditModal').find('form');
 
