@@ -48,5 +48,10 @@ public class ArchiveDisease {
 		 archiveDisease.setDisease(disease); 
 		 return archiveDisease;
 	 }
+	 
+	 public void updateAD(Archive archive, Disease disease) {
+		 this.archive = archive;
+		 this.disease = disease;
+	 }
 	
 }

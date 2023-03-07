@@ -32,8 +32,8 @@
 		    <div class ="answer_txt">
 	             <p>[[${qa.qaContent}]]</p>
 	             <div class="form-textbox row qaWrap" style="text-align:center;">
-                        <button type="button" th:onclick = "|location.href='/qa/mod/' + ${qa.id}|" class="qa_mod_btn btn btn-primary">수정</button>
-                        <button type="button" th:onclick = "qaDelete(this)"  class="qa_del_btn btn btn-primary">삭제</button>
+                        <button type="button" th:onclick = "|location.href='/qa/mod/' + ${qa.id}|" class="qa_mod_btn btn btn-primary" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</button>
+                        <button type="button" th:onclick = "qaDelete(this)"  class="qa_del_btn btn btn-primary" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">삭제</button>
 			          	<input type="hidden" th:value="${qa.id}">
                    </div>		    
 	    	</div>
