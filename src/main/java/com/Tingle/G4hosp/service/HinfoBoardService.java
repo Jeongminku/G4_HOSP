@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Tingle.G4hosp.dto.HinfoBoardDto;
 import com.Tingle.G4hosp.dto.HinfoImgDto;
 import com.Tingle.G4hosp.dto.HinfoListDto;
+import com.Tingle.G4hosp.dto.HinfoMainDto;
 import com.Tingle.G4hosp.dto.HinfoSerchDto;
 import com.Tingle.G4hosp.entity.HinfoBoard;
 import com.Tingle.G4hosp.entity.HinfoImg;
@@ -131,7 +132,29 @@ public class HinfoBoardService {
 				.findById(hinfoId)
 				.orElseThrow(EntityNotFoundException::new);
 		
+
 		hinfoBoardRepository.delete(hinfoboard);
 	}
-
+	
+	//메인페이지에 보여줄 건강정보글
+	@Transactional
+	public List<HinfoMainDto> getMainHinfoview() {
+		
+		List<HinfoBoard> hinfoboardList = hinfoBoardRepository.getHinfoBoardList();
+		List<HinfoMainDto> hinfoListDtoList = new ArrayList<>();
+		
+		for(HinfoBoard hinfoBoard : hinfoboardList) {
+			HinfoMainDto hinfoListDto = new HinfoMainDto();
+			
+			hinfoListDto.setId(hinfoBoard.getId());
+			hinfoListDto.setTitle(hinfoBoard.getTitle());
+			hinfoListDto.setMember(hinfoBoard.getMember());
+			hinfoListDto.setView(hinfoBoard.getView());
+			hinfoListDto.setRegTime(hinfoBoard.getRegDatetime());
+			
+			hinfoListDtoList.add(hinfoListDto);
+		}
+		
+		return hinfoListDtoList;
+	}
 }

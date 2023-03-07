@@ -47,8 +47,7 @@ public class AdminController {
 	private final HospitalizeService hospitalizeService;
 	private final QuickReservationService quickReservationService;
 	private final AdminService adminService;
-	private final ChatService chatService;
-	
+	private final ChatService chatService;	
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;

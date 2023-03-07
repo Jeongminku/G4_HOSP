@@ -1,5 +1,7 @@
 package com.Tingle.G4hosp.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +21,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
 	@Modifying
 	@Query(value = "Update board set board_content = :content , board_title = :title where board_id = :id",nativeQuery = true)
 	int upDateBoard(@Param("content") String content, @Param("id") Long id, @Param("title") String title);
+	
+	@Transactional
+	@Query(value = "select * from board where secret = 'False' order by board_id desc  limit 4",nativeQuery = true)
+	List<Board> mainViewBoard();
 }

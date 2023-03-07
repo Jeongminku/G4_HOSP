@@ -11,9 +11,13 @@ import org.hibernate.query.criteria.internal.expression.function.AggregationFunc
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.constant.Ward;
 import com.Tingle.G4hosp.dto.AdminMainDto;
+import com.Tingle.G4hosp.dto.MemberFormDto;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
+import com.Tingle.G4hosp.entity.QArchive;
+import com.Tingle.G4hosp.entity.QArchiveDisease;
+import com.Tingle.G4hosp.entity.QDisease;
 import com.Tingle.G4hosp.entity.QHospitalize;
 import com.Tingle.G4hosp.entity.QMed;
 import com.Tingle.G4hosp.entity.QMember;
@@ -150,9 +154,42 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 		
 		return adminMainDto;
 	}
+
 	
-	
-	
+	// 환자별 내원일자, 내원 과 조회
+	@Override
+	public MemberFormDto viewpatientArDateandMedname(MemberFormDto memberFormDto,Long memid) {
+		QArchive archive = QArchive.archive;
+		QArchiveDisease archiveDisease = QArchiveDisease.archiveDisease;
+		QDisease disease = QDisease.disease;
+		QMed med = QMed.med;
+		
+		List<String> archivedatelist = new ArrayList<>();
+		List<String> mednamelist = new ArrayList<>();
+		try {
+			archivedatelist = queryFactory.select(archive.ArchiveCreatedtime).from(archive)
+					.join(archiveDisease).on(archive.id.eq(archiveDisease.archive.id))
+					.join(disease).on(archiveDisease.disease.diseaseId.eq(disease.diseaseId))
+					.join(med).on(disease.med.medId.eq(med.medId))
+					.where(archive.member.id.eq(memid))
+					.fetch();
+			mednamelist = queryFactory.select(med.medName).from(archive)
+					.join(archiveDisease).on(archive.id.eq(archiveDisease.archive.id))
+					.join(disease).on(archiveDisease.disease.diseaseId.eq(disease.diseaseId))
+					.join(med).on(disease.med.medId.eq(med.medId))
+					.where(archive.member.id.eq(memid))
+					.fetch();	
+		} catch (NullPointerException e) {
+			String arnull = "";
+			String mednull = "";
+			archivedatelist.add(arnull);
+			mednamelist.add(mednull);
+		}
+		memberFormDto.setArchivedate(archivedatelist);
+		memberFormDto.setMedname(mednamelist);
+		
+		return memberFormDto;
+	}
 	
 	
 }

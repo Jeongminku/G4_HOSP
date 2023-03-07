@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Tingle.G4hosp.constant.Role;
+import com.Tingle.G4hosp.dto.BoardListDto;
+import com.Tingle.G4hosp.dto.HinfoMainDto;
 import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.SearchDocListDto;
 import com.Tingle.G4hosp.dto.SearchInputDto;
 import com.Tingle.G4hosp.dto.SearchMedListDto;
+import com.Tingle.G4hosp.entity.Board;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.repository.SearchDocRepository;
+import com.Tingle.G4hosp.service.BoardService;
+import com.Tingle.G4hosp.service.HinfoBoardService;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberMedService;
 import com.Tingle.G4hosp.service.MemberService;
@@ -32,10 +37,20 @@ public class MainController {
 	private final MemberMedService memberMedService;
 	private final MemberService memberService;
 	private final MedService medService;
+	private final BoardService boardService;
+	private final HinfoBoardService hinfoBoardService;
 	
 	@GetMapping(value = "/")
 	public String main(Model model) {
 		SearchInputDto searchInputDto = new SearchInputDto();
+		
+		List<BoardListDto> boardList = boardService.getMainBoard();
+		System.err.println(boardList);
+		List<HinfoMainDto> hinfoList = hinfoBoardService.getMainHinfoview();
+		System.err.println(hinfoList);
+		
+		model.addAttribute("boardList" , boardList);
+		model.addAttribute("hinfoList" , hinfoList);
 		model.addAttribute("searchInputDto", searchInputDto);
 		return "main";
 	}

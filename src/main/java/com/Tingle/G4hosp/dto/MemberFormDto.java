@@ -50,6 +50,11 @@ public class MemberFormDto {
 	
 	private Long medId;
 	
+	// 마이페이지 접속시 회원 내원일자, 내원 과 조회
+	private List<String> archivedate;
+	private List<String> medname;
+ 	
+	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
 	public Member createMember() {

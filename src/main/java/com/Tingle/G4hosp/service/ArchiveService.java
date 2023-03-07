@@ -135,5 +135,8 @@ public class ArchiveService {
 		}
 	}
 	
+//	public List<Archive> getArchivelist(Member member){
+//		//List<Archive> AL = archiveRepository.find
+//	}
 	
 }
