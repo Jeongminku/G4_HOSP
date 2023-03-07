@@ -1,6 +1,8 @@
 package com.Tingle.G4hosp.controller;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.util.StringUtils;
+
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
@@ -127,45 +131,53 @@ public class AdminController {
 	// 고객목록 페이지 화면
 	@GetMapping(value="/memberList")
 	public String memberList(Model model) {
-		
-		Role client = Role.CLIENT;
-		
-		List<Member> members = memberService.getMemberList(client);
-		model.addAttribute("members", members);
-		
+		model.addAttribute("memberList", memberService.findMemberList("ALL"));
 		return "adminPage/memberList";
 	}
 	
-	// 입원환자목록 페이지 화면
-	@GetMapping(value="/hospitalizeList")
-	public String hospitalizeList(Model model) {
-		
-//		List<Hospitalize> members = hospitalizeService.FindHosListByHosStatus();
-//		model.addAttribute("members", members);
-		
-		List<HospitalizeDisease> memHosDis = hospitalizeDiseaseRepository.findAll();
-		model.addAttribute("memHosDis", memHosDis);
-		
-		System.err.println(memHosDis);
-		
-		return "adminPage/hospitalizeList";
+	@PostMapping("/memberList/{opt}")
+	public String memberListFind (@PathVariable("opt")String opt, Model model, HttpServletResponse resp) {
+		try {
+			model.addAttribute("memberList", memberService.findMemberList(opt));
+		} catch (Exception e) {
+			MemberCheckMethod.redirectAfterAlert("목록을 불러오는중 오류가 발생했습니다.", "/admin", resp);
+		}
+		if(StringUtils.equals(opt, "DOCTOR")) return "adminPage/memberList :: memberList_DOCTOR";
+		if(StringUtils.equals(opt, "HOSPITALIZE")) return "adminPage/memberList :: memberList_HOSP";
+		if(StringUtils.equals(opt, "ALL")) return "adminPage/memberList :: memberList_ALL";
+		return "adminPage/memberList :: memberList_CLIENT_ADMIN";
 	}
 	
-	// 의사목록 페이지 화면
-	@GetMapping(value="/doctorList")
-	public String doctorList(Model model) {
-		
-//		Role doctor = Role.DOCTOR;
-		
-//		List<Member> members = memberService.getMemberList(doctor);
-//		model.addAttribute("members", members);
-		
-		List<MemberMed> memberMeds = memberMedRepository.findAll();
-		
-		model.addAttribute("memberMeds", memberMeds);
-		
-		return "adminPage/doctorList";
-	}
+//	// 입원환자목록 페이지 화면
+//	@GetMapping(value="/hospitalizeList")
+//	public String hospitalizeList(Model model) {
+//		
+////		List<Hospitalize> members = hospitalizeService.FindHosListByHosStatus();
+////		model.addAttribute("members", members);
+//		
+//		List<HospitalizeDisease> memHosDis = hospitalizeDiseaseRepository.findAll();
+//		model.addAttribute("memHosDis", memHosDis);
+//		
+//		System.err.println(memHosDis);
+//		
+//		return "adminPage/hospitalizeList";
+//	}
+//	
+//	// 의사목록 페이지 화면
+//	@GetMapping(value="/doctorList")
+//	public String doctorList(Model model) {
+//		
+////		Role doctor = Role.DOCTOR;
+//		
+////		List<Member> members = memberService.getMemberList(doctor);
+////		model.addAttribute("members", members);
+//		
+//		List<MemberMed> memberMeds = memberMedRepository.findAll();
+//		
+//		model.addAttribute("memberMeds", memberMeds);
+//		
+//		return "adminPage/doctorList";
+//	}
 	
 	// 비회원 예약환자 조회
 	@GetMapping("/qlist")

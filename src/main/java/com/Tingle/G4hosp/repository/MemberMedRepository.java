@@ -12,6 +12,9 @@ import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
 
 public interface MemberMedRepository extends JpaRepository<MemberMed, Long> {
+	
+	MemberMed findByMemberId(Member member);
+	
 	@Query("SELECT mm.memberId FROM MemberMed mm WHERE mm.medId = :medId ORDER BY mm.memberId")
 	List<Member> findDoctorsByMed(@Param("medId")Med medId);
 	

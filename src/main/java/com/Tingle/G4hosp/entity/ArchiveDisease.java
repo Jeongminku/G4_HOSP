@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,6 +31,7 @@ public class ArchiveDisease {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "archive_id", nullable = false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Archive archive;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -43,6 +47,11 @@ public class ArchiveDisease {
 		 archiveDisease.setArchive(archive);
 		 archiveDisease.setDisease(disease); 
 		 return archiveDisease;
+	 }
+	 
+	 public void updateAD(Archive archive, Disease disease) {
+		 this.archive = archive;
+		 this.disease = disease;
 	 }
 	
 }

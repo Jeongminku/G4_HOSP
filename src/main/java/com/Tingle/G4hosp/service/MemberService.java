@@ -17,12 +17,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import com.Tingle.G4hosp.constant.Hosp;
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.AdminMemberDto;
 import com.Tingle.G4hosp.dto.MemberFormDto;
+import com.Tingle.G4hosp.entity.Disease;
+import com.Tingle.G4hosp.entity.Hospitalize;
+import com.Tingle.G4hosp.entity.HospitalizeDisease;
 import com.Tingle.G4hosp.entity.Med;
 import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.MemberMed;
+import com.Tingle.G4hosp.repository.DiseaseRepository;
+import com.Tingle.G4hosp.repository.HospitalizeDiseaseRepository;
 import com.Tingle.G4hosp.repository.HospitalizeRepository;
 import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
@@ -40,6 +46,7 @@ public class MemberService implements UserDetailsService{
 	 private final MedRepository medRepository;
 	 private final MemberMedRepository memberMedRepository;
 	 private final HospitalizeRepository hospitalizeRepository;
+	 private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String loginid) throws UsernameNotFoundException {
@@ -191,18 +198,30 @@ public class MemberService implements UserDetailsService{
 		 return findByLoginid(loginId).getRole();
 	 }
 	 
-	 public List<AdminMemberDto> findMember (String opt) {
-		 List<Member> matchedMember = new ArrayList<>();
+	 public List<AdminMemberDto> findMemberList (String opt) {
 		 List<AdminMemberDto> adminMemberDtoList = new ArrayList<>();
+		 if(StringUtils.equals(opt, "HOSPITALIZE")) {
+			 List<Hospitalize> hospitalized = hospitalizeRepository.FindHosListByHosStatus();
+			 for(Hospitalize hosp : hospitalized) {
+				 HospitalizeDisease hospDisease = null;
+				 if(StringUtils.equals(hosp.getHasdisease(), Hosp.Y)) hospDisease = hospitalizeDiseaseRepository.findByHospitalize(hosp);
+				 adminMemberDtoList.add(AdminMemberDto.createByHospitalize(hosp, hospDisease));
+			 }
+			 return adminMemberDtoList;
+		 }
+
+		 List<Member> matchedMember = new ArrayList<>();
 		 if(StringUtils.equals(opt, "ALL")) matchedMember = memberRepository.findAll();
 		 if(StringUtils.equals(opt, "CLIENT")) matchedMember = memberRepository.findByRole(Role.CLIENT);
-		 if(StringUtils.equals(opt, "HOSPITALIZE")) matchedMember = hospitalizeRepository.FindMemListByHosStatus();
-		 if(StringUtils.equals(opt, "DOCTOR")) matchedMember = memberRepository.findByRole(Role.DOCTOR);
+		 if(StringUtils.equals(opt, "DOCTOR")) {
+			 matchedMember = memberRepository.findByRole(Role.DOCTOR);
+			 for(Member member : matchedMember) {
+				 MemberMed memberMed = memberMedRepository.findByMemberId(member);
+				 adminMemberDtoList.add(AdminMemberDto.createByMemberMed(memberMed));
+			 }
+			 return adminMemberDtoList;
+		 }
 		 if(StringUtils.equals(opt, "ADMIN")) matchedMember = memberRepository.findByRole(Role.ADMIN);
-		 
-		for(Member member : matchedMember) {
-			
-		}
-		 return null;
+		 return AdminMemberDto.createByMemberList(matchedMember);
 	 }
 }

@@ -55,6 +55,7 @@
 		
 		if(dateStr.length<8 || dateStr.length>8){
 			$('#birth_check').text('생년월일은 19990909형식의 8자로 작성해주세요.');
+			$('#birth_check').css('color', 'red');
 		}else if(dateStr.length = 8){
 			$('#birth_check').text('생년월일 형식이 일치합니다.');
 			$('#birth_check').css('color', 'green');
@@ -155,7 +156,11 @@ padding: 24px;
 
 .viewlinebox{
 	background-color: #eff3f7;
-	padding: 60px 100px;
+	padding: 10px 100px;
+}
+
+.defimg {
+ display:none
 }
 
 .linemenu {
@@ -220,6 +225,7 @@ padding: 24px;
 .tostext {
 padding : 10px;
 }
+
 
 	</style>
 </head>
@@ -395,8 +401,8 @@ padding : 10px;
 									
 									
 									<div>
-										<input class="form-check-input" id = "checkok" type="checkbox" />
-										<label class="form-check-label" for="flexCheckDefault"> 서비스 이용약관 및 개인정보 취급방침에 동의합니다. </label>											  						
+										
+										<label class="form-check-label" for="checkok"> <input class="form-check-input" id = "checkok" type="checkbox" />서비스 이용약관 및 개인정보 취급방침에 동의합니다. </label>											  						
 									</div>
 								</div>	
 										
@@ -437,14 +443,16 @@ padding : 10px;
 							<div class="check_font c-alert-color py-2" id=birth_check></div>
 						</div>
 						 
-	                             <div class="form-textbox row mb-3">
+						 <!-- 이미지 -->
+	                             <div class="form-textbox row mb-3 defimg">
 											<label class ="h5"for="profile">프로필사진</label>
 											<div id="image_container">
 	                                <img id="preview" style="width: 50%;"/>
 	                            </div>
 											<input type="file" onchange="readURL(this);" class="form-control profile bg-white" name ="profileImg" id="profileImg" style="padding-left: 100px;">
 											</div>
-						<div class="form-textbox row signWrap w-100 flex-nowrap" style="text-align:center;">
+											<!-- 이미지 -->
+						<div class="form-textbox row signWrap w-100 flex-nowrap signbtn" style="text-align:center;">
 							<button type="submit" onclick="check()" class="submitSign w-50 btn btn-primary">회원가입</button>
 							<button type="button" onclick="location.href='/'" class="submitSign w-50 ms-2 btn btn-primary">가입취소</button>
 						</div>
