@@ -40,7 +40,8 @@ public class ReplyDto {
 	
 	
 	@QueryProjection
-	public ReplyDto(Long id,String replyContent,LocalDateTime regTime,Board board,Member member) {
+	public ReplyDto(Long id,String replyContent,LocalDateTime regTime,Board board,
+			Member member) {
 		this.id =id;
 		this.replyContent =replyContent;
 		this.regTime = regTime;

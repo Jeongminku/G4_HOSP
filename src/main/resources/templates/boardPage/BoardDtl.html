@@ -111,6 +111,7 @@
         
 		
 	}
+	
 	//=========================================================================
 	
  	function test() {
@@ -383,15 +384,15 @@
 	</div>
 		
 	<div th:each="reply , i : ${lists}"> 
-			
 		<!-- 댓글폼  -->
 		 <div class="card-body">
               <div class="d-flex">
                <div class="flex-shrink-0" ><img class="rounded-circle" th:src="${reply.member.imgUrl}" th:alt="${reply.member.imgOri}"  style="width: 100px"/></div>
                      <div class="ms-3">
                         <div>
-                        <div class="fw-bold" th:text="${reply.member.loginid}"></div>
-         
+               			<div class="fw-bold" th:text="${reply.member.loginid}"></div>
+               			<a onclick="saveComment()" th:id="comment+${i.index+1}">답글</a> 
+   			
                         <div th:if="${reply.member.loginid == #authentication.name}">
                         	<a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
                         	<a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
@@ -401,7 +402,7 @@
                          <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
                          <input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
                		</div>
-               		
+               	
           	 <div> 
           	 </div>
           	 

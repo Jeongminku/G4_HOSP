@@ -76,9 +76,9 @@
 	</div>
 	
 	
+	<div th:each="img, status:${HinfoBoard.hinfoImgDtoList}" style="text-align: center;"><img  th:alt="${img.oriImgName}" th:src="${img.imgUrl}"></div>
 <table class="table table align-middle">
   <thead>
-  <tr th:each="img, status:${HinfoBoard.hinfoImgDtoList}" ><img th:alt="${img.oriImgName}" th:src="${img.imgUrl}"></tr>
     <tr>
       <td style="white-space: pre-line;"><p class="text-start text-break fs-5 lh-base ">[[${HinfoBoard.content}]]</p></td>
     </tr>
