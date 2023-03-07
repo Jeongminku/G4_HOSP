@@ -275,7 +275,7 @@
 				aria-label="Page navigation example">
 				<ul class="pagination d-flex justify-content-center" id="pbn" name="pbn" onchange="send_pbn()">
 					<li class="page-item" th:classappend="${lists.first}?'disabled'">
-						<a th:href="@{'/Hinfo/HinfoMain' + '?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+						<a th:href="@{'/Hinfo/HinfoMain' + '?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number-1}+ '&pn=' + ${(hinfoBoardDto.pn == null ? 6 : hinfoBoardDto.pn)}}" class="page-link">
 							<span>이전</span>
 						</a>
 					</li>
@@ -283,7 +283,7 @@
 						<a class="page-link" th:inline="text" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${page-1} + '&pn=' + ${(hinfoBoardDto.pn == null ? 6 : hinfoBoardDto.pn)}}">[[${page}]]</a>
 					</li>
 					<li class="page-item" th:classappend="${lists.last}?'disabled'">
-						<a class="page-link" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+						<a class="page-link" th:href="@{'/Hinfo/HinfoMain' +'?searchQuery=' + ${hinfoSerchDto.searchQuery} + '&page=' + ${lists.number+1}+ '&pn=' + ${(hinfoBoardDto.pn == null ? 6 : hinfoBoardDto.pn)}}">다음</a>
 					</li>
 				</ul>
 			</nav>
