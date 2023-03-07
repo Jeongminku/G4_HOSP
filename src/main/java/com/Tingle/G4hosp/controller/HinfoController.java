@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,7 +46,7 @@ public class HinfoController {
 //	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
 	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
-	
+		
 		
 		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
 		
@@ -61,7 +62,7 @@ public class HinfoController {
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);	
-				
+		
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
@@ -154,41 +155,88 @@ public class HinfoController {
 	
 	//의학정보게시판의 글내용 수정 페이지로 넘겨줌
 	@GetMapping("/updatepage/{hinfoId}")
-	public String HinfoUpdateForm(@PathVariable("hinfoId") Long hinfoIdId,Model model) {
+	public String HinfoUpdateForm(@PathVariable("hinfoId") Long hinfoIdId,Model model
+			,Authentication authentication, HttpServletResponse resp) {
+		
+		if(authentication == null) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
+		}
+		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
+		
+		if(!hinfoBoardDto.getMember().getLoginid().equals(authentication.getName())
+			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다.",   "/Hinfo/" + hinfoBoardDto.getId() , resp);
+		}
+		
 		model.addAttribute("hinfoBoardDto",hinfoBoardDto);
 		return "HinfoPage/HinfoForm";
 	}
 	
 	//의학정보게시판 글내용 수정
 	@PostMapping("/updatepage/{hinfoId}")
-	public String HinfoUpdate(@PathVariable("hinfoId") Long hinfoId,@Valid HinfoBoardDto hinfoBoardDto,@RequestParam("HinfoImg") List<MultipartFile> itemImgFileList,BindingResult bindingResult,Model model) {
-
+	public String HinfoUpdate(@PathVariable("hinfoId") Long hinfoId,@Valid HinfoBoardDto hinfoBoardDto,@RequestParam("HinfoImg") List<MultipartFile> itemImgFileList,
+			BindingResult bindingResult,Model model,HttpServletResponse resp) {
+		
+		
 		try {
 			 hinfoBoardService.HinfoUpdate(hinfoId,itemImgFileList, hinfoBoardDto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return  "redirect:/Hinfo/{hinfoId}";
+		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/Hinfo/" + hinfoId  , resp);
+		
 	}
 	
-
-	@GetMapping("/deletepage/{hinfoId}")
-	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId,HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model) {
-
+	//게시글 삭제
+	@RequestMapping("/deletepage/{hinfoId}")
+	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId, 
+			@RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,
+			HinfoBoardDto hinfoBoardDto, Model model,
+			HttpServletResponse resp, Authentication authentication) {
+		
+		
+		
+		if(authentication == null) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
+		}
+		
+		hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoId);
+		
+		if(!hinfoBoardDto.getMember().getLoginid().equals(authentication.getName())
+			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다.",   "/Hinfo/" + hinfoId , resp);
+		}
+		
+		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
+		
+		Integer pbn = 6;
+		
+		if (pn != null) {
+			pbn = pn;
+		} else if (pn == null) {
+			pbn = 6;
+		}
+		
+		System.err.println("if 문 변환 후 :" + pbn);
+		
 		hinfoBoardService.HinfoDelete(hinfoId);
 		
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 6);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , pbn);
 		Page<HinfoListDto> list = hinfoBoardService.getHinfoMain(hinfoSerchDto,pageable);
 
 				
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
+		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
 		
-		return "HinfoPage/hinfoMain";
+		
+		return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/Hinfo/HinfoMain" , resp);
 	}
 	
 

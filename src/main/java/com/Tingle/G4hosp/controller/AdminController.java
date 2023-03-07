@@ -1,10 +1,7 @@
 package com.Tingle.G4hosp.controller;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
@@ -36,7 +34,6 @@ import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberService;
 import com.Tingle.G4hosp.service.QuickReservationService;
-
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/admin")
@@ -50,12 +47,10 @@ public class AdminController {
 	private final HospitalizeService hospitalizeService;
 	private final QuickReservationService quickReservationService;
 	private final AdminService adminService;
-	private final ChatService chatService;
-	
+	private final ChatService chatService;	
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
-
 	private final MedRepository medRepository;
 	private final MemberRepository memberRepository;
 	
@@ -66,9 +61,12 @@ public class AdminController {
 		return "adminPage/adminPage";
 	}
 	
-//	@ResponseBody
+	@RequestMapping( value ="/chart" , method = {RequestMethod.POST})
+	@ResponseBody AdminMainDto adminChart() {
+		
+		return adminService.getChartList();
+	}
 	
-
 //	===================================================================================
 	
 	// 진료과 입력 화면
@@ -232,6 +230,7 @@ public class AdminController {
 	}
 	
 	//=========================================== 기능 테스트
+	
 	//////test
 	@GetMapping("/test")
 	public String test(){
@@ -243,7 +242,6 @@ public class AdminController {
 		 System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
 		 System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
 		 System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
-
 		// 중간길 : 각 호실별 입원 인원 현황 	
 				
 		for(int i=0; i<adminMainDtot.getHosptalizedEachMedname().size(); i++) {
@@ -256,14 +254,13 @@ public class AdminController {
 			System.err.println(adminMainDtot.getHosptalizedEachWardname().get(i)+"호실 현재 입원 환자 수 : "+adminMainDtot.getHosptalizedEachWard().get(i));
 		}
 		
-
 		
 		
 //		String test = "내";
 //	
 //		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
 //		
-//		// 이름으로 의사 검색 
+//		// 이름으로 의사 검색
 //		List<Member> list = memberRepository.getdoctorbysearch(test);
 //
 //		// 의사가 속해있는 과 검색 및 dto 추가
@@ -291,7 +288,7 @@ public class AdminController {
 //			medmemlistc.add(memlist);
 //		}	
 //		
-//		// 이름 검색, 과 검색 중복제거 
+//		// 이름 검색, 과 검색 중복제거
 //		for(int i=0; i<list.size(); i++) {
 //			for(int j =0; j<medmemlist.size(); j++) {
 //				if(list.get(i).getName() == medmemlist.get(j).getName()) {
@@ -312,17 +309,15 @@ public class AdminController {
 //			System.err.println("과 검색 후 의사 정보 리스트 "+ ad.getSearchdoctormedname());
 //			System.err.println("과 검색 후 의사 정보 리스트 "+ ad.getSearchdoctor().getName());		
 //		}
-
 			
 		
 		String test = "내";
 	
 		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
 		
-		// 이름으로 의사 검색 
+		// 이름으로 의사 검색
 		List<Member> list = memberRepository.getdoctorbysearch(test);
 		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
-
 		// 의사가 속해있는 과 검색 및 dto 추가
 		for(int i=0; i<list.size(); i++) {
 			AdminMainDto adminMainDto = new AdminMainDto();
@@ -342,8 +337,7 @@ public class AdminController {
 			System.err.println("진료과명 : "+m.getSearchDocMedName());
 		}
 		
-		return "adminPage/adminPage"; 
+		return "adminPage/adminPage";
 	}
-
 	
 }

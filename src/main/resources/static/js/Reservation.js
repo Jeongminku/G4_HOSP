@@ -26,6 +26,7 @@ let calendatBaseObj = {
         center:'',
         end: "title",
     },
+    dayMaxEventRows: true,
     initialView: 'dayGridMonth',
     timeZone: 'local',
     locale: 'kr',
@@ -34,12 +35,11 @@ let calendatBaseObj = {
     validRange: {
         start: new Date()
     },
-    select: function (arg) {
-        
+    select: function (arg) {},
+    eventClick: function (info) { 
+
     },
-    eventClick: function (info) {
-        
-    },
+    
 }
 const path = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
 
@@ -48,7 +48,20 @@ if (path == 'setNotAvailDay') {
         setNotAvailDay(arg);
     };
 } else if(path == 'listView') {
-    
+    calendatBaseObj.eventClick = (info) => {
+        console.log(info)
+        const eventDate = info.event._instance.range.start;
+        const eventTitle = info.event._def.title;
+        const eventTime = eventTitle.substring(0, 5);
+        const eventMonth = eventDate.getMonth() + 1 < 10 ? "0" + (eventDate.getMonth() + 1) : eventDate.getMonth() + 1;
+        const deleteCheck = confirm(eventDate.getFullYear() + "년 " + eventMonth + "월 " + eventDate.getDate() + "일\n" + eventTime + "시의 예약을 취소하시겠습니까?")
+        if (deleteCheck) {
+            const delForm = $(document).find('#deleteForm');
+            delForm.find('input[name="reservationId"]').val(info.event._def.publicId)
+            console.log( delForm.find('input[name="reservationId"]').val())
+            delForm.submit();
+        }
+    }
 } else {
     calendatBaseObj.select = (arg) => {
         selectReservationDate(arg);
@@ -78,22 +91,22 @@ function disableNotAvailDay() {
 
 function disableTakenTime(day) {
     const takenTimeList = reservationViewPatDto.takenTime;
+    let timeNum = 9;
+    $('label').each(function () {
+        $(this).removeClass('taken');
+        if (timeNum < 13) {
+            $(this).text('오전 ' + timeNum + '시');
+            timeNum += 1;
+        } else {
+            $(this).text('오후 ' + (timeNum - 12) + '시');
+            timeNum += 1;
+        }
+    })
     takenTimeList.forEach(arr => {
         let dayStr = arr.substring(0, arr.indexOf('T'));
         let timeStr = arr.substring(arr.indexOf('T') + 1);
         $('input[name="time"]').each(function () {
             $(this).attr('disabled', false)
-        })
-        let timeNum = 9;
-        $('label').each(function () {
-            $(this).removeClass('taken');
-            if (timeNum < 13) {
-                $(this).text('오전 ' + timeNum + '시');
-                timeNum += 1;
-            } else {
-                $(this).text('오후 ' + (timeNum - 12) + '시');
-                timeNum += 1;
-            }
         })
         if (day == dayStr) {
             $('input[id="' + timeStr + '"]').attr('disabled', true);

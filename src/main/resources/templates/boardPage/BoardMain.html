@@ -200,19 +200,16 @@ a:hover {
 								<div class="job-box-filter">
 									<div class="row">
 										<div class="col-md-6 col-sm-6">
-											<label>Show <select name="datatable_length"
-												class="form-control input-sm">
-													<option value="10">10</option>
-													<option value="25">25</option>
-													<option value="50">50</option>
-													<option value="100">100</option>
-											</select> entries
-											</label>
+						
 										</div>
 										<div class="col-md-6 col-sm-6">
-											<div class="filter-search-box text-right">
-												<label>Search:<input type="search"
-													class="form-control input-sm" placeholder=""></label>
+														<div class="filter-search-box text-right">
+												
+												<form class="d-flex" role="search" th:action="@{/board/main}" method="get">
+													<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
+													<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
+												</form>
+												
 											</div>
 										</div>
 									</div>
@@ -231,12 +228,12 @@ a:hover {
 													<div class="message-body-heading">
 												
 														<h5 th:if= "${list.boardSecret.name() == 'False'}"
-														 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
+														 th:href="'/board/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
 															[[${list.title}]]</a>
 														</h5>
 														
 														<h5 th:unless= "${list.boardSecret.name() == 'False'}"
-														 th:href="'/Hinfo/' +${list.id}">
+														 th:href="'/board/' +${list.id}">
 														
 														 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
 														 

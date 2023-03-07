@@ -104,12 +104,12 @@
 							</a>
 						</li>
 						<li class="nav-item w-100" sec:authorize="isAuthenticated()">
-							<a href="/members/modify">
+							<a href="/members/myPage">
 								<p>마이페이지</p>
 							</a>
 						</li>
 						<li class="nav-item w-100" sec:authorize="hasRole('CLIENT')">
-							<a href="/members/login">
+							<a href="/reservation/listView">
 								<p>나의 예약</p>
 							</a>
 						</li>
@@ -131,8 +131,6 @@
 						<li class="nav-item w-100" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
 							<a href="/admin/qlist">
 								<span id ="alert-message" class="alertbox" style="color: #205B8A; font-weight: bold; display: none; position: absolute; top: 10px;"></span>
-								<span id="alert-icon" style="display: none;">
-								<img alt="" src="/images/icons8-bell.gif" width="30px"></span>
 								<span id="nonalert-icon"><i class="fa-sharp fa-solid fa-bell"></i> </span>
 							</a>	
 						</li>

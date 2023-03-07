@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,7 @@ public class MemberController {
 	private final ReservationService reservationService;
 	private final MemberMedService memberMedService;
 	private final MedRepository medRepository;
+	
 
 	
 	// 로그인 화면
@@ -90,7 +92,8 @@ public class MemberController {
 			//System.err.println(memberFormDto.getMedId());
 			if (bindingResult.hasErrors()) {
 				return "member/memberClientForm";
-			}
+			} 
+			
 			try {
 				memberService.saveMember(memberFormDto, file);
 			} catch (Exception e) {
@@ -155,37 +158,6 @@ public class MemberController {
 					return "redirect:/";
 				}
 		
-		
-//	회원가입선택테스트 끝	
-
-				/*
-	// 회원가입 화면
-	@GetMapping(value = "/new")
-	public String memberForm(Model model) {
-		MemberFormDto dto = new MemberFormDto();
-		dto.setMed(medService.getMedList());
-		model.addAttribute("memberFormDto", dto);
-		return "member/memberForm";
-	}
-
-	// 회원가입 버튼 클릭
-	@PostMapping(value = "/new")
-	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-			@RequestParam("profileImg") MultipartFile file) {
-		//System.err.println(memberFormDto.getMedId());
-		if (bindingResult.hasErrors()) {
-			return "member/memberForm";
-		}
-		try {
-			memberService.saveMember(memberFormDto, file);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", e.getMessage());
-			return "member/memberForm";
-		}
-		return "redirect:/";
-	}
-	*/
 	
 	@GetMapping("/new/{loginid}")
 	public @ResponseBody ResponseEntity<Integer> idCheck(@PathVariable("loginid") String loginid) {
@@ -281,15 +253,37 @@ public class MemberController {
 		return "ReservationPage/ViewReservation";
 	}
 
+	@GetMapping(value ="/myPage")
+	public String memberMypage() {
+		return "member/memberMyPage";
+	}
+	
+	@GetMapping(value ="/archive")
+	public String memberArchive(MemberFormDto memberFormDto, Principal principal, Model model) {
+		String loginId = principal.getName();
+		Member member = memberService.findByLoginid(loginId);
+		memberFormDto = memberService.checkARdateandMedname(memberFormDto, member);
+		System.err.println("컨트롤러 환자 진료 일자 리스트 출력 테스트 : "+ memberFormDto.getArchivedate());
+		System.err.println("컨트롤러 환자 내원 과 리스트 출력 테스트 : "+ memberFormDto.getMedname());
+		
+		if(memberFormDto.getArchivedate() != null) {
+			model.addAttribute("memberArchiveDate",memberFormDto.getArchivedate());
+			model.addAttribute("memberArchiveMed", memberFormDto.getMedname());
+			model.addAttribute("memberArchive", memberFormDto.getArchive());			
+		}
+		
+		return "member/memberArchive";
+	}
+	
 	@GetMapping(value = "/modify")
 	public String memberModify(Model model, Principal principal) {
 		String loginId = principal.getName();
 		Member member = memberService.findByLoginid(loginId);
+		
 		Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
 		
-		
-		
 		MemberFormDto memberFormDto = new MemberFormDto();
+		
 		if(med != null) {
 			List<Med> medlist = medService.getTesListNotMy(med.getMedId());
 //			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
