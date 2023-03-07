@@ -130,7 +130,7 @@
 		
 		function drawBasic2() {
 		var data = new google.visualization.DataTable();
-		data.addColumn('string', '입원실');
+		data.addColumn('string', '입원실(호)');
 		data.addColumn('number', '입원환자 수(명)');
 		
         for( var i = 0; i < t3.length; i ++) {
@@ -154,7 +154,7 @@
 			var options = {
 				title: '각 호실별 입원 현황',
 				hAxis: {
-				title: '입원실',
+				title: '입원실(호)',
 				viewWindow: {
 					min: [7, 30, 0],
 					max: [17, 30, 0]
