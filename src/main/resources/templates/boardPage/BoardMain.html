@@ -5,285 +5,278 @@
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>
+	<style th:inline="text">
+	
+	/*================================
+	Filter Box Style
+	====================================*/
+	.job-box-filter label {
+		width: 100%;
+	}
+	
+	.job-box-filter select.input-sm {
+		display: inline-block;
+		max-width: 120px;
+		margin: 0 5px;
+		border: 1px solid #e8eef1;
+		border-radius: 2px;
+		height: 34px;
+		font-size: 15px;
+	}
+	
+	.job-box-filter label input.form-control {
+		max-width: 200px;
+		display: inline-block;
+		border: 1px solid #e8eef1;
+		border-radius: 2px;
+		height: 34px;
+		margin-left: 5px;
+		font-size: 15px;
+	}
+	
+	.text-right {
+		text-align: right;
+	}
+	
+	.job-box-filter {
+		padding: 12px 15px;
+		background: #ffffff;
+		border-bottom: 1px solid #e8eef1;
+		margin-bottom: 20px;
+	}
+	
+	.job-box {
+		background: #ffffff;
+		display: inline-block;
+		width: 100%;
+		padding: 0 0px 40px 0px;
+		border: 1px solid #e8eef1;
+	}
+	
+	.job-box-filter a.filtsec {
+		margin-top: 8px;
+		display: inline-block;
+		margin-right: 15px;
+		padding: 4px 10px;
+		font-family: 'Quicksand', sans-serif;
+		transition: all ease 0.4s;
+		background: #edf0f3;
+		border-radius: 50px;
+		font-size: 13px;
+		color: #81a0b1;
+		border: 1px solid #e2e8ef;
+	}
+	
+	.job-box-filter a.filtsec.active {
+		color: #ffffff;
+		background: #16262c;
+		border-color: #16262c;
+	}
+	
+	.job-box-filter a.filtsec i {
+		color: #03A9F4;
+		margin-right: 5px;
+	}
+	
+	.job-box-filter a.filtsec:hover, .job-box-filter a.filtsec:focus {
+		color: #ffffff;
+		background: #07b107;
+		border-color: #07b107;
+	}
+	
+	.job-box-filter a.filtsec:hover i, .job-box-filter a.filtsec:focus i {
+		color: #ffffff;
+	}
+	
+	.job-box-filter h4 i {
+		margin-right: 10px;
+	}
+	
+	/*=====================================
+	Inbox Message Style
+	=======================================*/
+	.inbox-message ul {
+		padding: 0;
+		margin: 0;
+	}
+	
+	.inbox-message ul li {
+		list-style: none;
+		position: relative;
+		padding: 15px 20px;
+		border-bottom: 1px solid #e8eef1;
+	}
+	
+	.inbox-message ul li:hover, .inbox-message ul li:focus {
+		background: #eff6f9;
+	}
+	
+	.inbox-message .message-avatar {
+		position: absolute;
+		left: 30px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	
+	.message-avatar img {
+		display: inline-block;
+		width: 54px;
+		height: 54px;
+		border-radius: 50%;
+	}
+	
+	.inbox-message .message-body {
+		margin-left: 85px;
+		font-size: 15px;
+		color: #62748F;
+	}
+	
+	.message-body-heading h5 {
+		font-weight: 600;
+		display: inline-block;
+		color: #62748F;
+		margin: 0 0 7px 0;
+		padding: 0;
+	}
+	
+	.message-body h5 span {
+		border-radius: 50px;
+		line-height: 14px;
+		font-size: 12px;
+		color: #fff;
+		font-style: normal;
+		padding: 4px 10px;
+		margin-left: 5px;
+		margin-top: -5px;
+	}
+	
+	.message-body h5 span.unread {
+		background: #07b107;
+	}
+	
+	.message-body h5 span.important {
+		background: #dd2027;
+	}
+	
+	.message-body h5 span.pending {
+		background: #2196f3;
+	}
+	
+	.message-body-heading span {
+		float: right;
+		color: #62748F;
+		font-size: 14px;
+	}
+	
+	.messages-inbox .message-body p {
+		margin: 0;
+		padding: 0;
+		line-height: 27px;
+		font-size: 15px;
+	}
+	
+	a:hover {
+		text-decoration: none;
+	}
+	
+	.p-content {
+		 overflow: hidden;
+		text-overflow: p-content;
+		  display: -webkit-box;
+		-webkit-line-clamp: 2;
+		 -webkit-box-orient: vertical;
+	}
+	</style>		
 </head>
 <body>
-	<div layout:fragment="content">
-<style th:inline="text">
+	<section layout:fragment="content">
 
-/*================================
-Filter Box Style
-====================================*/
-.job-box-filter label {
-	width: 100%;
-}
+	<h3>고객 게시판</h3><br><hr><br>
 
-.job-box-filter select.input-sm {
-	display: inline-block;
-	max-width: 120px;
-	margin: 0 5px;
-	border: 1px solid #e8eef1;
-	border-radius: 2px;
-	height: 34px;
-	font-size: 15px;
-}
-
-.job-box-filter label input.form-control {
-	max-width: 200px;
-	display: inline-block;
-	border: 1px solid #e8eef1;
-	border-radius: 2px;
-	height: 34px;
-	margin-left: 5px;
-	font-size: 15px;
-}
-
-.text-right {
-	text-align: right;
-}
-
-.job-box-filter {
-	padding: 12px 15px;
-	background: #ffffff;
-	border-bottom: 1px solid #e8eef1;
-	margin-bottom: 20px;
-}
-
-.job-box {
-	background: #ffffff;
-	display: inline-block;
-	width: 100%;
-	padding: 0 0px 40px 0px;
-	border: 1px solid #e8eef1;
-}
-
-.job-box-filter a.filtsec {
-	margin-top: 8px;
-	display: inline-block;
-	margin-right: 15px;
-	padding: 4px 10px;
-	font-family: 'Quicksand', sans-serif;
-	transition: all ease 0.4s;
-	background: #edf0f3;
-	border-radius: 50px;
-	font-size: 13px;
-	color: #81a0b1;
-	border: 1px solid #e2e8ef;
-}
-
-.job-box-filter a.filtsec.active {
-	color: #ffffff;
-	background: #16262c;
-	border-color: #16262c;
-}
-
-.job-box-filter a.filtsec i {
-	color: #03A9F4;
-	margin-right: 5px;
-}
-
-.job-box-filter a.filtsec:hover, .job-box-filter a.filtsec:focus {
-	color: #ffffff;
-	background: #07b107;
-	border-color: #07b107;
-}
-
-.job-box-filter a.filtsec:hover i, .job-box-filter a.filtsec:focus i {
-	color: #ffffff;
-}
-
-.job-box-filter h4 i {
-	margin-right: 10px;
-}
-
-/*=====================================
-Inbox Message Style
-=======================================*/
-.inbox-message ul {
-	padding: 0;
-	margin: 0;
-}
-
-.inbox-message ul li {
-	list-style: none;
-	position: relative;
-	padding: 15px 20px;
-	border-bottom: 1px solid #e8eef1;
-}
-
-.inbox-message ul li:hover, .inbox-message ul li:focus {
-	background: #eff6f9;
-}
-
-.inbox-message .message-avatar {
-	position: absolute;
-	left: 30px;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.message-avatar img {
-	display: inline-block;
-	width: 54px;
-	height: 54px;
-	border-radius: 50%;
-}
-
-.inbox-message .message-body {
-	margin-left: 85px;
-	font-size: 15px;
-	color: #62748F;
-}
-
-.message-body-heading h5 {
-	font-weight: 600;
-	display: inline-block;
-	color: #62748F;
-	margin: 0 0 7px 0;
-	padding: 0;
-}
-
-.message-body h5 span {
-	border-radius: 50px;
-	line-height: 14px;
-	font-size: 12px;
-	color: #fff;
-	font-style: normal;
-	padding: 4px 10px;
-	margin-left: 5px;
-	margin-top: -5px;
-}
-
-.message-body h5 span.unread {
-	background: #07b107;
-}
-
-.message-body h5 span.important {
-	background: #dd2027;
-}
-
-.message-body h5 span.pending {
-	background: #2196f3;
-}
-
-.message-body-heading span {
-	float: right;
-	color: #62748F;
-	font-size: 14px;
-}
-
-.messages-inbox .message-body p {
-	margin: 0;
-	padding: 0;
-	line-height: 27px;
-	font-size: 15px;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-.p-content {
- 	overflow: hidden;
-	text-overflow: p-content;
-  	display: -webkit-box;
-	-webkit-line-clamp: 2;
- 	-webkit-box-orient: vertical;
-}
-</style>		
-		
-		
-			<section layout:fragment="content">
-
-			<h3>고객 게시판</h3><br><hr><br>
-
-							<div class="job-box">
-								<div class="job-box-filter">
-									<div class="row">
-										<div class="col-md-6 col-sm-6">
-						
-										</div>
-										<div class="col-md-6 col-sm-6">
-														<div class="filter-search-box text-right">
-												
-												<form class="d-flex" role="search" th:action="@{/board/main}" method="get">
-													<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
-													<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
-												</form>
-												
-											</div>
-										</div>
+					<div class="job-box">
+						<div class="job-box-filter">
+							<div class="row">
+								<div class="col-md-6 col-sm-6">
+				
+								</div>
+								<div class="col-md-6 col-sm-6">
+												<div class="filter-search-box text-right">
+										
+										<form class="d-flex" role="search" th:action="@{/board/main}" method="get">
+											<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
+											<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
+										</form>
+										
 									</div>
 								</div>
-								<div class="inbox-message">
-									<ul th:each="list , i : ${lists.getContent()}">							
-										</li>
-										<li>
-										<a href="#">
-												<div class="message-avatar">
-													<img
-														th:src="${list.member.imgUrl}"
-														th:alt="${list.member.imgOri}">
-												</div>
-												<div class="message-body">
-													<div class="message-body-heading">
-												
-														<h5 th:if= "${list.boardSecret.name() == 'False'}"
-														 th:href="'/board/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
-															[[${list.title}]]</a>
-														</h5>
-														
-														<h5 th:unless= "${list.boardSecret.name() == 'False'}"
-														 th:href="'/board/' +${list.id}">
-														
-														 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
-														 
-														
-														 <a  th:unless="${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">[[${list.title}]]</a>
-														 
-														</h5>
-														
-
-														<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-													</div>
-													<p class="p-content"></p><br>
-													<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]] &nbsp; 댓글 : [[${list.replyCount}]]</p>
-												</div>
-										</a>
-										</li>
-
-									</ul>
-								</div>
 							</div>
-				<button style="float: right;" class="btn btn-primary" onClick="location.href='/board/write'" sec:authorize="isAuthenticated()">글쓰기</button>
-							<nav
-			th:with="start=${(lists.number/maxPage)*maxPage + 1}
-			,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
-			aria-label="Page navigation example">
-			<ul class="pagination d-flex justify-content-center">
-				<li class="page-item" th:classappend="${lists.first}?'disabled'">
-					<a th:href="@{'/board/main' + '?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
-						<span>이전</span>
-					</a>
-				</li>
-				<li class="page-item"
-					th:each="page: ${#numbers.sequence(start, end)}"
-					th:classappend="${lists.number eq page-1}?'active':''">
-					<a class="page-link" th:inline="text"
-					th:href="@{'/board/main' +'?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
-				</li>
-				<li class="page-item" th:classappend="${lists.last}?'disabled'">
-					<a class="page-link"
-					th:href="@{'/board/main' +'?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
-				</li>
-			</ul>
-		
-		</nav>
-			
-			
-		</section>
-		
+						</div>
+						<div class="inbox-message">
+							<ul th:each="list , i : ${lists.getContent()}">							
+								</li>
+								<li>
+								<a href="#">
+										<div class="message-avatar">
+											<img
+												th:src="${list.member.imgUrl}"
+												th:alt="${list.member.imgOri}">
+										</div>
+										<div class="message-body">
+											<div class="message-body-heading">
+										
+												<h5 th:if= "${list.boardSecret.name() == 'False'}"
+												 th:href="'/board/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
+													[[${list.title}]]</a>
+												</h5>
+												
+												<h5 th:unless= "${list.boardSecret.name() == 'False'}"
+												 th:href="'/board/' +${list.id}">
+												
+												 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
+												 
+												
+												 <a  th:unless="${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">[[${list.title}]]</a>
+												 
+												</h5>
+												
 
-		
-	</div>
+												<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+											</div>
+											<p class="p-content"></p><br>
+											<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]] &nbsp; 댓글 : [[${list.replyCount}]]</p>
+										</div>
+								</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+		<button style="float: right;" class="btn btn-primary" onClick="location.href='/board/write'" sec:authorize="isAuthenticated()">글쓰기</button>
+					<nav
+	th:with="start=${(lists.number/maxPage)*maxPage + 1}
+	,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"
+	aria-label="Page navigation example">
+	<ul class="pagination d-flex justify-content-center">
+		<li class="page-item" th:classappend="${lists.first}?'disabled'">
+			<a th:href="@{'/board/main' + '?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${lists.number-1}}" class="page-link">
+				<span>이전</span>
+			</a>
+		</li>
+		<li class="page-item"
+			th:each="page: ${#numbers.sequence(start, end)}"
+			th:classappend="${lists.number eq page-1}?'active':''">
+			<a class="page-link" th:inline="text"
+			th:href="@{'/board/main' +'?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${page-1}}">[[${page}]]</a>
+		</li>
+		<li class="page-item" th:classappend="${lists.last}?'disabled'">
+			<a class="page-link"
+			th:href="@{'/board/main' +'?searchQuery=' + ${boardSerchDto.searchQuery} + '&page=' + ${lists.number+1}}">다음</a>
+		</li>
+	</ul>
+
+</nav>
+	
+	
+	</section>
 </body>
 </html>
