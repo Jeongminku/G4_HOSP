@@ -135,6 +135,13 @@ public class MemberService implements UserDetailsService{
 		 }
 		 member.updateMember(memberFormDto, passwordEncoder);
 	 }
+	 
+	 public MemberFormDto checkARdateandMedname(MemberFormDto memberFormDto, Member member) {
+		 Long memid = member.getId();
+		 memberRepository.viewpatientArDateandMedname(memberFormDto, memid);
+		 return memberFormDto;
+	 }
+	 
 	 public List<Member> findMListbyMname(String memberName){
 		 return memberRepository.findMListbyMname(memberName);
 	 }
