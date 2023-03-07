@@ -289,11 +289,13 @@ public class MemberController {
 //			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
 			memberFormDto.setMed(medlist);			
 		}
+		// 환자별 내원일자, 내원 과 조회
+		memberFormDto = memberService.checkARdateandMedname(memberFormDto, member);		
+		System.err.println("컨트롤러 환자 진료 일자 리스트 출력 테스트 : "+ memberFormDto.getArchivedate());
+		System.err.println("컨트롤러 환자 내원 과 리스트 출력 테스트 : "+ memberFormDto.getMedname());
 
 		model.addAttribute("memberFormDto",memberFormDto);
 		model.addAttribute("modiMember", member);
-		
-		
 		MemberMed memberMed = memberMedService.findMemberMed(member.getId());
 		model.addAttribute("memberMed", memberMed);
 		

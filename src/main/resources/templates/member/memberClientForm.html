@@ -15,128 +15,125 @@
 			}
 
 		});
-	
 
-//이용약관 동의
-function check(){
-		var form = document.resvform;
-		var checkbox = document.getElementById('checkok');
-		console.log(checkbox.checked);
-		var form = document.resvform;
-		
-		
-		if(checkbox.checked == false){
-			alert("서비스 이용약관 및 개인정보 취급방침에 동의하셔야 회원가입을 진행할 수 있습니다.");
-			form.action ="/members/new/client"
-			form.method = "get"
-			//form.submit(); 
+		//이용약관 동의
+		function check(){
+				var form = document.resvform;
+				var checkbox = document.getElementById('checkok');
+				console.log(checkbox.checked);
+				var form = document.resvform;
 				
-			//return false;
-		}else{
-			/* alert("11"); */
-			form.submit();
-		}
+				
+				if(checkbox.checked == false){
+					alert("서비스 이용약관 및 개인정보 취급방침에 동의하셔야 회원가입을 진행할 수 있습니다.");
+					form.action ="/members/new/client"
+					form.method = "get"
+					//form.submit(); 
+						
+					//return false;
+				}else{
+					/* alert("11"); */
+					form.submit();
+				}
+				
+			}
 		
-	}
 		
-		
-	// 생일 유효성 검사
+		// 생일 유효성 검사
 		var birth = $('#birth');
 		
 		// 생년월일	birth 유효성 검사
-			function test(){
-			var dateStr = $('#birth').val();	
-			console.log(dateStr);
-			
-			var year = Number(dateStr.substr(0,4)); // 입력한 값의 0~4자리까지 (연)
-			var month = Number(dateStr.substr(4,2)); // 입력한 값의 4번째 자리부터 2자리 숫자 (월)
-			var day = Number(dateStr.substr(6,2)); // 입력한 값 6번째 자리부터 2자리 숫자 (일)
-			var today = new Date(); // 날짜 변수 선언
-			var yearNow = today.getFullYear(); // 올해 연도 가져옴
-			
-			if(dateStr.length<8 || dateStr.length>8){
-				$('#birth_check').text('생년월일은 19990909형식의 8자로 작성해주세요.');
-			}else if(dateStr.length = 8){
-				$('#birth_check').text('생년월일 형식이 일치합니다.');
-				$('#birth_check').css('color', 'green');
-			}	// 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환합니다.
-				else  if (1900 > year || year > yearNow){	
-				}else if (month < 1 || month > 12) {
-							
-					$('#birth_check').text('생년월일을 확인해주세요.');
-					$('#birth_check').css('color', 'red');
-				
-				}else if (day < 1 || day > 31) {
-					
-					$('#birth_check').text('생년월일을 확인해주세요.');
-					$('#birth_check').css('color', 'red');
-					
-					}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-					
-					$('#birth_check').text('생년월일을 확인해주세요.');
-					$('#birth_check').css('color', 'red');
-					
-					}else if (month == 2) {
-					
-					var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-					
-					if (day>29 || (day==29 && !isleap)) {
+		function test(){
+		var dateStr = $('#birth').val();	
+		console.log(dateStr);
+		
+		var year = Number(dateStr.substr(0,4)); // 입력한 값의 0~4자리까지 (연)
+		var month = Number(dateStr.substr(4,2)); // 입력한 값의 4번째 자리부터 2자리 숫자 (월)
+		var day = Number(dateStr.substr(6,2)); // 입력한 값 6번째 자리부터 2자리 숫자 (일)
+		var today = new Date(); // 날짜 변수 선언
+		var yearNow = today.getFullYear(); // 올해 연도 가져옴
+		
+		if(dateStr.length<8 || dateStr.length>8){
+			$('#birth_check').text('생년월일은 19990909형식의 8자로 작성해주세요.');
+		}else if(dateStr.length = 8){
+			$('#birth_check').text('생년월일 형식이 일치합니다.');
+			$('#birth_check').css('color', 'green');
+		}	// 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환합니다.
+			else  if (1900 > year || year > yearNow){	
+			}else if (month < 1 || month > 12) {
 						
-						$('#birth_check').text('생년월일을 확인해주세요.');
-						$('#birth_check').css('color', 'red');
+				$('#birth_check').text('생년월일을 확인해주세요.');
+				$('#birth_check').css('color', 'red');
+			
+			}else if (day < 1 || day > 31) {
+				
+				$('#birth_check').text('생년월일을 확인해주세요.');
+				$('#birth_check').css('color', 'red');
+				
+				}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+				
+				$('#birth_check').text('생년월일을 확인해주세요.');
+				$('#birth_check').css('color', 'red');
+				
+				}else if (month == 2) {
+				
+				var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+				
+				if (day>29 || (day==29 && !isleap)) {
 					
-					}else{
-						$('#birth_check').text('');
-						birth = true;
-					}//end of if (day>29 || (day==29 && !isleap))
-					
+					$('#birth_check').text('생년월일을 확인해주세요.');
+					$('#birth_check').css('color', 'red');
 				
 				}else{
-					
-					$('#birth_check').text(''); 
+					$('#birth_check').text('');
 					birth = true;
-				}//end of if
+				}//end of if (day>29 || (day==29 && !isleap))
 				
-				};
+			
+			}else{
 				
-				//ID 중복체크
+				$('#birth_check').text(''); 
+				birth = true;
+			}//end of if
+			
+			};
+			
+			//ID 중복체크
+			
+			var loginid = $('#loginid');
+			
+			function chk() {
+				var loginid = $('#loginid').val();
+				var url = "/members/new/" + loginid;
 				
-				var loginid = $('#loginid');
-				
-				function chk() {
-					var loginid = $('#loginid').val();
-					var url = "/members/new/" + loginid;
-					
-					if (loginid != '') {
-						$.ajax({
-							type: 'GET',
-							url : url,
-							dataType : 'json',
-							cache : false,
-							success : function(result) {
-								if (result == 0) {
-									$('#chk_result').text('사용가능한 아이디입니다.');
-									$('#chk_result').css('color', 'green');
-								} else {
-									$('#chk_result').text('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
-									$('#chk_result').css('color', 'red');
-								}
-							},
-							error : function(a,b,c) {
-								console.log(a,b,c);
+				if (loginid != '') {
+					$.ajax({
+						type: 'GET',
+						url : url,
+						dataType : 'json',
+						cache : false,
+						success : function(result) {
+							if (result == 0) {
+								$('#chk_result').text('사용가능한 아이디입니다.');
+								$('#chk_result').css('color', 'green');
+							} else {
+								$('#chk_result').text('이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.');
+								$('#chk_result').css('color', 'red');
 							}
-						});
-					} else {
-						$('#chk_result').text('아이디는 필수입력값입니다.');
-						$('#chk_result').css('color', 'red');
-						$('#loginid').focus();
-					}
-				};
-
+						},
+						error : function(a,b,c) {
+							console.log(a,b,c);
+						}
+					});
+				} else {
+					$('#chk_result').text('아이디는 필수입력값입니다.');
+					$('#chk_result').css('color', 'red');
+					$('#loginid').focus();
+				}
+			};
 	</script>
 	<!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-	<style>
+	<style th:inline="text">
 .wrap {
 	width: 100%;
 	margin: 0 auto;
@@ -200,15 +197,14 @@ function check(){
 .pnamein {
 	width: 80%;
 }
-.table{
-}
+
 
 .table tr{
 	text-align: left;
 }
 
 .but{
-	background: #205B8A;
+	background: #226597;
 	color: white;
 }
 
@@ -217,8 +213,7 @@ function check(){
 	margin-bottom: 25px;
 }
 
-</style>
-</th:block>
+	</style>
 </head>
 <body>
 	<section layout:fragment="content" class="login spad">
@@ -398,9 +393,7 @@ function check(){
 								</div>	
 										
 							</div>			
-				<!-- 		</form> -->
-							<!-- <div class="sign-up-content"> -->
-				<!-- <form action="/members/new/client" method="post" th:object="${memberFormDto}" enctype="multipart/form-data"> -->
+
 				<div class="col-md-12 viewlinebox">
 								<div class="privateagree">
 					<div class="signup">

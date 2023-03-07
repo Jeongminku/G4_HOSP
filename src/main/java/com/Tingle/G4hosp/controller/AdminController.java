@@ -242,7 +242,8 @@ public class AdminController {
 		 System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
 		 System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
 		 System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
-		// 중간길 : 각 호실별 입원 인원 현황 	
+
+		 // 중간길 : 각 호실별 입원 인원 현황 	
 				
 		for(int i=0; i<adminMainDtot.getHosptalizedEachMedname().size(); i++) {
 			System.err.println("과 이름 목록 테스트 : "+adminMainDtot.getHosptalizedEachMedname().get(i));

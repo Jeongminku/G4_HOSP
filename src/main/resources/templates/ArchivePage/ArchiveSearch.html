@@ -1,153 +1,143 @@
 <!DOCTYPE html>
 
-<!-- layout이 적용되어있는 페이지 폼 입니다. 
-		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8" />
-<title>환자 조회 페이지입니다.</title>
+<title>순양병원</title>
 
 <!-- THYMELEAF JS  -->
-<th:block layout:fragment="script">
 	<script th:inline="javascript">
-	$(document).ready(function(){
-    	var errorMessage = [[${errorMessage}]];
-    	console.log(errorMessage);
-    	if(errorMessage != null){
-        	alert(errorMessage);
-    	}
-	return false;
-	});
-    
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]];
+			console.log(errorMessage);
+			if(errorMessage != null){
+				alert(errorMessage);
+			}
+		return false;
+		});
 	</script>
-</th:block>
 
 <!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-	<style>
+	<style th:inline="text">
 
-section{
-}	
+
+		section{
+		}	
 	
 .wrap {
 	width: 80%;
 	margin: 0 auto;
 }
 
-.headwrap{
-	margin: 0 auto;
-}
-.viewhead{
-	text-align: center;
-	margin-bottom: 10px;
-}
-.viewlineboxup {
-	border-top: 3px solid black;
-}
+		.headwrap{
+		margin: 0 auto;
+		}
+		.viewhead{
+		text-align: center;
+		margin-bottom: 10px;
+		}
+		.viewlineboxup {
+		border-top: 3px solid black;
+		}
 
-.viewlinebox {
-	border: 1px solid black;
-	text-align: center;
-}
-.linemenu{
-	height: 50px;
-	text-align: center;
-	display: table;
-	margin-bottom: 15px;
-}
-.tablemenu{
-	border: 1px solid;
-	background-color: white;
-	padding: 15px;
-}
-.detailbody {
-	border: none;
-}
+		.viewlinebox {
+		border: 1px solid black;
+		text-align: center;
+		}
+		.linemenu{
+		height: 50px;
+		text-align: center;
+		display: table;
+		margin-bottom: 15px;
+		}
+		.tablemenu{
+		border: 1px solid;
+		background-color: white;
+		padding: 15px;
+		}
+		.detailbody {
+		border: none;
+		}
 
-.table_con{
-margin-top: 10px;
-text-align: center;
-}
+		.table_con{
+		margin-top: 10px;
+		text-align: center;
+		}
 
-.cont_img{
-	width: 15%;
-}
+		.cont_img{
+		width: 15%;
+		}
 
-.patientlist{
-	text-align: center;
-}
+		.patientlist{
+		text-align: center;
+		}
 
-.pnamein{
-	width: 80%
-}
-.but{
-	height: 30px;
-	width: 80px;
-	background: #205B8A;
-	color: white;
-}
+		.pnamein{
+		width: 80%
+		}
+		.but{
+		height: 30px;
+		width: 80px;
+		background: #226597;
+		color: white;
+		}
 
-</style>
-</th:block>
+	</style>
 </head>
 <body>
-	<div layout:fragment="content">
-	<section>
-	
+	<section layout:fragment="content">
 		<div class="wrap">
 			<div class="cont">				
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-10 headwrap">
-					<div class="col-md-12 viewhead">
-						<h1 style="color: #205B8A; font-weight: bold;">환자 조회</h1>
-					</div>
-					<div class="col-md-12 viewhead"></div>
-					<div class="col-md-12 viewlineboxup"> </div>
-					<div class="col-md-12 viewlinebox"> </div>
-					<div class="col-md-12 tablemenu">
-					<form action="/archive/patientsearch" method="post" role="form" th:object="${archiveSearchDto}">
-						<table class="table table-bordered table_con">
-							<tbody>
-								<tr>
-									<th scope="row">환자명</th>
-									<td><input type="text" th:field = "*{name}" class="form-control pnamein" id="inputPostname" placeholder="환자 이름을 입력해주세요."></td>
-								</tr>
-							</tbody>
-						</table>					
-					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-					<div class="col-md-12 linemenu">
-						<button type="submit" class="btn btn-primary"> 환자 조회 </button>
-					</div>
-					</form>
-					<div class="patientlist" th:if = "${patientlist}">
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">환자 번호</th>
-									<th scope="row">아이디</th>
-									<th scope="row">이름</th>
-									<th scope="row">생년월일</th>
-									<th scope="row">전화번호</th>
-								</tr>
-								<tr th:each ="patient : ${patientlist}">
-									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.id}]] </a></td>
-									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.loginid}]] </a></td>
-									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.name}]] </a></td>
-									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.birth}]] </a></td>
-									<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.tel}]] </a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					</div>
+						<div class="col-md-12 viewhead">
+							<h1 style="color: #226597; font-weight: bold;">환자 조회</h1>
+						</div>
+						<div class="col-md-12 viewhead"></div>
+						<div class="col-md-12 viewlineboxup"> </div>
+						<div class="col-md-12 viewlinebox"> </div>
+						<div class="col-md-12 tablemenu">
+							<form action="/archive/patientsearch" method="post" role="form" th:object="${archiveSearchDto}">
+								<table class="table table-bordered table_con">
+									<tbody>
+										<tr>
+											<th scope="row">환자명</th>
+											<td><input type="text" th:field = "*{name}" class="form-control pnamein" id="inputPostname" placeholder="환자 이름을 입력해주세요."></td>
+										</tr>
+									</tbody>
+								</table>					
+								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+								<div class="col-md-12 linemenu">
+									<button type="submit" class="btn btn-primary"> 환자 조회 </button>
+								</div>
+							</form>
+							<div class="patientlist" th:if = "${patientlist}">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th scope="row">환자 번호</th>
+											<th scope="row">아이디</th>
+											<th scope="row">이름</th>
+											<th scope="row">생년월일</th>
+											<th scope="row">전화번호</th>
+										</tr>
+										<tr th:each ="patient : ${patientlist}">
+											<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.id}]] </a></td>
+											<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.loginid}]] </a></td>
+											<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.name}]] </a></td>
+											<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.birth}]] </a></td>
+											<td><a th:href ="'/archive/search/'+${patient.id}"> [[${patient.tel}]] </a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	</div>
 </body>
 </html>
