@@ -1,3 +1,35 @@
+// 관리자 알림용 웹소켓
+var socket = new WebSocket("ws://localhost:80/websocket");
+
+socket.onopen = () => {
+    console.log(socket);
+};
+
+socket.onmessage = function (event) {
+    cleartest();
+
+    // WebSocket으로 전달받은 알람을 header에 띄움
+    $("#alert-icon").css("display", "inline");
+
+    // 관리자 로그인 전용 알림
+    var msgTimer = 0;
+    var test = $("#alert-message");
+    setTimeout(function () {
+        test.fadeIn(500, function () {
+        msgTimer = setTimeout(function () {
+            test.fadeOut(500);
+        }, 1000);
+        });
+    }, 200);
+    function cleartest() {
+        if (msgTimer != 0) {
+        clearTimeout(msgTimer);
+        msgTimer = 0;
+        }
+    }
+    $("#alert-message").text(event.data);
+};
+
 // 헤더 메뉴 버튼
 $(document).on('click', 'nav button', function () {
     const hrefURL = $(this).attr('id');

@@ -10,7 +10,7 @@
 
 <body>
 	<div layout:fragment="content">
-    	<section>
+    	<section layout:fragment="content">
         <div class="container">
             <div class="sign-up-content">
                 <form action="/qa/new" method="post" th:object="${qaBoardDto}" enctype="multipart/form-data">

@@ -1,101 +1,72 @@
 <!DOCTYPE html>
 
-<!-- layout이 적용되어있는 페이지 폼 입니다. 
-		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
-<meta charset="UTF-8" />
-<title>입원 수속 페이지</title>
-
-<!-- THYMELEAF JS  -->
-<th:block layout:fragment="script">
-	<script th:inline="javascript">
-		
-	</script>
-</th:block>
-
-<!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-	<style>
-	.wrap {
-	margin: 0 auto;
-}
-
-section{
-}
-
-.headwrap{
-	margin: 0 auto;
-}
-
-.viewhead{
-	border-bottom: 3px solid; 
-	padding: 10px;
-}
-
-.viewbody{
-	margin-top : 20px;
-	border: 1px solid;
-}
-
-.viewlinebox {
-	text-align: center;
-	height: 35px;
-	margin-top: 15px;
-	border-bottom: 3px solid;
-}
-
-.linemenu{
-	margin-top: 20px;
-	text-align: center;
-}
-
-.goback{
-	border: 2px solid;
-}
-
-.tablemenu{
-	border: 1px solid;
-	padding: 20px;
-	background-color: white;
-}
-
-.condivide{
-	border-right: 3px solid;
-	
-}
-
-.cond{
-	margin-left: 5px;
-}
-
-.but{
-	height: 30px;
-	width: 80px;
-	background: #205B8A;
-	color: white;
-}
-
-</style>
-</th:block>
+	<meta charset="UTF-8" />
+	<title>순양병원</title>
+	<!-- THYMELEAF CSS -->
+	<style th:inline="text">
+		.wrap {
+			margin: 0 auto;
+		}
+		section{
+			background-color: #eeeeee;
+		}
+		.headwrap{
+			margin: 0 auto;
+		}
+		.viewhead{
+			border-bottom: 3px solid; 
+			padding: 10px;
+		}
+		.viewbody{
+			margin-top : 20px;
+			border: 1px solid;
+		}
+		.viewlinebox {
+			text-align: center;
+			height: 35px;
+			margin-top: 15px;
+			border-bottom: 3px solid;
+		}
+		.linemenu{
+			margin-top: 20px;
+			text-align: center;
+		}
+		.goback{
+			border: 2px solid;
+		}
+		.tablemenu{
+			border: 1px solid;
+			padding: 20px;
+			background-color: white;
+		}
+		.condivide{
+			border-right: 3px solid;
+		}
+		.cond{
+			margin-left: 5px;
+		}
+		.but{
+			height: 30px;
+			width: 80px;
+			background: #226597;
+			color: white;
+		}
+	</style>
 </head>
 <body>
-	<div layout:fragment="content">
-	<section>
+	<section layout:fragment="content">
 		<div class="wrap">
 			<div class="cont">
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-10 headwrap">
-
 						<div class="col-md-12 viewhead">
-							<h1 style="color: #205B8A; font-weight: bold;">입원 수속</h1>
+							<h1 style="color: #226597; font-weight: bold;">입원 수속</h1>
 						</div>
-
-						<form th:action="'/hospitalize/write/'+${patient.id}" method="post"
-							enctype="multipart/form-data" th:object="${hospitalizeFormDto}">
+						<form th:action="'/hospitalize/write/'+${patient.id}" method="post"	enctype="multipart/form-data" th:object="${hospitalizeFormDto}">
 							<div class="col-md-12 viewlineboxup"></div>
 							<div class="col-md-12 viewlinebox">
 								<span> 환자명 :  </span> 
@@ -106,25 +77,27 @@ section{
 								<span> [[${hospYN}]] </span>	
 							</div>
 							<div class="col-md-12 tablemenu">
-							<input type="hidden" th:field ="*{doctorname}" th:value="${hospitalizeFormDto.Doctorname}">
+								<input type="hidden" th:field ="*{doctorname}" th:value="${hospitalizeFormDto.Doctorname}">
 								<table class="table table-bordered">
 									<tbody>
 										<tr>
 											<th> 담당의 </th>
 											<td> [[${hospitalizeFormDto.Doctorname}]] (진료 과목 : [[${hospitalizeFormDto.Doctormed}]])</td>
 											<th scope="row">질병이름</th>
-											<td><select class="form-select" aria-label="Default select example" th:field = "*{symptom}">
-												<option th:each ="dis : ${disease}" th:value="${dis.diseaseName}"> [[${dis.diseaseName}]] </option>
-											</select>
+											<td>
+												<select class="form-select" aria-label="Default select example" th:field = "*{symptom}">
+													<option th:each ="dis : ${disease}" th:value="${dis.diseaseName}"> [[${dis.diseaseName}]] </option>
+												</select>
 											</td>
 											<td>
-											  <input class="form-check-input" type="checkbox" th:field = "*{nonsymptom}">
+											  	<input class="form-check-input" type="checkbox" th:field = "*{nonsymptom}">
  									 			<label class="form-check-label" for="flexCheckDefault"> 질병명 없음 (단순 검사, 미확인 질병) </label>											  
 											</td>
 										</tr>
 										<tr>
 											<th scope="row">병실 선택</th>
-											<td><select class="form-select" aria-label="Default select example" th:field = "*{ward}">
+											<td>
+												<select class="form-select" aria-label="Default select example" th:field = "*{ward}">
 													<option value="0" selected>병실 선택</option>
 													<option value="301">301호</option>
 													<option value="302">302호</option>
@@ -136,7 +109,7 @@ section{
 													<option value="308">308호</option>
 													<option value="309">309호</option>
 													<option value="310">310호</option>
-											</select>
+												</select>
 											</td>
 										</tr>
 										<tr class="detailhead">
@@ -155,13 +128,6 @@ section{
 				</div>
 			</div>
 		</div>
-
-	
 	</section>
-
-
-
-
-	</div>
 </body>
 </html>

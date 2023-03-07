@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-
-<!-- layout이 적용되어있는 페이지 폼 입니다. 
-		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8" />
-<title>메인 검색 결과 페이지입니다.</title>
+<title>순양병원</title>
 <link rel="stylesheet" href="../../css/searchresult.css">
 </head>
 <body>
-	<div layout:fragment="content">
-	<section>
-	
+	<section layout:fragment="content">
 		<div class="wrap">
 			<div class="cont">				
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
@@ -25,18 +19,17 @@
 						<hr>
 						<div class="doc_search_form">
 							<form class="doc_search" action="/searchresult" method="get">
-							<div class="col-md-12 linemenu">
-								<input type="text" name="searchQuery" class="doc_searchbar" placeholder="의료진/진료과 검색" oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="2" required>
-								<button type="submit" class="doc_search_btn">검색</button>
-							</div>
+								<div class="col-md-12 linemenu">
+									<input type="text" name="searchQuery" class="doc_searchbar" placeholder="의료진/진료과 검색" oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="2" required>
+									<button type="submit" class="doc_search_btn">검색</button>
+								</div>
 							</form>						
 						</div>
 					</div>
 					<div class="search_cont">
 						<p class="search_txt"><span>'[[${searchABC}]]'</span>에 관한 검색결과가 총<span>'[[${searchSize}]]'</span>건이 검색되었습니다.</p>
 					</div>
-						<div class="search_gap">
-						</div>
+					<div class="search_gap"></div>
 					<!-- [의료진 검색결과] -->
 					<div class="search_sec">
 						<div class="search_title">
@@ -93,56 +86,48 @@
 				</div>
 			</div>
 		</div>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
 	</section>
-	</div>					
-					
-					
-					
-					
-					
-					<!-- [진료과 검색결과] -->
-					
-					<!-- div class="search_sec">
-						<div class="search_title">
-							<h4 class="sub_title_h4 fix">진료과<span> [[${searchMedSize}]]</span>건</h4>
-						</div>
-						<div class="med_cont">
-							<div class="in_w" th:if="${searchMedSize == 0}">
-								<div class="gray_bg">
-									<div class="cont_no">
-										<img src="/images/docTeam.png">
-										<p class="doctor_no_txt">등록된 진료과가 없습니다.</p>
+	<!-- [진료과 검색결과] -->
+	
+	<!-- div class="search_sec">
+		<div class="search_title">
+			<h4 class="sub_title_h4 fix">진료과<span> [[${searchMedSize}]]</span>건</h4>
+		</div>
+		<div class="med_cont">
+			<div class="in_w" th:if="${searchMedSize == 0}">
+				<div class="gray_bg">
+					<div class="cont_no">
+						<img src="/images/docTeam.png">
+						<p class="doctor_no_txt">등록된 진료과가 없습니다.</p>
+					</div>
+				</div>
+			</div>
+			
+				<div class="col-xs-4 col-sm-4 col-md-4 d-flex flex-wrap w-100" >
+					<th:block class="thblock" th:each="medList : ${medList}">
+						<div class="image-flip w-50">
+							<div class="mainflip flip-0">
+								<div class="frontside">
+									<div class="card ${medListStat.odd}">
+										<div class="card-body text-center">
+											<h4 class="card-title">[[${medList.medName}]]</h4>
+										</div>
+									</div>
+								</div>
+								<div class="backside w-100">
+									<div class="card">
+										<div class="card-body text-center mt-4">
+											<h4 class="card-title">[[${medList.medName}]]</h4>
+											<p class="card-text">[[${medList.medInfo}]]</p>
+										</div>
 									</div>
 								</div>
 							</div>
-							
-								<div class="col-xs-4 col-sm-4 col-md-4 d-flex flex-wrap w-100" >
-									<th:block class="thblock" th:each="medList : ${medList}">
-						                <div class="image-flip w-50">
-						                    <div class="mainflip flip-0">
-						                        <div class="frontside">
-						                            <div class="card ${medListStat.odd}">
-						                                <div class="card-body text-center">
-						                                    <h4 class="card-title">[[${medList.medName}]]</h4>
-						                                </div>
-						                            </div>
-						                        </div>
-						                        <div class="backside w-100">
-						                            <div class="card">
-						                                <div class="card-body text-center mt-4">
-						                                    <h4 class="card-title">[[${medList.medName}]]</h4>
-						                                    <p class="card-text">[[${medList.medInfo}]]</p>
-						                                </div>
-						                            </div>
-						                        </div>
-						                    </div>
-						                </div>
-		 							</th:block>
-        	    					</div>
-								</div>
-						</div-->
-
-	
-<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+						</div>
+					</th:block>
+					</div>
+				</div>
+		</div-->
 </body>
 </html>

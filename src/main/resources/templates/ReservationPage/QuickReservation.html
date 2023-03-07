@@ -1,153 +1,118 @@
 <!DOCTYPE html>
 
-<!-- layout이 적용되어있는 페이지 폼 입니다. 
-		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
-<meta charset="UTF-8" />
-<title>비회원 빠른 예약</title>
+	<meta charset="UTF-8" />
+	<title>순양병원</title>
 
-<!-- THYMELEAF JS  -->
-<th:block layout:fragment="script">
+	<!-- THYMELEAF JS  -->
 	<script th:inline="javascript">
-	$(document).ready(function(){
-    	var errorMessage = [[${errorMessage}]];
-    	console.log(errorMessage);
-    	if(errorMessage != null){
-        	alert(errorMessage);
-    	}
-	return false;
-	});
-	function check(){
-		var form = document.resvform;
-		var checkbox = document.getElementById('checkok');
-		console.log(checkbox.checked);
-		
-		if(checkbox.checked == false){
-			alert("개인정보 수집 및 이용 동의에 동의해야 예약을 진행할 수 있습니다.");
-			return false;
-		}else{
-			alert("예약이 완료되었습니다!");
-			form.submit();
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]];
+			console.log(errorMessage);
+			if(errorMessage != null){
+				alert(errorMessage);
+			}
+		return false;
+		});
+		function check(){
+			var form = document.resvform;
+			var checkbox = document.getElementById('checkok');
+			console.log(checkbox.checked);
+			
+			if(checkbox.checked == false){
+				alert("개인정보 수집 및 이용 동의에 동의해야 예약을 진행할 수 있습니다.");
+				return false;
+			}else{
+				alert("예약이 완료되었습니다!");
+				form.submit();
+			}
+			
 		}
-		
-	}
-    
 	</script>
-</th:block>
 
-<!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-	<style>
-.wrap {
-	width: 100%;
-	margin: 0 auto;
-}
+	<!-- THYMELEAF CSS -->
+	<style th:inline="text">
+		.wrap {
+			width: 100%;
+			margin: 0 auto;
+		}
+		.headwrap {
+			margin: 0 auto;
+		}
+		.viewhead {
+			text-align: center;
+			margin-bottom: 10px;
+		}
+		.viewlineboxup {
+			border-top: 4px solid black;
+			padding: 15px;
+		}
 
-.headwrap {
-	margin: 0 auto;
-}
-
-.viewhead {
-	text-align: center;
-	margin-bottom: 10px;
-}
-
-.viewlineboxup {
-	border-top: 4px solid black;
-	padding: 15px;
-}
-
-
-.viewlinebox{
-	padding: 50px 100px;
-}
-
-.linemenu {
-	height: 50px;
-	text-align: center;
-	margin-top: 15px;
-}
-
-.tablemenu {
-	padding: 15px;
-	margin: 0 auto;
-	background: white;
-	width : 60%;
-}
-
-.detailbody {
-	border: none;
-}
-
-.detail{
-	width: 90%;
-	height : 250px;
-	background-color: white;
-	
-}
-
-.table_con {
-	margin-top: 10px;
-	text-align: center;
-}
-
-.cont_img {
-	width: 15%;
-}
-
-.patientlist {
-	text-align: center;
-}
-
-.pnamein {
-	width: 80%;
-}
-.table{
-}
-
-.table tr{
-	text-align: left;
-}
-
-.but{
-	background: #205B8A;
-	color: white;
-}
-
-.warning{
-	margin-bottom: 50px;
-}
-
-.privateagree{
-	margin-top: 25px;
-	margin-bottom: 45px;
-}
-
-.lineboxhead{
-	margin-top: 15px;
-	margin-bottom: 10px;
-}
-
-.lineboxbody{
-	margin-left: 15px;
-	margin-bottom: 5px;
-	padding: 15px;
-}
-
-li{
-	margin: 10px;
-}
-
-li span{
-	margin: 10px;
-}
-
-</style>
-</th:block>
+		.viewlinebox{
+			background-color: #EEEEEE;
+			padding: 50px 100px;
+		}
+		.linemenu {
+			height: 50px;
+			text-align: center;
+			margin-top: 15px;
+		}
+		.tablemenu {
+			padding: 15px;
+			margin: 0 auto;
+			background: white;
+			width : 60%;
+		}
+		.detailbody {
+			border: none;
+		}
+		.detail{
+			width: 90%;
+			height : 250px;
+			background-color: white;
+		}
+		.table_con {
+			margin-top: 10px;
+			text-align: center;
+		}
+		.cont_img {
+			width: 15%;
+		}
+		.patientlist {
+			text-align: center;
+		}
+		.pnamein {
+			width: 80%;
+		}
+		.table tr{
+			text-align: left;
+		}
+		.but{
+			background: #226597;
+			color: white;
+		}
+		.warning{
+			margin-bottom: 50px;
+		}
+		.privateagree{
+			margin-top: 25px;
+			margin-bottom: 45px;
+		}
+		.lineboxhead{
+			margin-top: 15px;
+			margin-bottom: 10px;
+		}
+		.lineboxbody{
+			margin-left: 15px;
+			margin-bottom: 5px;
+			padding: 15px;
+		}
+		li{	margin: 10px;}
+		li span{ margin: 10px;}
+	</style>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -157,71 +122,68 @@ li span{
 					<div class="col-md-10 headwrap">
 						<form th:action="'/reservation/sendqr'" method="post" name = "resvform" th:object="${quickReservationDto}">
 							<div class="col-md-12 viewhead">
-								<h1 style="color: #205B8A; font-weight: bold;">비회원 진료 빠른예약</h1>
+								<h1 style="color: #226597; font-weight: bold;">비회원 진료 빠른예약</h1>
 							</div>
 							<div class="col-md-12 viewlineboxup">
 							<div>							
-								<span style="color: #205B8A; font-size: 2rem; font-weight: bold;"><i class="fa-solid fa-headset"></i> 비회원 진료</span><span style="font-size: 2rem; font-weight: bold;"> 빠른예약이란 </span> 
+								<span style="color: #226597; font-size: 2rem; font-weight: bold;"><i class="fa-solid fa-headset"></i> 비회원 진료</span><span style="font-size: 2rem; font-weight: bold;"> 빠른 예약이란 </span> 
 							</div>
 						 		<div class="lineboxbody">
-						 		처음 오시는 고객의 편의를 위하여 전문 상담원이 전화를 통해 진료 예약을 도와드리는 서비스입니다.
-						 		<br>
-								서비스를 원하는 경우 아래 사항을 입력해주시면 상담 시간에 연락드리겠습니다.
+									처음 오시는 고객의 편의를 위하여 전문 상담원이 전화를 통해 진료 예약을 도와드리는 서비스입니다.
+									<br>
+									서비스를 원하는 경우 아래 사항을 입력해주시면 상담 시간에 연락드리겠습니다.
 						 		</div>
 							</div>
 							<div class="col-md-12 viewlinebox">
 								<div>
-									<h2 class="lineboxhead" style="color: #205B8A; font-weight: bold;">주의 사항</h2>
+									<h2 class="lineboxhead" style="color: #226597; font-weight: bold;">주의 사항</h2>
 								</div>
 								<div>
 									<ul>
 										<li> 
-										<div class="num"> 1. 
-											상담시간 : 평일 08:30 - 17:00 토요일 08:30 - 12:00 (일요일 및 공휴일 제외)
-										</div>
+											<div class="num"> 1. 
+												상담시간 : 평일 08:30 - 17:00 토요일 08:30 - 12:00 (일요일 및 공휴일 제외)
+											</div>
 										</li>
 										<li> 
-
-										<div class="num"> 2.
-											공휴일 다음날은 신청자가 많은 관계로 오후에 연락드릴 수 있습니다
-										</div>
+											<div class="num"> 2.
+												공휴일 다음날은 신청자가 많은 관계로 오후에 연락드릴 수 있습니다
+											</div>
 										</li>
 										<li> 
-
-										<div class="num"> 3.
-											1577-0075 번호로 상담 전화가 수신되며 연결 2회 이상 실패 시 예약의뢰가 자동 취소됩니다.
-										</div>
+											<div class="num"> 3.
+												1577-0075 번호로 상담 전화가 수신되며 연결 2회 이상 실패 시 예약의뢰가 자동 취소됩니다.
+											</div>
 										</li>
 										<li> 
-										<div class="num"> 4.
-
-											처음 오시는 분이 아닐 경우 상담이 자동 취소됩니다.<br>
-											(처음 오시는 분이 아닐 경우 인터넷진료예약, 모바일앱, 콜센터 진료예약으로 직접 예약하실 수 있으니 이용 바랍니다.)
-										</div>
+											<div class="num"> 4.
+												처음 오시는 분이 아닐 경우 상담이 자동 취소됩니다.<br>
+												(처음 오시는 분이 아닐 경우 인터넷진료예약, 모바일앱, 콜센터 진료예약으로 직접 예약하실 수 있으니 이용 바랍니다.)
+											</div>
 										</li>
 									</ul>
 								</div>		
 								<div class="privateagree">
-									<div><h2 class="lineboxhead" style="color: #205B8A; font-weight: bold;"> 개인정보 수집 및 이용동의</h2></div>
+									<div><h2 class="lineboxhead" style="color: #226597; font-weight: bold;"> 개인정보 수집 및 이용동의</h2></div>
 									<div> 
 										<textarea class="detail" readonly="readonly"> 
-개인정보 수집 및 이용 동의(비회원 진료 빠른예약)
-1. 개인정보의 수집 및 이용 목적
-서울대학교병원운영 서울특별시보라매병원은 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적 이외의 용도로는 사용되지 않으며,
-이용 목적이 변경될 시에는 사전 동의를 구할 예정입니다.												
-	○ 민원사무처리
-	민원인의 신원 확인, 민원사항 확인, 사실조사를 위한 연락•통지, 처리결과 통보 등을 
-	목적으로 개인정보를 처리합니다.												
-2.수집하는 개인정보의 항목
-	○ 비회원 진료 빠른예약
-	1) 필수항목: 고객이름, 전화번호, 통화요청시간
-	2) 선택항목: 비고	
-3. 개인정보의 처리 및 보유기간												
-서울대학교병원운영 서울특별시보라매병원 홈페이지는 법령에 따른 개인정보 보유•이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의 받은 개인정보 보유•이용기간 내에서 개인정보를 처리•보유합니다.												
-	○ 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.											
-	1) 민원사무 처리 : 민원처리 종료 후 2년												
-4. 동의를 거부할 권리가 있다는 사실과 동의 거부에 따른 불이익 내용
-이용자는 서울대학교병원운영 서울특별시보라매병원에서 수집하는 개인정보에 대해 동의를 거부할 권리가 있으며 동의 거부 시에는 홈페이지 민원등록(비회원 진료 빠른예약)서비스가 제한됩니다.
+											개인정보 수집 및 이용 동의(비회원 진료 빠른예약)
+											1. 개인정보의 수집 및 이용 목적
+											서울대학교병원운영 서울특별시보라매병원은 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적 이외의 용도로는 사용되지 않으며,
+											이용 목적이 변경될 시에는 사전 동의를 구할 예정입니다.												
+												○ 민원사무처리
+												민원인의 신원 확인, 민원사항 확인, 사실조사를 위한 연락•통지, 처리결과 통보 등을 
+												목적으로 개인정보를 처리합니다.												
+											2.수집하는 개인정보의 항목
+												○ 비회원 진료 빠른예약
+												1) 필수항목: 고객이름, 전화번호, 통화요청시간
+												2) 선택항목: 비고	
+											3. 개인정보의 처리 및 보유기간												
+											서울대학교병원운영 서울특별시보라매병원 홈페이지는 법령에 따른 개인정보 보유•이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의 받은 개인정보 보유•이용기간 내에서 개인정보를 처리•보유합니다.												
+												○ 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.											
+												1) 민원사무 처리 : 민원처리 종료 후 2년												
+											4. 동의를 거부할 권리가 있다는 사실과 동의 거부에 따른 불이익 내용
+											이용자는 서울대학교병원운영 서울특별시보라매병원에서 수집하는 개인정보에 대해 동의를 거부할 권리가 있으며 동의 거부 시에는 홈페이지 민원등록(비회원 진료 빠른예약)서비스가 제한됩니다.
 										 </textarea> 
 									</div>
 									<div>
