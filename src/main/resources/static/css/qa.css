@@ -108,8 +108,22 @@
 	height: 50px;
 	}
 	
+	.qaWrap {
+	display:flex;
+	justify-content: flex-end;
+	}
+	
 	.qa_h1 > h1 {
 	display: flex;
 	justify-content: space-around;
 	padding-bottom: 50px;
+	}
+	
+	.qa_mod_btn {
+	width: 10%;
+	margin-right: 20px;
+	}
+	
+	.qa_del_btn {
+	width: 10%;
 	}

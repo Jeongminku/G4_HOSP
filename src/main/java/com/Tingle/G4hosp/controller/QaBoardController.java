@@ -35,7 +35,7 @@ public class QaBoardController {
 	private final QaBoardService qaBoardService;
 	
 	//QA 메인 & 카테고리별 클릭했을때 띄워줄 화면
-	@GetMapping(value={"/","/{category}"})
+	@GetMapping(value={"","/{category}"})
 	public String pageroute(Model model,@PathVariable("category") Optional<String> case1) {
 		List<QaBoard> qaList = null;
 		if(case1.isPresent()) {
