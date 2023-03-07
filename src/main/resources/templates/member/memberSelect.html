@@ -9,6 +9,7 @@
 <title>메인페이지 title입니다.</title>
     <th:block layout:fragment="css">
       <style> 
+      
       div.title, .sel_top, .member_client, .member_doctor, .member_admin {
     border: 1px solid #000000;
    
@@ -18,36 +19,18 @@
 text-align: center;
 }
 
-.member_client {
-display : flex;
+
+.member_client, .member_doctor, .member_admin {
 float: left;
+display : flex;
  width:28%;
  margin-left : 4%;
  margin-top : 15%;
- box-sizing: border-box;
  height: 50%;
+ box-sizing: border-box;
  
 }
 
-.member_doctor {
-float: left;
-display : flex;
- width:28%;
- margin-left : 4%;
- margin-top : 15%;
- height: 50%;
- box-sizing: border-box;
-}
-
-.member_admin {
-display : flex;
-float: right;
- width:28%;
- margin-right : 4%;
- margin-top : 15%;
- height: 50%;
- box-sizing: border-box;
-}
    
    .seli {
   margin : auto;
@@ -70,7 +53,21 @@ float: right;
    .select_signup {
     text-align: justify;
    }
-   
+  .bg_blue {
+    background: #eff3f7;
+}
+
+.in_w {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.select {
+text-align:center;
+float: left; 
+width: 30%; 
+padding:10px;
+}
       </style>
     </th:block>
 </head>
@@ -82,31 +79,34 @@ float: right;
 <div layout:fragment="content">
 	<div class="row">
 		<section>
-			<div class="title">
+		<div class="in_w">
+		<div class="bg_blue">
+			
 				<h3>회원가입</h3>
-			</div>
+			
 			<hr>
-			<div class="sel_top">
+			
 				<h4>홈페이지 회원가입을 위한 회원 선택</h4>
 				<!--  >icon -->
 				<p><i class="fa-solid fa-caret-right">홈페이지 회원은 일반인, 의료진, 직원으로 구분됩니다.</i></p>
+			
+			<div class="select">
+						<p class="select_title">일반회원가입</p>
+						<p><img class="signup_img" src="/img/signup_client.jpg"></p>
+						<a class="select_signup" th:href="'/members/new/client'">회원가입</a>
 			</div>
-			<div class="member_client">
-			<p class="select_title">일반회원가입</p>
-			<p><img class="signup_img" src="/img/signup_client.jpg"></p>
-			<a class="select_signup" th:href="'/members/new/client'">회원가입</a>
-			</div>
-			<div class="member_doctor">
+			<div class="select">
 				<p class="select_title">의료진 회원가입</p>
 				<p><img class="signup_img" src="/img/signup_doctor.jpg"></p>
-				<a class="select_signup" th:href="'/members/new/doctor'">회원가입</a>
+				<a class="select_signup" th:href="'/members/new/doctor'">회원가입</a>			
 			</div>
-			<div class="member_admin">
+			<div class="select">
 				<p class="select_title">직원 회원가입</p>
 				<p><img class="signup_img" src="/img/signup_admin.jpg"></p>
 				<a class="select_signup" th:href="'/members/new/admin'">회원가입</a>
 			</div>
-		
+			</div>
+		</div>
 		</section>
 	</div>
 </div>
