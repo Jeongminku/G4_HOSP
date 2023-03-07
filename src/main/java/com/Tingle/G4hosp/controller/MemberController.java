@@ -253,25 +253,49 @@ public class MemberController {
 		return "ReservationPage/ViewReservation";
 	}
 
+	@GetMapping(value ="/myPage")
+	public String memberMypage() {
+		return "member/memberMyPage";
+	}
+	
+	@GetMapping(value ="/archive")
+	public String memberArchive(MemberFormDto memberFormDto, Principal principal, Model model) {
+		String loginId = principal.getName();
+		Member member = memberService.findByLoginid(loginId);
+		memberFormDto = memberService.checkARdateandMedname(memberFormDto, member);
+		System.err.println("컨트롤러 환자 진료 일자 리스트 출력 테스트 : "+ memberFormDto.getArchivedate());
+		System.err.println("컨트롤러 환자 내원 과 리스트 출력 테스트 : "+ memberFormDto.getMedname());
+		
+		if(memberFormDto.getArchivedate() != null) {
+			model.addAttribute("memberArchiveDate",memberFormDto.getArchivedate());
+			model.addAttribute("memberArchiveMed", memberFormDto.getMedname());
+			model.addAttribute("memberArchive", memberFormDto.getArchive());			
+		}
+		
+		return "member/memberArchive";
+	}
+	
 	@GetMapping(value = "/modify")
 	public String memberModify(Model model, Principal principal) {
 		String loginId = principal.getName();
 		Member member = memberService.findByLoginid(loginId);
+		
 		Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
 		
-		
-		
 		MemberFormDto memberFormDto = new MemberFormDto();
+		
 		if(med != null) {
 			List<Med> medlist = medService.getTesListNotMy(med.getMedId());
 //			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
 			memberFormDto.setMed(medlist);			
 		}
+		// 환자별 내원일자, 내원 과 조회
+		memberFormDto = memberService.checkARdateandMedname(memberFormDto, member);		
+		System.err.println("컨트롤러 환자 진료 일자 리스트 출력 테스트 : "+ memberFormDto.getArchivedate());
+		System.err.println("컨트롤러 환자 내원 과 리스트 출력 테스트 : "+ memberFormDto.getMedname());
 
 		model.addAttribute("memberFormDto",memberFormDto);
 		model.addAttribute("modiMember", member);
-		
-		
 		MemberMed memberMed = memberMedService.findMemberMed(member.getId());
 		model.addAttribute("memberMed", memberMed);
 		

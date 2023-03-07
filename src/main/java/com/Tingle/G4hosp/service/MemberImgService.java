@@ -25,7 +25,8 @@ public class MemberImgService {
 	public void saveMemberImg(Member member, MultipartFile imgfile) throws Exception {
 		String imgOri = imgfile.getOriginalFilename();
 		String imgName = "default";
-		String imgUrl = "/images/item/b45699ae-8cc7-468b-9ce2-6c9ea5c99e8a.png";
+//		String imgUrl = "/images/item/b45699ae-8cc7-468b-9ce2-6c9ea5c99e8a.png";
+		String imgUrl = "/img/userdefault_l.jpg";
 		if(!StringUtils.isEmpty(imgOri)) {
 			imgName = fileService.uploadFile(imgLocation, imgOri, imgfile.getBytes());
 			imgUrl = "/images/item/" + imgName;

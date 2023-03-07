@@ -15,9 +15,10 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 	
-	private final CustomLoginSuccessHandler customLoginSuccessHandler = new CustomLoginSuccessHandler();
+	private final CustomLoginSuccessHandler customLoginSuccessHandler;
 	
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -32,20 +33,18 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
 
         http.authorizeRequests()
-                .mvcMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**").permitAll()
-                .mvcMatchers("/", "/members/**", "/item/**", "/archive/**").permitAll();
-        //.anyRequest().authenticated();
-        
+                .mvcMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**", "/lib/**").permitAll()
+                .mvcMatchers("/", "/members/**").permitAll()
+                .mvcMatchers("/board/**", "/Hinfo/HinfoMain", "/{hinfoId}", "/qa/", "/qa/{category}", "/reservation/**").permitAll()
+                .mvcMatchers("/reservation/setNotAvailDay").hasRole("DOCTOR")
+                .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().hasAnyRole("ADMIN", "DOCTOR");
         
         http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
-        // http.csrf().disable();
-        
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS); //모든 접속(?)리퀘스트에 대하여 항상 session을 만들어줍니다.
-        
         return http.build();
     }
-
 
     @Bean
     PasswordEncoder passwordEncoder() {

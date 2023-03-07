@@ -1,24 +1,48 @@
 <!-- 회원가입선택화면 -->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8">
-<title>메인페이지 title입니다.</title>
-    <th:block layout:fragment="css">
-      <style> 
+
+<title>순양병원</title>
+	<style th:inline="text"> 
+	div.title, .sel_top, .member_client, .member_doctor, .member_admin {
+border: 1px solid #000000;
+
+}
+
+            * {
+    
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    height: 100vh;
+
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+
+}
       div.title, .sel_top, .member_client, .member_doctor, .member_admin {
     border: 1px solid #000000;
    
    }
    
+
 .title, .sel_top {
 text-align: center;
 }
 
-.member_client {
+.member_client .member_doctor .member_admin{
 display : flex;
 float: left;
  width:28%;
@@ -29,86 +53,134 @@ float: left;
  
 }
 
-.member_doctor {
-float: left;
-display : flex;
- width:28%;
- margin-left : 4%;
- margin-top : 15%;
- height: 50%;
- box-sizing: border-box;
+
+
+.seli {
+margin : auto;
+height: 60%;
+background-color: #226597;
+border-radius: 50%;
+width: 90%;
 }
 
-.member_admin {
-display : flex;
-float: right;
- width:28%;
- margin-right : 4%;
- margin-top : 15%;
- height: 50%;
- box-sizing: border-box;
+.in_w {
+    max-width: 1200px;
+    width: 110%;
+    height: 100%;
 }
-   
-   .seli {
-  margin : auto;
- height: 60%;
- background-color: #205B8A;
- border-radius: 50%;
- width: 90%;
-   }
 
-   .signup_img {
-  position: relative;
-  margin-top: 60px;
-   
-   }
-   
-   .select_title {
-    text-align:  center;
-   }
-   
-   .select_signup {
-    text-align: justify;
-   }
-   
-      </style>
-    </th:block>
+.member_signup .select_top .select_inner {
+    /* display: table; */
+    width:100%;
+    margin-top: 24px;
+    /* margin: 24px; */
+    text-align:center;
+}
+.member_signup {
+    padding: 20px 30px 70px 30px;
+}
+.member_signup .select_top {
+    position: relative;
+    padding: 80px;
+    border: 1px solid #e0e5ee;
+    background-color: #fff;
+}
+.select {
+
+width: 50%;
+margin-left:23%;
+margin-top: 16px;
+padding:23px;
+text-align:center;
+padding:23px;
+background-color: #eff3f7;
+border:1px solid #EEEEEE;
+margin: 24px;
+}
+
+
+
+h3 {
+    padding: 40px 0;
+    color: #0a0606;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 1;
+    text-align: center;
+}
+h4 {
+margin-top: -65px;
+text-align: center;
+}
+.in {
+text-align: center;
+margin-top: 5px;
+margin-bottom: 40px;
+
+}
+
+.signup_img {
+/* position: relative; */
+margin-top: 20px;
+margin-bottom: 20px;
+
+}
+.bg_blue {
+		background: #eff3f7;
+		}
+.select_title {
+text-align:  center;
+}
+
+.select_signup {
+text-align: justify;
+}
+
+	</style>
 </head>
 <body>
+
+
 <!-- memberselect : 회원가입할때 회원,관리자,의사 선택할 페이지 -->
 <!-- memberformCLIENT :  회원 -->
 <!-- memeberformDOCTOR : 의사   -->
 <!-- memberformADMIN : 관리자 -->
-<div layout:fragment="content">
-	<div class="row">
-		<section>
-			<div class="title">
-				<h3>회원가입</h3>
-			</div>
-			<hr>
-			<div class="sel_top">
+
+	
+		<section layout:fragment="content" class="d-flex align-items-center justify-content-center">
+		<div class="container">
+		<div class="in_w">
+		<div class="bg_blue">
+				<h3><i class="fa-solid fa-user-plus fa-1x"></i>&nbsp;회원가입</h3>
+			<div class="member_signup">
+			<div class="select_top">
 				<h4>홈페이지 회원가입을 위한 회원 선택</h4>
 				<!--  >icon -->
-				<p><i class="fa-solid fa-caret-right">홈페이지 회원은 일반인, 의료진, 직원으로 구분됩니다.</i></p>
+				<p class="in"><i class="fa-solid fa-caret-right"></i>&nbsp;홈페이지 회원은 일반인, 의료진, 관리자로 구분됩니다.</p>
+				<!-- <div class="select_inner"> -->
+				
+			<div class="select mx-auto">
+						<p class="select_title">일반인 회원가입</p>
+						<p><img class="signup_img" src="/img/signup_client.jpg"></p>
+						<a class="select_signup" th:href="'/members/new/client'">회원가입</a>
 			</div>
-			<div class="member_client">
-			<p class="select_title">일반회원가입</p>
-			<p><img class="signup_img" src="/img/signup_client.jpg"></p>
-			<a class="select_signup" th:href="'/members/new/client'">회원가입</a>
-			</div>
-			<div class="member_doctor">
+			<div class="select mx-auto">
 				<p class="select_title">의료진 회원가입</p>
 				<p><img class="signup_img" src="/img/signup_doctor.jpg"></p>
-				<a class="select_signup" th:href="'/members/new/doctor'">회원가입</a>
+				<a class="select_signup" th:href="'/members/new/doctor'">회원가입</a>			
 			</div>
-			<div class="member_admin">
-				<p class="select_title">직원 회원가입</p>
+			<div class="select mx-auto">
+				<p class="select_title">관리자 회원가입</p>
 				<p><img class="signup_img" src="/img/signup_admin.jpg"></p>
 				<a class="select_signup" th:href="'/members/new/admin'">회원가입</a>
 			</div>
-		
+			</div>
+			</div>
+			</div>
+		</div>
+		</div>	
+	<!-- 	</div> -->
 		</section>
-	</div>
-</div>
+
 </body>
 </html>

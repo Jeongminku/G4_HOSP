@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.Tingle.G4hosp.constant.Hosp;
 import com.Tingle.G4hosp.constant.Ward;
 
@@ -34,10 +37,12 @@ public class HospitalizeDisease {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "disease_id", nullable = false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Disease disease;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospitalize_id", nullable = false)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Hospitalize hospitalize;
 
 	public static HospitalizeDisease createHospitalize(Disease disease, Hospitalize hospitalize) {

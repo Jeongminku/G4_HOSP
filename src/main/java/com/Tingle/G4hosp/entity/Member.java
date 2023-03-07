@@ -34,7 +34,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ToString
-public class Member {
+public class Member extends BaseTime {
 
 	@Id
 	@Column(name="member_id")

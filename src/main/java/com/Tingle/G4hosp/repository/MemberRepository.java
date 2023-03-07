@@ -35,7 +35,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 	List<Member> FindHosMemListByHosStatus ();
 
 	//role이 환자인 사람의 이름으로 member객체가져오기.
-	@Query(value = "select * from member where member.role = 'client' and member.name = :MNAME",nativeQuery = true)
+	@Query(value = "select * from member where member.role = 'client' and member.name like %:MNAME%",nativeQuery = true)
 	List<Member> findMListbyMname(@Param("MNAME") String mname);
 
 	Member findByName(String name);

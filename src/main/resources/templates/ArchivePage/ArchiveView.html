@@ -1,195 +1,173 @@
 <!DOCTYPE html>
-
-<!-- layout이 적용되어있는 페이지 폼 입니다. 
-		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
-
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
 <head>
-<meta charset="UTF-8" />
-<title>환자 진료 내역 페이지입니다.</title>
-
-<!-- THYMELEAF JS  -->
-<th:block layout:fragment="script">
+	<meta charset="UTF-8" />
+	<title>순양병원</title>
+	<!-- THYMELEAF JS  -->
 	<script th:inline="javascript">
-    
-	$(document).ready(function(){
-    	var errorMessage = [[${errorMessage}]];
-    	if(errorMessage != null){
-        	alert(errorMessage);
-    	}
-	});
-	
-	function readURL(input) {
- 		var id = $(input).attr('id');
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview'+id).src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-    }
-    
-	function deletearchive(value){
-		var confir = confirm("진료내역을 삭제하시겠습니까?");
-		if(confir){
-			alert("삭제가 완료되었습니다.");
-			location.href = "/archive/delete/"+value;
-		}else{
-			alert("삭제를 취소합니다.");
-			return false;
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]];
+			if(errorMessage != null){
+				alert(errorMessage);
+			}
+		});
+		
+		function readURL(input) {
+			var id = $(input).attr('id');
+			var reader = new FileReader();
+			reader.onload = function(e) {
+			document.getElementById('preview'+id).src = e.target.result;
+			};
+			reader.readAsDataURL(input.files[0]);
 		}
-	}
-	
+		
+		function deletearchive(value){
+			var confir = confirm("진료내역을 삭제하시겠습니까?");
+			if(confir){
+				alert("삭제가 완료되었습니다.");
+				location.href = "/archive/delete/"+value;
+			}else{
+				alert("삭제를 취소합니다.");
+				return false;
+			}
+		}
 
-	function discharge(value){
-		var confir = confirm("퇴원처리 하시겠습니까?");
-		if(confir){
-			alert("퇴원처리가 완료되었습니다.");
-			location.href = "/hospitalize/delete/"+value;
-		}else{
-			alert("퇴원을 취소합니다.");
-			return false;
+		function discharge(value){
+			var confir = confirm("퇴원처리 하시겠습니까?");
+			if(confir){
+				alert("퇴원처리가 완료되었습니다.");
+				location.href = "/hospitalize/delete/"+value;
+			}else{
+				alert("퇴원을 취소합니다.");
+				return false;
+			}
 		}
-	}
-	
-	
 	</script>
-</th:block>
 
-<!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-	<style>
+	<!-- THYMELEAF CSS -->
+	<style th:inline="text">
+		section{
+		}
 
-section{
-	background-color: #eeeeee;
-}
+		.wrap {
+			margin: 0 auto;
+		}
 
-.wrap {
-	margin: 0 auto;
-}
+		.headwrap{
+			margin: 0 auto;
+		}
 
-.headwrap{
-	margin: 0 auto;
-}
+		.viewhead{
+			text-align: center;
+			border-bottom: 3px solid; 
+			margin-bottom: 10px;
+			height: 80px;
+		}
 
-.viewhead{
-	text-align: center;
-	border-bottom: 3px solid; 
-	margin-bottom: 10px;
-	height: 80px;
-	}
-	
-.viewlineboxup {
-}
+		.viewlinebox {
+			text-align: center;
+			height: 30px;
+			margin-top: 10px;
+			border-bottom: 3px solid;
+		}
 
-.viewlinebox {
-	text-align: center;
-	height: 30px;
-	margin-top: 10px;
-	border-bottom: 3px solid;
-}
+		.linemenu{
+			height: 35px;
+			text-align: center;
+			display: table;
+			margin-top: 15px;
+		}
+		.tablemenu{
+			border: 1px solid;
+			background-color: white;
+		}
 
-.linemenu{
-	height: 35px;
-	text-align: center;
-	display: table;
-	margin-top: 15px;
-}
-.tablemenu{
-	border: 1px solid;
-	background-color: white;
-}
+		.detailbody {
+			border: none;
+		}
 
-.detailbody {
-	border: none;
-}
+		.cont_img{
+			width: 15%;
+		}
 
-.cont_img{
-	width: 15%;
-}
+		a:hover {
+			cursor: pointer;
+		}
 
-a:hover {
-	cursor: pointer;
-}
+		.condivide{
+			border-right: 3px solid;
+		}
 
-.condivide{
-	border-right: 3px solid;
-	
-}
+		.cond{
+			margin-left: 5px;
+		}
 
-.cond{
-	margin-left: 5px;
-}
+		.but{
+			height: 30px;
+			width: 80px;
+			background: #226597;
+			color: white;
+		}
 
-.but{
-	height: 30px;
-	width: 80px;
-	background: #205B8A;
-	color: white;
-}
+		.table{
+			margin-top: 20px;
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+		}
 
-.table{
-	margin-top: 20px;
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-}
+		tr{
+			border-bottom: 1px solid;
+		}
 
-tr{
-	border-bottom: 1px solid;
-}
+		.inhead{
+			font-weight: bold;
+			margin-top: 20px;
+		}
 
-.inhead{
-	font-weight: bold;
-	margin-top: 20px;
-}
+		.inbody{
+			margin-bottom: 15px;
+			padding: 5px;
+		}
 
-.inbody{
-	margin-bottom: 15px;
-	padding: 5px;
-}
+		.imgbody{
+			padding: 5px;
+		}
 
-.imgbody{
-	padding: 5px;
-}
-
-</style>
-</th:block>
+	</style>
 </head>
 <body>
-	<div layout:fragment="content">
-		<section>
-		
+	<section layout:fragment="content">
 		<div class="wrap">
 			<div class="cont">
 				<!-- USER INFO, POST INFO  -->
 				<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-10 headwrap">
-					
-					<div class="col-md-12 viewhead">
-						<span style="color: #205B8A; font-size: 2.5rem; font-weight: bold;">[[${patientinfo.name}]]</span><span style="font-size: 2.5rem; font-weight: bold;">님 진료 내역</span>
-					</div>
-					<div class="col-md-12 viewlinebox">
-						<div class="boxcont">
-						<span> 환자명 :  </span> 
-						<span class="condivide"> [[${patientinfo.name}]] </span> 
-						<span class="cond"> 나이 : </span> 
-						<span class="condivide"> [[${age}]] </span>
-						<span class="cond"> 입원여부 : </span> 
-						<span> [[${hospYN}]] </span>						
+						<div class="col-md-12 viewhead">
+							<span style="color: #226597; font-size: 2.5rem; font-weight: bold;">[[${patientinfo.name}]]</span><span style="font-size: 2.5rem; font-weight: bold;">님 진료 내역</span>
 						</div>
-					</div>
-					<div class="col-md-12 linemenu">
-						<div>
-						<a th:href="'/archive/write/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 신규작성 </a>
-						<a th:if ="${hospYN} == N" th:href="'/hospitalize/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 입원수속 </a>
-						<a th:if ="${hospYN} == Y" th:href="'/hospitalize/view/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 입원정보확인 </a>
-						<a th:if ="${hospYN} == Y" th:onclick = "discharge([[${patientinfo.id}]])" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 퇴원수속 </a>						
+						<div class="col-md-12 viewlinebox">
+							<div class="boxcont">
+								<span> 환자명 :  </span> 
+								<span class="condivide"> [[${patientinfo.name}]] </span> 
+								<span class="cond"> 나이 : </span> 
+								<span class="condivide"> [[${age}]] </span>
+								<span class="cond"> 입원여부 : </span> 
+								<span> [[${hospYN}]] </span>						
+							</div>
 						</div>
-					</div>
-					<div class="col-md-12 viewlineboxup"></div>
-					<div class="col-md-12 tablemenu" th:each="archive : ${AVDlist}">
+						<div class="col-md-12 linemenu">
+							<div>
+								<a th:href="'/archive/write/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 신규작성 </a>
+								<a th:if ="${hospYN} == N" th:href="'/hospitalize/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 입원수속 </a>
+								<a th:if ="${hospYN} == Y" th:href="'/hospitalize/view/'+${patientinfo.id}" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 입원정보확인 </a>
+								<a th:if ="${hospYN} == Y" th:onclick = "discharge([[${patientinfo.id}]])" sec:authorize="hasAnyAuthority('ROLE_DOCTOR')"> 퇴원수속 </a>						
+							</div>
+						</div>
+						<div class="col-md-12 viewlineboxup"></div>
+						<div class="col-md-12 tablemenu" th:each="archive : ${AVDlist}">
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
@@ -197,7 +175,7 @@ tr{
 									<td>[[${archive.ARid}]]</td>
 									<th scope="row">진료목적 (병명)</th>
 									<td>[[${archive.ARdiseasename}]]</td>
-
+		
 								</tr>
 								<tr>
 									<th scope="row">담당의</th>
@@ -215,31 +193,27 @@ tr{
 										<div class="inbody"> [[${archive.ARdetail}]] </div>
 										<div class="inhead"> 이미지 첨부 </div>
 										<div class="imgbody">
-										<span th:each="AI : ${ArchiveImgList}">
-											<span th:each = "IMGLIST : ${AI}">
-	 												<span th:if="${IMGLIST.getArchive().getId()} == ${archive.ARid}">
-													<img th:alt="${IMGLIST.imgname}" th:src="${IMGLIST.imgurl}" style="width: 20%">
+											<span th:each="AI : ${ArchiveImgList}">
+												<span th:each = "IMGLIST : ${AI}">
+													<span th:if="${IMGLIST.getArchive().getId()} == ${archive.ARid}">
+														<img th:alt="${IMGLIST.imgname}" th:src="${IMGLIST.imgurl}" style="width: 20%">
+													</span>
 												</span>
-											</span>
-										</span>																			
+											</span>																			
 										</div> 
 									</td>	
 								</tr>
 							</tbody>
 						</table>
 					<div class="col-md-12 linemenu">
-						<a th:href="'/archive/update/'+${archive.ARid}" style="font-weight: bold; color: #205B8A;"> 진료내역수정 </a>
-						<a th:onclick="deletearchive([[${archive.ARid}]])" style="font-weight: bold; color: #205B8A;"> 진료내역삭제 </a>
+						<a th:href="'/archive/update/'+${archive.ARid}" style="font-weight: bold; color: #226597;"> 진료내역수정 </a>
+						<a th:onclick="deletearchive([[${archive.ARid}]])" style="font-weight: bold; color: #226597;"> 진료내역삭제 </a>
 					</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-		</section>
-</div>
-
-
-
+	</section>
 </body>
 </html>

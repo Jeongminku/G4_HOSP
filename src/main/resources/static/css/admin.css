@@ -24,6 +24,7 @@ section {width: 100%; height: auto; min-height: fit-content; width: 100%; max-wi
 h1 {padding: 30px 0;}
 #adminHeader .btn-secondary {padding: 15px 20px; border-radius: 0;}
 #adminHeader .btn-secondary.active {background-color: #5c636a;}
+.alertbox { width: 60%; top: 50px; right: 50px; color: #226597; font-weight: bold; font-size: 1rem; text-align: right;}
 
 /* class */
 .b-line {border-bottom: 1px solid #3C4048; padding-bottom: 10px;}
@@ -54,5 +55,11 @@ h1 {padding: 30px 0;}
 .cont_img{	width: 15%;}
 .patientlist{	text-align: center;}
 .pnamein{	width: 80%}
-.but{	height: 30px;	width: 80px;	background: #205B8A;	color: white;}
+.but{	height: 30px;	width: 80px;	background: #226597;	color: white;}
 .nonQR{	margin-top: 30px;	text-align: center;}
+
+/* 회원관리 페이지 */
+.btn-group .btn.btn-outline-primary {width: 100px;}
+.table-header {background-color: #eeeeee;}
+.table tr th {padding: 20px;}
+.table tr td {padding: 10px 20px;}

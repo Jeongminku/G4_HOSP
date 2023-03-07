@@ -7,64 +7,15 @@
     <meta charset="UTF-8" />
     <meta name="_csrf" th:content="${_csrf.token}" />
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-    <title>layout title here</title>
+    <title>순양병원</title>
     <script src="../../lib/Bootstrap_5.3.0a/js/bootstrap.bundle.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="../../lib/Bootstrap_5.3.0a/css/bootstrap.min.css"/>
     <script src="../../lib/jquery-3.6.3.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../lib/FontAwesome-Free_6.3.0-web/css/all.min.css"
-    />
+    <link rel="stylesheet" href="../../lib/FontAwesome-Free_6.3.0-web/css/all.min.css"/>
     <link rel="stylesheet" href="../../css/reset.css" />
     <link rel="stylesheet" href="../../css/layout.css" />
     <link rel="stylesheet" href="../../css/admin.css" />
     <script src="../../js/Admin.js"></script>
-    <script>
-      var socket = new WebSocket("ws://localhost:80/websocket");
-
-      socket.onopen = () => {
-        console.log(socket);
-      };
-
-      socket.onmessage = function (event) {
-        cleartest();
-
-        // WebSocket으로 전달받은 알람을 header에 띄움
-        $("#alert-icon").css("display", "inline");
-
-        // 관리자 로그인 전용 알림
-        var msgTimer = 0;
-        var test = $("#alert-message");
-        setTimeout(function () {
-          test.fadeIn(500, function () {
-            msgTimer = setTimeout(function () {
-              test.fadeOut(500);
-            }, 1000);
-          });
-        }, 200);
-        function cleartest() {
-          if (msgTimer != 0) {
-            clearTimeout(msgTimer);
-            msgTimer = 0;
-          }
-        }
-        $("#alert-message").text(event.data);
-      };
-    </script>
-    <style>
-      .alertbox {
-        width: 60%;
-        top: 50px;
-        right: 50px;
-        color: #205b8a;
-        font-weight: bold;
-        font-size: 1rem;
-        text-align: right;
-      }
-    </style>
   </head>
   <body>
     <div class="d-flex position-relative">

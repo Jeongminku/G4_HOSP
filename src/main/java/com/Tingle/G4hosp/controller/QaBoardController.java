@@ -35,7 +35,7 @@ public class QaBoardController {
 	private final QaBoardService qaBoardService;
 	
 	//QA 메인 & 카테고리별 클릭했을때 띄워줄 화면
-	@GetMapping(value={"/","/{category}"})
+	@GetMapping(value={"","/{category}"})
 	public String pageroute(Model model,@PathVariable("category") Optional<String> case1) {
 		List<QaBoard> qaList = null;
 		if(case1.isPresent()) {
@@ -51,7 +51,9 @@ public class QaBoardController {
 	
 	//QA 작성 페이지 보기
 	@GetMapping(value="/new")
-	public String qnaForm(QaBoardDto qaBoardDto) {
+	public String qnaForm(Model model, QaBoardDto qaBoardDto) {
+		qaBoardDto = new QaBoardDto();
+		model.addAttribute("qaBoardDto", qaBoardDto);
 		return "qaPage/qaForm";
 	}
 	
