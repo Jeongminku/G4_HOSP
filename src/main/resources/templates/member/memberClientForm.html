@@ -149,6 +149,7 @@
 }
 
 .viewlineboxup {
+padding: 24px;
 	border-top: 4px solid black;
 }
 
@@ -177,7 +178,7 @@
 .detail{
 	width: 90%;
 	height : 250px;
-	background-color: #eff3f7;
+	/* background-color: #eff3f7; */
 	
 }
 
@@ -212,6 +213,13 @@
 	margin-top: 25px;
 	margin-bottom: 25px;
 }
+.tostitle {
+ padding : 10px;
+}
+
+.tostext {
+padding : 10px;
+}
 
 	</style>
 </head>
@@ -238,13 +246,13 @@
 							</div>
 							<div class="col-md-12 viewlinebox">
 								<div class="privateagree">
-									<div>
+									<div class="tostitle">
 									<h3>서비스 이용약관</h3>
 									<p>서비스 이용약관에 동의하셔야만 회원가입을 하실 수 있습니다.</p>
 									</div>
 									
 									
-									<div>
+									<div class="tostext">
 <textarea class="detail" readonly="readonly"> 
 제 1조 (목적)
 본 약관은 순양병원(이하 "병원"이라 합니다.)에서 운영하는 인터넷 홈페이지에서 제공하는 인터넷 관련 서비스 (이하 "서비스"라 합니다.)의 이용에 관한 사항을 규정함을 목적으로 합니다.
@@ -363,10 +371,10 @@
 </textarea>
 									</div>
 
-									<div><h3> 개인정보 취급방침</h3>
+									<div class="tostitle"><h3> 개인정보 취급방침</h3>
 									<p>개인정보 취급방침에 동의하셔야만 회원가입을 하실 수 있습니다.</p>
 									</div>								
-									<div> 
+									<div class="tostext"> 
 <textarea class="detail" readonly="readonly">
 
 1. 개인 정보의 수집 목적 및 이용

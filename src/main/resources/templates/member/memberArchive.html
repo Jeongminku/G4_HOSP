@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../css/myarchive.css">
+
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="table-wrap shadow-4">
+			<table class="table">
+				<thead class="thead-bg">
+				<tr>
+					<th>No.</th>
+					<th>방문일</th>
+					<th>진료과</th>
+				</tr>
+				</thead>
+				<tbody class="tbody-bg">
+						<tr th:unless ="${#lists.isEmpty(memberArchiveDate)}" th:each="arch : ${memberArchive}">
+							<td class="tbody-td tbody-no">[[${archStat.size - archStat.count+1}]]</td>
+							<td class="tbody-td tbody-date">[[${#strings.substring(arch.key,0,16)}]]</td>
+							<td class="tbody-td tbody-med" >[[${arch.value}]]</td>
+						</tr>
+						
+						<tr th:if ="${#lists.isEmpty(memberArchiveDate)}">
+							<td colspan="3" class="no_archive"><p>진료 기록이 없습니다.</p></td>
+						</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+	
+	
+</body>
+</html>

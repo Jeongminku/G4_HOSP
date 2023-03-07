@@ -1,0 +1,26 @@
+@charset "UTF-8";
+.memType01 {
+	margin-top: 53px;
+	padding-top: 32px;
+	/* border-top: 1px solid #ccc; */
+}
+
+.clearFix {
+	display: flex;
+	justify-content: space-around;
+}
+
+.clearFix a {
+	width: 300px;
+	height: 400px;
+}
+
+.mypage_img {
+	width: 100%;
+}
+
+.clearFix p {
+	font-size: 30px;
+	font-weight: 600;
+	margin-top: 22px;
+}

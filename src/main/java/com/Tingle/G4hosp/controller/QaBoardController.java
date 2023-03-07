@@ -51,7 +51,9 @@ public class QaBoardController {
 	
 	//QA 작성 페이지 보기
 	@GetMapping(value="/new")
-	public String qnaForm(QaBoardDto qaBoardDto) {
+	public String qnaForm(Model model, QaBoardDto qaBoardDto) {
+		qaBoardDto = new QaBoardDto();
+		model.addAttribute("qaBoardDto", qaBoardDto);
 		return "qaPage/qaForm";
 	}
 	

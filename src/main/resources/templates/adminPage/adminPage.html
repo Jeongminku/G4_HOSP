@@ -7,6 +7,7 @@
 <title>순양병원</title>
 </head>
 <body>
+
   <section layout:fragment="content">
     <div id="chart_div"></div>
     <div id="chart_div2"></div>
@@ -56,6 +57,7 @@
 	                   
 	          			google.charts.setOnLoadCallback(drawChart);
 	          		 	google.charts.setOnLoadCallback(drawBasic);
+	          		 	google.charts.setOnLoadCallback(drawBasic2);
 	             },
 	            
 	        	error : function() {
@@ -65,33 +67,9 @@
 	        });
 		}
       	
-      // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
-      // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['안과', 5],
-          ['치과', 1],
-          ['정형외과', 1],
-          ['피부과', 1],
-          ['산부인과', 2]
-        ]);
-        // Set chart options
-        var options = {'title':'진료과별 입원 환자 수',
-                        'width':500,
-                        'height':400};
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+      
       	/* 원 차트 */
 		google.charts.load('current', {'packages':['corechart']});
 	    function drawChart() {
@@ -132,6 +110,7 @@
                      [t3[i] , t4[i]]
                    ]);
              }
+             
      	      var options = {
      	        title: '각 호실별 입원 현황',
      	        chartArea: {width: '100%'},
@@ -147,50 +126,66 @@
 			  chart.draw(data, options);
      	    }
      	
-     	
-     	
-     	
-     	/*  */
-     	
-     	/* google.charts.load('current', {packages: ['corechart', 'bar']});
-		google.charts.setOnLoadCallback(drawBasic);
-		function drawBasic() {
+     	/* 수정본 세로차트  */
 		
-		      var data = google.visualization.arrayToDataTable([
-		        ['City', '2010 Population',],
-		        ['New York City, NY', 8175000],
-		        ['Los Angeles, CA', 3792000],
-		        ['Chicago, IL', 2695000],
-		        ['Houston, TX', 2099000],
-		        ['Philadelphia, PA', 1526000]
-		      ]);
+		function drawBasic2() {
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', '입원실(호)');
+		data.addColumn('number', '입원환자 수(명)');
 		
-		      var options = {
-		        title: 'Population of Largest U.S. Cities',
-		        chartArea: {width: '50%'},
-		        hAxis: {
-		          title: 'Total Population',
-		          minValue: 0
-		        },
-		        vAxis: {
-		          title: 'City'
-		        }
-		      };
+        for( var i = 0; i < t3.length; i ++) {
+            data.addRows([
+                [t3[i] , t4[i]]
+              ]);
+        }
 		
-		      var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
+			/* data.addRows([
+			
+				['일', 1],
+				['월', 2],
+				['화', 3],
+				['수', 4],
+				['일', 5],
+				['금', 6],
+				['토', 7],
+			
+			]); */
+
+			var options = {
+				title: '각 호실별 입원 현황',
+				hAxis: {
+				title: '입원실(호)',
+				viewWindow: {
+					min: [7, 30, 0],
+					max: [17, 30, 0]
+					}
+				},
+				
+				vAxis: {
+					title: '입원환자 수(명)',
+					minValue: 10
+				}
+			
+			};
+			
+			 
+			
+			var chart = new google.visualization.ColumnChart(
+			document.getElementById('chart_div5'));
 		
-		      chart.draw(data, options);
-		    } */
+			chart.draw(data, options);
 		
-     	/*  */
+		}
+
+		
      	
-     	
-     	
+ 
     </script>
+    
 	<!-- 차트 넣기 -->
 	<div id="chart_div"></div>
-  	<div id="chart_div3"></div>
-  	<div id="chart_div4"></div>
+  	<!-- <div id="chart_div3"></div> -->
+  	<div id="chart_div5"></div>
   	
 </div>
   </section>
