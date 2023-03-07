@@ -1,8 +1,6 @@
 package com.Tingle.G4hosp.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 
@@ -180,11 +178,18 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom{
 					.where(archive.member.id.eq(memid))
 					.fetch();	
 		} catch (NullPointerException e) {
-			String arnull = "";
-			String mednull = "";
-			archivedatelist.add(arnull);
-			mednamelist.add(mednull);
+			archivedatelist = null;
+			mednamelist = null;
 		}
+		
+		if(archivedatelist != null) {
+			Map<String, String> archiveMap = new HashMap<>();
+			for(int i = 0; i < archivedatelist.size(); i++) {
+				archiveMap.put(archivedatelist.get(i), mednamelist.get(i));
+			}
+			memberFormDto.setArchive(archiveMap);			
+		}
+		
 		memberFormDto.setArchivedate(archivedatelist);
 		memberFormDto.setMedname(mednamelist);
 		

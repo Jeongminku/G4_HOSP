@@ -1,7 +1,7 @@
 package com.Tingle.G4hosp.dto;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -53,7 +53,7 @@ public class MemberFormDto {
 	// 마이페이지 접속시 회원 내원일자, 내원 과 조회
 	private List<String> archivedate;
 	private List<String> medname;
- 	
+ 	private Map<String, String> archive;
 	
 	public static ModelMapper modelMapper = new ModelMapper();
 	
