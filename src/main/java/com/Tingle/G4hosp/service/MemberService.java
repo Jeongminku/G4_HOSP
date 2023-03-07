@@ -129,6 +129,21 @@ public class MemberService implements UserDetailsService{
 		
 		 
 		 
+	 public void updateMember(MemberFormDto memberFormDto, String loginId, MultipartFile file) {
+		 Member member = memberRepository.findByLoginid(loginId);
+		 if (member.getRole() == Role.DOCTOR) {
+			 Med med = medRepository.findById(memberFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);//med값이 나옴.
+			 MemberMed memberMed = memberMedRepository.findByMemberid(member.getId());
+			 memberMed.updateMemberMed(med);
+			 try {
+				memberImgService.saveMemberImg(member, file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 }
+		 member.updateMember(memberFormDto, passwordEncoder);
+	 }
+	 
 	 public void updateMember(MemberFormDto memberFormDto, String loginId) {
 		 Member member = memberRepository.findByLoginid(loginId);
 		 if (member.getRole() == Role.DOCTOR) {
