@@ -1,5 +1,6 @@
 package com.Tingle.G4hosp.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.Tingle.G4hosp.dto.PageSerchDto;
 import com.Tingle.G4hosp.dto.ReplyDto;
+import com.Tingle.G4hosp.entity.Board;
+import com.Tingle.G4hosp.entity.Member;
 import com.Tingle.G4hosp.entity.Reply;
 import com.Tingle.G4hosp.repository.BoardRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
@@ -25,6 +28,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class ReplyService {
 	private final ReplyRepository replyRepository;
+	private final BoardRepository boardRepository;
+	private final MemberRepository memberRepository;
 	
 	@Transactional
 	public List<ReplyDto> viewReply(Long boardId){
@@ -59,4 +64,5 @@ public class ReplyService {
 	public Page<ReplyDto> getReplyPage(PageSerchDto pageSerchDto,Pageable pageable,Long boardId) {
 		return replyRepository.getReplyPage(pageSerchDto, pageable,boardId);
 	}
+	
 }

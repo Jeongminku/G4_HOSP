@@ -114,7 +114,7 @@ public class BoardService {
 		
 		Reply reply = new Reply();
 		
-		reply.createReply(replyJsonDto.getReplyContent(), board, member);
+		reply.createComment(replyJsonDto.getReplyContent(), board, member);
 		//리플저장
 		replyRepository.save(reply);
 	}

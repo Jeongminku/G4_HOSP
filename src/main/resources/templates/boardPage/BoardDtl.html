@@ -107,6 +107,7 @@
         
 		
 	}
+	
 	//=========================================================================
 	
  	function test() {
@@ -314,6 +315,53 @@
 			<p th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
 		
 		</div>
+<<<<<<< HEAD
+		
+		
+		<div class="card mb-2">
+	<div class="card-header bg-light">
+	        <i class="fa fa-comment fa"></i> REPLY
+	</div>
+	<div class="card-body">
+		<ul class="list-group list-group-flush">
+		    <li class="list-group-item">
+			<textarea class="form-control" id="replyContent" name="replyContent" rows="2"></textarea>
+			<input type="hidden" th:value="${boardFormDto.id}" id="boardId" name="boardId">
+			<button type="button" class="btn btn-dark mt-3" onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
+		    </li>
+		</ul>
+	</div>
+	</div>
+		
+	<div th:each="reply , i : ${lists}"> 
+		<!-- 댓글폼  -->
+		 <div class="card-body">
+              <div class="d-flex">
+               <div class="flex-shrink-0" ><img class="rounded-circle" th:src="${reply.member.imgUrl}" th:alt="${reply.member.imgOri}"  style="width: 100px"/></div>
+                     <div class="ms-3">
+                        <div>
+               			<div class="fw-bold" th:text="${reply.member.loginid}"></div>
+               			<a onclick="saveComment()" th:id="comment+${i.index+1}">답글</a> 
+   			
+                        <div th:if="${reply.member.loginid == #authentication.name}">
+                        	<a onclick="createinput()" th:id="up+${i.index+1}" th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+                        	<a onclick="deletReply()" th:id="${i.index+1}" th:class="del-btn" style="cursor: pointer;">삭제</a>   
+                        </div>
+                        </div> 
+                         <span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}"> <span th:text="${reply.replyContent}"></span> </span> <span th:id="ReId+${i.index+1}"></span>
+                         <input type="hidden" th:value="${reply.replyContent}" th:id="con+${i.index+1}" th:name="con+${i.index+1}">
+                         <input type="hidden" th:value="${reply.id}" th:id="replyId+${i.index+1}" th:name="replyId+${i.index+1}">
+               		</div>
+               	
+          	 <div> 
+          	 </div>
+          	 
+          	</div>
+           </div> 
+		<!-- 댓글폼  -->
+		        
+	</div>	
+=======
 			
 					
 			<table class="table table align-middle">
@@ -340,6 +388,7 @@
 		
 	  </tbody>
 	</table>
+>>>>>>> 5f3e4c07aadeb63d0b1185898d4d7c2ad899c9d5
 			
 			
 			
