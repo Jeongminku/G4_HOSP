@@ -11,7 +11,7 @@
     <div class="d-flex justify-content-between align-items-center b-line">
       <h2 class="h3">회원 환자 목록</h2>
       <div class="btn-group">
-        <button type="button" class="btn btn-outline-primary" id="ALL">전체</button>
+        <button type="button" class="btn btn-outline-primary active" id="ALL">전체</button>
         <button type="button" class="btn btn-outline-primary" id="CLIENT">일반회원</button>
         <button type="button" class="btn btn-outline-primary" id="HOSPITALIZE">입원환자</button>
         <button type="button" class="btn btn-outline-primary" id="DOCTOR">의사</button>
@@ -21,6 +21,7 @@
     <table class="table" id="memberListTable" th:fragment="memberList_ALL">
       <thead class="table-header">
         <tr>
+          <th scope="col">NO.</th>
           <th scope="col">성함</th>
           <th scope="col">생년월일</th>
           <th scope="col">전화번호</th>
@@ -29,14 +30,86 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="members : ${members}">
-          <td>[[${members.name}]]</td>
-          <td>[[${members.birth}]]</td>
-          <td>[[${members.tel}]]</td>
-          <td>[[${members.tel}]]</td>
+        <tr th:each="member : ${memberList}">
+          <td>[[${member.id}]]</td>
+          <td>[[${member.memberName}]]</td>
+          <td>[[${member.memberBirth}]]</td>
+          <td>[[${member.memberTel}]]</td>
+          <td>[[${member.memberRegDate}]]</td>
+          <td>[[${member.memberRole}]]</td>
         </tr>
       </tbody>
     </table>
   </section>
+
+  <!-- 프래그먼트 -->
+  <table class="table" id="memberListTable" th:fragment="memberList_DOCTOR">
+    <thead class="table-header">
+      <tr>
+        <th scope="col">NO.</th>
+        <th scope="col">성함</th>
+        <th scope="col">생년월일</th>
+        <th scope="col">전화번호</th>
+        <th scope="col">가입일</th>
+        <th scope="col">담당과</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="member : ${memberList}">
+        <td>[[${member.id}]]</td>
+        <td>[[${member.memberName}]]</td>
+        <td>[[${member.memberBirth}]]</td>
+        <td>[[${member.memberTel}]]</td>
+        <td>[[${member.memberRegDate}]]</td>
+        <td>[[${member.memberMedName}]]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table" id="memberListTable" th:fragment="memberList_CLIENT_ADMIN">
+    <thead class="table-header">
+      <tr>
+        <th scope="col">NO.</th>
+        <th scope="col">성함</th>
+        <th scope="col">생년월일</th>
+        <th scope="col">전화번호</th>
+        <th scope="col">가입일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="member : ${memberList}">
+        <td>[[${member.id}]]</td>
+        <td>[[${member.memberName}]]</td>
+        <td>[[${member.memberBirth}]]</td>
+        <td>[[${member.memberTel}]]</td>
+        <td>[[${member.memberRegDate}]]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table" id="memberListTable" th:fragment="memberList_HOSP">
+    <thead class="table-header">
+      <tr>
+        <th scope="col">NO.</th>
+        <th scope="col">성함</th>
+        <th scope="col">입원일</th>
+        <th scope="col">담당의</th>
+        <th scope="col">담당과</th>
+        <th scope="col">병명</th>
+        <th scope="col">병실</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="member : ${memberList}">
+        <td>[[${member.id}]]</td>
+        <td>[[${member.memberName}]]</td>
+        <td>[[${member.memberHospDate}]]</td>
+        <td>[[${member.memberHospDocName}]]</td>
+        <td>[[${member.memberHospMedName}]]</td>
+        <td>[[${member.memberHospDiseName}]]</td>
+        <td>[[${member.memberHospRoom}]]</td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 </html>
