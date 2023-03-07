@@ -75,15 +75,34 @@
 	
 	</div>
 	
-	<div class="board-content">
-		<p>[[${HinfoBoard.content}]]</p>
-	</div>
 	
-	<div th:each="img, status:${HinfoBoard.hinfoImgDtoList}"> <img alt="" th:src="${img.imgUrl}"></div>
-		
-		<br>
-		
-		<div class="button2">
+<table class="table table align-middle">
+  <thead>
+  <tr th:each="img, status:${HinfoBoard.hinfoImgDtoList}" ><img alt="${img.oriImgName}" th:src="${img.imgUrl}"></tr>
+    <tr>
+      <td style="white-space: pre-line;"><p class="text-start text-break fs-5 lh-base ">[[${HinfoBoard.content}]]</p></td>
+    </tr>
+
+  </thead>
+  <tbody class="table-group-divider">
+    <tr>
+      <th scope="row">
+
+      </th>
+    </tr>
+
+    <tr>
+      <th scope="row">
+
+
+
+      </th>
+    </tr>
+    
+  </tbody>
+
+</table>
+	  	<div class="button2">
 			<a class="btn btn-primary" th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}" role="button">수정</a>
 			<a class="btn btn-primary" th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}" role="button">삭제</a>
 		</div>

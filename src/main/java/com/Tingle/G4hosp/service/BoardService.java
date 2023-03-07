@@ -1,6 +1,8 @@
 package com.Tingle.G4hosp.service;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
@@ -151,4 +153,22 @@ public class BoardService {
 		return succes;
 	}
 	
+	//메인페이지에 게시글을 뿌려줌
+	public List<BoardListDto> getMainBoard() {
+		List<Board> boardList = boardRepository.mainViewBoard();
+		List<BoardListDto> boardListdtoList = new ArrayList<>();
+		
+		for(int i = 0; i < boardList.size(); i++) {
+			BoardListDto boardListdto = new BoardListDto();
+			boardListdto.setId(boardList.get(i).getId());
+			boardListdto.setMember(boardList.get(i).getMember());
+			boardListdto.setRegTime(boardList.get(i).getRegDatetime());
+			boardListdto.setView(boardList.get(i).getView());
+			boardListdto.setTitle(boardList.get(i).getTitle());
+			
+			boardListdtoList.add(boardListdto);
+		}
+
+		return boardListdtoList;
+	}
 }

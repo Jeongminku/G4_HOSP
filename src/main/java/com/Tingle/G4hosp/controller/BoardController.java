@@ -227,6 +227,19 @@ public class BoardController {
 	public String deleteBoard(@PathVariable("boardId") Long boardId,BoardSerchDto boardserchDto,Optional<Integer> page,Model model,
 			HttpServletResponse resp, Authentication authentication) {	
 		
+		BoardFormDto boardFormDto	= boardSerivce.getboardDto(boardId);
+
+		
+		if(authentication == null) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
+		}
+		
+		if(!boardFormDto.getMember().getLoginid().equals(authentication.getName())
+			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
+		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다.",   "/board/" + boardId , resp);
+		}
+		
 		boardSerivce.delBoard(boardId, resp, authentication, model);
 		
 		
@@ -247,7 +260,6 @@ public class BoardController {
 			Authentication authentication, HttpServletResponse resp) {
 		
 		BoardFormDto boardFormDto	= boardSerivce.getboardDto(boardId);
-		System.err.println(authentication == null);
 		
 		if(authentication == null) {
 			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
