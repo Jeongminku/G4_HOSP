@@ -165,10 +165,12 @@ public class BoardController {
 	
 	//댓글 저장
 	@PostMapping(value = "saveReply")
-	@ResponseBody public ResponseEntity saveReply(@RequestBody ReplyJsonDto replyJsonDto,Principal principal,Model model) {
+	@ResponseBody public ResponseEntity saveReply(@RequestBody ReplyJsonDto replyJsonDto,Principal principal) {
+		System.err.println(replyJsonDto);
 		boardSerivce.saveReply(replyJsonDto, principal);
 		return new ResponseEntity(HttpStatus.OK);
 	}
+	
 	
 	//테스트 댓글 목록 보내기
 	@RequestMapping(value = "/test/{boardId}"  , method = { RequestMethod.POST })

@@ -1,5 +1,4 @@
 package com.Tingle.G4hosp.entity;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,12 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
@@ -32,6 +28,7 @@ public class Reply extends BaseEntity{
 	
 	private String replyContent;
 	
+	
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="board_id")
@@ -43,9 +40,11 @@ public class Reply extends BaseEntity{
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Member member;
 	
-	public void createReply(String replyContent,Board board,Member member) {
+	public void createComment(String replyContent,Board board,Member member) {
 		this.replyContent = replyContent;
 		this.board = board;
 		this.member = member;
 	}
+	
+
 }
