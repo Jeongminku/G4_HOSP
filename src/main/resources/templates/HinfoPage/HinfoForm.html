@@ -36,7 +36,7 @@
 					<h3>글 제목 입력</h3>
 					<div class="input-group mb-3">
 						<span class="input-group-text" id="inputGroup-sizing-default">글 제목 입력</span>
-						<input type="text" th:field="*{Title}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="글 제목 입력">					
+						<input type="text" th:field="*{Title}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" maxlength="40" placeholder="글 제목 입력">					
 					</div>
 					<div class="error">
 						<p th:if="${#fields.hasErrors('Title')}" th:errors="*{Title}" class="fieldError">Incorrect Data</p>
@@ -55,6 +55,7 @@
 						<!-- <input type="hidden" th:field="*{Id}" th:value="${hinfoBoardDto.id}"> -->
 					</div>
 				</div>
+					<a style="float: right;" class="btn btn-primary" onclick="location.href='/Hinfo/HinfoMain'">목록으로</a>
 				<button th:formaction="@{/Hinfo/Hinfo}" class="btn btn-primary" style="float: right;">글쓰기</button>
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			</form>
@@ -85,7 +86,8 @@
 						<input type="file" id="HinfoImg" name="HinfoImg" style="padding-top: 15px;">
 						<input type="hidden" th:field="*{Id}" th:value="${hinfoBoardDto.id}">
 					</div>
-				</div>						
+				</div>					
+				<a style="float: right;" class="btn btn-primary" onclick="location.href='/Hinfo/HinfoMain'">목록으로</a>	
 				<button th:formaction="@{'/Hinfo/updatepage/' + ${hinfoBoardDto.id} }" type="submit" style="float: right;" class="btn btn-primary">수정하기</button>
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			</form>

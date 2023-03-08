@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
 
 import com.Tingle.G4hosp.entity.HinfoBoard;

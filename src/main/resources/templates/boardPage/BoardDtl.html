@@ -81,7 +81,7 @@ $.ajax({
 	<section layout:fragment="content">
 
 		<div class="title-box">
-
+			<a style="float: right;" class="btn btn-outline-primary btn-sm" onclick="location.href='/board/main'">목록으로</a>	
 			<h4 class="title">[[${boardFormDto.title}]]</h4>
 			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
 				[[${boardFormDto.view}]] | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
@@ -95,7 +95,7 @@ $.ajax({
 		<table class="table table align-middle">
 			<thead>
 				<tr style="text-align: center;">
-					<td><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+					<td style="white-space: pre-line;"><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
 				</tr>
 
 			</thead>

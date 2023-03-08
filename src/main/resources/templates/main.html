@@ -9,7 +9,8 @@
 <meta charset="UTF-8">
 <title>순양병원</title>
 <link rel="stylesheet" href="../../css/main.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <script th:inline="javascript">
 	/*$(function(){
 		var searchStr = $('.doc_searchbar').val();
@@ -45,7 +46,7 @@
 			<div class="swiper-button-next"></div>
 			<div class="swiper-button-prev"></div>
 			<div class="swiper-pagination"></div>
-			
+
 
 		</div>
 		<div class="container text-center">
@@ -61,32 +62,37 @@
 						</h3>
 					</div>
 					<div class="reservation_btn_list">
-						<a href="/reservation/quick" sec:authorize="isAnonymous()"><span>비회원 빠른예약</span></a>
-						<a href="/reservation/listView/" sec:authorize="isAuthenticated()"><span>내 예약 확인</span></a>	
-						<a href="/reservation/selectDoc"><span>온라인 진료예약</span></a>
+						<a href="/reservation/quick" sec:authorize="isAnonymous()"><span>비회원
+								빠른예약</span></a> <a href="/reservation/listView/"
+							sec:authorize="isAuthenticated()"><span>내 예약 확인</span></a> <a
+							href="/reservation/selectDoc"><span>온라인 진료예약</span></a>
 					</div>
 				</div>
 				<div class="col-xl-6 box_search">
-			    	<div class="doc_search_h3">
-			    		<h3>&nbsp&nbsp의료진/진료과 검색</h3>
-			    	</div>
-			    	<div class="doc_search">
-				    <form class="doc_search" action="/searchresult" th:object="${searchInputDto}" role="search">
-	  					<input type="text" th:field="*{searchQuery}" name="searchQuery" class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요." oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="2" required>
-  						<button type="submit" class="doc_search_btn">검색하기</button>
-					</form>
+					<div class="doc_search_h3">
+						<h3>&nbsp&nbsp의료진/진료과 검색</h3>
 					</div>
-			      <img class="doc_search_img" src="/img/male_doc.png">
+					<div class="doc_search">
+						<form class="doc_search" action="/searchresult"
+							th:object="${searchInputDto}" role="search">
+							<input type="text" th:field="*{searchQuery}" name="searchQuery"
+								class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요."
+								oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"
+								oninput="this.setCustomValidity('')" minlength="2" required>
+							<button type="submit" class="doc_search_btn">검색하기</button>
+						</form>
+					</div>
+					<img class="doc_search_img" src="/img/male_doc.png">
 				</div>
 			</div>
-	    </div>
+		</div>
 
 
 		<div style="display: flex;">
-			<div class="container" style="width: 50%; background-color: white;">
+			<div class="container" style="width: 50%; background-color: #EFF3F7;">
 				<div class="row">
 					<div style="padding: 20px 0px 20px 0px; color: #108ccf">
-						<h3>건강정보게시판</h3>
+						<h3 style="margin-left: 18px;">건강정보게시판</h3>
 					</div>
 
 
@@ -106,7 +112,7 @@
 											</div>
 
 											<div class="col-md-5"
-												style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+												style="width: 200px; padding: 0 5px; overflow: hidden; text-overflow: elevation; white-space: nowrap;">
 												<a th:href="'/Hinfo/' +${hinfo.id}" class="forum-item-title">[[${hinfo.title}]]</a>
 											</div>
 											<div class="col-md-2 forum-info">
@@ -140,59 +146,60 @@
 				</div>
 			</div>
 
-			<div class="container" style="width: 50%">
+			<div class="container" style="width: 50%; background-color: #EFF3F7;">
 				<div class="row">
 					<div style="padding: 20px 0px 20px 0px; color: #108ccf">
-						<h3>고객게시판</h3>
+						<h3 style="padding-left: 18px">고객게시판</h3>
 					</div>
 
 					<div>
-									<div th:each=" board : ${boardList}">
-						<div class="col-lg-12">
-							<div class="wrapper wrapper-content animated fadeInRight">
+						<div th:each=" board : ${boardList}">
+							<div class="col-lg-12">
+								<div class="wrapper wrapper-content animated fadeInRight">
 
-								<div class="ibox-content forum-container">
+									<div class="ibox-content forum-container">
 
-									<div class="forum-item">
-										<div class="row">
-											<div class="col-md-1 forum-info">
-												<div>
-													<small>[[${board.id}]]</small>
+										<div class="forum-item">
+											<div class="row">
+												<div class="col-md-1 forum-info">
+													<div>
+														<small>[[${board.id}]]</small>
+													</div>
+
+												</div>
+
+												<div class="col-md-5"
+													style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+													<a th:href="'/board/' +${board.id}"
+														class="forum-item-title">[[${board.title}]]</a>
+												</div>
+												<div class="col-md-2 forum-info">
+													<div>
+														<small>글쓴이 </small><span>[[${board.member.loginid}]]</span>
+													</div>
+
+												</div>
+												<div class="col-md-3 forum-info">
+													<div>
+														<small>작성일 </small><span
+															th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></span>
+													</div>
+
+												</div>
+												<div class="col-md-2 forum-info">
+													<div>
+														<small>조회수 </small><span>[[${board.view}]]</span>
+													</div>
+
 												</div>
 
 											</div>
-
-											<div class="col-md-5"
-												style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-												<a th:href="'/board/' +${board.id}" class="forum-item-title">[[${board.title}]]</a>
-											</div>
-											<div class="col-md-2 forum-info">
-												<div>
-													<small>글쓴이 </small><span>[[${board.member.loginid}]]</span>
-												</div>
-
-											</div>
-											<div class="col-md-3 forum-info">
-												<div>
-													<small>작성일 </small><span
-														th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></span>
-												</div>
-
-											</div>
-											<div class="col-md-2 forum-info">
-												<div>
-													<small>조회수 </small><span>[[${board.view}]]</span>
-												</div>
-
-											</div>
-
 										</div>
-									</div>
 
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 
 				</div>

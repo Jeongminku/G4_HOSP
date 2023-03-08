@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.MemberFormDto;
 import com.Tingle.G4hosp.dto.MessageDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
@@ -89,7 +90,7 @@ public class MemberController {
 		// 일반인회원가입 버튼 클릭
 		@PostMapping(value = "/new/client")
 		public String memberclientForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-				@RequestParam("profileImg") MultipartFile file) {
+				@RequestParam("profileImg") MultipartFile file, HttpServletResponse resp) {
 			//System.err.println(memberFormDto.getMedId());
 			if (bindingResult.hasErrors()) {
 				return "member/memberClientForm";
@@ -102,7 +103,7 @@ public class MemberController {
 				model.addAttribute("errorMessage", e.getMessage());
 				return "member/memberClientForm";
 			}
-			return "redirect:/";
+			return MemberCheckMethod.redirectAfterAlert("회원가입이 완료되었습니다.", "/", resp);
 		}
 		
 		// 의료진회원가입 화면
@@ -117,7 +118,7 @@ public class MemberController {
 				// 의료진회원가입 버튼 클릭
 				@PostMapping(value = "/new/doctor")
 				public String memberdocotrForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-						@RequestParam("profileImg") MultipartFile file) {
+						@RequestParam("profileImg") MultipartFile file, HttpServletResponse resp) {
 					//System.err.println(memberFormDto.getMedId());
 					if (bindingResult.hasErrors()) {
 						return "member/memberDoctorForm";
@@ -129,7 +130,7 @@ public class MemberController {
 						model.addAttribute("errorMessage", e.getMessage());
 						return "member/memberDoctorForm";
 					}
-					return "redirect:/";
+					return MemberCheckMethod.redirectAfterAlert("회원가입이 완료되었습니다.", "/", resp);
 				}
 				
 				//관리자 회원가입 화면
@@ -144,7 +145,7 @@ public class MemberController {
 				//관리자 회원가입 버튼 클릭
 				@PostMapping(value = "/new/admin")
 				public String memberadminForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-						@RequestParam("profileImg") MultipartFile file) {
+						@RequestParam("profileImg") MultipartFile file, HttpServletResponse resp) {
 					//System.err.println(memberFormDto.getMedId());
 					if (bindingResult.hasErrors()) {
 						return "member/memberAdminForm";
@@ -156,7 +157,7 @@ public class MemberController {
 						model.addAttribute("errorMessage", e.getMessage());
 						return "member/memberAdminForm";
 					}
-					return "redirect:/";
+					return MemberCheckMethod.redirectAfterAlert("회원가입이 완료되었습니다.", "/", resp);
 				}
 		
 	
@@ -175,36 +176,37 @@ public class MemberController {
 
 	}
 
-	// ID찾기
-	@PostMapping(value = "/FindId")
-	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-
-		try {
-			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-			System.out.println("llllllllllllllll"+ memberFindID.getLoginid());
-			model.addAttribute("findID", memberFindID);
-			return "member/memberFindIdResult";
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
-			return "member/memberFindIdResult";
-		}
-
-//		return "member/memberFindIdResult";		
-	}
-
-	// id찾기 결과화면
-	@GetMapping(value = "/FindIdResult")
-	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
-
-		return "member/memberFindIdResult";
-	}
+//	// ID찾기
+//	@PostMapping(value = "/FindId")
+//	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+//
+//		try {
+//			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+//			System.out.println("llllllllllllllll"+ memberFindID.getLoginid());
+//			model.addAttribute("findID", memberFindID);
+//			return "member/memberFindIdResult";
+//		} catch (Exception e) {
+//			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
+//			return "member/memberFindIdResult";
+//		}
+//	
+//	}
+//
+//	// id찾기 결과화면
+//	@GetMapping(value = "/FindIdResult")
+//	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
+//
+//		return "member/memberFindIdResult";
+//	}
 	
 	@PostMapping(value = "/FindIdResult")
-	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model, HttpServletResponse resp) {
 		Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-		System.out.println("llllllllllllllll"+ memberFindID.getPwd());
-		model.addAttribute("findID", memberFindID);
-		System.out.println(memberFindID.getLoginid());
+		if(memberFindID == null) {
+			return MemberCheckMethod.redirectAfterAlert("존재하지 않는 회원입니다.", "/members/FindId", resp);
+		} else {
+			model.addAttribute("findID", memberFindID);						
+		}
 		return "member/memberFindIdResult";
 	}
 	
@@ -280,16 +282,16 @@ public class MemberController {
 	public String memberModify(Model model, Principal principal) {
 		String loginId = principal.getName();
 		Member member = memberService.findByLoginid(loginId);
-		
-		Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
-		
 		MemberFormDto memberFormDto = new MemberFormDto();
-		
-		if(med != null) {
-			List<Med> medlist = medService.getTesListNotMy(med.getMedId());
+		if(member.getRole().equals(Role.DOCTOR)) {
+			Med med = medService.findMedbyDocid(member.getId()); //medId, medName, medInfo 가져옴.
+			if(med != null) {
+				List<Med> medlist = medService.getTesListNotMy(med.getMedId());
 //			List<Med> medlist = medRepository.getMedListNotMyMed(med.getMedId());
-			memberFormDto.setMed(medlist);			
+				memberFormDto.setMed(medlist);			
+			}
 		}
+		
 		// 환자별 내원일자, 내원 과 조회
 		memberFormDto = memberService.checkARdateandMedname(memberFormDto, member);		
 		System.err.println("컨트롤러 환자 진료 일자 리스트 출력 테스트 : "+ memberFormDto.getArchivedate());
@@ -297,22 +299,29 @@ public class MemberController {
 
 		model.addAttribute("memberFormDto",memberFormDto);
 		model.addAttribute("modiMember", member);
-		MemberMed memberMed = memberMedService.findMemberMed(member.getId());
-		model.addAttribute("memberMed", memberMed);
+		if(member.getRole().equals(Role.DOCTOR)) {
+			MemberMed memberMed = memberMedService.findMemberMed(member.getId());
+			model.addAttribute("memberMed", memberMed);
+		}
 		
 		return "member/memberModify";
 	}
 	
 	@PostMapping(value="/modify")
-	public String memberModify(MemberFormDto memberFormDto, Model model, Principal principal, @RequestParam("profileImg") Optional<MultipartFile> file) {
+	public String memberModify(MemberFormDto memberFormDto, Model model, Principal principal, @RequestParam(name = "profileImg", required = false) MultipartFile file, HttpServletResponse resp) {
 		String loginId = principal.getName();
-		if(!file.get().isEmpty()) {
-			memberService.updateMember(memberFormDto, loginId, file.get());			
+		System.err.println(file);
+		if(file != null) {
+			if(!file.isEmpty()) {
+				memberService.updateMember(memberFormDto, loginId, file);			
+			} else {
+				memberService.updateMember(memberFormDto, loginId);
+			}			
 		} else {
 			memberService.updateMember(memberFormDto, loginId);
 		}
-		
-		return "member/memberLoginForm";
+				
+		return MemberCheckMethod.redirectAfterAlert("정보수정이 완료되었습니다.", "/", resp);
 	}
 	
 	@GetMapping(value= "/del/{id}")
