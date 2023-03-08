@@ -90,7 +90,7 @@ public class MemberController {
 		// 일반인회원가입 버튼 클릭
 		@PostMapping(value = "/new/client")
 		public String memberclientForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-				@RequestParam("profileImg") MultipartFile file) {
+				@RequestParam("profileImg") MultipartFile file, HttpServletResponse resp) {
 			//System.err.println(memberFormDto.getMedId());
 			if (bindingResult.hasErrors()) {
 				return "member/memberClientForm";
@@ -103,7 +103,7 @@ public class MemberController {
 				model.addAttribute("errorMessage", e.getMessage());
 				return "member/memberClientForm";
 			}
-			return "redirect:/";
+			return MemberCheckMethod.redirectAfterAlert("회원가입이 완료되었습니다.", "/", resp);
 		}
 		
 		// 의료진회원가입 화면
@@ -118,7 +118,7 @@ public class MemberController {
 				// 의료진회원가입 버튼 클릭
 				@PostMapping(value = "/new/doctor")
 				public String memberdocotrForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-						@RequestParam("profileImg") MultipartFile file) {
+						@RequestParam("profileImg") MultipartFile file, HttpServletResponse resp) {
 					//System.err.println(memberFormDto.getMedId());
 					if (bindingResult.hasErrors()) {
 						return "member/memberDoctorForm";
@@ -130,7 +130,7 @@ public class MemberController {
 						model.addAttribute("errorMessage", e.getMessage());
 						return "member/memberDoctorForm";
 					}
-					return "redirect:/";
+					return MemberCheckMethod.redirectAfterAlert("회원가입이 완료되었습니다.", "/", resp);
 				}
 				
 				//관리자 회원가입 화면
@@ -145,7 +145,7 @@ public class MemberController {
 				//관리자 회원가입 버튼 클릭
 				@PostMapping(value = "/new/admin")
 				public String memberadminForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,
-						@RequestParam("profileImg") MultipartFile file) {
+						@RequestParam("profileImg") MultipartFile file, HttpServletResponse resp) {
 					//System.err.println(memberFormDto.getMedId());
 					if (bindingResult.hasErrors()) {
 						return "member/memberAdminForm";
@@ -157,7 +157,7 @@ public class MemberController {
 						model.addAttribute("errorMessage", e.getMessage());
 						return "member/memberAdminForm";
 					}
-					return "redirect:/";
+					return MemberCheckMethod.redirectAfterAlert("회원가입이 완료되었습니다.", "/", resp);
 				}
 		
 	
@@ -176,35 +176,37 @@ public class MemberController {
 
 	}
 
-	// ID찾기
-	@PostMapping(value = "/FindId")
-	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-
-		try {
-			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-			System.out.println("llllllllllllllll"+ memberFindID.getLoginid());
-			model.addAttribute("findID", memberFindID);
-			return "member/memberFindIdResult";
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
-			return "member/memberFindIdResult";
-		}
-	
-	}
-
-	// id찾기 결과화면
-	@GetMapping(value = "/FindIdResult")
-	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
-
-		return "member/memberFindIdResult";
-	}
+//	// ID찾기
+//	@PostMapping(value = "/FindId")
+//	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+//
+//		try {
+//			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
+//			System.out.println("llllllllllllllll"+ memberFindID.getLoginid());
+//			model.addAttribute("findID", memberFindID);
+//			return "member/memberFindIdResult";
+//		} catch (Exception e) {
+//			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
+//			return "member/memberFindIdResult";
+//		}
+//	
+//	}
+//
+//	// id찾기 결과화면
+//	@GetMapping(value = "/FindIdResult")
+//	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
+//
+//		return "member/memberFindIdResult";
+//	}
 	
 	@PostMapping(value = "/FindIdResult")
-	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model, HttpServletResponse resp) {
 		Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-		System.out.println("llllllllllllllll"+ memberFindID.getPwd());
-		model.addAttribute("findID", memberFindID);
-		System.out.println(memberFindID.getLoginid());
+		if(memberFindID == null) {
+			return MemberCheckMethod.redirectAfterAlert("존재하지 않는 회원입니다.", "/members/FindId", resp);
+		} else {
+			model.addAttribute("findID", memberFindID);						
+		}
 		return "member/memberFindIdResult";
 	}
 	
