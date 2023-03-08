@@ -189,8 +189,7 @@ public class MemberController {
 			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
 			return "member/memberFindIdResult";
 		}
-
-//		return "member/memberFindIdResult";		
+	
 	}
 
 	// id찾기 결과화면

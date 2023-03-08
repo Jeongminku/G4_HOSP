@@ -98,3 +98,14 @@ $(document).on('click', '.btn-group > .btn.btn-outline-primary', function () {
         },
     })
 })
+
+window.addEventListener('DOMContentLoaded', function () {
+    const path = location.pathname;
+    if (path == '/admin/memberList') {
+        const param = location.search.substring(location.search.indexOf('=') + 1);
+        if (param != '') {
+            history.pushState(null, null, '/admin/memberList')
+            $('.btn-group').children('#' + param).click();
+        }
+    }
+})
