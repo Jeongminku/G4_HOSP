@@ -1,6 +1,8 @@
 package com.Tingle.G4hosp.controller;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -21,6 +23,7 @@ import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
+import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Disease;
 import com.Tingle.G4hosp.entity.HospitalizeDisease;
 import com.Tingle.G4hosp.entity.Med;
@@ -33,12 +36,15 @@ import com.Tingle.G4hosp.repository.MedRepository;
 import com.Tingle.G4hosp.repository.MemberMedRepository;
 import com.Tingle.G4hosp.repository.MemberRepository;
 import com.Tingle.G4hosp.service.AdminService;
+import com.Tingle.G4hosp.service.ChatRoomAccessService;
 import com.Tingle.G4hosp.service.ChatService;
 import com.Tingle.G4hosp.service.DiseaseService;
 import com.Tingle.G4hosp.service.HospitalizeService;
 import com.Tingle.G4hosp.service.MedService;
 import com.Tingle.G4hosp.service.MemberService;
 import com.Tingle.G4hosp.service.QuickReservationService;
+import com.Tingle.G4hosp.service.ReservationService;
+
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/admin")
@@ -53,12 +59,13 @@ public class AdminController {
 	private final QuickReservationService quickReservationService;
 	private final AdminService adminService;
 	private final ChatService chatService;	
+	private final ChatRoomAccessService chatRoomAccessService;
+	private final ReservationService reservationService;
 	private final HospitalizeRepository hospitalizeRepository;
 	private final HospitalizeDiseaseRepository hospitalizeDiseaseRepository;
 	private final MemberMedRepository memberMedRepository;
 	private final MedRepository medRepository;
 	private final MemberRepository memberRepository;
-	
 	
 	// 관리자 페이지 화면
 	@GetMapping
@@ -131,9 +138,8 @@ public class AdminController {
 	
 	// 고객목록 페이지 화면
 	@GetMapping(value="/memberList")
-	public String memberList(@RequestParam(name = "opt", required = false)String opt, Model model) {
+	public String memberList(Model model) {
 		model.addAttribute("memberList", memberService.findMemberList("ALL"));
-		model.addAttribute("param", opt);
 		return "adminPage/memberList";
 	}
 	
@@ -205,21 +211,46 @@ public class AdminController {
 		return "adminPage/QuickReservationList";
 	}
 	
+//	채팅관련
 	@GetMapping("/chat")
+	public String chat (Model model) {
+		chatRoomAccessService.checkInit();
+		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
+		model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
+		model.addAttribute("isAdmin", true);
+		return "ChatPage/WebChat";    		    			
+	}
+	
+	@PostMapping("/room")
+    public String enterChatRoom (@RequestParam Map<String, String> roomData, Model model, Principal principal) {
+    	Long roomId = Long.parseLong(roomData.get("roomId"));
+    	Long roomAccessId = Long.parseLong(roomData.get("roomAccessId"));
+    	System.err.println(roomId + ", " + roomAccessId);
+    	try {
+    		Map<String, ChatRoomDto> roomInfo = chatService.enterChatRoom(roomId, roomAccessId, principal.getName());
+    		model.addAttribute("RoomInfo", roomInfo);
+    	} catch (Exception e) {
+    		model.addAttribute("ErrorMsg", e.getMessage());
+            return "ChatPage/WebChat :: chatRoomFrag";
+    	}
+    	return "ChatPage/WebChat :: chatRoomFrag";
+    }
+	
+	@GetMapping("/chatControll")
 	public String chatView (Model model) {
 		model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
 		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
 		return "adminPage/AdminChat";
 	}
 	
-	@PostMapping("/chat")
+	@PostMapping("/chatControll")
     public String createRoom(ChatRoomDto chatRoomDto, Model model) {
     	try {
     		chatService.createChatRoom(chatRoomDto);
     	} catch(Exception e) {
     		model.addAttribute("ErrorMsg", e.getMessage());
     	}
-        return "redirect:/admin/chat";
+        return "redirect:/admin/chatControll";
     }
 	
 	@PostMapping("/chatDel")
@@ -229,7 +260,7 @@ public class AdminController {
 		} catch (Exception e) {
 			model.addAttribute("ErrorMsg", e.getMessage());			
 		}
-		return "redirect:/admin/chat";
+		return "redirect:/admin/chatControll";
 	}
 	
 	@PostMapping("/chatEdit")
@@ -240,7 +271,20 @@ public class AdminController {
 		} catch (Exception e) {
 			model.addAttribute("ErrorMsg", e.getMessage());		
 		}
-		return "redirect:/admin/chat";
+		return "redirect:/admin/chatControll";
+	}
+	
+//	예약관리
+	@GetMapping("/reservation")
+	public String reservationListView (Model model, Principal principal) {
+		try {
+			List<ReservationViewDto> viewList = reservationService.findAllReservation();
+			model.addAttribute("ViewList", viewList);
+			model.addAttribute("isAdmin", true);
+		} catch (Exception e) {
+			model.addAttribute("Error", e.getMessage());
+		}
+		return "ReservationPage/ViewReservation";
 	}
 	
 	//=========================================== 기능 테스트

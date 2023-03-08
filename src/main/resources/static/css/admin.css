@@ -22,7 +22,7 @@ section {width: 100%; height: auto; min-height: fit-content; width: 100%; max-wi
 #adminHeader a {color: #ffffff;}
 #adminHeader .h5 {padding: 5px 20px; color: #B2B2B2;}
 h1 {padding: 30px 0;}
-#adminHeader .btn-secondary {padding: 15px 20px; border-radius: 0;}
+#adminHeader .btn-secondary {padding: 10px 20px; border-radius: 0;}
 #adminHeader .btn-secondary.active {background-color: #5c636a;}
 .alertbox { width: 60%; top: 50px; right: 50px; color: #226597; font-weight: bold; font-size: 1rem; text-align: right;}
 

@@ -58,12 +58,15 @@ $(document).on('keyup', 'input[name="sendMessage"]', function (e) {
 $('input[name="roomId"]').on('change', () => {
     const checkedRadio = $('input[name="roomId"]:checked');
     const accessId = checkedRadio.parents('div').children('input[name="roomAccessId"]').val();
-    
+    let currentLocation = location.pathname;
+    let targetUrl = '/chat/room';
+    if (currentLocation == '/admin/chat') targetUrl = '/admin/room';
+    console.log(location.pathname)
     // console.log(chatSocket.readyState)
     // if (chatSocket.readyState != 1) chatSocket = new WebSocket("ws://localhost/ws/chat");
     
     $.ajax({
-        url: '/chat/room',
+        url: targetUrl,
         type: 'POST',
         dataType: 'text',
         data: {
