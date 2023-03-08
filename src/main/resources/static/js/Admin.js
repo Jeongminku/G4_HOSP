@@ -55,15 +55,14 @@ function deleteqr(value){
 // 채팅방
 $(document).on('click', '#chatRoomDel', function () {
     const selectForm = $(this).children('form[name="deleteId"]');
-    console.log(selectForm)
     selectForm.submit();
 })
 
 $(document).on('click', '#chatRoomEdit', function () {
-    const currentLi = $(this).parent().parent();
-    const currentAccessId = currentLi.children('input[name="chatRoomAccessId"]').val();
-    const currentRoomId = currentLi.find('input[name="chatRoomId"]').val();
-    const currentRoomName = currentLi.children('div[name="chatRoomName"]').text();
+    const currentTr = $(this).parent().parent();
+    const currentAccessId = currentTr.find('input[name="chatRoomAccessId"]').val();
+    const currentRoomId = currentTr.find('input[name="chatRoomId"]').val();
+    const currentRoomName = currentTr.find('td[name="chatRoomName"]').text();
     const editForm = $('#chatRoomEditModal').find('form');
 
     editForm.find('option').each((idx, item) => {
@@ -101,11 +100,46 @@ $(document).on('click', '.btn-group > .btn.btn-outline-primary', function () {
 
 window.addEventListener('DOMContentLoaded', function () {
     const path = location.pathname;
+    const adminPath = '/admin';
+    let originHref;
+    console.log(path.substring(0, 12))
     if (path == '/admin/memberList') {
         const param = location.search.substring(location.search.indexOf('=') + 1);
         if (param != '') {
-            history.pushState(null, null, '/admin/memberList')
+            history.pushState(null, null, adminPath + '/memberList')
             $('.btn-group').children('#' + param).click();
+        }
+    }
+    if (path.substring(0, 12) == '/admin/board' || path == '/admin/board/main') {
+        const subPath = path.substring(12);
+        if (subPath == '/write') {
+            originHref = $('button').attr('formaction');
+            $('button').attr('formaction', adminPath + originHref);
+            $('#toList').on('click', function() {
+                location.href = adminPath + '/board/main';
+            })
+        }
+        if (subPath == '' || subPath == '/main') {
+            $('#boardWrite').on('click', function () {
+                location.href = adminPath + '/board/write';
+            })
+            originHref = $('.message-body').find('a').attr('href');
+            $('.message-body').find('a').attr('href', adminPath + originHref);
+            originHref = $('#searchForm').attr('action');
+            $('#searchForm').attr('action', adminPath + originHref);
+        }
+        if (Number(subPath) != NaN) {
+            $('#toList').on('click', function() {
+                location.href = adminPath + '/board/main';
+            })
+            $('#postBtnGroup a').each((idx, item) => {
+                originHref = $(item).attr('href');
+                $(item).attr('href', adminPath + originHref);
+            })
+            $('nav li.page-item a').each((idx, item) => {
+                originHref = $(item).attr('href');
+                $(item).attr('href', adminPath + originHref);
+            })
         }
     }
 })
