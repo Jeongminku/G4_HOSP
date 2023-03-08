@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
         <div class="w-100 d-flex justify-content-end" sec:authorize="hasRole('DOCTOR')">
             <a class="btn btn-primary mb-2" href="/reservation/setNotAvailDay">휴일설정</a>
         </div>
-        <div id="Fcalendar"></div>
+        <div id="Fcalendar" th:classappend="${isAdmin} ? h-100 : ''"></div>
         <form th:action="@{/reservation/delete}" id="deleteForm" class="d-none" method="post">
             <input type="hidden" name="reservationId">
         </form>

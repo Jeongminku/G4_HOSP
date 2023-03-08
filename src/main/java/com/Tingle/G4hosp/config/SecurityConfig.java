@@ -34,8 +34,8 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 .mvcMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**", "/lib/**").permitAll()
-                .mvcMatchers("/", "/members/**").permitAll()
-                .mvcMatchers("/board/**", "/Hinfo/HinfoMain", "/Hinfo/{hinfoId}", "/qa/", "/qa/{category}", "/reservation/**").permitAll()
+                .mvcMatchers("/", "/searchresult", "/members/**").permitAll()
+                .mvcMatchers("/board/**", "/Hinfo/HinfoMain", "/Hinfo/{hinfoId}", "/qa", "/qa/{category}", "/reservation/**").permitAll()
                 .mvcMatchers("/reservation/setNotAvailDay").hasRole("DOCTOR")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().hasAnyRole("ADMIN", "DOCTOR");

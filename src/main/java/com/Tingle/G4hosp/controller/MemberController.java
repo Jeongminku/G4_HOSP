@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
@@ -303,9 +304,14 @@ public class MemberController {
 	}
 	
 	@PostMapping(value="/modify")
-	public String memberModify(MemberFormDto memberFormDto, Model model, Principal principal) {
+	public String memberModify(MemberFormDto memberFormDto, Model model, Principal principal, @RequestParam("profileImg") Optional<MultipartFile> file) {
 		String loginId = principal.getName();
-		memberService.updateMember(memberFormDto, loginId);
+		if(!file.get().isEmpty()) {
+			memberService.updateMember(memberFormDto, loginId, file.get());			
+		} else {
+			memberService.updateMember(memberFormDto, loginId);
+		}
+		
 		return "member/memberLoginForm";
 	}
 	

@@ -176,7 +176,7 @@ public class ArchiveController {
 		}
 		archiveFormDto.setDoctorname(Doctor.getName());
 
-		List<Disease> Diseaselist = diseaseRepository.findAll();
+		List<Disease> Diseaselist = diseaseService.findDiseaseListByDocId(Doctor.getLoginid());
 		
 		// CALCULATE AGE BY MEMBER BIRTH
         String now = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
@@ -221,6 +221,7 @@ public class ArchiveController {
 	public String archiveupdate(Model model,@PathVariable("id") Optional<Long> arcid, Principal principal) {
 		String loginId = principal.getName();
 		Member Doctor = memberService.findDocbyMid(loginId);
+		List<Disease> Diseaselist = diseaseService.findDiseaseListByDocId(Doctor.getLoginid());
 		
 		ArchiveFormDto archiveFormDto = new ArchiveFormDto();		
 		Archive archive = new Archive();
@@ -240,6 +241,7 @@ public class ArchiveController {
 		model.addAttribute("patient",patient);
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("archive",archive);
+		model.addAttribute("DL",Diseaselist);
 		return "/ArchivePage/ArchiveUpdate";
 	}
 

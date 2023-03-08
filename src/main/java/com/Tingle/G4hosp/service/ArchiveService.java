@@ -96,6 +96,18 @@ public class ArchiveService {
 		//UPDATE ARCHIVE
 		archive.updateArchive(docinfo, archiveFormDto, now);
 		
+		//UPDATE ARCHIVE_DISEASE
+		Disease disease = new Disease();
+		try {
+			disease = diseaseRepository.findDiseasebyDiseasename(archiveFormDto.getDisease());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("archiveservice에서 disease 객체를 불러오는 동안 에러 발생!");
+		}
+		ArchiveDisease archiveDisease = archiveDiseaseRepository.FindADbyARCid(archive.getId());
+		archiveDisease.updateAD(archive, disease);
+		
+		
 		//save new imglist if saved imglist is none. 
 		if(archiveImglist.size() == 0) {
 			for(int i=0; i<archiveImgFileList.size(); i++) {

@@ -62,6 +62,8 @@ if (path == 'setNotAvailDay') {
             delForm.submit();
         }
     }
+} else if (path == 'reservation'){
+    calendatBaseObj.height = '100%';
 } else {
     calendatBaseObj.select = (arg) => {
         selectReservationDate(arg);
@@ -75,7 +77,7 @@ function calendarLoad (calendatBaseObj) {
         calendar = new FullCalendar.Calendar(calendarEl, calendatBaseObj);
         calendar.render();
         typeof reservationViewPatDto == "undefined" ? '' : disableNotAvailDay();
-        typeof notAvail == "undefined" ? '' : setNotAvailDay_exsistView();
+        typeof notAvail == "undefined" ? '' : (notAvail == null ? '' : setNotAvailDay_exsistView());
     });
 }
 

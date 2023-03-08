@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
       
 <head>
@@ -53,9 +54,15 @@
   </tbody>
 
 </table>
+<<<<<<< HEAD
 	  	<div class="button2" sec:authorize="hasAnyAuthority('ROLE_DOCTOR','ROLE_ADMIN')">
 			<a class="btn btn-primary" th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}" role="button">수정</a>
 			<a class="btn btn-primary" th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}" role="button">삭제</a>
+=======
+	  	<div class="button2">
+			<a class="btn btn-primary" th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}" role="button" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</a>
+			<a class="btn btn-primary" th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}" role="button" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">삭제</a>
+>>>>>>> 5af4e9f07384ed96ede06d76b5d84b9014a8de93
 		</div>
 	
 	</section>	
