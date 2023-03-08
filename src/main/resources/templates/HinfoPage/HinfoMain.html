@@ -7,17 +7,33 @@
 	<meta charset="UTF-8">
 	<title>순양병원</title>
 	<script th:inline="javascript">
-		function send_pn(){
-			var yaho = $("#pn").val();
-			console.log(yaho);
-			$("#pn_form").submit();
-		}
+	  
+	  const width = window.innerWidth;
+	  
+		$(document).ready(
+				function(){
+					if(width < 1076){
+						$(".title").css("width" , "200px").css("overflow" , "hidden").css("text-overflow", "ellipsis")
+					}
+					
+				}
+				
+		)	  
+			  
+		window.onresize = function() {
 		
-		function send_pbn(){
-			var mu = $("#pbn").val();
-			console.log(mu);
-			$("#pbn_form").submit();
-		}
+			  
+			  //'input=[name=title]'.eq('0')
+	
+				if(width < 1076) {
+					$(".title").css("width" , "200px").css("overflow" , "hidden").css("text-overflow", "ellipsis")
+				}
+				if(width > 1076){
+					$(".title").css("width" , "").css("overflow" , "").css("text-overflow", "")
+				}
+					
+				
+			} 
 	</script>
 <link rel="stylesheet" href="../../css/HinfoMain.css">
 </head>
@@ -67,11 +83,14 @@
 							</div>
 							<div class="message-body">
 								<div class="message-body-heading">
+			
 								
-									<h5 th:href="'/Hinfo/' +${list.id}"><a style="color:#0D6EFD" th:href="'/Hinfo/' +${list.id}">[[${list.title}]] </a>
+									<h5 id="title" name="title" class="display-8" th:href="'/Hinfo/' +${list.id}">
+										<a style="color:#0D6EFD" th:href="'/Hinfo/' +${list.id}" th:text="${list.title}"></a>
 										<span th:if="${i.first} and ${lists.number==0}" class="unread" style="margin-top:1px">New</span>
 										<span th:if="${list.view} >= 5" class="important" style="margin-top:1px">Hot</span>
 									</h5>
+	
 									<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 								</div>
 								<p class="p-content">[[${list.content}]]</p><br>

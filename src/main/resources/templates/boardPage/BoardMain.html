@@ -9,7 +9,38 @@
 	<style th:inline="text">
 	
 	
-	</style>		
+	</style>	
+		<script th:inline="javascript">
+			  
+		  
+			$(document).ready(
+					function(){
+		  const width = window.innerWidth;
+						if(width < 1076){
+							$(".title").css("width" , "200px").css("overflow" , "hidden").css("text-overflow", "ellipsis")
+						}
+						
+					}
+					
+			)	
+		
+		window.onresize = function() {		
+			  const width = window.innerWidth;
+			  console.log(width)
+			  //'input=[name=title]'.eq('0')
+	
+				if(width < 1076) {
+					$(".title").css("width" , "200px").css("overflow" , "hidden").css("text-overflow", "ellipsis")
+				}
+				if(width > 1076){
+					$(".title").css("width" , "").css("overflow" , "").css("text-overflow", "")
+				}
+					
+				
+			}
+  
+			  
+	</script>	
 </head>
 <body>
 	<section layout:fragment="content">
@@ -44,15 +75,15 @@
 												th:src="${list.member.imgUrl}"
 												th:alt="${list.member.imgOri}">
 										</div>
-										<div class="message-body">
+										<div class="message-body" >
 											<div class="message-body-heading">
 										
-												<h5 th:if= "${list.boardSecret.name() == 'False'}"
+												<h5 class="title" th:if= "${list.boardSecret.name() == 'False'}"
 												 th:href="'/board/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
 													[[${list.title}]]</a>
 												</h5>
 												
-												<h5 th:unless= "${list.boardSecret.name() == 'False'}"
+												<h5 class="title" th:unless= "${list.boardSecret.name() == 'False'}"
 												 th:href="'/board/' +${list.id}">
 												
 												 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
