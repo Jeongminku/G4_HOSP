@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
 
@@ -130,8 +131,9 @@ public class AdminController {
 	
 	// 고객목록 페이지 화면
 	@GetMapping(value="/memberList")
-	public String memberList(Model model) {
+	public String memberList(@RequestParam(name = "opt", required = false)String opt, Model model) {
 		model.addAttribute("memberList", memberService.findMemberList("ALL"));
+		model.addAttribute("param", opt);
 		return "adminPage/memberList";
 	}
 	
