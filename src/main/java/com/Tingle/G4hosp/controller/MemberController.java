@@ -167,7 +167,15 @@ public class MemberController {
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/news/{tel}")
+	public @ResponseBody ResponseEntity<Integer> telCheck(@PathVariable("tel") String tel) {
+		Integer telresult = memberService.vaildateDuplicateTel(tel);
+		
+		return new ResponseEntity<Integer>(telresult, HttpStatus.OK);
+	}
+	
+	
 	// ID찾기화면
 	@GetMapping(value = "/FindId")
 	public String memberFindId(Model model) {
