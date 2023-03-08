@@ -225,7 +225,6 @@ public class AdminController {
     public String enterChatRoom (@RequestParam Map<String, String> roomData, Model model, Principal principal) {
     	Long roomId = Long.parseLong(roomData.get("roomId"));
     	Long roomAccessId = Long.parseLong(roomData.get("roomAccessId"));
-    	System.err.println(roomId + ", " + roomAccessId);
     	try {
     		Map<String, ChatRoomDto> roomInfo = chatService.enterChatRoom(roomId, roomAccessId, principal.getName());
     		model.addAttribute("RoomInfo", roomInfo);
