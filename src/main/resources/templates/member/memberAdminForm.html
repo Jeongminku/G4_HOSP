@@ -88,6 +88,7 @@
 				
 				};
 				
+				
 				//ID 중복체크
 				
 				var loginid = $('#loginid');
@@ -149,6 +150,9 @@ padding: 24px;
 	padding: 60px 100px;
 }
 
+.defimg {
+ display:none
+}
 .linemenu {
 	height: 50px;
 	text-align: center;
@@ -188,8 +192,6 @@ padding: 24px;
 
 .pnamein {
 	width: 80%;
-}
-.table{
 }
 
 .table tr{
@@ -257,7 +259,7 @@ padding: 24px;
 							<p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="py-2 c-alert-color">잘못된 생년월일 입력</p>
 							<div class="check_font c-alert-color py-2" id=birth_check></div>
 						</div>
-						 <div class="form-textbox row mb-3">
+						 <div class="form-textbox row mb-3 defimg">
 											<label class ="h5"for="profile">프로필사진</label>
 											<div id="image_container">
 	                                <img id="preview" style="width: 50%;"/>

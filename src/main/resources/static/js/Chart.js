@@ -32,8 +32,12 @@
 	          			console.log(chartData.hosptalizedEachWardname)	*/
 	          			console.log(chartData.doctorcount + '의사수?')
 	        			console.log(chartData.patientcount + '환자수?')
+	        			var member = chartData.doctorcount + chartData.patientcount
+	        			console.log(member + "?????????????")
+	        			
 	          			$("#doctorCount").text(chartData.doctorcount)
 	          			$("#memberCount").text(chartData.patientcount)
+	          			$("#sumMember").text(member)
 	        			
 	                    t1 = chartData.hosptalizedEachMedname
 	                    t2 = chartData.hosptalizedEachMed
