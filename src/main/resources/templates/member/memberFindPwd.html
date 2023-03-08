@@ -8,7 +8,17 @@
 >
   <head>
       <meta charset="UTF-8" />
-      <title>순양병원 </title> 
+      <title>순양병원 </title>
+      <!-- THYMELEAF JS  -->
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]];
+			if(errorMessage != null){
+				alert(errorMessage);
+			}
+
+		}); 
+	</script> 
       <style th:inline="text">
       	* {
 		margin: 0;
@@ -90,6 +100,7 @@
             <input type="text" name="tel" id="tel"  th:field="*{tel}"class="form-control">
           </div>
           <div style="text-align: center;">
+           <p th:if="${errorMessage}" class="errorMessage" th:text="${errorMessage}"></p> 
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <button type="submit" class="btn btn-primary w-40" id="loginbtn" onclick="location.href='/members/FindPwdResult'">비밀번호 찾기</button>
           </div>

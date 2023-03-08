@@ -176,29 +176,7 @@ public class MemberController {
 
 	}
 
-//	// ID찾기
-//	@PostMapping(value = "/FindId")
-//	public String memberFindId(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-//
-//		try {
-//			Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
-//			System.out.println("llllllllllllllll"+ memberFindID.getLoginid());
-//			model.addAttribute("findID", memberFindID);
-//			return "member/memberFindIdResult";
-//		} catch (Exception e) {
-//			model.addAttribute("errorMessage", "일치하는 회원정보가 없습니다.");
-//			return "member/memberFindIdResult";
-//		}
-//	
-//	}
-//
-//	// id찾기 결과화면
-//	@GetMapping(value = "/FindIdResult")
-//	public String memberFindResult(MemberFormDto memberFormDto, Model model) {
-//
-//		return "member/memberFindIdResult";
-//	}
-	
+	// 아이디찾기 결과
 	@PostMapping(value = "/FindIdResult")
 	public String memberFindResult(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model, HttpServletResponse resp) {
 		Member memberFindID = memberService.findByMnameMtel(memberFormDto.getName(), memberFormDto.getTel());
@@ -216,29 +194,16 @@ public class MemberController {
 			model.addAttribute("memberFormDto", new MemberFormDto());
 			return "member/memberFindPwd";
 		}
-		// 비밀번호 찾기(변경)
-		@PostMapping(value="/FindPwd")
-		public String memberFindPwd(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-			try {
-				Member memberFindPwd = memberService.findByPwd(memberFormDto.getLoginid(), memberFormDto.getName(), memberFormDto.getTel());
-				System.out.println("pppppp" + memberFindPwd.getPwd());
-				model.addAttribute("findPwd", memberFindPwd);
-			} catch (Exception e) {
-				return "member/memberFindPwd";
-			}
-			return "member/memberFindPwdResult";
-		}
-		
-		// 비번찾기 결과
-		@GetMapping(value="/FindPwdResult")
-		public String memberFindPwdResult(MemberFormDto memberFormDto, Model model) {
-			return "member/memberFindPwdResult";
-		}
-	
+	//비밀번호 찾기 결과
 		@PostMapping(value="/FindPwdResult")
-		public String memberFindPwdResult2(MemberFormDto memberFormDto,Model model) {
-			String newPwd = memberService.updatenewPwd(memberFormDto, memberFormDto.getLoginid(), memberFormDto.getName(), memberFormDto.getTel());
-			model.addAttribute("newPwd",newPwd);
+		public String memberFindPwdResult2(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model,HttpServletResponse resp) {
+			Member memberFindPwd = memberService.findByPwd(memberFormDto.getLoginid(), memberFormDto.getName(), memberFormDto.getTel());
+			if(memberFindPwd == null) {
+				return MemberCheckMethod.redirectAfterAlert("존재하지 않는 회원입니다.", "/members/FindPwd", resp);
+			} else {
+				String newPwd = memberService.updatenewPwd(memberFormDto, memberFormDto.getLoginid(), memberFormDto.getName(), memberFormDto.getTel());
+				model.addAttribute("newPwd", newPwd);
+			}
 			return "member/memberFindPwdResult";
 		}
 	
