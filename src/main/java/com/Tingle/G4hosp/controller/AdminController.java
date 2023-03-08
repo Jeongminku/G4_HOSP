@@ -138,9 +138,8 @@ public class AdminController {
 	
 	// 고객목록 페이지 화면
 	@GetMapping(value="/memberList")
-	public String memberList(@RequestParam(name = "opt", required = false)String opt, Model model) {
+	public String memberList(Model model) {
 		model.addAttribute("memberList", memberService.findMemberList("ALL"));
-		model.addAttribute("param", opt);
 		return "adminPage/memberList";
 	}
 	
