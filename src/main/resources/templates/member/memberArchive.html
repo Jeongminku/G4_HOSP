@@ -58,6 +58,17 @@
         };
       };
     </script>
+    <style>
+    .content{
+    	text-align: center;
+    }
+    .pdfbutton{
+    	border: 0;
+    	margin-top: 30px;
+    	padding: 15px;
+    	background: transparent;
+    }
+    </style>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -83,7 +94,9 @@
 				</tbody>
 			</table>
 		</div>
-			 <button type="button" th:onclick="topdf([[${membername}]])"> pdf로 출력 </button>
+			 <button class="pdfbutton" type="button" th:onclick="topdf([[${membername}]])"> <img alt="pdf" src="/rs/images/pdf.png" width="50px"> 
+			 <p>pdf로 출력</p>
+			  </button>
 	</section>
 	
 	
