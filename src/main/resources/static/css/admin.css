@@ -24,7 +24,7 @@ section {width: 100%; height: 100vh; min-height: fit-content; width: 100%; max-w
 h1 {padding: 30px 0;}
 #adminHeader .btn-secondary {padding: 10px 20px; border-radius: 0;}
 #adminHeader .btn-secondary.active {background-color: #5c636a;}
-.alertbox { width: 60%; top: 50px; right: 50px; color: #226597; font-weight: bold; font-size: 1rem; text-align: right;}
+.alertbox { width: 60%; top: 10px; right: 50px; color: #226597; font-weight: bold; font-size: 1.3rem; text-align: right;}
 
 /* class */
 .b-line {border-bottom: 1px solid #3C4048; padding-bottom: 10px;}
