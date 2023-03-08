@@ -25,6 +25,7 @@ public class QaBoard {
 	@Column(name="qa_title")
 	private String qaTitle; //자주묻는질문 게시판제목
 	
+	@Lob
 	@Column(name="qa_content")
 	private String qaContent;
 	

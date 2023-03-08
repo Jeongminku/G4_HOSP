@@ -54,7 +54,7 @@ public class Member extends BaseTime {
 	private String tel; //전화번호 
 
 	@Column(nullable = false)
-	//@Length(min=8,max=8)
+	@Length(min=8,max=8)
 	private String birth;  //생년월일 
 
 	@Enumerated(EnumType.STRING)

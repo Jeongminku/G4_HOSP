@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+	layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
 
 <head>
 <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 <style th:inline="text">
 
 </style>
-<link rel="stylesheet" href="../../css/BoardDtl.css">
+<link rel="stylesheet" href="/rs/css/BoardDtl.css">
 <script th:inline="javascript">
 	   
 //=========================================================================
@@ -81,7 +81,7 @@ $.ajax({
 	<section layout:fragment="content">
 
 		<div class="title-box">
-			<a style="float: right;" class="btn btn-outline-primary btn-sm" onclick="location.href='/board/main'">목록으로</a>	
+			<a style="float: right;" id="toList" class="btn btn-outline-primary btn-sm" onclick="location.href='/board/main'">목록으로</a>	
 			<h4 class="title">[[${boardFormDto.title}]]</h4>
 			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
 				[[${boardFormDto.view}]] | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
@@ -114,11 +114,11 @@ $.ajax({
 
 		<!-- 댓글 -->
 		<div class="reply" id="reply" th:fragment="reply">
-			<div th:if="${boardFormDto.member.loginid == #authentication.name}" sec:authorize="isAuthenticated()" class="float-right"
+			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name}" sec:authorize="isAuthenticated()" class="float-right"
 				style="padding-bottom: 30px;">
 				<a class="btn btn-primary"
-					th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> <a
-					class="btn btn-primary"
+					th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
+				<a class="btn btn-primary"
 					th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
 			</div>
 
@@ -205,7 +205,7 @@ $.ajax({
 			<!-- 페이징 -->
 		</div>
 		<!-- 댓글 -->
-<script src="../../js/BoardDtl.js"></script>	
+<script src="/rs/js/BoardDtl.js"></script>	
 	</section>
 </body>
 </html>

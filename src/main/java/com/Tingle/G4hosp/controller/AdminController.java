@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -79,6 +80,33 @@ public class AdminController {
 		return adminService.getChartList();
 	}
 	
+//	게시판
+	@GetMapping({"/board", "/board/{Path}", "/board/{Path}/{Id}"}) 
+	public String boardGet (@PathVariable(name = "Path", required = false)String path, 
+							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req) {
+		System.err.println(path);
+		System.err.println(id);
+		req.setAttribute("isAdmin", true);
+		try {
+			Long boardId = Long.parseLong(path);
+			return "forward:/board/" + boardId;
+		} catch (Exception e) {
+			if(path == null || StringUtils.equals(path, "main")) return "forward:/board/main";
+			if(StringUtils.equals(path, "write")) return "forward:/board/write";
+			if(StringUtils.equals(path, "boardsave")) return "forward:/board/boardsave";
+			if(StringUtils.equals(path, "upDateForm")) return "forward:/board/upDateForm/" + id;
+			if(StringUtils.equals(path, "delBoard")) return "forward:/board/delBoard/" + id;
+		}
+		return "";
+	}
+	@PostMapping("/board/{Path}") 
+	public String boardPost (@PathVariable("Path")String path, HttpServletRequest req) {
+		System.err.println(path);
+		req.setAttribute("isAdmin", true);
+		if(StringUtils.equals(path, "boardsave")) return "forward:/board/boardsave";
+		return "";
+	}
+
 //	===================================================================================
 	
 	// 진료과 입력 화면
@@ -104,6 +132,47 @@ public class AdminController {
 		}
 		
 		return "redirect:/admin/med";
+	}
+	
+	// 진료과 삭제
+	@RequestMapping("delmed/{medId}")
+	public String delMed(@PathVariable("medId") Long medId, Model model, HttpServletResponse resp) {
+		
+		
+		try {
+			medService.delmed(medId);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "진료과 삭제중 에러가 발생했습니다.");
+			return "redirect:/admin/med";
+		}
+
+		
+		model.addAttribute("medFormDto", new MedFormDto());
+		
+		List<Med> meds = medService.getMedList();
+		model.addAttribute("meds", meds);
+		
+		return  MemberCheckMethod.redirectAfterAlert("진료과 삭제가 완료되었습니다.",  "/admin/disease" , resp);
+	}
+	
+	// 병명 삭제
+	@RequestMapping("deldisease/{diseaseId}")
+	public String deldisease(@PathVariable("diseaseId") Long diseaseId, Model model, HttpServletResponse resp) {
+		
+		try {
+			diseaseService.deldisease(diseaseId);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "병명 삭제중 에러가 발생했습니다.");
+			return "redirect:/admin/disease";
+		}
+
+		model.addAttribute("diseaseFormDto", new DiseaseFormDto());
+		
+		List<Disease> diseases = diseaseService.getDiseaseList();
+		model.addAttribute("diseases", diseases);
+		
+		
+		return MemberCheckMethod.redirectAfterAlert("병명삭제가 완료되었습니다.",  "/admin/disease" , resp);
 	}
 	
 	// 병명 입력 화면
@@ -225,7 +294,6 @@ public class AdminController {
     public String enterChatRoom (@RequestParam Map<String, String> roomData, Model model, Principal principal) {
     	Long roomId = Long.parseLong(roomData.get("roomId"));
     	Long roomAccessId = Long.parseLong(roomData.get("roomAccessId"));
-    	System.err.println(roomId + ", " + roomAccessId);
     	try {
     		Map<String, ChatRoomDto> roomInfo = chatService.enterChatRoom(roomId, roomAccessId, principal.getName());
     		model.addAttribute("RoomInfo", roomInfo);

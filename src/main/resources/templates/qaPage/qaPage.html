@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <title>순양병원</title>
 
-  <link rel="stylesheet" href="../../css/qa.css">
+  <link rel="stylesheet" href="/rs/css/qa.css">
 </head>
 <body>
 	<section layout:fragment="content">
@@ -15,7 +15,7 @@
     <div class="qa_btn">
       <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/new'" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">등록</button>
       <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/'">전체보기</button>
-      <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/pay'">페이</button>
+      <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/pay'">결제</button>
       <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/hspdsc'">입/퇴원</button>
     </div>
     <div class="accordion" id="accordionExample">

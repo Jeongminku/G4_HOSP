@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>순양병원</title>
-<link rel="stylesheet" href="../../css/searchresult.css">
+<link rel="stylesheet" href="/rs/css/searchresult.css">
 </head>
 <body>
 	<section layout:fragment="content">
@@ -20,7 +20,7 @@
 						<div class="doc_search_form">
 							<form class="doc_search" action="/searchresult" method="get">
 								<div class="col-md-12 linemenu">
-									<input type="text" name="searchQuery" class="doc_searchbar" placeholder="의료진/진료과 검색" oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="2" required>
+									<input type="text" name="searchQuery" class="doc_searchbar" placeholder="의료진/진료과 검색" oninvalid="this.setCustomValidity('검색어를 입력해주세요')"  oninput="this.setCustomValidity('')" minlength="1" required>
 									<button type="submit" class="doc_search_btn">검색</button>
 								</div>
 							</form>						

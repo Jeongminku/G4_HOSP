@@ -66,4 +66,10 @@ public class DiseaseService {
 		return diseaseRepository.findDiseaseListByDocId(docloginid);
 	}
 	
+	// 병명 삭제
+	public void deldisease(Long id) {
+		Disease disease = diseaseRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		diseaseRepository.delete(disease);
+	}
+	
 }
