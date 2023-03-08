@@ -40,12 +40,23 @@ $(document).on('click', 'nav button', function () {
     location.href = hrefURL;
 })
 
-// 비회원 예약 페이지
+// 비회원 예약 페이지 (예약 취소)
 function deleteqr(value){
     var confir = confirm("취소된 예약이 맞습니까?");
     if(confir){
         alert("취소가 완료되었습니다.");
         location.href = "/admin/deleteqr/"+value;
+    }else{
+        alert("현 상태를 유지합니다.");
+        return false;
+    }
+}
+// 비회원 예약 페이지 (예약 완료)
+function okqr(value){
+    var confir = confirm("예약을 완료했습니까?");
+    if(confir){
+        alert("예약이 완료되었습니다. 기존 리스트에서 제거합니다.");
+        location.href = "/admin/updateqr/"+value;
     }else{
         alert("현 상태를 유지합니다.");
         return false;
