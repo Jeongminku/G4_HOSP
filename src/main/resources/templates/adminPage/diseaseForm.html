@@ -26,23 +26,21 @@
 			</div>
 			<button type="submit" class="btn btn-primary">등록하기</button>
 		</form>	
-		<h2 class="h3 b-line mb-4">진료과 별 담당 병 목록</h2>
-		<div class="px-5">
-			<table class="table">
-				<thead>
+		<h2 class="h3 b-line m-0">진료과 별 담당 병 목록</h2>
+		<table class="table">
+			<thead class="table-header">
 				<tr>
 					<th scope="col">진료과</th>
 					<th scope="col">해당 진료과 등록 병명</th>
 				</tr>
-				</thead>
-				<tbody>
-				<tr th:each="diseases : ${diseases}">
-					<td style="color:blue"><span class="medName">[[${diseases.med.medName}]]</span></td>
-					<td><span class="medInfo">[[${diseases.diseaseName}]]</span></td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+			</thead>
+			<tbody>
+			<tr th:each="diseases : ${diseases}">
+				<td style="color:blue"><span class="medName">[[${diseases.med.medName}]]</span></td>
+				<td><span class="medInfo">[[${diseases.diseaseName}]]</span></td>
+			</tr>
+			</tbody>
+		</table>
 	</section>
 </body>
 </html>

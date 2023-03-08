@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
       
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>
-<link rel="stylesheet" href="../../css/BoardMain.css">
+<link rel="stylesheet" href="/rs/css/BoardMain.css">
 	<style th:inline="text">
 	
 	
@@ -25,7 +25,7 @@
 								<div class="col-md-6 col-sm-6">
 												<div class="filter-search-box text-right">
 										
-										<form class="d-flex" role="search" th:action="@{/board/main}" method="get">
+										<form class="d-flex" id="searchForm" role="search" th:action="@{/board/main}" method="get">
 											<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
 											<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
 										</form>
@@ -35,46 +35,31 @@
 							</div>
 						</div>
 						<div class="inbox-message">
-							<ul th:each="list , i : ${lists.getContent()}">							
-								</li>
-								<li>
-								<a href="#">
-										<div class="message-avatar">
-											<img
-												th:src="${list.member.imgUrl}"
-												th:alt="${list.member.imgOri}">
+							<ul>							
+								<li th:each="list , i : ${lists.getContent()}">
+									<div class="message-avatar">
+										<img th:src="${list.member.imgUrl}"	th:alt="${list.member.imgOri}">
+									</div>
+									<div class="message-body">
+										<div class="message-body-heading">
+											<h5 th:if= "${list.boardSecret.name() == 'False'}">
+												<a style="color:#0D6EFD" th:href="'/board/' +${list.id}">[[${list.title}]]</a>
+											</h5>
+											
+											<h5 th:unless= "${list.boardSecret.name() == 'False'}">
+												<a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
+												<a  th:unless="${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">[[${list.title}]]</a>
+											</h5>
+											<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 										</div>
-										<div class="message-body">
-											<div class="message-body-heading">
-										
-												<h5 th:if= "${list.boardSecret.name() == 'False'}"
-												 th:href="'/board/' +${list.id}"><a style="color:#0D6EFD" th:href="'/board/' +${list.id}">
-													[[${list.title}]]</a>
-												</h5>
-												
-												<h5 th:unless= "${list.boardSecret.name() == 'False'}"
-												 th:href="'/board/' +${list.id}">
-												
-												 <a th:if = "${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">비밀글입니다.</a>
-												 
-												
-												 <a  th:unless="${list.member.loginid != #authentication.name} and ${#authorization.expression('hasAnyRole(''ROLE_CLIENT'',''ROLE_ANONYMOUS'')') ?  true: false}" style="color:#0D6EFD" th:href="'/board/' +${list.id}">[[${list.title}]]</a>
-												 
-												</h5>
-												
-
-												<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-											</div>
-											<p class="p-content"></p><br>
-											<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]] &nbsp; 댓글 : [[${list.replyCount}]]</p>
-										</div>
-								</a>
+										<p class="p-content"></p><br>
+										<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]] &nbsp; 댓글 : [[${list.replyCount}]]</p>
+									</div>
 								</li>
-
 							</ul>
 						</div>
 					</div>
-		<button style="float: right;" class="btn btn-primary" onClick="location.href='/board/write'" sec:authorize="isAuthenticated()">글쓰기</button>
+		<button style="float: right;" class="btn btn-primary" onClick="location.href='/board/write'" id="boardWrite" sec:authorize="isAuthenticated()">글쓰기</button>
 					<nav
 	th:with="start=${(lists.number/maxPage)*maxPage + 1}
 	,end=(${(lists.totalPages == 0) ? 1 : (start + (maxPage - 1) < lists.totalPages ? start + (maxPage - 1) : lists.totalPages)})"

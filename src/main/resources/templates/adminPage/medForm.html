@@ -21,23 +21,21 @@
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<button type="submit" class="btn btn-primary">진료과 등록하기</button>
 		</form>	
-		<h2 class="h3 b-line mb-4">등록된 진료과 목록</h2>
-		<div class="px-5">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">진료과</th>
-						<th scope="col">진료과설명</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="meds : ${meds}">
-						<td style="color:blue"><span class="medName">[[${meds.medName}]]</span></td>
-						<td><span class="medInfo">[[${meds.medInfo}]]</span></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<h2 class="h3 b-line m-0">등록된 진료과 목록</h2>
+		<table class="table">
+			<thead class="table-header">
+				<tr>
+					<th scope="col">진료과</th>
+					<th scope="col">진료과설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="meds : ${meds}">
+					<td style="color:blue"><span class="medName">[[${meds.medName}]]</span></td>
+					<td><span class="medInfo">[[${meds.medInfo}]]</span></td>
+				</tr>
+			</tbody>
+		</table>
 	</section>
 </body>
 </html>

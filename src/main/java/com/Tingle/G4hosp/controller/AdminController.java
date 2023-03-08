@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -79,6 +80,33 @@ public class AdminController {
 		return adminService.getChartList();
 	}
 	
+//	게시판
+	@GetMapping({"/board", "/board/{Path}", "/board/{Path}/{Id}"}) 
+	public String boardGet (@PathVariable(name = "Path", required = false)String path, 
+							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req) {
+		System.err.println(path);
+		System.err.println(id);
+		req.setAttribute("isAdmin", true);
+		try {
+			Long boardId = Long.parseLong(path);
+			return "forward:/board/" + boardId;
+		} catch (Exception e) {
+			if(path == null || StringUtils.equals(path, "main")) return "forward:/board/main";
+			if(StringUtils.equals(path, "write")) return "forward:/board/write";
+			if(StringUtils.equals(path, "boardsave")) return "forward:/board/boardsave";
+			if(StringUtils.equals(path, "upDateForm")) return "forward:/board/upDateForm/" + id;
+			if(StringUtils.equals(path, "delBoard")) return "forward:/board/delBoard/" + id;
+		}
+		return "";
+	}
+	@PostMapping("/board/{Path}") 
+	public String boardPost (@PathVariable("Path")String path, HttpServletRequest req) {
+		System.err.println(path);
+		req.setAttribute("isAdmin", true);
+		if(StringUtils.equals(path, "boardsave")) return "forward:/board/boardsave";
+		return "";
+	}
+
 //	===================================================================================
 	
 	// 진료과 입력 화면
