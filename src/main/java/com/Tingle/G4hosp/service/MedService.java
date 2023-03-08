@@ -58,4 +58,9 @@ public class MedService {
 	public Med findbyid(Long id) {
 		return medRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 	}
+	
+	public void delmed(Long id) {
+		Med med = medRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		medRepository.delete(med);
+	}
 }

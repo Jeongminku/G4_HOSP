@@ -5,6 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>
+<script th:inline="javascript">
+	   
+$(document).ready(
+		function() {
+			var error = [[${errorMessage}]]
+			
+			if(error != null) {
+				alert(error)
+			}
+		}
+	)
+
+	
+</script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -34,6 +48,7 @@
 					<tr th:each="meds : ${meds}">
 						<td style="color:blue"><span class="medName">[[${meds.medName}]]</span></td>
 						<td><span class="medInfo">[[${meds.medInfo}]]</span></td>
+						<td><a th:href="'/admin/delmed/' + ${meds.medId}">삭제</a></td>
 					</tr>
 				</tbody>
 			</table>
