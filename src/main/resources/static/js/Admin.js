@@ -168,6 +168,7 @@ $(document).ready(function () {
 	          			$("#doctorCount").text(chartData.doctorcount)
 	          			$("#memberCount").text(chartData.patientcount)
 	        			
+	        			
 	                    t1 = chartData.hosptalizedEachMedname
 	                    t2 = chartData.hosptalizedEachMed
 	                   
@@ -177,6 +178,7 @@ $(document).ready(function () {
 	          			google.charts.setOnLoadCallback(drawChart);
 	          		 	google.charts.setOnLoadCallback(drawBasic);
 	          		 	google.charts.setOnLoadCallback(drawBasic2);
+	        			console.log("????????????????????????????????????")
 	             },
 	            
 	        	error : function() {
