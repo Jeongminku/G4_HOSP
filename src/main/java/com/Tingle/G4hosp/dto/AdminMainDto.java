@@ -18,6 +18,8 @@ public class AdminMainDto {
 	
 	private Long patientcount;
 	
+	private Long membercount;
+	
 	private Long hospitalizecount;
 	
 	private List<String> HosptalizedEachMedname;
