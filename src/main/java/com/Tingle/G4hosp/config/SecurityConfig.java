@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
 
         http.authorizeRequests()
-                .mvcMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**", "/lib/**").permitAll()
+                .mvcMatchers("/css/**", "/js/**", "/fonts/**", "/images/**", "/img/**", "/lib/**", "/rs/**").permitAll()
                 .mvcMatchers("/", "/searchresult", "/members/**").permitAll()
                 .mvcMatchers("/board/**", "/Hinfo/HinfoMain", "/Hinfo/{hinfoId}", "/qa", "/qa/{category}", "/reservation/**").permitAll()
                 .mvcMatchers("/reservation/setNotAvailDay").hasRole("DOCTOR")
