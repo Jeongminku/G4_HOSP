@@ -86,4 +86,9 @@ public class ReservationService {
 		}
 	}
 	
+	public List<ReservationViewDto> findAllReservation () {
+		List<Reservation> allReservation = reservationRepository.findAll();
+		return ReservationViewDto.createReservationViewDtoList(allReservation, false);
+	}
+	
 }

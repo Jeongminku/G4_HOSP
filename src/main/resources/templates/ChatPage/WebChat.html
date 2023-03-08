@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,7 @@
     </script>
 </head>
 <body>
-    <section class="d-flex flex-column align-items-center" layout:fragment="content">
+    <section class="d-flex flex-column align-items-center" th:classappend="${isAdmin} ? 'justify-content-center' : ''" layout:fragment="content">
         <div class="d-flex justify-content-between w-100">
             <div id="roomList">
                 <div class="d-flex align-items-center justify-content-center h5" id="roomListHeader">채팅방 리스트</div>
