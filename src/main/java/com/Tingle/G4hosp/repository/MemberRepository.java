@@ -13,6 +13,8 @@ import com.Tingle.G4hosp.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom{
 	Member findByLoginid(String loginid);
 	
+	Member findByTel(String tel);
+	
 	// select * from member where role = ?
 	// 관리자 페이지 -> 고객/의사 목록 조회
 	List<Member> findByRole(Role role);

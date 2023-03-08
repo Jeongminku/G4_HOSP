@@ -25,6 +25,7 @@ public class MemberMed {
 	
 	@JoinColumn(name = "med_id")
 	@ManyToOne
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private Med medId;
 	
 	public static MemberMed createMemberMed (Member doctor, Med med) {
