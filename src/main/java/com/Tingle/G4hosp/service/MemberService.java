@@ -133,8 +133,30 @@ public class MemberService implements UserDetailsService{
 				}
 				return chk = 1;
 			}
+			
 		
-		 
+		//전화번호 중복체크 
+			private void vaildateDuplicateMember1(Member chkTel) {
+				Member findTel = memberRepository.findByTel(chkTel.getTel());
+				if (findTel != null) {
+					throw new IllegalStateException("중복된 전화번호입니다.");	
+				}
+			}
+			@org.springframework.transaction.annotation.Transactional(readOnly = true) 
+			public Member getTel(String tel) {
+				Member chkTel = memberRepository.findByTel(tel);
+				return chkTel;
+			}
+			@org.springframework.transaction.annotation.Transactional(readOnly =  true)
+			public int vaildateDuplicateTel(String tel) {
+				Member chkTel = memberRepository.findByTel(tel);
+				int Tel;
+				if (chkTel == null) {
+					return Tel = 0;
+				} return Tel =1;
+			}
+			
+			
 		 
 	 public void updateMember(MemberFormDto memberFormDto, String loginId, MultipartFile file) {
 		 Member member = memberRepository.findByLoginid(loginId);

@@ -158,6 +158,47 @@ public class AdminController {
 		return "redirect:/admin/med";
 	}
 	
+	// 진료과 삭제
+	@RequestMapping("delmed/{medId}")
+	public String delMed(@PathVariable("medId") Long medId, Model model, HttpServletResponse resp) {
+		
+		
+		try {
+			medService.delmed(medId);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "진료과 삭제중 에러가 발생했습니다.");
+			return "redirect:/admin/med";
+		}
+
+		
+		model.addAttribute("medFormDto", new MedFormDto());
+		
+		List<Med> meds = medService.getMedList();
+		model.addAttribute("meds", meds);
+		
+		return  MemberCheckMethod.redirectAfterAlert("진료과 삭제가 완료되었습니다.",  "/admin/disease" , resp);
+	}
+	
+	// 병명 삭제
+	@RequestMapping("deldisease/{diseaseId}")
+	public String deldisease(@PathVariable("diseaseId") Long diseaseId, Model model, HttpServletResponse resp) {
+		
+		try {
+			diseaseService.deldisease(diseaseId);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "병명 삭제중 에러가 발생했습니다.");
+			return "redirect:/admin/disease";
+		}
+
+		model.addAttribute("diseaseFormDto", new DiseaseFormDto());
+		
+		List<Disease> diseases = diseaseService.getDiseaseList();
+		model.addAttribute("diseases", diseases);
+		
+		
+		return MemberCheckMethod.redirectAfterAlert("병명삭제가 완료되었습니다.",  "/admin/disease" , resp);
+	}
+	
 	// 병명 입력 화면
 	@GetMapping(value="/disease")
 	public String diseaseForm(Model model) {

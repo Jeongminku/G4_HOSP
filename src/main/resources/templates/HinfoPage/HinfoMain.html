@@ -4,47 +4,63 @@
 	layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
 
 <head>
-	<meta charset="UTF-8">
-	<title>순양병원</title>
-	<script th:inline="javascript">
-	  
-	  const width = window.innerWidth;
-	  
-		$(document).ready(
-				function(){
-					if(width < 1076){
-						$(".title").css("width" , "200px").css("overflow" , "hidden").css("text-overflow", "ellipsis")
-					}
-					
-				}
-				
-		)	  
-			  
-		window.onresize = function() {
-		
-			  
-			  //'input=[name=title]'.eq('0')
+<meta charset="UTF-8">
+<title>순양병원</title>
+<script th:inline="javascript">
+	function send_pn() {
+		var yaho = $("#pn").val();
+		console.log(yaho);
+		$("#pn_form").submit();
+	}
+
+	function send_pbn() {
+		var mu = $("#pbn").val();
+		console.log(mu);
+		$("#pbn_form").submit();
+	}
 	
-				if(width < 1076) {
-					$(".title").css("width" , "200px").css("overflow" , "hidden").css("text-overflow", "ellipsis")
+	
+	$(document).ready(
+			function() {
+				const width = window.innerWidth;
+				if (width < 1076) {
+					$(".display-8").css("width", "200px").css("overflow",
+							"hidden").css("text-overflow", "ellipsis")
 				}
-				if(width > 1076){
-					$(".title").css("width" , "").css("overflow" , "").css("text-overflow", "")
-				}
-					
-				
-			} 
-	</script>
-<link rel="stylesheet" href="/rs/css/HinfoMain.css">
+
+			}
+
+	)
+
+	window.onresize = function() {
+		const width = window.innerWidth;
+		console.log(width)
+		//'input=[name=title]'.eq('0')
+
+		if (width < 1076) {
+			$(".display-8").css("width", "200px").css("overflow", "hidden")
+					.css("text-overflow", "ellipsis")
+		}
+		if (width > 1076) {
+			$(".display-8").css("width", "").css("overflow", "").css(
+					"text-overflow", "")
+		}
+
+	}
+</script>
+<link rel="stylesheet" href="../../css/HinfoMain.css">
 </head>
 <body>
 	<section layout:fragment="content">
-		<h3>건강정보 게시판</h3><br><hr><br>
+		<h3>건강정보 게시판</h3>
+		<br>
+		<hr>
+		<br>
 		<div class="job-box">
 			<div class="job-box-filter">
 				<div class="row">
 					<div class="col-md-6 col-sm-6">
-	<!-- 					<label>Show 
+						<!-- 					<label>Show 
 						<select name="datatable_length" class="form-control input-sm">
 								<option name="pn" value="5">5</option>
 								<option name="pn" value="10">10</option>
@@ -53,22 +69,25 @@
 						</select> entries
 						</label> -->
 						<form id="pn_form" method="post" action="/Hinfo/HinfoMain">
-							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-							<select id="pn" name="pn" onchange="send_pn()" class="form-control input-sm">
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}" /> <select id="pn" name="pn"
+								onchange="send_pn()" class="form-control input-sm">
 								<option hidden="hidden" value="">[[${lists.size}]]</option>
 								<option value="2">2</option>
 								<option value="4">4</option>
 								<option value="6">6</option>
 								<option value="10">10</option>
-							</select>
-							<label for="pn"> : 볼 게시물 갯수</label>
+							</select> <label for="pn"> : 볼 게시물 갯수</label>
 						</form>
 					</div>
 					<div class="col-md-6 col-sm-6">
 						<div class="filter-search-box text-right">
-							<form class="d-flex" role="search" th:action="@{/Hinfo/HinfoMain}" method="get">
-								<input name="searchQuery" class="form-control me-2" type="search" placeholder="검색어 입력" aria-label="Search">
-								<button class="btn btn-outline-success" type="submit" style="width: 100px;">검색</button>
+							<form class="d-flex" role="search"
+								th:action="@{/Hinfo/HinfoMain}" method="get">
+								<input name="searchQuery" class="form-control me-2"
+									type="search" placeholder="검색어 입력" aria-label="Search">
+								<button class="btn btn-outline-success" type="submit"
+									style="width: 100px;">검색</button>
 							</form>
 						</div>
 					</div>

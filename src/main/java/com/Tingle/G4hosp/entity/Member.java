@@ -49,12 +49,12 @@ public class Member extends BaseTime {
 
 	@Column(nullable = false)
 	private String pwd; //비밀번호 
-
-	@Column(nullable = false)
+	
+	@Column(nullable = false, unique = true)
 	private String tel; //전화번호 
 
 	@Column(nullable = false)
-	//@Length(min=8,max=8)
+	@Length(min=8,max=8)
 	private String birth;  //생년월일 
 
 	@Enumerated(EnumType.STRING)

@@ -5,6 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>
+<script th:inline="javascript">
+	   
+$(document).ready(
+		function() {
+			var error = [[${errorMessage}]]
+			
+			if(error != null) {
+				alert(error)
+			}
+		}
+	)
+
+	
+</script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -21,6 +35,26 @@
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<button type="submit" class="btn btn-primary">진료과 등록하기</button>
 		</form>	
+<<<<<<< HEAD
+		<h2 class="h3 b-line mb-4">등록된 진료과 목록</h2>
+		<div class="px-5">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">진료과</th>
+						<th scope="col">진료과설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="meds : ${meds}">
+						<td style="color:blue"><span class="medName">[[${meds.medName}]]</span></td>
+						<td><span class="medInfo">[[${meds.medInfo}]]</span></td>
+						<td><a th:href="'/admin/delmed/' + ${meds.medId}">삭제</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+=======
 		<h2 class="h3 b-line m-0">등록된 진료과 목록</h2>
 		<table class="table">
 			<thead class="table-header">
@@ -36,6 +70,7 @@
 				</tr>
 			</tbody>
 		</table>
+>>>>>>> 0621ee9c05e6078c2079d09a396059d212fcec4c
 	</section>
 </body>
 </html>
