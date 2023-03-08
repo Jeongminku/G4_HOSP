@@ -77,8 +77,8 @@
 							th:object="${searchInputDto}" role="search">
 							<input type="text" th:field="*{searchQuery}" name="searchQuery"
 								class="doc_searchbar" placeholder="의료진 및 진료과를 입력하세요."
-								oninvalid="this.setCustomValidity('2글자 이상 입력해주세요')"
-								oninput="this.setCustomValidity('')" minlength="2" required>
+								oninvalid="this.setCustomValidity('검색어를 입력해주세요')"
+								oninput="this.setCustomValidity('')" minlength="1" required>
 							<button type="submit" class="doc_search_btn">검색하기</button>
 						</form>
 					</div>
