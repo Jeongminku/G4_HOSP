@@ -241,7 +241,7 @@ public class MemberController {
 		memberFormDto = memberService.checkARdateandMedname(memberFormDto, member);
 		System.err.println("컨트롤러 환자 진료 일자 리스트 출력 테스트 : "+ memberFormDto.getArchivedate());
 		System.err.println("컨트롤러 환자 내원 과 리스트 출력 테스트 : "+ memberFormDto.getMedname());
-		
+		model.addAttribute("membername", member.getName());
 		if(memberFormDto.getArchivedate() != null) {
 			model.addAttribute("memberArchiveDate",memberFormDto.getArchivedate());
 			model.addAttribute("memberArchiveMed", memberFormDto.getMedname());
