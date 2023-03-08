@@ -8,55 +8,9 @@
 <title>순양병원</title>
 
 <style th:inline="text">
-
-	section {
-		line-height: 25px;
-	}
-
-	.title-box {
-		/* background-color: #226597; */
-		border:1px solid ;
-		border-color: #226597;
-		padding: 5px;
-		padding-bottom: 12px;
-		
-	}
-	
-	.title-box > h4 {
-		padding: 10px;
-		/* color: white; */
-		color: black;
-		margin: 0 auto;
-		text-align: center;
-		color: #226597;
-	}
-
-	.title-box > p {
-		margin: 0 auto;
-		text-align: center;
-		padding: 3px;
-		line-height: 18px;
-	}
-	.board-content {
-		margin: 10px;
-	}
-	
-	.board-content p {
-		padding: 40px 0px;
-	}
-	
-	.button2 {
-		display: flex;
-		justify-content: space-between;
-		justify-content: flex-end;
-	}
-	
-	.button2 a {
-		margin: 3px;
-	}
 	
 </style>
-
+<link rel="stylesheet" href="../../css/HinfoDtl.css">
 </head>
 <body>
 	<section layout:fragment="content">
@@ -99,7 +53,7 @@
   </tbody>
 
 </table>
-	  	<div class="button2">
+	  	<div class="button2" sec:authorize="hasAnyAuthority('ROLE_DOCTOR','ROLE_ADMIN')">
 			<a class="btn btn-primary" th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}" role="button">수정</a>
 			<a class="btn btn-primary" th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}" role="button">삭제</a>
 		</div>
