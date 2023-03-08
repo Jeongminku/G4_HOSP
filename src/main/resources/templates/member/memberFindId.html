@@ -102,7 +102,7 @@
 			<div style="text-align: center;">
 				 <p th:if="${errorMessage}" class="errorMessage" th:text="${errorMessage}"></p> 
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-				<button type="submit" class="btn btn-primary w-40 findbtn" th:formaction="@{/members/FindId}">아이디찾기</button>
+				<button type="submit" class="btn btn-primary w-40 findbtn">아이디찾기</button>
 			</div>
 		</form>
 		</div>

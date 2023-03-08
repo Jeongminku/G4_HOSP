@@ -16,7 +16,7 @@
 	 <form role="form" method="post" th:object="${boardFormDto}">
         <div class="form-group" >
               <label for="exampleFormControlInput1">제목</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" name="title" th:field="*{title}" placeholder="제목을 작성해주세요.">
+            <input type="text" class="form-control" id="exampleFormControlInput1" name="title" th:field="*{title}" placeholder="제목을 작성해주세요." maxlength="40">
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError" style="padding: 10px">Incorrect Data</p>
           </div>
           <div class="form-group">
