@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
 <head>
   <meta charset="UTF-8">
   <title>순양병원</title>
@@ -11,7 +11,7 @@
 </head>
 <body>
 	<section layout:fragment="content">
-	<div class="qa_h1"><h1>자주묻는 질문</h1></div>
+	  <div class="qa_h1"><h1>자주묻는 질문</h1></div>
     <div class="qa_btn">
       <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/new'" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">등록</button>
       <button type="button" class="btn btn-outline-primary qa_btn0" onclick="location.href='/qa/'">전체보기</button>
@@ -29,10 +29,10 @@
           </h2>
           <div th:id="${qaStat.index}" class="accordion-collapse collapse" th:aria-labelledby="${qaStat.index}" >
             <div class="accordion-body">
-		    <div class ="answer_txt">
+		    <div class ="answer_txt" style="white-space:pre-line";>
 	             <p>[[${qa.qaContent}]]</p>
 	             <div class="form-textbox row qaWrap" style="text-align:center;">
-                        <button type="button" th:onclick = "|location.href='/qa/mod/' + ${qa.id}|" class="qa_mod_btn btn btn-primary" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</button>
+                        <button type="button" th:onclick = "|location.href='@{|/qa/mod/${qa.id}|}'|" class="qa_mod_btn btn btn-primary" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</button>
                         <button type="button" th:onclick = "qaDelete(this)"  class="qa_del_btn btn btn-primary" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">삭제</button>
 			          	<input type="hidden" th:value="${qa.id}">
                    </div>		    
@@ -41,21 +41,20 @@
             </div>
           </div>
         </th:block>
- <script th:inline="javascript">
-	function qaDelete(btn) {
-		const currId = $(btn).siblings('input').val();
-		const check = confirm("삭제하시겠습니까?");
-		if(check) {
-			location.href = '/qa/del/' + currId;
-		} else {
-			return false;
-		}
-		
-	}
- </script>
-      </div>
+    </div>
+    <script th:inline="javascript">
+      function qaDelete(btn) {
+        const currId = $(btn).siblings('input').val();
+        const check = confirm("삭제하시겠습니까?");
+        if(check) {
+          location.href = '/qa/del/' + currId;
+        } else {
+          return false;
+        }
+        
+      }
+    </script>
 	</section>
-
 </body>
 
 </html>

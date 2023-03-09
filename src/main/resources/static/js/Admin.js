@@ -112,7 +112,7 @@ $(document).on('click', '.btn-group > .btn.btn-outline-primary', function () {
 window.addEventListener('DOMContentLoaded', function () {
     const path = location.pathname;
     const adminPath = '/admin';
-    let originHref;
+    let originHref, methodOnClick, subPath;
     console.log(path.substring(0, 12))
     // 관리자 회원관리 메뉴일때
     if (path == '/admin/memberList') {
@@ -123,9 +123,8 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
     // 관리자 고객게시판 메뉴일때
-    if (path.substring(0, 12) == '/admin/board') {
-        const subPath = path.substring(12);
-        console.log(subPath)
+    if (path.startsWith('/admin/board')) {
+        subPath = path.substring(12);
         if (subPath == '/write') {
             originHref = $('button').attr('formaction');
             $('button').attr('formaction', adminPath + originHref);
@@ -163,22 +162,20 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (path.substring(0, 12) == '/admin/Hinfo') {
-        const subPath = path.substring(12);
-        let method;
-        console.log(subPath)
+    if (path.startsWith('/admin/Hinfo')) {
+        subPath = path.substring(12);
         if (subPath == '/HinfoMain') {
             originHref = $('#pn_form').attr('action');
             $('#pn_form').attr('action', adminPath + originHref);
             originHref = $('.filter-search-box').children('form').attr('action');
             $('.filter-search-box').children('form').attr('action', adminPath + originHref);
             $('.inbox-message ul li').each((idx, item) => {
-                method = $(item).attr('onclick');
-                originHref = method.substring(method.indexOf("'") + 1, method.lastIndexOf("'"));
-                $(item).attr('onClick', "location.href='" + adminPath + originHref + "'")
+                methodOnClick = $(item).attr('onclick');
+                originHref = methodOnClickToHref(methodOnClick);
+                $(item).attr('onclick', "location.href='" + adminPath + originHref + "'")
             })
-            method = $('#HinfoWrite').attr('onclick');
-            originHref = method.substring(method.indexOf("'") + 1, method.lastIndexOf("'"));
+            methodOnClick = $('#HinfoWrite').attr('onclick');
+            originHref = methodOnClickToHref(methodOnClick);
             $('#HinfoWrite').attr('onclick', "location.href='" + adminPath + originHref + "'")
             $('.page-item a').each((idx, item) => {
                 originHref = $(item).attr('href');
@@ -186,15 +183,15 @@ window.addEventListener('DOMContentLoaded', function () {
             })
         }
         if (subPath == '/write' || subPath.substring(0, subPath.lastIndexOf("/")) == '/updatepage') {
-            method = $('#toList').attr('onClick');
-            originHref = method.substring(method.indexOf("'") + 1, method.lastIndexOf("'"));
+            methodOnClick = $('#toList').attr('onclick');
+            originHref = methodOnClickToHref(methodOnClick);
             $('#toList').attr('onclick', "location.href='" + adminPath + originHref + "'")
             originHref = $('#toList').siblings('button').attr('formaction');
             $('#toList').siblings('button').attr('formaction', adminPath + originHref)
         }
         if (!Number.isNaN(Number(subPath.substring(1)))) {
-            method = $('#toList').attr('onClick');
-            originHref = method.substring(method.indexOf("'") + 1, method.lastIndexOf("'"));
+            methodOnClick = $('#toList').attr('onclick');
+            originHref = methodOnClickToHref(methodOnClick);
             $('#toList').attr('onclick', "location.href='" + adminPath + originHref + "'")
             $('.button2 a').each((idx, item) => {
                 originHref = $(item).attr('href');
@@ -202,4 +199,35 @@ window.addEventListener('DOMContentLoaded', function () {
             })
         }
     }
+    if (path.startsWith('/admin/qa')) {
+        subPath = path.substring(9);
+        console.log(subPath)
+        if (subPath == '' || subPath == '/' || subPath == '/pay' || subPath == '/hspdsc') {
+            $('.qa_btn .btn').each((idx, item) => {
+                methodOnClick = $(item).attr('onclick');
+                originHref = methodOnClickToHref(methodOnClick);
+                $(item).attr('onclick', "location.href='" + adminPath + originHref + "'");
+            })
+            methodOnClick = $('.qa_mod_btn').attr('onclick');
+            originHref = methodOnClickToHref(methodOnClick);
+            $('.qa_mod_btn').attr('onclick', "location.href='" + adminPath + originHref + "'");
+            $('.qa_del_btn').attr('onclick', '');
+            $('.qa_del_btn').on('click', function () {
+                if (confirm('삭제하시겠습니까?')) {
+                    location.href = '/admin/qa/del/' + $(this).siblings('input').val();
+                }
+            })
+        }
+        if (subPath == '/new' || subPath.startsWith('/mod')) {
+            originHref = $('form').attr('action');
+            $('form').attr('action', adminPath + originHref);
+            methodOnClick = $('.signWrap button[type="button"]').attr('onclick');
+            originHref = methodOnClickToHref(methodOnClick);
+            $('.signWrap button[type="button"]').attr('onclick', "location.href='" + adminPath + originHref + "'")
+        }
+    }
 })
+
+function methodOnClickToHref(str) {
+    return str.substring(str.indexOf("'") + 1, str.lastIndexOf("'"));
+}

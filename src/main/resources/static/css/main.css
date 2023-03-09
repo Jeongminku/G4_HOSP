@@ -34,6 +34,9 @@
 .placeinfo .tel {color:#0f7833;}
 .placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
 
+/* 게시판 */
+.table {background-color: #ffffff;}
+.table tbody tr:hover {background-color: #eeeeee; cursor: pointer;}
 
 /* swiper 슬라이더 기능 */
  .swiper {

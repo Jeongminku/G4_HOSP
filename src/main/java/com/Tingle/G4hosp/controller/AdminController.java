@@ -134,6 +134,33 @@ public class AdminController {
 		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/Hinfo/HinfoMain", resp);
 	}
 
+//	qa게시판
+	@GetMapping({"/qa", "/qa/{Path}", "/qa/{Path}/{Id}"}) 
+	public String qaGet (@PathVariable(name = "Path", required = false)String path, 
+							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("isAdmin", true);
+		try {
+			Long boardId = Long.parseLong(path);
+			return "forward:/board/" + boardId;
+		} catch (Exception e) {
+			if(path == null) return "forward:/qa";
+			if(StringUtils.equals(path, "new")) return "forward:/qa/new";
+			if(StringUtils.equals(path, "pay")) return "forward:/qa/pay";
+			if(StringUtils.equals(path, "hspdsc")) return "forward:/qa/hspdsc";
+			if(StringUtils.equals(path, "mod")) return "forward:/qa/mod/" + id;
+			if(StringUtils.equals(path, "del")) return "forward:/qa/del/" + id;
+		}
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/qa", resp);
+	}
+	
+	@PostMapping({"/qa/{Path}", "/qa/{Path}/{Id}"}) 
+	public String qaPost (@PathVariable("Path")String path, @PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("isAdmin", true);
+		if(StringUtils.equals(path, "new")) return "forward:/qa/new";
+		if(StringUtils.equals(path, "mod")) return "forward:/qa/mod";
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/qa", resp);
+	}
+	
 //	===================================================================================
 	
 	// 진료과 입력 화면
@@ -338,26 +365,14 @@ public class AdminController {
 	
 //	채팅관련
 	@GetMapping("/chat")
-	public String chat (Model model) {
-		chatRoomAccessService.checkInit();
-		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-		model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
-		model.addAttribute("isAdmin", true);
-		return "ChatPage/WebChat";    		    			
+	public String chat (HttpServletRequest req) {
+		req.setAttribute("isAdmin", true);
+		return "forward:/chat";	    			
 	}
 	
 	@PostMapping("/room")
-    public String enterChatRoom (@RequestParam Map<String, String> roomData, Model model, Principal principal) {
-    	Long roomId = Long.parseLong(roomData.get("roomId"));
-    	Long roomAccessId = Long.parseLong(roomData.get("roomAccessId"));
-    	try {
-    		Map<String, ChatRoomDto> roomInfo = chatService.enterChatRoom(roomId, roomAccessId, principal.getName());
-    		model.addAttribute("RoomInfo", roomInfo);
-    	} catch (Exception e) {
-    		model.addAttribute("ErrorMsg", e.getMessage());
-            return "ChatPage/WebChat :: chatRoomFrag";
-    	}
-    	return "ChatPage/WebChat :: chatRoomFrag";
+    public String enterChatRoom () {
+		return "forward:/chat/room";
     }
 	
 	@GetMapping("/chatControll")

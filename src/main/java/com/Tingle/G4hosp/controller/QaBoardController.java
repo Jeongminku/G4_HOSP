@@ -3,6 +3,7 @@ package com.Tingle.G4hosp.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -60,11 +61,11 @@ public class QaBoardController {
 	
 	//로그인아이디 안넣고 글세이브하는 기능 
 	@PostMapping(value="/new")
-	public String newQaBoard(QaBoardDto qaBoardDto, Model model) {
+	public String newQaBoard(QaBoardDto qaBoardDto, Model model, HttpServletRequest req) {
 		
 		QaBoard qaBoard = QaBoard.createQaTest(qaBoardDto);
 		qaBoardService.saveQaBoard(qaBoard);
-		
+		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/qa/";
 		return "redirect:/qa/";
 	}
 
@@ -80,23 +81,25 @@ public class QaBoardController {
 	}
 	
 	@PostMapping(value="/mod")
-	public String modQQaBoard(QaBoardDto qaBoardDto, Model model) {
+	public String modQQaBoard(QaBoardDto qaBoardDto, Model model, HttpServletRequest req) {
 		qaBoardService.modifyQaBoard(qaBoardDto);
-		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
-		model.addAttribute("qaList", QaBoardAllList);
-		return "qaPage/qaPage";
+//		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
+//		model.addAttribute("qaList", QaBoardAllList);
+		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/qa/";
+		return "redirect:/qa/";
 	}
 	
 				
 	@GetMapping(value = "/del/{id}")
-	public String deletearchive(Model model, @PathVariable("id") Long qaId, QaBoardDto qaBoardDto) {
+	public String deletearchive(Model model, @PathVariable("id") Long qaId, QaBoardDto qaBoardDto, HttpServletRequest req) {
 		String delMessage = qaBoardService.deleteQa(qaId); 
 		model.addAttribute("delMessage", delMessage);
 		System.out.println(delMessage);
 		
-		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
-		model.addAttribute("qaList", QaBoardAllList);
-		return "qaPage/qaPage";
+//		List<QaBoard> QaBoardAllList = qaBoardService.findAllQaBoard();
+//		model.addAttribute("qaList", QaBoardAllList);
+		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/qa/";
+		return "redirect:/qa/";
 	}
 	
 }
