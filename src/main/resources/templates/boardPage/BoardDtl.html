@@ -86,7 +86,7 @@ $.ajax({
 			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
 				[[${boardFormDto.view}]] | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
 			<p
-				th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
+				th:text="작성일 + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
 
 		</div>
 

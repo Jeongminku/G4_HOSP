@@ -77,12 +77,12 @@ public class ReservationService {
 	public List<ReservationViewDto> findAllReservationByMember (String memberLoginId) {
 		Member member = memberRepository.findByLoginid(memberLoginId);
 		List<Reservation> allReservation = new ArrayList<>();
-		if(member.getRole() == Role.CLIENT) {
+		if(member.getRole() == Role.DOCTOR) {
+			allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(member);			
+			return ReservationViewDto.createReservationViewDtoList(allReservation, true);			
+		} else {
 			allReservation = reservationRepository.findByReservationPatientOrderByReservationDate(member);
 			return ReservationViewDto.createReservationViewDtoList(allReservation, false);
-		} else {
-			allReservation = reservationRepository.findByReservationDoctorOrderByReservationDate(member);			
-			return ReservationViewDto.createReservationViewDtoList(allReservation, true);
 		}
 	}
 	

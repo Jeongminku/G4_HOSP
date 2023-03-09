@@ -102,6 +102,7 @@ function createinput(e) {
 
 var replyIdIndex = $(event.target).attr("id");
 console.log(replyIdIndex);
+console.log(replyIdIndex.substr(2));
 
 var content = $("#con"+replyIdIndex.substr(2)).val();
 	
@@ -109,7 +110,7 @@ var content = $("#con"+replyIdIndex.substr(2)).val();
 $("#conview"+replyIdIndex.substr(2)).css('display', 'none');
 
 //버튼 none
-$("[class*='btn']").not("[class*=" + replyIdIndex.substr(2) + "]").css('display', 'none');
+$("#reply [class*='btn']").not("[class*='up-btn" + replyIdIndex.substr(2) + "']").css('display', 'none');
 
 
 //인풋창 생성

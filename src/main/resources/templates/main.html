@@ -3,22 +3,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layouts/layout}">
-
-
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>
 <link rel="stylesheet" href="/rs/css/main.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-<script th:inline="javascript">
-	/*$(function(){
-		var searchStr = $('.doc_searchbar').val();
-		if(searchStr.length<2) {
-			$('.doc_searchbar').attr('oninvalid',"this.setCustomValidity('2글자 이상 입력하라')")
-		}
-	})*/
-</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 </head>
 <body>
 	<section layout:fragment="content" id="mainPage">
@@ -86,128 +75,54 @@
 				</div>
 			</div>
 		</div>
-
-
-		<div style="display: flex;">
-			<div class="container" style="width: 50%; background-color: #EFF3F7;">
-				<div class="row">
-					<div style="padding: 20px 0px 20px 0px; color: #108ccf">
-						<h3 style="margin-left: 18px;">건강정보게시판</h3>
-					</div>
-
-
-					<div th:each=" hinfo : ${hinfoList}">
-						<div class="col-lg-12">
-							<div class="wrapper wrapper-content animated fadeInRight">
-
-								<div class="ibox-content forum-container">
-
-									<div class="forum-item">
-										<div class="row">
-											<div class="col-md-1 forum-info">
-												<div>
-													<small>[[${hinfo.id}]]</small>
-												</div>
-
-											</div>
-
-											<div class="col-md-5"
-												style="width: 200px; padding: 0 5px; overflow: hidden; text-overflow: elevation; white-space: nowrap;">
-												<a th:href="'/Hinfo/' +${hinfo.id}" class="forum-item-title">[[${hinfo.title}]]</a>
-											</div>
-											<div class="col-md-2 forum-info">
-												<div>
-													<small>글쓴이 </small><span>[[${hinfo.member.loginid}]]</span>
-												</div>
-
-											</div>
-											<div class="col-md-3 forum-info">
-												<div>
-													<small>작성일 </small><span
-														th:text="${#temporals.format(hinfo.regTime, 'yyyy-MM-dd')}"></span>
-												</div>
-
-											</div>
-											<div class="col-md-2 forum-info">
-												<div>
-													<small>조회수 </small><span>[[${hinfo.view}]]</span>
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
+		<div class="d-flex c-bg-second">
+			<div class="w-50 p-4">
+				<h3  class="h3 b-line m-0">건강정보게시판</h3>
+				<table class="table" id="Hinfo">
+					<thead class="table-header">
+						<tr>
+							<th scope="col">NO.</th>
+							<th scope="col">글제목</th>
+							<th scope="col">글쓴이</th>
+							<th scope="col">작성일</th>
+							<th scope="col">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each=" hinfo : ${hinfoList}">
+							<td th:text="${hinfo.id}"></td>
+							<td th:text="${hinfo.title}"></td>
+							<td th:text="${hinfo.member.loginid}"></td>
+							<td th:text="${#temporals.format(hinfo.regTime, 'yyyy-MM-dd')}"></td>
+							<td th:text="${hinfo.view}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-
-			<div class="container" style="width: 50%; background-color: #EFF3F7;">
-				<div class="row">
-					<div style="padding: 20px 0px 20px 0px; color: #108ccf">
-						<h3 style="padding-left: 18px">고객게시판</h3>
-					</div>
-
-					<div>
-						<div th:each=" board : ${boardList}">
-							<div class="col-lg-12">
-								<div class="wrapper wrapper-content animated fadeInRight">
-
-									<div class="ibox-content forum-container">
-
-										<div class="forum-item">
-											<div class="row">
-												<div class="col-md-1 forum-info">
-													<div>
-														<small>[[${board.id}]]</small>
-													</div>
-
-												</div>
-
-												<div class="col-md-5"
-													style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-													<a th:href="'/board/' +${board.id}"
-														class="forum-item-title">[[${board.title}]]</a>
-												</div>
-												<div class="col-md-2 forum-info">
-													<div>
-														<small>글쓴이 </small><span>[[${board.member.loginid}]]</span>
-													</div>
-
-												</div>
-												<div class="col-md-3 forum-info">
-													<div>
-														<small>작성일 </small><span
-															th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></span>
-													</div>
-
-												</div>
-												<div class="col-md-2 forum-info">
-													<div>
-														<small>조회수 </small><span>[[${board.view}]]</span>
-													</div>
-
-												</div>
-
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
+			<div class="w-50 p-4">
+				<h3  class="h3 b-line m-0">고객게시판</h3>
+				<table class="table" id="board">
+					<thead class="table-header">
+						<tr>
+							<th scope="col">NO.</th>
+							<th scope="col">글제목</th>
+							<th scope="col">글쓴이</th>
+							<th scope="col">작성일</th>
+							<th scope="col">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each=" board : ${boardList}">
+							<td th:text="${board.id}"></td>
+							<td th:text="${board.title}"></td>
+							<td th:text="${board.member.loginid}"></td>
+							<td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
+							<td th:text="${board.view}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-
-
-
 		<div id="mainMap">
 			<div class="mainMap">
 				<ul id="category" class="row">
@@ -228,30 +143,10 @@
 		</div>
 		<!-- 카카오 지도 -->
 		<div id="map" style="width: 100%; height: 400px;"></div>
-		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b69c98e81e9e8093ea6acea1ea4f4a14&libraries=services,clusterer,drawing"></script>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b69c98e81e9e8093ea6acea1ea4f4a14&libraries=services,clusterer,drawing"></script>
+		<script	src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 		<script src="/rs/js/MainMap.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-		<script>
-			//swiper 슬라이드 효과
-			var swiper = new Swiper(".mySwiper", {
-				cssMode : true,
-				autoplay : { //오토플레이 설정
-					delay : 2000, //딜레이 시간 설정
-				},
-				navigation : {
-					nextEl : ".swiper-button-next",
-					prevEl : ".swiper-button-prev",
-				},
-
-				pagination : {
-					el : ".swiper-pagination",
-				},
-				mousewheel : true,
-				keyboard : true,
-			});
-		</script>
+		<script src="/rs/js/Main.js"></script>
 	</section>
 </body>
 </html>
