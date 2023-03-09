@@ -22,7 +22,7 @@ import lombok.Setter;
 @lombok.ToString
 public class MemberFormDto {
 	@NotBlank(message = "아이디는 필수 입력값입니다.")
-	@Pattern(regexp="^[ㄱ-ㅎ가-힣a-z0-9-_]{3,10}$", message="아이디는 3자 이상, 10이하의 영어,한글,숫자로만 입력해주세요.")
+	@Pattern(regexp="^[A-Za-z0-9-_]{3,10}$", message="아이디는 3자 이상, 10이하의 한글,숫자로만 입력해주세요.")
 	private String loginid; //ID
 	
 	@NotBlank(message="이름은 필수 입력값입니다.")
