@@ -13,6 +13,10 @@ select * from membermed;
 select * from disease;
 select * from hospitalize_disease;
 select * from hospitalize;
+select * from Hinfo_hinfo_contentBoard;
+select * from archive;
+select * from archive_disease;
+select * from archiveimg;
 
 insert into med values(1, '저희는 건강한 눈과 가치 있는 생활을 많은 사람들이 누릴 수 있도록 항상 노력해 왔습니다.
 3명의 교수진과 7명의 안과 간호사 및 3명의 전문기사가 각 환자에 따라 각 분야에 맞는
@@ -31,39 +35,9 @@ insert into disease values(3, '허리디스크', 3);
 insert into disease values(4, '피부암', 4);
 insert into disease values(5, '난임', 5);
 
+
+
+
+
+
 select * from hospitalize a join member b on a.member_id = b.member_id where a.hospstatus = 'Y';
-
-
-
-
-
-
-
-
--- seq_mysql 테이블 생성
-create table seq (
-id int not null,
-seq_name varchar(50) not null
-);
-
--- 생성된 펑션 삭제 
-drop function if exists get_seq;
-
--- auto_increment 적용
-delimiter $$
-create function get_seq (p_seq_name varchar(45))
-returns int reads sql data
-begin
-declare result_id int;
-update seq set id = last_insert_id(id+1)
-where seq_name = p_seq_name;
-set result_id = (select last_insert_id());
-return result_id;
-end $$
-delimiter;
-
--- 시퀀스 생성
-insert into seq values (1, 'med_id');
-
--- 시퀀스 삽입
-get_seq('boardSeq')

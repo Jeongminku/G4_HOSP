@@ -86,7 +86,7 @@ $.ajax({
 			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
 				[[${boardFormDto.view}]] | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
 			<p
-				th:text="작성일 + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
+				th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
 
 		</div>
 
@@ -95,38 +95,39 @@ $.ajax({
 		<table class="table table align-middle">
 			<thead>
 				<tr style="text-align: center;">
-					<td style="white-space: pre-line;"><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+					<td style="white-space: pre-line;"><p class="text-start text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
 				</tr>
 
 			</thead>
-			<tbody class="table-group-divider">
-				<tr>
-					<th scope="row"></th>
-				</tr>
-
-				<tr>
-					<th scope="row"></th>
-				</tr>
 
 			</tbody>
 		</table>
 
+			<div style="	display: flex;
+							justify-content: space-between;
+							justify-content: flex-end;
+							margin-bottom: 20px;">
+							
+					<div style="padding : 5px;">
+						<a class="btn btn-primary"
+							 th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
+						<a class="btn btn-primary"
+							 th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>				
+					</div>
+				</div>
 
 		<!-- 댓글 -->
-		<div class="reply" id="reply" th:fragment="reply">
-			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name}" sec:authorize="isAuthenticated()" class="float-right"
+		<div class="reply" id="reply" th:fragment="reply" style="margin-bottom: 30px">
+			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name} or ${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? true : false}" class="float-right"
 				style="padding-bottom: 30px;">
-				<a class="btn btn-primary"
-					th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
-				<a class="btn btn-primary"
-					th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+	
 			</div>
 
 
-			
+			<div class="card mb-2">
+			</div>
 
 			<div th:each="reply , i : ${lists}">
-
 				<!-- 댓글폼  -->
 				<div class="card-body">
 					<div class="d-flex">
@@ -134,23 +135,22 @@ $.ajax({
 							<img class="rounded-circle" th:src="${reply.member.imgUrl}"
 								th:alt="${reply.member.imgOri}" style="width: 100px" />
 						</div>
+				
 						<div class="ms-3">
-							<div>
-								<div class="fw-bold" th:text="${reply.member.loginid}"></div>
-
-								
+						
+							<div style="width: 100%">
+						<span class="fw-bold" th:text="${reply.member.loginid}" style="font-size: 21px"></span><span style="font-size: 10px" th:text="'&nbsp' + ${#temporals.format(reply.regTime, 'yyyy/MM/dd HH:mm')}"></span>
 							</div>
+							
 							<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">
 								<span th:text="${reply.replyContent}"></span>
-							</span> 
-							<span th:id="ReId+${i.index+1}"></span> 
-							<input type="hidden"
+							</span> <span th:id="ReId+${i.index+1}"></span> <input type="hidden"
 								th:value="${reply.replyContent}" th:id="con+${i.index+1}"
-								th:name="con+${i.index+1}"> 
-							<input type="hidden"
+								th:name="con+${i.index+1}"> <input type="hidden"
 								th:value="${reply.id}" th:id="replyId+${i.index+1}"
 								th:name="replyId+${i.index+1}">
-							<div th:if="${reply.member.loginid == #authentication.name}">
+								
+								<div th:if="${reply.member.loginid == #authentication.name}">
 									<a onclick="createinput()" th:id="up+${i.index+1}"
 										th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
 									<a onclick="deletReply()" th:id="${i.index+1}"
@@ -158,14 +158,12 @@ $.ajax({
 								</div>
 						</div>
 
-						<div></div>
 
 					</div>
 				</div>
 				<!-- 댓글폼  -->
 
 			</div>
-<div class="card mb-2">
 				<div class="card-header bg-light">
 					<i class="fa fa-comment fa"></i> REPLY
 				</div>
@@ -180,7 +178,7 @@ $.ajax({
 						</li>
 					</ul>
 				</div>
-			</div>
+
 
 			<!-- 페이징 -->
 			<nav
