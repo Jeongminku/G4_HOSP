@@ -63,4 +63,9 @@ public class MedService {
 		Med med = medRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 		medRepository.delete(med);
 	}
+	
+	public void editmed(MedFormDto medFormDto) {
+		Med med = medRepository.findById(medFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);
+		med.editMed(medFormDto);
+	}
 }

@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.Tingle.G4hosp.dto.MedFormDto;
+
 import lombok.*;
 
 @Entity
@@ -26,4 +28,10 @@ public class Med {
 	
 	@Column(name = "med_info")
 	private String medInfo;
+	
+//	public void editMed(MedFormDto medFormDto) {
+//		this.medId = medFormDto.getMedId();
+//		this.medName = medFormDto.getMedName();
+//		this.medInfo = medFormDto.getMedInfo();
+//	}
 }

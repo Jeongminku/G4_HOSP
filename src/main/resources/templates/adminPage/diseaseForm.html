@@ -22,6 +22,7 @@ $(document).ready(
 </head>
 <body>
 	<section layout:fragment="content">
+
 		<h2 class="h3 b-line mb-4">관리 병명 추가하기</h2>
 		<form class="d-flex flex-column align-items-end px-5" action="/admin/disease" method="post" enctype="multipart/form-data" th:object="${diseaseFormDto}">
 			<!-- 진료과에서 생성한 항목들 들어가기 -->
@@ -40,16 +41,19 @@ $(document).ready(
 			</div>
 			<button type="submit" class="btn btn-primary">등록하기</button>
 		</form>	
+		
 		<h2 class="h3 b-line m-0">진료과 별 담당 병 목록</h2>
 		<table class="table">
 			<thead class="table-header">
 				<tr>
 					<th scope="col">진료과</th>
 					<th scope="col">해당 진료과 등록 병명</th>
+					<th scope="col"></th>
 				</tr>
-<<<<<<< HEAD
+
 				</thead>
 				<tbody>
+			
 				<tr th:each="diseases : ${diseases}">
 					<td style="color:blue"><span class="medName">[[${diseases.med.medName}]]</span></td>
 					<td><span class="medInfo">[[${diseases.diseaseName}]]</span></td>
@@ -58,16 +62,7 @@ $(document).ready(
 				</tbody>
 			</table>
 		</div>
-=======
-			</thead>
-			<tbody>
-			<tr th:each="diseases : ${diseases}">
-				<td style="color:blue"><span class="medName">[[${diseases.med.medName}]]</span></td>
-				<td><span class="medInfo">[[${diseases.diseaseName}]]</span></td>
-			</tr>
-			</tbody>
-		</table>
->>>>>>> 0621ee9c05e6078c2079d09a396059d212fcec4c
+
 	</section>
 </body>
 </html>
