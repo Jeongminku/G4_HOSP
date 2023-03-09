@@ -151,7 +151,7 @@ $.ajax({
 								th:value="${reply.id}" th:id="replyId+${i.index+1}"
 								th:name="replyId+${i.index+1}">
 								
-								<div th:if="${reply.member.loginid == #authentication.name}">
+								<div style="padding-top: 10px" th:if="${reply.member.loginid == #authentication.name}">
 									<a  onclick="createinput()" th:id="up+${i.index+1}"
 										th:class="up-btn + ${i.index+1}" style="cursor: pointer; ; border-radius: 5px; background: #226597; color: white; padding: 2px">수정</a>
 									<a onclick="deletReply()" th:id="${i.index+1}"
