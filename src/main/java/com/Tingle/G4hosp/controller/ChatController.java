@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -31,12 +32,13 @@ public class ChatController {
     private final MemberService memberService;
 
     @GetMapping
-    public String findAllRoom(Model model, Principal principal, HttpServletResponse resp) throws IOException {
+    public String findAllRoom(Model model, Principal principal, HttpServletRequest req, HttpServletResponse resp) throws IOException {
     	if(principal != null) {
     		if(memberService.getMemberRole(principal.getName()) != Role.CLIENT) {
     			chatRoomAccessService.checkInit();
     			model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
     			model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
+    			if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
     			return "ChatPage/WebChat";    		    			
     		} else {
     			return MemberCheckMethod.redirectAfterAlert("사용 권한이 없습니다.", "/", resp);
