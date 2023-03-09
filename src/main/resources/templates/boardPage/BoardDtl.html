@@ -123,7 +123,49 @@ $.ajax({
 			</div>
 
 
-			<div class="card mb-2">
+			
+
+			<div th:each="reply , i : ${lists}">
+
+				<!-- 댓글폼  -->
+				<div class="card-body">
+					<div class="d-flex">
+						<div class="flex-shrink-0">
+							<img class="rounded-circle" th:src="${reply.member.imgUrl}"
+								th:alt="${reply.member.imgOri}" style="width: 100px" />
+						</div>
+						<div class="ms-3">
+							<div>
+								<div class="fw-bold" th:text="${reply.member.loginid}"></div>
+
+								
+							</div>
+							<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">
+								<span th:text="${reply.replyContent}"></span>
+							</span> 
+							<span th:id="ReId+${i.index+1}"></span> 
+							<input type="hidden"
+								th:value="${reply.replyContent}" th:id="con+${i.index+1}"
+								th:name="con+${i.index+1}"> 
+							<input type="hidden"
+								th:value="${reply.id}" th:id="replyId+${i.index+1}"
+								th:name="replyId+${i.index+1}">
+							<div th:if="${reply.member.loginid == #authentication.name}">
+									<a onclick="createinput()" th:id="up+${i.index+1}"
+										th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+									<a onclick="deletReply()" th:id="${i.index+1}"
+										th:class="del-btn" style="cursor: pointer;">삭제</a>
+								</div>
+						</div>
+
+						<div></div>
+
+					</div>
+				</div>
+				<!-- 댓글폼  -->
+
+			</div>
+<div class="card mb-2">
 				<div class="card-header bg-light">
 					<i class="fa fa-comment fa"></i> REPLY
 				</div>
@@ -139,44 +181,6 @@ $.ajax({
 					</ul>
 				</div>
 			</div>
-
-			<div th:each="reply , i : ${lists}">
-
-				<!-- 댓글폼  -->
-				<div class="card-body">
-					<div class="d-flex">
-						<div class="flex-shrink-0">
-							<img class="rounded-circle" th:src="${reply.member.imgUrl}"
-								th:alt="${reply.member.imgOri}" style="width: 100px" />
-						</div>
-						<div class="ms-3">
-							<div>
-								<div class="fw-bold" th:text="${reply.member.loginid}"></div>
-
-								<div th:if="${reply.member.loginid == #authentication.name}">
-									<a onclick="createinput()" th:id="up+${i.index+1}"
-										th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
-									<a onclick="deletReply()" th:id="${i.index+1}"
-										th:class="del-btn" style="cursor: pointer;">삭제</a>
-								</div>
-							</div>
-							<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">
-								<span th:text="${reply.replyContent}"></span>
-							</span> <span th:id="ReId+${i.index+1}"></span> <input type="hidden"
-								th:value="${reply.replyContent}" th:id="con+${i.index+1}"
-								th:name="con+${i.index+1}"> <input type="hidden"
-								th:value="${reply.id}" th:id="replyId+${i.index+1}"
-								th:name="replyId+${i.index+1}">
-						</div>
-
-						<div></div>
-
-					</div>
-				</div>
-				<!-- 댓글폼  -->
-
-			</div>
-
 
 			<!-- 페이징 -->
 			<nav

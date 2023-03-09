@@ -66,6 +66,6 @@ public class MedService {
 	
 	public void editmed(MedFormDto medFormDto) {
 		Med med = medRepository.findById(medFormDto.getMedId()).orElseThrow(EntityNotFoundException::new);
-		med.editMed(medFormDto);
+//		med.editMed(medFormDto);
 	}
 }
