@@ -14,6 +14,8 @@ import lombok.Setter;
 @Setter
 public class MedFormDto {
 
+	private Long medId;
+	
 	@NotBlank(message = "진료과 이름은 필수 입력값입니다.")
 	private String medName; //ID
 	
@@ -25,5 +27,7 @@ public class MedFormDto {
 	public Med createMed() {
 		return modelMapper.map(this, Med.class);
 	}
+	
+	
 	
 }

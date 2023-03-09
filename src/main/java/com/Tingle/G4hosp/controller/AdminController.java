@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,7 @@ import com.Tingle.G4hosp.constant.Role;
 import com.Tingle.G4hosp.dto.AdminMainDto;
 import com.Tingle.G4hosp.dto.ChatRoomDto;
 import com.Tingle.G4hosp.dto.DiseaseFormDto;
+import com.Tingle.G4hosp.dto.HinfoBoardDto;
 import com.Tingle.G4hosp.dto.MedFormDto;
 import com.Tingle.G4hosp.dto.ReservationViewDto;
 import com.Tingle.G4hosp.entity.Disease;
@@ -174,7 +177,6 @@ public class AdminController {
 	// 진료과 입력 기능
 	@PostMapping(value = "/med")
 	public String medFormInput(@Valid MedFormDto medFormDto, BindingResult bindingResult, Model model) {
-		
 		try {
 			medService.saveMed(medFormDto);
 		} catch (Exception e) {
@@ -184,6 +186,8 @@ public class AdminController {
 		
 		return "redirect:/admin/med";
 	}
+	
+	
 	
 	// 진료과 삭제
 	@RequestMapping("delmed/{medId}")
@@ -203,7 +207,34 @@ public class AdminController {
 		List<Med> meds = medService.getMedList();
 		model.addAttribute("meds", meds);
 		
-		return  MemberCheckMethod.redirectAfterAlert("진료과 삭제가 완료되었습니다.",  "/admin/disease" , resp);
+		return  MemberCheckMethod.redirectAfterAlert("진료과 삭제가 완료되었습니다.",  "/admin/med" , resp);
+	}
+	
+	// 진료과 수정 페이지 이동
+	@GetMapping("editmed/{medId}")
+	public String editMed(@PathVariable("medId") Long medId, Model model,Authentication authentication, HttpServletResponse resp, MedFormDto medFormDto) {
+		System.err.println(medId);
+		Med med = medService.findbyid(medId);
+		medFormDto.setMedId(med.getMedId());
+		medFormDto.setMedInfo(med.getMedInfo());
+		medFormDto.setMedName(med.getMedName());
+		System.err.println(medFormDto);
+		model.addAttribute("medFormDto",medFormDto);
+
+		return "adminPage/medForm";
+	}
+	
+	//진료과 수정 버튼 클릭
+	@PostMapping("editmed")
+	public String editMedPage(MedFormDto medFormDto, Model model, HttpServletResponse resp) {
+		try {
+			medService.saveMed(medFormDto);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "진료과 입력 중 에러가 발생하였습니다.");
+			return "adminPage/medForm";
+		}
+		
+		return MemberCheckMethod.redirectAfterAlert("진료과 내용이 변경되었습니다.",  "/admin/med" , resp);
 	}
 	
 	// 병명 삭제
@@ -225,6 +256,7 @@ public class AdminController {
 		
 		return MemberCheckMethod.redirectAfterAlert("병명삭제가 완료되었습니다.",  "/admin/disease" , resp);
 	}
+	
 	
 	// 병명 입력 화면
 	@GetMapping(value="/disease")
