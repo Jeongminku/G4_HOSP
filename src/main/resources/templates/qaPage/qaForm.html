@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>

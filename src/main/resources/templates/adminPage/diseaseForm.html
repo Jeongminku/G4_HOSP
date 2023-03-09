@@ -47,22 +47,17 @@ $(document).ready(
 			<thead class="table-header">
 				<tr>
 					<th scope="col">진료과</th>
-					<th scope="col">해당 진료과 등록 병명</th>
-					<th scope="col"></th>
+					<th scope="col" colspan="2">해당 진료과 등록 병명</th>
 				</tr>
-
-				</thead>
-				<tbody>
-			
+			</thead>
+			<tbody>
 				<tr th:each="diseases : ${diseases}">
 					<td style="color:blue"><span class="medName">[[${diseases.med.medName}]]</span></td>
 					<td><span class="medInfo">[[${diseases.diseaseName}]]</span></td>
 					<td><a th:href="'/admin/deldisease/' + ${diseases.diseaseId}">삭제</a></td>
 				</tr>
-				</tbody>
-			</table>
-		</div>
-
+			</tbody>
+		</table>
 	</section>
 </body>
 </html>

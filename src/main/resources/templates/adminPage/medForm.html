@@ -40,15 +40,12 @@ $(document).ready(
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<button type="submit" class="btn btn-primary">진료과 등록하기</button>
 		</form>	
-
 		<h2 class="h3 b-line m-0">등록된 진료과 목록</h2>
 		<table class="table">
 			<thead class="table-header">
 				<tr>
 					<th scope="col">진료과</th>
-					<th scope="col">진료과설명</th>
-					<th scope="col"></th>
-					<th scope="col"></th>
+					<th scope="col" colspan="2">진료과설명</th>
 				</tr>
 			</thead>
 			<tbody>
