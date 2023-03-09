@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>순양병원</title>
 <style th:inline="text">
-
 </style>
 <link rel="stylesheet" href="/rs/css/BoardDtl.css">
 <script th:inline="javascript">
@@ -81,12 +80,18 @@ $.ajax({
 	<section layout:fragment="content">
 
 		<div class="title-box">
-			<a style="float: right;" id="toList" class="btn btn-outline-primary btn-sm" onclick="location.href='/board/main'">목록으로</a>	
+			<a style="float: right;" id="toList"
+				class="btn btn-outline-primary btn-sm"
+				onclick="location.href='/board/main'">목록으로</a>
 			<h4 class="title">[[${boardFormDto.title}]]</h4>
-			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
-				[[${boardFormDto.view}]] | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
-			<p
-				th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
+
+			<p>
+				작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
+
+				[[${boardFormDto.view}]] | &nbsp; <span
+					th:text="'작성일 : ' + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></span>
+			</p>
+
 
 		</div>
 
@@ -95,7 +100,8 @@ $.ajax({
 		<table class="table table align-middle">
 			<thead>
 				<tr style="text-align: center;">
-					<td style="white-space: pre-line;"><p class="text-start text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+					<td style="white-space: pre-line;"><p
+							class="text-start text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
 				</tr>
 
 			</thead>
@@ -103,29 +109,26 @@ $.ajax({
 			</tbody>
 		</table>
 
-			<div style="	display: flex;
-							justify-content: space-between;
-							justify-content: flex-end;
-							margin-bottom: 20px;">
-							
-					<div style="padding : 5px;">
-						<a class="btn btn-primary"
-							 th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
-						<a class="btn btn-primary"
-							 th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>				
-					</div>
-				</div>
+		<div th:if="${boardFormDto.member.loginid == #authentication.name} or ${#authorization.expression('hasAnyRole(''ROLE_ADMIN'',''ROLE_DOCTOR'')') ? true : false}"
+			style=" display: flex; justify-content: space-between; justify-content: flex-end; margin-bottom: 20px;">
+
+			<div style="padding: 5px;">
+				<a class="btn btn-primary"
+					th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> <a
+					class="btn btn-primary"
+					th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+			</div>
+		</div>
 
 		<!-- 댓글 -->
-		<div class="reply" id="reply" th:fragment="reply" style="margin-bottom: 30px">
-			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name} or ${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? true : false}" class="float-right"
-				style="padding-bottom: 30px;">
-	
-			</div>
+		<div class="reply" id="reply" th:fragment="reply"
+			style="margin-bottom: 30px">
+			<div id="postBtnGroup"
+				th:if="${boardFormDto.member.loginid == #authentication.name} or ${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? true : false}"
+				class="float-right" style="padding-bottom: 30px;"></div>
 
 
-			<div class="card mb-2">
-			</div>
+			<div class="card mb-2"></div>
 
 			<div th:each="reply , i : ${lists}">
 				<!-- 댓글폼  -->
@@ -135,27 +138,33 @@ $.ajax({
 							<img class="rounded-circle" th:src="${reply.member.imgUrl}"
 								th:alt="${reply.member.imgOri}" style="width: 100px" />
 						</div>
-				
+
 						<div class="ms-3">
-						
+
 							<div style="width: 100%">
-						<span class="fw-bold" th:text="${reply.member.loginid}" style="font-size: 21px"></span><span style="font-size: 10px" th:text="'&nbsp' + ${#temporals.format(reply.regTime, 'yyyy/MM/dd HH:mm')}"></span>
+								<span class="fw-bold" th:text="${reply.member.loginid}"
+									style="font-size: 21px"></span><span style="font-size: 10px"
+									th:text="'&nbsp' + ${#temporals.format(reply.regTime, 'yyyy/MM/dd HH:mm')}"></span>
 							</div>
-							
+
 							<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">
-								<span th:text="${reply.replyContent}"></span>
+								<span><p class="text-start text-break"
+										th:text="${reply.replyContent}"></p></span>
 							</span> <span th:id="ReId+${i.index+1}"></span> <input type="hidden"
 								th:value="${reply.replyContent}" th:id="con+${i.index+1}"
 								th:name="con+${i.index+1}"> <input type="hidden"
 								th:value="${reply.id}" th:id="replyId+${i.index+1}"
 								th:name="replyId+${i.index+1}">
-								
-								<div th:if="${reply.member.loginid == #authentication.name}">
-									<a onclick="createinput()" th:id="up+${i.index+1}"
-										th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
-									<a onclick="deletReply()" th:id="${i.index+1}"
-										th:class="del-btn" style="cursor: pointer;">삭제</a>
-								</div>
+
+							<div style="padding-top: 10px"
+								th:if="${reply.member.loginid == #authentication.name}">
+								<a onclick="createinput()" th:id="up+${i.index+1}"
+									th:class="up-btn + ${i.index+1}"
+									style="cursor: pointer;; border-radius: 5px; background: #226597; color: white; padding: 2px">수정</a>
+								<a onclick="deletReply()" th:id="${i.index+1}"
+									th:class="del-btn"
+									style="cursor: pointer; border-radius: 5px; background: #226597; color: white; padding: 2px">삭제</a>
+							</div>
 						</div>
 
 
@@ -164,6 +173,7 @@ $.ajax({
 				<!-- 댓글폼  -->
 
 			</div>
+			<div sec:authorize="isAuthenticated()">
 				<div class="card-header bg-light">
 					<i class="fa fa-comment fa"></i> REPLY
 				</div>
@@ -174,10 +184,11 @@ $.ajax({
 							type="hidden" th:value="${boardFormDto.id}" id="boardId"
 							name="boardId">
 							<button type="button" class="btn btn-dark mt-3"
-								onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
-						</li>
+								onClick="saveReply()">댓글입력</button></li>
 					</ul>
 				</div>
+			</div>
+
 
 
 			<!-- 페이징 -->
@@ -207,7 +218,7 @@ $.ajax({
 			<!-- 페이징 -->
 		</div>
 		<!-- 댓글 -->
-<script src="/rs/js/BoardDtl.js"></script>	
+		<script src="/rs/js/BoardDtl.js"></script>
 	</section>
 </body>
 </html>

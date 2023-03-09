@@ -116,9 +116,10 @@ $("#reply [class*='btn']").not("[class*='up-btn" + replyIdIndex.substr(2) + "']"
 //인풋창 생성
 let input = document.createElement("input")
 input.setAttribute("type","text")
-input.setAttribute("class","upContent")
+input.setAttribute("class","form-control form-control-sm")
 input.setAttribute("id","upContent")
 input.setAttribute("value", content )
+input.style.width = "300%"
 document.querySelector("#ReId"+replyIdIndex.substr(2)).append(input);
 
 $("#upRe").css('display', 'block');
