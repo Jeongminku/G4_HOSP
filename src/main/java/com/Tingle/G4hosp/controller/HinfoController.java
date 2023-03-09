@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +68,7 @@ public class HinfoController {
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
-		
+		if(request.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
 		return "HinfoPage/HinfoMain";
 		
 	}
@@ -98,7 +99,7 @@ public class HinfoController {
 	//글쓰기 완료
 	@PostMapping(value = "/Hinfo")
 	public String saveContent(@Valid HinfoBoardDto hinfoBoardDto  , BindingResult bindingResult ,@RequestParam("HinfoImg") List<MultipartFile> hinfoImg
-			,Principal principal,Model model) {
+			,Principal principal,Model model, HttpServletRequest req) {
 		
 		if(bindingResult.hasErrors()) {
 			return "HinfoPage/HinfoForm";
@@ -110,6 +111,7 @@ public class HinfoController {
 		} catch (Exception e) {
 			System.out.println("확인해보자");
 		}
+		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/Hinfo/HinfoMain";
 		return "redirect:/Hinfo/HinfoMain"; //경로 수정필요합니다.
 	}
 	
@@ -148,7 +150,7 @@ public class HinfoController {
 		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
 		model.addAttribute("HinfoBoard",hinfoBoardDto);
-			
+		if(request.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
 		
 		return "HinfoPage/hinfoDtl";
 	}
@@ -156,7 +158,7 @@ public class HinfoController {
 	//의학정보게시판의 글내용 수정 페이지로 넘겨줌
 	@GetMapping("/updatepage/{hinfoId}")
 	public String HinfoUpdateForm(@PathVariable("hinfoId") Long hinfoIdId,Model model
-			,Authentication authentication, HttpServletResponse resp) {
+			,Authentication authentication, HttpServletResponse resp, HttpServletRequest req) {
 		
 		if(authentication == null) {
 			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다 로그인을 해주세요.",   "/members/login"  , resp);
@@ -171,13 +173,14 @@ public class HinfoController {
 		}
 		
 		model.addAttribute("hinfoBoardDto",hinfoBoardDto);
+		if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
 		return "HinfoPage/HinfoForm";
 	}
 	
 	//의학정보게시판 글내용 수정
 	@PostMapping("/updatepage/{hinfoId}")
 	public String HinfoUpdate(@PathVariable("hinfoId") Long hinfoId,@Valid HinfoBoardDto hinfoBoardDto,@RequestParam("HinfoImg") List<MultipartFile> itemImgFileList,
-			BindingResult bindingResult,Model model,HttpServletResponse resp) {
+			BindingResult bindingResult,Model model,HttpServletResponse resp, HttpServletRequest req) {
 		
 		
 		try {
@@ -186,6 +189,7 @@ public class HinfoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",   "/admin/Hinfo/" + hinfoId , resp);
 		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/Hinfo/" + hinfoId  , resp);
 		
 	}
@@ -195,7 +199,7 @@ public class HinfoController {
 	public String HinfoDelete(@PathVariable("hinfoId") Long hinfoId, 
 			@RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,
 			HinfoBoardDto hinfoBoardDto, Model model,
-			HttpServletResponse resp, Authentication authentication) {
+			HttpServletResponse resp, Authentication authentication, HttpServletRequest req) {
 		
 		
 		
@@ -235,7 +239,7 @@ public class HinfoController {
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
 		
-		
+		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/admin/Hinfo/HinfoMain" , resp);
 		return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/Hinfo/HinfoMain" , resp);
 	}
 	

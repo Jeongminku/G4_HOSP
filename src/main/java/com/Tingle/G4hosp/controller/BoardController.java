@@ -255,7 +255,7 @@ public class BoardController {
 		model.addAttribute("lists", list);
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardserchDto" , boardserchDto);
-		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",  "/admin/board" , resp);
+		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",  "/admin/board/main" , resp);
 		return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",  "/board/main" , resp);
 	}
 	
@@ -284,7 +284,7 @@ public class BoardController {
 	
 	//게시글 수정하기
 	@PostMapping(value = "/updateB")
-	public String boardUpdate(@Valid BoardFormDto boardFormDto,BindingResult bindingResult,Model model,HttpServletResponse resp ) {
+	public String boardUpdate(@Valid BoardFormDto boardFormDto,BindingResult bindingResult,Model model,HttpServletResponse resp, HttpServletRequest req ) {
 	
 		if(bindingResult.hasErrors()) {
 			return "boardpage/boardForm";
@@ -297,7 +297,7 @@ public class BoardController {
 			
 			return MemberCheckMethod.redirectAfterAlert("게시글을 수정을 실패 했습니다.",  "/board/" + boardFormDto.getId() , resp);
 		}
-		
+		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/admin/board/" + boardFormDto.getId() , resp);
 		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/board/" + boardFormDto.getId() , resp);
 	}
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{${isAdmin} ? 'layouts/adminLayout' : 'layouts/layout'}">
       
 <head>
 <meta charset="UTF-8">
@@ -21,7 +21,7 @@
 	
 	<div class="title-box">
 	
-	<a style="float: right;" class="btn btn-outline-primary btn-sm" onclick="location.href='/Hinfo/HinfoMain'">목록으로</a>	
+	<a style="float: right;" id="toList" class="btn btn-outline-primary btn-sm" onclick="location.href='/Hinfo/HinfoMain'">목록으로</a>	
 		<h4 class="title">[[${HinfoBoard.title}]]</h4>
 		<p>작성자 : [[${HinfoBoard.member.name}]] &nbsp; | &nbsp; 조회수 : [[${HinfoBoard.view}]]</p>
 		<p th:text="작성일_ + ${#temporals.format(HinfoBoard.regTime, 'yyyy-MM-dd HH:mm:ss')}"></p>

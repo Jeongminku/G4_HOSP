@@ -55,7 +55,7 @@
             <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError" style="padding: 10px">Incorrect Data</p>
             <input type="hidden" th:value="${boardFormDto.id}" th:field="*{id}">
           </div>
-		<a style="float: right;" class="btn btn-primary" th:href="'/board/' +${boardFormDto.id}">게시글로</a>
+		<a style="float: right;" class="btn btn-primary" id="toPost" th:href="'/board/' +${boardFormDto.id}">게시글로</a>
         <button th:formaction="@{/board/updateB}" style="float: right;" class="btn btn-primary">수정하기</button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>

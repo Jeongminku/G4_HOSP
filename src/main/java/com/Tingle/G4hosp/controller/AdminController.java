@@ -83,31 +83,55 @@ public class AdminController {
 		return adminService.getChartList();
 	}
 	
-//	게시판
-	@GetMapping({"/board", "/board/{Path}", "/board/{Path}/{Id}"}) 
+//	고객 게시판
+	@GetMapping({"/board/{Path}", "/board/{Path}/{Id}"}) 
 	public String boardGet (@PathVariable(name = "Path", required = false)String path, 
-							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req) {
-		System.err.println(path);
-		System.err.println(id);
+							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("isAdmin", true);
 		try {
 			Long boardId = Long.parseLong(path);
 			return "forward:/board/" + boardId;
 		} catch (Exception e) {
-			if(path == null || StringUtils.equals(path, "main")) return "forward:/board/main";
+			if(StringUtils.equals(path, "main")) return "forward:/board/main";
 			if(StringUtils.equals(path, "write")) return "forward:/board/write";
 			if(StringUtils.equals(path, "boardsave")) return "forward:/board/boardsave";
 			if(StringUtils.equals(path, "upDateForm")) return "forward:/board/upDateForm/" + id;
 			if(StringUtils.equals(path, "delBoard")) return "forward:/board/delBoard/" + id;
 		}
-		return "";
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/board/main", resp);
 	}
+	
 	@PostMapping("/board/{Path}") 
-	public String boardPost (@PathVariable("Path")String path, HttpServletRequest req) {
-		System.err.println(path);
+	public String boardPost (@PathVariable("Path")String path, HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("isAdmin", true);
 		if(StringUtils.equals(path, "boardsave")) return "forward:/board/boardsave";
-		return "";
+		if(StringUtils.equals(path, "updateB")) return "forward:/board/updateB/";
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/board/main", resp);
+	}
+	
+//	건강정보 게시판
+	@GetMapping({"/Hinfo/{Path}", "/Hinfo/{Path}/{Id}"})
+	public String hinfoGet (@PathVariable(name = "Path", required = false)String path, 
+							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("isAdmin", true);
+		try {
+			Long hinfoId = Long.parseLong(path);
+			return "forward:/Hinfo/" + hinfoId;
+		} catch (Exception e) {
+			if(StringUtils.equals(path, "HinfoMain")) return "forward:/Hinfo/HinfoMain";			
+			if(StringUtils.equals(path, "write")) return "forward:/Hinfo/write";		
+			if(StringUtils.equals(path, "updatepage")) return "forward:/Hinfo/updatepage/" + id;		
+			if(StringUtils.equals(path, "deletepage")) return "forward:/Hinfo/deletepage/" + id;		
+		}
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/Hinfo/HinfoMain", resp);
+	}
+
+	@PostMapping({"/Hinfo/{Path}", "/Hinfo/{Path}/{Id}"}) 
+	public String hinfoPost (@PathVariable("Path")String path, @PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("isAdmin", true);
+		if(StringUtils.equals(path, "Hinfo")) return "forward:/Hinfo/Hinfo";
+		if(StringUtils.equals(path, "updatepage")) return "forward:/Hinfo/updatepage/" + id;
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/Hinfo/HinfoMain", resp);
 	}
 
 //	===================================================================================

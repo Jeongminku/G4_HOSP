@@ -25,8 +25,8 @@
 						<div class="col-md-12 viewhead">
 							<h2 class="b-line h3 mb-4">비회원 예약 신청자 조회 / 관리</h2>
 						</div>
-						<div class="col-md-12 tablemenu">
-							<div class="QuickResevationlist" th:if = "${QRlist.size}">
+						<div class="col-md-12 tablemenu" th:if = "${QRlist.size}">
+							<div class="QuickResevationlist">
 								<table class="table table-bordered">
 									<tbody>
 										<tr>
@@ -44,7 +44,7 @@
 											<td> [[${qr.requesttime}]]</td>
 											<td> [[${qr.symptom}]]</td>
 											<td> [[${qr.qryn}]]</td>
-											<td><button class="but" th:onclick="|location.href='/admin/updateqr/'+${qr.id}|"> 예약완료 </button></td>								
+											<td><button class="but" th:onclick="okqr([[${qr.id}]])"> 예약완료 </button></td>								
 											<td><button class="but" type="button" th:onclick="deleteqr([[${qr.id}]])"> 예약취소 </button></td>								
 									</tbody>
 								</table>

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>순양병원</title>
+
 <link rel="stylesheet" href="/rs/css/qa.css">
 </head>
 
@@ -33,7 +34,10 @@
 	                    
 	                    <div class="form-textbox row">
 	                        <label th:for="content" class="formbox">질문 답변</label>
-	                        <textarea class="form-control" th:field="*{content}" placeholder = "답변을 작성해주세요" style="padding-left: 100px; border-radius:inherit;"></textarea>
+	                        <textarea class="form-control contentarea" th:field="*{content}" placeholder = "답변을 작성해주세요(최대 500자)" style="padding-left: 100px; border-radius:inherit;" maxlength="500자" wrap="hard"></textarea>
+	                        <div class="textLengthWrap">
+	                        <span class="textCount">0</span><span class="textTotal">/500자</span>
+	                        </div>
 	                    </div> 
 	                    
 	                    	
@@ -48,6 +52,17 @@
                 </form>
             </div>
         </div>
+<script>
+$('.contentarea').keyup(function (e) {
+	let content = $(this).val();
+    // 글자수 세기
+    if (content.length == 0 || content == '') {
+    	$('.textCount').text('0');
+    } else {
+    	$('.textCount').text(content.length + '자');
+    }
+});
+</script>
     </section>
 </body>
 </html>
