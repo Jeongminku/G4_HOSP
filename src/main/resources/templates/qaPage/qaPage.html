@@ -29,7 +29,7 @@
           </h2>
           <div th:id="${qaStat.index}" class="accordion-collapse collapse" th:aria-labelledby="${qaStat.index}" >
             <div class="accordion-body">
-		    <div class ="answer_txt">
+		    <div class ="answer_txt" style="white-space:pre-line";>
 	             <p>[[${qa.qaContent}]]</p>
 	             <div class="form-textbox row qaWrap" style="text-align:center;">
                         <button type="button" th:onclick = "|location.href='@{|/qa/mod/${qa.id}|}'|" class="qa_mod_btn btn btn-primary" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</button>
