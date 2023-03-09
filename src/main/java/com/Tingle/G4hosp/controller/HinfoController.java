@@ -46,7 +46,8 @@ public class HinfoController {
 	//메인페이지를 보여줌
 //	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping(value = "/HinfoMain")
-	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, 
+			HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
 		
 		
 		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
