@@ -95,15 +95,11 @@ $.ajax({
 		<table class="table table align-middle">
 			<thead>
 				<tr style="text-align: center;">
-					<td style="white-space: pre-line;"><p class="text-center text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
+					<td style="white-space: pre-line;"><p class="text-start text-break fs-5 lh-lg ">[[${boardFormDto.content}]]</p></td>
 				</tr>
 
 			</thead>
 			<tbody class="table-group-divider">
-				<tr>
-					<th scope="row"></th>
-				</tr>
-
 				<tr>
 					<th scope="row"></th>
 				</tr>
@@ -113,8 +109,8 @@ $.ajax({
 
 
 		<!-- 댓글 -->
-		<div class="reply" id="reply" th:fragment="reply">
-			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name}" sec:authorize="isAuthenticated()" class="float-right"
+		<div class="reply" id="reply" th:fragment="reply" style="margin-bottom: 30px">
+			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name} or ${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? true : false}" class="float-right"
 				style="padding-bottom: 30px;">
 				<a class="btn btn-primary"
 					th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
@@ -124,6 +120,45 @@ $.ajax({
 
 
 			<div class="card mb-2">
+			</div>
+
+			<div th:each="reply , i : ${lists}">
+				<!-- 댓글폼  -->
+				<div class="card-body">
+					<div class="d-flex">
+						<div class="flex-shrink-0">
+							<img class="rounded-circle" th:src="${reply.member.imgUrl}"
+								th:alt="${reply.member.imgOri}" style="width: 100px" />
+						</div>
+				
+						<div class="ms-3">
+						
+							<div style="width: 100%">
+						<span class="fw-bold" th:text="${reply.member.loginid}" style="font-size: 21px"></span><span style="font-size: 10px" th:text="'&nbsp' + ${#temporals.format(reply.regTime, 'yyyy/MM/dd HH:mm')}"></span>
+							</div>
+							
+							<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">
+								<span th:text="${reply.replyContent}"></span>
+							</span> <span th:id="ReId+${i.index+1}"></span> <input type="hidden"
+								th:value="${reply.replyContent}" th:id="con+${i.index+1}"
+								th:name="con+${i.index+1}"> <input type="hidden"
+								th:value="${reply.id}" th:id="replyId+${i.index+1}"
+								th:name="replyId+${i.index+1}">
+								
+								<div th:if="${reply.member.loginid == #authentication.name}">
+									<a onclick="createinput()" th:id="up+${i.index+1}"
+										th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
+									<a onclick="deletReply()" th:id="${i.index+1}"
+										th:class="del-btn" style="cursor: pointer;">삭제</a>
+								</div>
+						</div>
+
+
+					</div>
+				</div>
+				<!-- 댓글폼  -->
+
+			</div>
 				<div class="card-header bg-light">
 					<i class="fa fa-comment fa"></i> REPLY
 				</div>
@@ -138,44 +173,6 @@ $.ajax({
 						</li>
 					</ul>
 				</div>
-			</div>
-
-			<div th:each="reply , i : ${lists}">
-
-				<!-- 댓글폼  -->
-				<div class="card-body">
-					<div class="d-flex">
-						<div class="flex-shrink-0">
-							<img class="rounded-circle" th:src="${reply.member.imgUrl}"
-								th:alt="${reply.member.imgOri}" style="width: 100px" />
-						</div>
-						<div class="ms-3">
-							<div>
-								<div class="fw-bold" th:text="${reply.member.loginid}"></div>
-
-								<div th:if="${reply.member.loginid == #authentication.name}">
-									<a onclick="createinput()" th:id="up+${i.index+1}"
-										th:class="up-btn + ${i.index+1}" style="cursor: pointer;">수정</a>
-									<a onclick="deletReply()" th:id="${i.index+1}"
-										th:class="del-btn" style="cursor: pointer;">삭제</a>
-								</div>
-							</div>
-							<span th:id="conview+${i.index+1}" th:name="conview+${i.index+1}">
-								<span th:text="${reply.replyContent}"></span>
-							</span> <span th:id="ReId+${i.index+1}"></span> <input type="hidden"
-								th:value="${reply.replyContent}" th:id="con+${i.index+1}"
-								th:name="con+${i.index+1}"> <input type="hidden"
-								th:value="${reply.id}" th:id="replyId+${i.index+1}"
-								th:name="replyId+${i.index+1}">
-						</div>
-
-						<div></div>
-
-					</div>
-				</div>
-				<!-- 댓글폼  -->
-
-			</div>
 
 
 			<!-- 페이징 -->

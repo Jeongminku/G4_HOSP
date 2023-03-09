@@ -101,38 +101,10 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response ,
 			PageSerchDto pageSerchDto,Optional<Integer> page,
 			Authentication authentication) {
-		
-		
-		//쿠키를 통한 게시글 조회수 중복 카운트 방지
-		 Cookie oldCookie = null;
-		 Cookie[] cookies = request.getCookies();
-		 
-		    if (cookies != null) {
-		        for (Cookie cookie : cookies) {
-        	
-		            if (cookie.getName().equals("postView")) {		            	
-		                oldCookie = cookie;
-		            }
-		        }
-		    }
-
-		    if (oldCookie != null) {
-		        if (!oldCookie.getValue().contains("[" + boardId.toString() + "]")) {
-		        	boardSerivce.updateview(boardId);
-		            oldCookie.setValue(oldCookie.getValue() + "_[" + boardId + "]");
-		            oldCookie.setPath("/");
-		            oldCookie.setMaxAge(60 * 60 * 24);
-		            response.addCookie(oldCookie);
-		        }
-		    } else {
-		    	boardSerivce.updateview(boardId);
-		        Cookie newCookie = new Cookie("postView","[" + boardId + "]");
-		        newCookie.setPath("/");
-		        newCookie.setMaxAge(60 * 60 * 24);
-		        response.addCookie(newCookie);
-		    }
-		 
-		
+		    
+		    
+		    
+		    
 		    BoardFormDto boardFormDto = boardSerivce.getBoardDtl(boardId);
 		    //List<ReplyDto> ReplyDtoList = replyService.viewReply(boardId);
 		    //model.addAttribute("ReplyDtoList" ,ReplyDtoList);
@@ -150,8 +122,39 @@ public class BoardController {
 		    	return MemberCheckMethod.redirectAfterAlert("비밀글입니다.",  "/board/main" , response);
 		    }
 		    
-
 		
+			//쿠키를 통한 게시글 조회수 중복 카운트 방지
+			 Cookie oldCookie = null;
+			 Cookie[] cookies = request.getCookies();
+			 
+			    if (cookies != null) {
+			        for (Cookie cookie : cookies) {
+	        	
+			            if (cookie.getName().equals("postView")) {		            	
+			                oldCookie = cookie;
+			            }
+			        }
+			    }
+
+			    if (oldCookie != null) {
+			    		
+			        if (!oldCookie.getValue().contains("[" + boardId.toString() + "]")) {
+			    
+			        	boardSerivce.updateview(boardId);
+			            oldCookie.setValue(oldCookie.getValue() + "_[" + boardId + "]");
+			            oldCookie.setPath("/");
+			            oldCookie.setMaxAge(60 * 60 * 24);
+			            response.addCookie(oldCookie);
+			        }
+			    } else {
+			 
+			    	boardSerivce.updateview(boardId);
+			        Cookie newCookie = new Cookie("postView","[" + boardId + "]");
+			        newCookie.setPath("/");
+			        newCookie.setMaxAge(60 * 60 * 24);
+			        response.addCookie(newCookie);
+			    }
+		    
 		    
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 5);
 			Page<ReplyDto> list = replyService.getReplyPage(pageSerchDto, pageable,boardId);
