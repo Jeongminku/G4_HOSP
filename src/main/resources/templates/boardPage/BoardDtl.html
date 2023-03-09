@@ -99,27 +99,27 @@ $.ajax({
 				</tr>
 
 			</thead>
-			<tbody class="table-group-divider">
-				<tr>
-					<th scope="row"></th>
-				</tr>
 
-				<tr>
-					<th scope="row"></th>
-				</tr>
-
-			</tbody>
 		</table>
 
+			<div style="	display: flex;
+							justify-content: space-between;
+							justify-content: flex-end;
+							margin-bottom: 20px;">
+							
+					<div style="padding : 5px;">
+						<a class="btn btn-primary"
+							 th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
+						<a class="btn btn-primary"
+							 th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>				
+					</div>
+				</div>
 
 		<!-- 댓글 -->
 		<div class="reply" id="reply" th:fragment="reply">
 			<div id="postBtnGroup" th:if="${boardFormDto.member.loginid == #authentication.name}" sec:authorize="isAuthenticated()" class="float-right"
 				style="padding-bottom: 30px;">
-				<a class="btn btn-primary"
-					th:href="'/board/upDateForm/' + ${boardFormDto.id}">수정</a> 
-				<a class="btn btn-primary"
-					th:href="'/board/delBoard/' +${boardFormDto.id}">삭제</a>
+	
 			</div>
 
 
