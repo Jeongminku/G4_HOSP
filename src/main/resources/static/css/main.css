@@ -3,7 +3,7 @@
 /* #category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;} */
 #category {display:flex; justify-content:center; top:10px;left:10px; background: #fff;overflow: hidden;z-index: 2;}
 /* #category li {float:left;list-style: none;width:70px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;} */
-#category li {position:relative; float:left;list-style: none;width:100px;height:100px;px; padding:6px 0;margin:30px 30px 30px 30px;text-align: center; cursor: pointer; border-radius:50%;}
+#category li {position:relative; float:left;list-style: none;width:100px;height:100px; padding:6px 0;margin:30px 30px 30px 30px;text-align: center; cursor: pointer; border-radius:50%;}
 /* #category .round-map {float:left;list-style: none;width:100px;height:100px;px; padding:6px 0;margin:10px;text-align: center; cursor: pointer; border-radius:50%;} */
 #category li.on {background: #eee;}
 .fa-solid {font-size: 50px;}
