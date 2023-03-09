@@ -83,10 +83,11 @@ $.ajax({
 		<div class="title-box">
 			<a style="float: right;" id="toList" class="btn btn-outline-primary btn-sm" onclick="location.href='/board/main'">목록으로</a>	
 			<h4 class="title">[[${boardFormDto.title}]]</h4>
+		
 			<p>작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
-				[[${boardFormDto.view}]] | &nbsp; 댓글 : [[${lists.NumberOfElements}]]</p>
-			<p
-				th:text="작성일_ + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></p>
+
+				[[${boardFormDto.view}]] | &nbsp; <span th:text="'작성일 : ' + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></span></p>			
+		
 
 		</div>
 
@@ -164,7 +165,8 @@ $.ajax({
 				<!-- 댓글폼  -->
 
 			</div>
-				<div class="card-header bg-light">
+			<div sec:authorize="isAuthenticated()">
+			<div class="card-header bg-light" >
 					<i class="fa fa-comment fa"></i> REPLY
 				</div>
 				<div class="card-body">
@@ -174,10 +176,12 @@ $.ajax({
 							type="hidden" th:value="${boardFormDto.id}" id="boardId"
 							name="boardId">
 							<button type="button" class="btn btn-dark mt-3"
-								onClick="saveReply()" sec:authorize="isAuthenticated()">댓글입력</button>
+								onClick="saveReply()">댓글입력</button>
 						</li>
 					</ul>
-				</div>
+				</div>			
+			</div>
+
 
 
 			<!-- 페이징 -->
