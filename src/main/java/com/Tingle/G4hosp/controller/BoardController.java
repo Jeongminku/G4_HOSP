@@ -201,7 +201,7 @@ public class BoardController {
 		model.addAttribute("maxPage", 5);
 		model.addAttribute("boardFormDto",boardFormDto);
 		 
-		return "boardPage/BoardDtl :: reply";
+		return "boardPage/boardDtl :: reply";
 	}
 	
 	//댓글삭제
