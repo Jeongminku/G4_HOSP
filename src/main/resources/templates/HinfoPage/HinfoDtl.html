@@ -21,7 +21,7 @@
 	
 	<div class="title-box">
 	
-	<a style="float: right;" id="toList" class="btn btn-outline-primary btn-sm" onclick="location.href='/Hinfo/HinfoMain'">목록으로</a>	
+	<a style="float: right;" id="toList" class="btn btn-outline-primary btn-sm" onclick="location.href='/hinfo/hinfoMain'">목록으로</a>	
 		<h4 class="title">[[${HinfoBoard.title}]]</h4>
 		<p>작성자 : [[${HinfoBoard.member.name}]] &nbsp; | &nbsp; 조회수 : [[${HinfoBoard.view}]]</p>
 		<p th:text="작성일_ + ${#temporals.format(HinfoBoard.regTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
@@ -56,8 +56,8 @@
 </table>
 
 	  	<div class="button2">
-			<a class="btn btn-primary" th:href="'/Hinfo/updatepage/' +${HinfoBoard.id}" role="button" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</a>
-			<a class="btn btn-primary" th:href="'/Hinfo/deletepage/' +${HinfoBoard.id}" role="button" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">삭제</a>
+			<a class="btn btn-primary" th:href="'/hinfo/updatepage/' +${HinfoBoard.id}" role="button" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">수정</a>
+			<a class="btn btn-primary" th:href="'/hinfo/deletepage/' +${HinfoBoard.id}" role="button" sec:authorize="hasAnyRole('DOCTOR','ADMIN')">삭제</a>
 		</div>
 	
 	</section>	

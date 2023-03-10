@@ -1,9 +1,11 @@
-$(document).ready(function(){
+// 공통
+$(document).ready(function () {
     if(errorMessage != null){
         alert(errorMessage);
     }
 });
 
+// 회원가입 페이지
 function medListEvent() {
     var doctor = $('#doctor');
     if(doctor.is(":checked")) {
@@ -126,3 +128,13 @@ function chktel() {
         $('#tel').focus();
     }
 };
+
+// 정보수정 페이지
+$('.delMember').on('click', function(){
+    $('.delMember').click(function(){
+        if (confirm("삭제하시겠습니까?")) {
+            $(location).attr("href", "/members/del/"+$(this).attr('id'));				
+        }
+        return false;
+    })
+});
