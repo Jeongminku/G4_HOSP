@@ -139,8 +139,8 @@ window.addEventListener('DOMContentLoaded', function () {
                 location.href = adminPath + '/board/write';
             })
             $('.message-body').find('a').each((idx, item) => {
-                originHref = $(item).find('a').attr('href');
-                $(item).find('a').attr('href', adminPath + originHref);
+                originHref = $(item).attr('href');
+                $(item).attr('href', adminPath + originHref);
             })
             originHref = $('#searchForm').attr('action');
             $('#searchForm').attr('action', adminPath + originHref);
