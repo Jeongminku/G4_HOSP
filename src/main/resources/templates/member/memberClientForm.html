@@ -40,13 +40,11 @@
 		
 		
 		// 생일 유효성 검사
-		var birth = $('#birth');
-		
+		var birth = $('#birth');	
 		// 생년월일	birth 유효성 검사
 		function test(){
 		var dateStr = $('#birth').val();	
-		console.log(dateStr);
-		
+		console.log(dateStr);	
 		var year = Number(dateStr.substr(0,4)); // 입력한 값의 0~4자리까지 (연)
 		var month = Number(dateStr.substr(4,2)); // 입력한 값의 4번째 자리부터 2자리 숫자 (월)
 		var day = Number(dateStr.substr(6,2)); // 입력한 값 6번째 자리부터 2자리 숫자 (일)
@@ -69,17 +67,12 @@
 			}else if (day < 1 || day > 31) {
 				
 				$('#birth_check').text('생년월일을 확인해주세요.');
-				$('#birth_check').css('color', 'red');
-				
-				}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-				
+				$('#birth_check').css('color', 'red');			
+				}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {			
 				$('#birth_check').text('생년월일을 확인해주세요.');
-				$('#birth_check').css('color', 'red');
-				
-				}else if (month == 2) {
-				
-				var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-				
+				$('#birth_check').css('color', 'red');			
+				}else if (month == 2) {	
+				var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));			
 				if (day>29 || (day==29 && !isleap)) {
 					
 					$('#birth_check').text('생년월일을 확인해주세요.');
@@ -88,25 +81,19 @@
 				}else{
 					$('#birth_check').text('');
 					birth = true;
-				}//end of if (day>29 || (day==29 && !isleap))
-				
-			
-			}else{
-				
+				}//end of if (day>29 || (day==29 && !isleap))		
+			}else{			
 				$('#birth_check').text(''); 
 				birth = true;
-			}//end of if
+			}//end of if		
+			};	
 			
-			};
 			
-			//ID 중복체크
-			
-			var loginid = $('#loginid');
-			
+			//ID 중복체크		
+			var loginid = $('#loginid');		
 			function chk() {
 				var loginid = $('#loginid').val();
-				var url = "/members/new/" + loginid;
-				
+				var url = "/members/new/" + loginid;			
 				if (loginid != '') {
 					$.ajax({
 						type: 'GET',
@@ -133,14 +120,11 @@
 				}
 			};
 			
-			//전화번호 중복체크
-			
+			//전화번호 중복체크		
 			var tel = $('#tel');
-			
 			function chktel() {
 				var tel= $('#tel').val();
-				var url = "/members/news/" + tel;
-				
+				var url = "/members/news/" + tel;	
 				if (tel != '') {
 					$.ajax({
 						type: 'GET',

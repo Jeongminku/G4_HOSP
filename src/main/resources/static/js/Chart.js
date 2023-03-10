@@ -1,21 +1,17 @@
    // 관리자페이지 구글차트 통계관련
-
 		$(document).ready(function(){
 			  /* alert("준비중입니다."); */
 			  test();
 		});
 		
 		/* 변수선언 */
-		
 		 var t1 = null;
 		 var t2 = null;
 		 var t3 = null;
-		 var t4 = null;
-		
+		 var t4 = null;		
       	/* 데이터 가져오기 */
 	 	function test() {
-	        var url = "/admin/chart";
-	       
+	        var url = "/admin/chart";	       
 	        $.ajax({
 	        	url : url,
 	        	type : 'POST',
@@ -48,12 +44,10 @@
 	          			google.charts.setOnLoadCallback(drawChart);
 	          		 	google.charts.setOnLoadCallback(drawBasic);
 	          		 	google.charts.setOnLoadCallback(drawBasic2);
-	             },
-	            
+	             },            
 	        	error : function() {
 	        		alert("error");
-	        	}
-	            
+	        	}           
 	        });
 		}
       	
@@ -100,7 +94,7 @@
                      [t3[i] , t4[i]]
                    ]);
              }
-             
+
      	      var options = {
      	        title: '각 호실별 입원 현황',
      	        chartArea: {width: '100%'},
@@ -127,8 +121,7 @@
             data.addRows([
                 [t3[i] , t4[i]]
               ]);
-        }
-		
+        }	
 			/* data.addRows([
 			
 				['일', 1],
@@ -140,7 +133,6 @@
 				['토', 7],
 			
 			]); */
-
 			var options = {
 				title: '각 호실별 입원 현황',
 				hAxis: {
@@ -150,19 +142,13 @@
 					max: [17, 30, 0]
 					}
 				},
-				
 				vAxis: {
 					title: '입원환자 수(명)',
 					minValue: 10
-				}
-			
+				}	
 			};
-			
-			 
-			
+	
 			var chart = new google.visualization.ColumnChart(
 			document.getElementById('chart_div5'));
-		
-			chart.draw(data, options);
-		
+			chart.draw(data, options);	
 		}

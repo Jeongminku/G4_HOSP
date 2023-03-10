@@ -127,7 +127,7 @@ public class ReservationController {
 		
 		model.addAttribute(quickReservationDto);
 		model.addAttribute("DL",DL);
-		return "reservationPage/QuickReservation";
+		return "reservationPage/quickReservation";
 	}
 	
 	@PostMapping("/sendqr")
