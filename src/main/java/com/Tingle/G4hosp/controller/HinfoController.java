@@ -45,7 +45,7 @@ public class HinfoController {
 	
 	//메인페이지를 보여줌
 //	@RequestMapping(value="/HinfoMain" , method = {RequestMethod.GET, RequestMethod.POST})
-	@GetMapping(value = "/HinfoMain")
+	@GetMapping(value = "/hinfoMain")
 	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, 
 			HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
 
@@ -71,7 +71,7 @@ public class HinfoController {
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
 		if(request.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
-		return "HinfoPage/HinfoMain";
+		return "hinfoPage/hinfoMain";
 		
 	}
 	
@@ -86,7 +86,7 @@ public class HinfoController {
 		model.addAttribute("maxPage",5);
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		
-		return "HinfoPage/HinfoMain";
+		return "hinfoPage/hinfoMain";
 		
 	}
 	
@@ -94,7 +94,7 @@ public class HinfoController {
 	@GetMapping(value = "/write")
 	public String mainview(Model model) {
 		model.addAttribute("hinfoBoardDto",new HinfoBoardDto());
-		return "HinfoPage/HinfoForm";
+		return "hinfoPage/hinfoForm";
 	}
 	
 	
@@ -104,7 +104,7 @@ public class HinfoController {
 			,Principal principal,Model model, HttpServletRequest req) {
 		
 		if(bindingResult.hasErrors()) {
-			return "HinfoPage/HinfoForm";
+			return "hinfoPage/hinfoForm";
 		}
 		
 		try {
@@ -121,38 +121,41 @@ public class HinfoController {
 	@GetMapping(value={"/{hinfoId}"})
 	public String hinfoview(Model model, @PathVariable("hinfoId") Long hinfoIdId,HttpServletRequest request, HttpServletResponse response) {
 		
-		 Cookie oldCookie = null;
-		 Cookie[] cookies = request.getCookies();
-		 
-		    if (cookies != null) {
-		        for (Cookie cookie : cookies) {
-		            if (cookie.getName().equals("postView")) {
-		                oldCookie = cookie;
-		            }
-		        }
-		    }
-
-		    if (oldCookie != null) {
-		        if (!oldCookie.getValue().contains("[" + hinfoIdId.toString() + "]")) {
-	        	hinfoBoardService.updateViewtest(hinfoIdId);
-		            oldCookie.setValue(oldCookie.getValue() + "_[" + hinfoIdId + "]");
-	            oldCookie.setPath("/");
-		            oldCookie.setMaxAge(60 * 60 * 24);
-		            response.addCookie(oldCookie);
-		        }
-		    } else {
-	    	hinfoBoardService.updateViewtest(hinfoIdId);
-	        Cookie newCookie = new Cookie("postView","[" + hinfoIdId + "]");
-		        newCookie.setPath("/");
-		        newCookie.setMaxAge(60 * 60 * 24);
-		        response.addCookie(newCookie);
-		    }// 쿠키를 이용한 게시글 중복조회 방지 
+//		 Cookie oldCookie = null;
+//		 Cookie[] cookies = request.getCookies();
+//		 
+//		    if (cookies != null) {
+//		        for (Cookie cookie : cookies) {
+//		            if (cookie.getName().equals("postView")) {
+//		                oldCookie = cookie;
+//		            }
+//		        }
+//		    }
+//
+//		    if (oldCookie != null) {
+//		        if (!oldCookie.getValue().contains("[" + hinfoIdId.toString() + "]")) {
+//	        	hinfoBoardService.updateViewtest(hinfoIdId);
+//		            oldCookie.setValue(oldCookie.getValue() + "_[" + hinfoIdId + "]");
+//	            oldCookie.setPath("/");
+//		            oldCookie.setMaxAge(60 * 60 * 24);
+//		            response.addCookie(oldCookie);
+//		        }
+//		    } else {
+//	    	hinfoBoardService.updateViewtest(hinfoIdId);
+//	        Cookie newCookie = new Cookie("postView","[" + hinfoIdId + "]");
+//		        newCookie.setPath("/");
+//		        newCookie.setMaxAge(60 * 60 * 24);
+//		        response.addCookie(newCookie);
+//		    }// 쿠키를 이용한 게시글 중복조회 방지 
 		
 		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
 		model.addAttribute("HinfoBoard",hinfoBoardDto);
 		if(request.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
+	
+    	hinfoBoardService.updateViewtest(hinfoIdId);
 		
+
 		return "hinfoPage/hinfoDtl";
 	}
 	
@@ -175,7 +178,7 @@ public class HinfoController {
 		
 		model.addAttribute("hinfoBoardDto",hinfoBoardDto);
 		if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
-		return "HinfoPage/HinfoForm";
+		return "hinfoPage/hinfoForm";
 	}
 	
 	//의학정보게시판 글내용 수정
@@ -191,7 +194,7 @@ public class HinfoController {
 			e.printStackTrace();
 		}
 		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",   "/admin/hinfo/" + hinfoId , resp);
-		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/Hinfo/" + hinfoId  , resp);
+		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/hinfo/" + hinfoId  , resp);
 		
 	}
 	
