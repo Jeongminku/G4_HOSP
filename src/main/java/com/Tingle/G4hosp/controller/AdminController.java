@@ -379,7 +379,7 @@ public class AdminController {
 	public String chatView (Model model) {
 		model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
 		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-		return "adminPage/AdminChat";
+		return "adminPage/adminChat";
 	}
 	
 	@PostMapping("/chatControll")
@@ -423,7 +423,7 @@ public class AdminController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/ViewReservation";
+		return "reservationPage/viewReservation";
 	}
 	
 	//=========================================== 기능 테스트

@@ -39,7 +39,7 @@ public class ChatController {
     			model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
     			model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
     			if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
-    			return "ChatPage/WebChat";    		    			
+    			return "chatPage/webChat";    		    			
     		} else {
     			return MemberCheckMethod.redirectAfterAlert("사용 권한이 없습니다.", "/", resp);
     		}
@@ -58,8 +58,8 @@ public class ChatController {
     		model.addAttribute("RoomInfo", roomInfo);
     	} catch (Exception e) {
     		model.addAttribute("ErrorMsg", e.getMessage());
-            return "ChatPage/WebChat :: chatRoomFrag";
+            return "chatPage/webChat :: chatRoomFrag";
     	}
-    	return "ChatPage/WebChat :: chatRoomFrag";
+    	return "chatPage/webChat :: chatRoomFrag";
     }
 }

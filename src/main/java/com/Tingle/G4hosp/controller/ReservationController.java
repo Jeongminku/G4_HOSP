@@ -40,7 +40,7 @@ public class ReservationController {
 	@GetMapping("/selectDoc")
 	public String selectDocPage (Model model) {
 		model.addAttribute("DocList", reservationService.findAllDoctor());
-		return "ReservationPage/SelectDoc";
+		return "reservationPage/selectDoc";
 	}
 	
 	@GetMapping("/{doctorId}")
@@ -48,7 +48,7 @@ public class ReservationController {
 		if(principal == null) return MemberCheckMethod.redirectAfterAlert("로그인이 필요한 서비스입니다.", "/members/login", resp);
 		model.addAttribute("ReservationViewPatDto", reservationService.initDto(doctorId));
 		model.addAttribute("ReservationDto", new ReservationDto());
-		return "ReservationPage/SelectDate";
+		return "reservationPage/selectDate";
 	}
 	
 	@PostMapping("/checkIn")
@@ -60,7 +60,7 @@ public class ReservationController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/ReservationComplete";
+		return "reservationPage/reservationComplete";
 	}
 	
 	@PostMapping("/delete")
@@ -88,7 +88,7 @@ public class ReservationController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/ViewReservation";
+		return "reservationPage/viewReservation";
 	}
 	
 	@GetMapping("/setNotAvailDay")
@@ -101,7 +101,7 @@ public class ReservationController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/SetNotAvailableDay";
+		return "reservationPage/setNotAvailableDay";
 	}
 	
 	@PostMapping("/setNotAvailDay")
@@ -117,7 +117,7 @@ public class ReservationController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/SetNotAvailableDay";
+		return "reservationPage/setNotAvailableDay";
 	}
 	
 	@GetMapping("/quick")
@@ -127,7 +127,7 @@ public class ReservationController {
 		
 		model.addAttribute(quickReservationDto);
 		model.addAttribute("DL",DL);
-		return "ReservationPage/QuickReservation";
+		return "reservationPage/QuickReservation";
 	}
 	
 	@PostMapping("/sendqr")
