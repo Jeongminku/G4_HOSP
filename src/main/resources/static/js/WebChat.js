@@ -1,4 +1,6 @@
 let chatSocket = new WebSocket("ws://localhost/ws/chat");
+// 서버용
+// let chatSocket = new WebSocket("ws://13.209.69.219/ws/chat");
 let messageData = {
     roomId: '',
     sender: '',
