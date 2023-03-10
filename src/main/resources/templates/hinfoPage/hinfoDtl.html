@@ -28,7 +28,7 @@
 	</div>
 	
 	
-	<div th:each="img, status:${HinfoBoard.hinfoImgDtoList}" style="text-align: center;"><img  th:alt="${img.oriImgName}" th:src="${img.imgUrl}"></div>
+	<div th:each="img, status:${HinfoBoard.hinfoImgDtoList}" style="text-align: center;" ><img style="width: 100%; max-width: 600px;" th:alt="${img.oriImgName}" th:src="${img.imgUrl}"></div>
 <table class="table table align-middle">
   <thead>
     <tr>
