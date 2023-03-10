@@ -60,7 +60,9 @@ public class ArchiveController {
 	public String archivesearchpage(Model model) {
 		ArchiveSearchDto archiveSearchDto = new ArchiveSearchDto();
 		model.addAttribute("archiveSearchDto",archiveSearchDto);
-		return "/archivePage/ArchiveSearch";
+
+		return "/archivePage/archiveSearch";
+
 	}
 	
 	// PATIENT SEARCH RESULT

@@ -51,7 +51,7 @@ public class MainController {
 		model.addAttribute("searchABC", searchInputDto.getSearchQuery());
 		model.addAttribute("searchSize", adminMainDtolist.size());
 		
-		return "searchPage/SearchResult"; 
+		return "searchPage/searchResult"; 
 	}
 	
 	
