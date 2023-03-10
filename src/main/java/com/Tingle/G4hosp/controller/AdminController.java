@@ -313,7 +313,7 @@ public class AdminController {
 	public String qrlist(Model model) {
 		List<QuickReservation> QRlist = quickReservationService.QRList();
 		model.addAttribute("QRlist",QRlist);
-		return "adminPage/QuickReservationList";
+		return "adminPage/quickReservationList";
 	}
 	// 비회원 예약환자 처리 (N -> Y)
 	@GetMapping("/updateqr/{id}")
@@ -321,7 +321,7 @@ public class AdminController {
 		quickReservationService.updateQR(qrid);
 		List<QuickReservation> QRlist = quickReservationService.QRList();
 		model.addAttribute("QRlist",QRlist);
-		return "adminPage/QuickReservationList";
+		return "adminPage/quickReservationList";
 	}
 	// 비회원 예약 환자 삭제
 	@GetMapping("/deleteqr/{id}")
@@ -329,7 +329,7 @@ public class AdminController {
 		quickReservationService.deleteQR(qrid);
 		List<QuickReservation> QRlist = quickReservationService.QRList();
 		model.addAttribute("QRlist",QRlist);
-		return "adminPage/QuickReservationList";
+		return "adminPage/quickReservationList";
 	}
 	
 //	채팅관련
