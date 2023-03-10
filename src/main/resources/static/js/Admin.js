@@ -162,9 +162,9 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (path.startsWith('/admin/Hinfo')) {
+    if (path.startsWith('/admin/hinfo')) {
         subPath = path.substring(12);
-        if (subPath == '/HinfoMain') {
+        if (subPath == '/hinfoMain') {
             originHref = $('#pn_form').attr('action');
             $('#pn_form').attr('action', adminPath + originHref);
             originHref = $('.filter-search-box').children('form').attr('action');
@@ -174,9 +174,9 @@ window.addEventListener('DOMContentLoaded', function () {
                 originHref = methodOnClickToHref(methodOnClick);
                 $(item).attr('onclick', "location.href='" + adminPath + originHref + "'")
             })
-            methodOnClick = $('#HinfoWrite').attr('onclick');
+            methodOnClick = $('#hinfoWrite').attr('onclick');
             originHref = methodOnClickToHref(methodOnClick);
-            $('#HinfoWrite').attr('onclick', "location.href='" + adminPath + originHref + "'")
+            $('#hinfoWrite').attr('onclick', "location.href='" + adminPath + originHref + "'")
             $('.page-item a').each((idx, item) => {
                 originHref = $(item).attr('href');
                 $(item).attr('href', adminPath + originHref)
