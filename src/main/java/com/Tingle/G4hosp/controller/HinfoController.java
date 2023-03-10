@@ -121,38 +121,41 @@ public class HinfoController {
 	@GetMapping(value={"/{hinfoId}"})
 	public String hinfoview(Model model, @PathVariable("hinfoId") Long hinfoIdId,HttpServletRequest request, HttpServletResponse response) {
 		
-		 Cookie oldCookie = null;
-		 Cookie[] cookies = request.getCookies();
-		 
-		    if (cookies != null) {
-		        for (Cookie cookie : cookies) {
-		            if (cookie.getName().equals("postView")) {
-		                oldCookie = cookie;
-		            }
-		        }
-		    }
-
-		    if (oldCookie != null) {
-		        if (!oldCookie.getValue().contains("[" + hinfoIdId.toString() + "]")) {
-	        	hinfoBoardService.updateViewtest(hinfoIdId);
-		            oldCookie.setValue(oldCookie.getValue() + "_[" + hinfoIdId + "]");
-	            oldCookie.setPath("/");
-		            oldCookie.setMaxAge(60 * 60 * 24);
-		            response.addCookie(oldCookie);
-		        }
-		    } else {
-	    	hinfoBoardService.updateViewtest(hinfoIdId);
-	        Cookie newCookie = new Cookie("postView","[" + hinfoIdId + "]");
-		        newCookie.setPath("/");
-		        newCookie.setMaxAge(60 * 60 * 24);
-		        response.addCookie(newCookie);
-		    }// 쿠키를 이용한 게시글 중복조회 방지 
+//		 Cookie oldCookie = null;
+//		 Cookie[] cookies = request.getCookies();
+//		 
+//		    if (cookies != null) {
+//		        for (Cookie cookie : cookies) {
+//		            if (cookie.getName().equals("postView")) {
+//		                oldCookie = cookie;
+//		            }
+//		        }
+//		    }
+//
+//		    if (oldCookie != null) {
+//		        if (!oldCookie.getValue().contains("[" + hinfoIdId.toString() + "]")) {
+//	        	hinfoBoardService.updateViewtest(hinfoIdId);
+//		            oldCookie.setValue(oldCookie.getValue() + "_[" + hinfoIdId + "]");
+//	            oldCookie.setPath("/");
+//		            oldCookie.setMaxAge(60 * 60 * 24);
+//		            response.addCookie(oldCookie);
+//		        }
+//		    } else {
+//	    	hinfoBoardService.updateViewtest(hinfoIdId);
+//	        Cookie newCookie = new Cookie("postView","[" + hinfoIdId + "]");
+//		        newCookie.setPath("/");
+//		        newCookie.setMaxAge(60 * 60 * 24);
+//		        response.addCookie(newCookie);
+//		    }// 쿠키를 이용한 게시글 중복조회 방지 
 		
 		
 		HinfoBoardDto hinfoBoardDto = hinfoBoardService.getHinfoDtl(hinfoIdId);
 		model.addAttribute("HinfoBoard",hinfoBoardDto);
 		if(request.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
+	
+    	hinfoBoardService.updateViewtest(hinfoIdId);
 		
+
 		return "hinfoPage/hinfoDtl";
 	}
 	
