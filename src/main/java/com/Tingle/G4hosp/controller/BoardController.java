@@ -66,7 +66,7 @@ public class BoardController {
 		
 		if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
 		
-		return "boardpage/boardMain";
+		return "boardPage/boardMain";
 	}
 	
 	//글쓰기 페이지로 이동
@@ -74,7 +74,7 @@ public class BoardController {
 	public String boardForm(Model model, HttpServletRequest req) {
 		model.addAttribute("boardFormDto",new BoardFormDto());
 		if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
-		return "boardpage/boardForm";
+		return "boardPage/boardForm";
 	}
 	
 	//게시글 등록
@@ -82,14 +82,14 @@ public class BoardController {
 	public String saveBoardForm(@Valid BoardFormDto boardFormDto, BindingResult bindingResult,Principal pricipal,Model model, HttpServletRequest req) {
 		
 		if(bindingResult.hasErrors()) {
-			return "boardpage/boardForm";
+			return "boardPage/boardForm";
 		}
 		
 		try {
 			 boardSerivce.saveBoardForm(boardFormDto, pricipal);	
 		} catch (Exception e) {
 			model.addAttribute("errorMessage","로그인을 해주세요");
-			return "boardpage/boardForm";
+			return "boardPage/boardForm";
 		}
 		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/board/main";
 		return "redirect:/board/main";
@@ -167,7 +167,7 @@ public class BoardController {
 		    model.addAttribute("boardFormDto",boardFormDto);
 
 		    if(request.getAttribute("isAdmin") != null)  model.addAttribute("isAdmin", true);
-		    return "boardpage/boardDtl";
+		    return "boardPage/boardDtl";
 	}
 	
 	//댓글 저장
@@ -283,7 +283,7 @@ public class BoardController {
 		
 		model.addAttribute("boardFormDto", boardFormDto);
 		if(req.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
-		return "boardpage/boardForm";
+		return "boardPage/boardForm";
 	}
 	
 	//게시글 수정하기
@@ -291,7 +291,7 @@ public class BoardController {
 	public String boardUpdate(@Valid BoardFormDto boardFormDto,BindingResult bindingResult,Model model,HttpServletResponse resp, HttpServletRequest req ) {
 	
 		if(bindingResult.hasErrors()) {
-			return "boardpage/boardForm";
+			return "boardPage/boardForm";
 		}
 		
 		try {
