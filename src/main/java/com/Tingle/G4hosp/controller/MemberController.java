@@ -226,7 +226,7 @@ public class MemberController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/ViewReservation";
+		return "reservationPage/viewReservation";
 	}
 
 	@GetMapping(value ="/myPage")

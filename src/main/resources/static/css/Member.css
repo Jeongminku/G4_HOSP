@@ -1,2 +1,206 @@
 .box-padding {padding: 50px 100px;}
-.c-bg-white {padding: 100px 50px; width: 500px;}
+.c-bg-white.findInfo {padding: 100px 50px; min-width: 500px; width: max-content;}
+.c-bg-white.signUp {padding: 100px 50px;}
+
+/* adminForm */
+.wrap {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.headwrap {
+	margin: 0 auto;
+}
+
+.viewhead {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.viewlineboxup {
+padding: 24px;
+	border-top: 4px solid black;
+}
+
+.viewlinebox{
+	background-color: #eff3f7;
+	padding: 60px 100px;
+}
+
+.defimg {
+ display:none
+}
+.linemenu {
+	height: 50px;
+	text-align: center;
+	margin-top: 15px;
+}
+
+.tablemenu {
+	padding: 15px;
+	margin: 0 auto;
+	background: white;
+	width : 60%;
+}
+
+.detailbody {
+	border: none;
+}
+
+.detail{
+	width: 90%;
+	height : 250px;
+	background-color: #eff3f7;
+	
+}
+
+.table_con {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.cont_img {
+	width: 15%;
+}
+
+.patientlist {
+	text-align: center;
+}
+
+.pnamein {
+	width: 80%;
+}
+
+.table tr{
+	text-align: left;
+}
+
+.but{
+	background: #226597;
+	color: white;
+}
+
+.privateagree{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+/* modifyPage */
+.wrap {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.headwrap {
+	margin: 0 auto;
+}
+
+/* .viewhead {
+	text-align: center;
+	margin-bottom: 10px;
+} */
+
+.viewlineboxup {
+padding: 24px;
+	border-top: 4px solid black;
+}
+
+.viewlinebox{
+	background-color: #eff3f7;
+	padding: 60px 100px;
+}
+
+.defimg {
+ display:none
+}
+.linemenu {
+	height: 50px;
+	text-align: center;
+	margin-top: 15px;
+}
+
+.tablemenu {
+	padding: 15px;
+	margin: 0 auto;
+	background: white;
+	width : 60%;
+}
+
+.detailbody {
+	border: none;
+}
+
+.detail{
+	width: 90%;
+	height : 250px;
+	background-color: #eff3f7;
+	
+}
+
+.table_con {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.cont_img {
+	width: 15%;
+}
+
+.patientlist {
+	text-align: center;
+}
+
+.pnamein {
+	width: 80%;
+}
+
+.table tr{
+	text-align: left;
+}
+
+.but{
+	background: #226597;
+	color: white;
+}
+h2 {
+text-align: center;
+margin-bottom: 20px;
+}
+.privateagree{
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+
+/* 정보찾기 */
+a.c-primary-color:hover {color: #113F67;}
+ 
+h3 {
+    margin: 10px;
+    color:red;
+}
+.c-bg-white {
+width: 720px;
+}
+.findtitle {
+    margin-bottom : 40px;
+}
+.p-0 {
+margin-bottom:10px;
+}
+
+form {
+padding: 15px;
+}
+.findid {
+display: contents;
+}
+.result {
+color: red;
+font-size: 26px;
+}
+.reslog {
+margin-bottom: 20px;
+}
+.findpwd {
+margin:15px;
+}

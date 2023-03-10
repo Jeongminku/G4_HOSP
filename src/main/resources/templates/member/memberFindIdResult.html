@@ -9,112 +9,41 @@
   <head>
     <meta charset="UTF-8" />
     <title>순양병원 </title> 
+     <link rel="stylesheet" href="/rs/css/Member.css">
     <script th:inline="javascript">
-		$(document).ready(function(){
-			var errorMessage = [[${errorMessage}]];
-			if(errorMessage != null){
-				alert(errorMessage);
-			}
-
-		}); 
+		var errorMessage = [[${errorMessage}]];
 	</script>
-    <style th:inline="text">
-      	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		}
-		
-		html, body {
-		height: 100vh;
-		}
-
-		.container {
-		position: relative;
-		min-height: 100vh;
-		
-		}
-		.in_w {
-		max-width: 1200px;
-		margin: 0 auto;
-	
-		}
-		.bg_blue {
-		border: 1px solid #EEEEEE;
-		background: #eff3f7;
-		width: 840px;
-		height: 515px;
-		}
-		.findid {
-	padding: 30px;
-	}
-
-	button {
-	width: 40%;
-	display: inline-block;
-	margin-top: 20px;
-	margin-bottom: 10px;
-	}
-	.form-control {
-	margin : 0 auto;
-	width:60%;
-    border: 2px solid #999;
-  	color:black;
-    font-weight: 500;
-    font-size: 17px;
-    background-color: #fff;
-    box-sizing: border-box;
-    outline: none;
-}
-.px-5 {
-		text-align: center;
-		margin-bottom: 10px;
-		}
-		.findlogin{
-		padding: 40px;
-		}
-		a {
-		font-size : 16px;
-		}
-		
-		.result {
-		color: red;
-		font-size: 26px;
-		}
-		</style>
   </head>
   <body>
-       <section layout:fragment="content"  class="d-flex flex-column align-items-center justify-content-center max-w-50">
-         	<div class="contaniner">
-	<div class="in_w">
-	<div class="bg_blue">
-	<div class="find">
-	<div align="center"class="findid">
-  				<h5 style="display: inline">찾으시는 아이디는&nbsp;</h5><h5 style="display: inline" class="result" th:text = "${findID.loginid}"></h5><h5 style="display: inline">&nbsp;입니다. </h5>
-  				<h5>해당아이디로 로그인해주시기 바랍니다.</h5>
-  				<div class="findlogin">
-  				<form class="row g-3" action="/members/login" method="post">
-  					  <div class="px-5">
-						<label class="h5" th:for="loginid">아이디</label> 
-						<input type="text" name="loginid" id="loginid" class="form-control">
-					</div>
-					  <div class="px-5">
-						<label class="h5" th:for="password">비밀번호</label> 
-						<input type="password" name="password" id="password" th:value="${newPwd}" class="form-control">
-					</div>
-			 		</form>
-					</div>
-					<div class="findpwd"><a th:href="'/members/FindPwd'">비밀번호가 기억나지 않으신가요?<br><br>비밀번호 찾기</a></div>
-  				 <div style="text-align: center;">
-  				  <p th:if="${errorMessage}" class="errorMessage" th:text="${errorMessage}"></p> 
-					<button type="submit" class="btn btn-primary mb-3 me-2 w-50" id="loginbtn" onclick="location.href='/'">로그인</button>
-					</div>
-			 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-  		</div>		
-  		</div>
-		</div>
-		</div>
-		</div>
-     </section>
+       	<section layout:fragment="content"  class="d-flex flex-column align-items-center justify-content-center max-w-50">
+    		<div class="c-bg-second box-padding">
+				<div class="d-flex flex-column align-items-center c-bg-white findInfo">
+					<h5 class="findid">
+						<span>찾으시는 아이디는</span>
+						<span class="c-alert-color h3" th:text = "${findID.loginid}"></span>
+						<span>입니다.</span>
+						<span class="my-4">해당아이디로 로그인해주시기 바랍니다.</span>
+					</h5>
+					<form class="row g-3" action="/members/login" method="post">
+						<div class="p-0">
+							<label class="h5" th:for="loginid">아이디</label> 
+							<input type="text" name="loginid" id="loginid" class="form-control">
+						</div>
+						<div class="p-0">
+							<label class="h5" th:for="password">비밀번호</label> 
+							<input type="password" name="password" id="password" th:value="${newPwd}" class="form-control">
+						</div>
+						<div class="d-flex justify-content-between p-0 my-3">
+							<span>비밀번호가 기억나지 않으신가요?</span>
+							<a class="c-primary-color" th:href="'/members/FindPwd'">비밀번호 찾기</a>
+						</div>
+						<p th:if="${errorMessage}" class="errorMessage" th:text="${errorMessage}"></p> 
+						<button type="submit" class="btn btn-primary w-40" id="loginbtn" onclick="location.href='/'">로그인</button>
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form>
+				</div>
+  			</div>		
+			<script src="/rs/js/Member.js"></script>
+    	</section>
   </body>
 </html>

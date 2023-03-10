@@ -308,37 +308,6 @@ public class AdminController {
 		return "adminPage/memberList :: memberList_CLIENT_ADMIN";
 	}
 	
-//	// 입원환자목록 페이지 화면
-//	@GetMapping(value="/hospitalizeList")
-//	public String hospitalizeList(Model model) {
-//		
-////		List<Hospitalize> members = hospitalizeService.FindHosListByHosStatus();
-////		model.addAttribute("members", members);
-//		
-//		List<HospitalizeDisease> memHosDis = hospitalizeDiseaseRepository.findAll();
-//		model.addAttribute("memHosDis", memHosDis);
-//		
-//		System.err.println(memHosDis);
-//		
-//		return "adminPage/hospitalizeList";
-//	}
-//	
-//	// 의사목록 페이지 화면
-//	@GetMapping(value="/doctorList")
-//	public String doctorList(Model model) {
-//		
-////		Role doctor = Role.DOCTOR;
-//		
-////		List<Member> members = memberService.getMemberList(doctor);
-////		model.addAttribute("members", members);
-//		
-//		List<MemberMed> memberMeds = memberMedRepository.findAll();
-//		
-//		model.addAttribute("memberMeds", memberMeds);
-//		
-//		return "adminPage/doctorList";
-//	}
-	
 	// 비회원 예약환자 조회
 	@GetMapping("/qlist")
 	public String qrlist(Model model) {
@@ -379,7 +348,7 @@ public class AdminController {
 	public String chatView (Model model) {
 		model.addAttribute("AllAccessList", chatService.findAllAccessListToMap());
 		model.addAttribute("AllChatRoom", chatService.findAllChatRoom());
-		return "adminPage/AdminChat";
+		return "adminPage/adminChat";
 	}
 	
 	@PostMapping("/chatControll")
@@ -423,119 +392,8 @@ public class AdminController {
 		} catch (Exception e) {
 			model.addAttribute("Error", e.getMessage());
 		}
-		return "ReservationPage/ViewReservation";
+		return "reservationPage/viewReservation";
 	}
 	
-	//=========================================== 기능 테스트
-	
-	//////test
-	@GetMapping("/test")
-	public String test(){
-		AdminMainDto adminMainDtot = new AdminMainDto();
-		adminMainDtot = adminService.adminpagetest(adminMainDtot);
-		
-		//  의사 수, 환자수, 입원 환자 수, 과별 입원환자 카운트 리스트 		
-		 System.err.println("의사수 확인 테스트 : "+adminMainDtot.getDoctorcount());
-		 System.err.println("입원 환자 수 확인 테스트 : "+adminMainDtot.getHospitalizecount());
-		 System.err.println("병상 가동률 확인 테스트 (병상 50개 기준): "+((adminMainDtot.getHospitalizecount()*100)/50)+"%");
-		 System.err.println("환자수 확인 테스트 : "+adminMainDtot.getPatientcount());
-
-		 // 중간길 : 각 호실별 입원 인원 현황 	
-				
-		for(int i=0; i<adminMainDtot.getHosptalizedEachMedname().size(); i++) {
-			System.err.println("과 이름 목록 테스트 : "+adminMainDtot.getHosptalizedEachMedname().get(i));
-			System.err.println(adminMainDtot.getHosptalizedEachMedname().get(i)+"의 입원 환자 수 테스트 : "+adminMainDtot.getHosptalizedEachMed().get(i));
-		}
-		
-		for(int i=0; i<adminMainDtot.getHosptalizedEachWard().size(); i++) {
-			System.err.println("호실별 입원 환자 현황 테스트 : " + adminMainDtot.getHosptalizedEachWardname().get(i));
-			System.err.println(adminMainDtot.getHosptalizedEachWardname().get(i)+"호실 현재 입원 환자 수 : "+adminMainDtot.getHosptalizedEachWard().get(i));
-		}
-		
-		
-		
-//		String test = "내";
-//	
-//		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
-//		
-//		// 이름으로 의사 검색
-//		List<Member> list = memberRepository.getdoctorbysearch(test);
-//
-//		// 의사가 속해있는 과 검색 및 dto 추가
-//		for(int i=0; i<list.size(); i++) {
-//			AdminMainDto adminMainDto = new AdminMainDto();
-//			Med med = medRepository.findMedbyDocid(list.get(i).getId());
-//			adminMainDto.setSearchdoctor(list.get(i));
-//			adminMainDto.setSearchdoctormedname(med.getMedName());
-//			adminMainDtolist.add(adminMainDto);
-//		}
-//	
-//		for(AdminMainDto ad : adminMainDtolist) {
-//			System.err.println("과로 검색 전 의사 정보 리스트 "+ ad.getSearchdoctormedname());
-//			System.err.println("과로 검색 전 의사 정보 리스트 "+ ad.getSearchdoctor().getName());		
-//		}
-//		
-//		//~ 과에 속해있는 의사 띄워주기
-//		// 주어진 키워드로 과를 찾아온다
-//		List<MemberMed> medlist1 = memberRepository.getMedDoctorbysearch(test);
-//		List<Member> medmemlist = new ArrayList<>();
-//		List<Member> medmemlistc = new ArrayList<>();
-//		for(MemberMed med : medlist1) {
-//			Member memlist = memberRepository.getReferenceById(med.getMemberId().getId());
-//			medmemlist.add(memlist);
-//			medmemlistc.add(memlist);
-//		}	
-//		
-//		// 이름 검색, 과 검색 중복제거
-//		for(int i=0; i<list.size(); i++) {
-//			for(int j =0; j<medmemlist.size(); j++) {
-//				if(list.get(i).getName() == medmemlist.get(j).getName()) {
-//					medmemlistc.remove(j);
-//				}				
-//			}
-//		}
-//		
-//		for(int i = 0; i<medmemlistc.size(); i++) {
-//			AdminMainDto adminMainDto = new AdminMainDto();
-//			Med med = medRepository.findMedbyDocid(medmemlistc.get(i).getId());
-//			adminMainDto.setSearchdoctor(medmemlistc.get(i));
-//			adminMainDto.setSearchdoctormedname(med.getMedName());
-//			adminMainDtolist.add(adminMainDto);
-//		}
-//		
-//		for(AdminMainDto ad : adminMainDtolist) {
-//			System.err.println("과 검색 후 의사 정보 리스트 "+ ad.getSearchdoctormedname());
-//			System.err.println("과 검색 후 의사 정보 리스트 "+ ad.getSearchdoctor().getName());		
-//		}
-			
-		
-		String test = "내";
-	
-		List<AdminMainDto> adminMainDtolist = new ArrayList<>();
-		
-		// 이름으로 의사 검색
-		List<Member> list = memberRepository.getdoctorbysearch(test);
-		System.err.println("'내'가 이름에 들어가있는 의사 list : "+list);
-		// 의사가 속해있는 과 검색 및 dto 추가
-		for(int i=0; i<list.size(); i++) {
-			AdminMainDto adminMainDto = new AdminMainDto();
-			Med med = medRepository.findMedbyDocid(list.get(i).getId());
-			adminMainDto.setSearchDocId(list.get(i).getId());
-			adminMainDto.setSearchDocImgOri(list.get(i).getImgOri());
-			adminMainDto.setSearchDocImgUrl(list.get(i).getImgUrl());
-			adminMainDto.setSearchDocName(list.get(i).getName());
-			adminMainDto.setSearchDocMedName(med.getMedName());
-			adminMainDtolist.add(adminMainDto);
-		}
-	
-		
-		for(AdminMainDto m : adminMainDtolist) {
-			System.err.println("@@@@@@@ 진료과, 의사 명 테스트 @@@@@@@@");
-			System.err.println("의사명 : "+m.getSearchDocName());
-			System.err.println("진료과명 : "+m.getSearchDocMedName());
-		}
-		
-		return "adminPage/adminPage";
-	}
 	
 }
