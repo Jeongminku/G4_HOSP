@@ -138,8 +138,10 @@ window.addEventListener('DOMContentLoaded', function () {
             $('#boardWrite').on('click', function () {
                 location.href = adminPath + '/board/write';
             })
-            originHref = $('.message-body').find('a').attr('href');
-            $('.message-body').find('a').attr('href', adminPath + originHref);
+            $('.message-body').find('a').each((idx, item) => {
+                originHref = $(item).find('a').attr('href');
+                $(item).find('a').attr('href', adminPath + originHref);
+            })
             originHref = $('#searchForm').attr('action');
             $('#searchForm').attr('action', adminPath + originHref);
         }
