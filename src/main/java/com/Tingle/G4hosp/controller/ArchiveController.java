@@ -55,14 +55,13 @@ public class ArchiveController {
 	private final MemberRepository memberRepository;
 	private final DiseaseRepository diseaseRepository;
 	private final ArchiveDiseaseRepository archiveDiseaseRepository;
+	
 	// SEARCH PATIENT PAGE
 	@GetMapping(value="/")
 	public String archivesearchpage(Model model) {
 		ArchiveSearchDto archiveSearchDto = new ArchiveSearchDto();
 		model.addAttribute("archiveSearchDto",archiveSearchDto);
-
 		return "/archivePage/archiveSearch";
-
 	}
 	
 	// PATIENT SEARCH RESULT
@@ -75,8 +74,7 @@ public class ArchiveController {
 			ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
 			model.addAttribute("archiveSearchDto",archiveSearchDto1);
 			return "/archivePage/archiveSearch";
-		}
-		
+		}		
 		ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
 		model.addAttribute("patientlist",patient);
 		model.addAttribute("archiveSearchDto",archiveSearchDto1);
@@ -125,8 +123,6 @@ public class ArchiveController {
         String birth = patient.getBirth().substring(0, 4);
 		int age = Integer.parseInt(now)-Integer.parseInt(birth);		
 		model.addAttribute("age",age);
-		
-		
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
 		model.addAttribute("patientinfo",patientinfo);
@@ -163,7 +159,7 @@ public class ArchiveController {
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
 		model.addAttribute("patientinfo",patientinfo);
-		return "archivePage/archiveView";
+		return "/archivePage/archiveView";
 	}
 	
 	// ARCHIVE WRITE PAGE
@@ -201,7 +197,7 @@ public class ArchiveController {
 			@RequestParam("doctorname") String docname) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "값을 가져오는 중 에러가 발생했습니다!");
-			return "archivePage/archiveWrite/"+patientid.get();
+			return "/archivePage/archiveWrite/"+patientid.get();
 		}
 		// CREATE & SAVE ARCHIVE
 		try {
