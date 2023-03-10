@@ -97,7 +97,7 @@
 							<td th:text="${hinfo.id}"></td>
 							<td><p th:text="${hinfo.title}"
 									style="width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></p></td>
-							<td th:text="${hinfo.member.loginid}"></td>
+							<td th:text="${hinfo.member.name}"></td>
 							<td th:text="${#temporals.format(hinfo.regTime, 'yyyy-MM-dd')}"></td>
 							<td th:text="${hinfo.view}"></td>
 						</tr>
@@ -120,7 +120,7 @@
 						<tr th:each=" board : ${boardList}">
 							<td th:text="${board.id}"></td>
 							<td><p th:text="${board.title}" style="width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></p></td>
-							<td th:text="${board.member.loginid}"></td>
+							<td th:text="${board.member.name}"></td>
 							<td th:text="${#temporals.format(board.regTime, 'yyyy-MM-dd')}"></td>
 							<td th:text="${board.view}"></td>
 						</tr>

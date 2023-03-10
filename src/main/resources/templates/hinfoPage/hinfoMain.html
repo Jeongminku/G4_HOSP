@@ -110,7 +110,7 @@
 								<span th:text="작성일_ + ${#temporals.format(list.regTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 							</div>
 							<p class="p-content">[[${list.content}]]</p><br>
-							<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.loginid}]] &nbsp; 조회수 : [[${list.view}]]</p>
+							<p>글번호 : [[${list.id}]] &nbsp; 작성자 : [[${list.member.name}]] &nbsp; 조회수 : [[${list.view}]]</p>
 						</div>
 					</li>
 				</ul>

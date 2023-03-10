@@ -86,7 +86,7 @@ $.ajax({
 			<h4 class="title">[[${boardFormDto.title}]]</h4>
 
 			<p>
-				작성자 : [[${boardFormDto.member.loginid}]] &nbsp; | &nbsp; 조회수 :
+				작성자 : [[${boardFormDto.member.name}]] &nbsp; | &nbsp; 조회수 :
 
 				[[${boardFormDto.view}]] | &nbsp; <span
 					th:text="'작성일 : ' + ${#temporals.format(boardFormDto.regTime, 'yyyy-MM-dd')}"></span>
