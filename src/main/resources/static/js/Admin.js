@@ -4,6 +4,8 @@ const header = $("meta[name='_csrf_header']").attr("content");
 
 // 관리자 알림용 웹소켓
 var socket = new WebSocket("ws://localhost:80/websocket");
+// 서버용
+// var socket = new WebSocket("ws://http://13.209.69.219//websocket");
 
 socket.onopen = () => {
     console.log(socket);
