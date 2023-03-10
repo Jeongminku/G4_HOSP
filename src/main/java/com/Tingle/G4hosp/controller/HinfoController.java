@@ -36,7 +36,7 @@ import com.Tingle.G4hosp.service.HinfoBoardService;
 import javassist.expr.NewArray;
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/Hinfo")
+@RequestMapping("/hinfo")
 @Controller
 @RequiredArgsConstructor
 public class HinfoController {
@@ -48,6 +48,7 @@ public class HinfoController {
 	@GetMapping(value = "/HinfoMain")
 	public String viewHinfoList(HttpServletRequest request, @RequestParam(value = "pn", required=false) Integer pn, 
 			HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
+
 		
 		
 		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
@@ -75,7 +76,7 @@ public class HinfoController {
 	}
 	
 
-	@PostMapping(value = "/HinfoMain")
+	@PostMapping(value = "/hinfoMain")
 	public String viewHinfoList(HttpServletRequest request, HinfoSerchDto hinfoSerchDto,Optional<Integer> page,Model model, HinfoBoardDto hinfoBoardDto) {
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , hinfoBoardDto.getPn());
@@ -98,7 +99,7 @@ public class HinfoController {
 	
 	
 	//글쓰기 완료
-	@PostMapping(value = "/Hinfo")
+	@PostMapping(value = "/hinfo")
 	public String saveContent(@Valid HinfoBoardDto hinfoBoardDto  , BindingResult bindingResult ,@RequestParam("HinfoImg") List<MultipartFile> hinfoImg
 			,Principal principal,Model model, HttpServletRequest req) {
 		
@@ -112,8 +113,8 @@ public class HinfoController {
 		} catch (Exception e) {
 			System.out.println("확인해보자");
 		}
-		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/Hinfo/HinfoMain";
-		return "redirect:/Hinfo/HinfoMain"; //경로 수정필요합니다.
+		if(req.getAttribute("isAdmin") != null) return "redirect:/admin/hinfo/hinfoMain";
+		return "redirect:/hinfo/hinfoMain"; //경로 수정필요합니다.
 	}
 	
 	//게시글 상세조회 그리고 조회수증가
@@ -152,7 +153,7 @@ public class HinfoController {
 		model.addAttribute("HinfoBoard",hinfoBoardDto);
 		if(request.getAttribute("isAdmin") != null) model.addAttribute("isAdmin", true);
 		
-		return "HinfoPage/hinfoDtl";
+		return "hinfoPage/hinfoDtl";
 	}
 	
 	//의학정보게시판의 글내용 수정 페이지로 넘겨줌
@@ -169,7 +170,7 @@ public class HinfoController {
 		if(!hinfoBoardDto.getMember().getLoginid().equals(authentication.getName())
 			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
-			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다.",   "/Hinfo/" + hinfoBoardDto.getId() , resp);
+			return MemberCheckMethod.redirectAfterAlert("게시글 수정권한이 없습니다.",   "/hinfo/" + hinfoBoardDto.getId() , resp);
 		}
 		
 		model.addAttribute("hinfoBoardDto",hinfoBoardDto);
@@ -189,7 +190,7 @@ public class HinfoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",   "/admin/Hinfo/" + hinfoId , resp);
+		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",   "/admin/hinfo/" + hinfoId , resp);
 		return MemberCheckMethod.redirectAfterAlert("게시글을 수정했습니다.",  "/Hinfo/" + hinfoId  , resp);
 		
 	}
@@ -212,7 +213,7 @@ public class HinfoController {
 		if(!hinfoBoardDto.getMember().getLoginid().equals(authentication.getName())
 			   	&& !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")
 		    	&& !authentication.getAuthorities().toString().equals("[ROLE_DOCTOR]")) {
-			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다.",   "/Hinfo/" + hinfoId , resp);
+			return MemberCheckMethod.redirectAfterAlert("게시글 삭제권한이 없습니다.",   "/hinfo/" + hinfoId , resp);
 		}
 		
 		System.err.println("페이지 넘길 때 뷰단에서 주는 값 : " + pn);
@@ -239,8 +240,8 @@ public class HinfoController {
 		model.addAttribute("hinfoSerchDto", hinfoSerchDto);
 		model.addAttribute("hinfoBoardDto", hinfoBoardDto);
 		
-		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/admin/Hinfo/HinfoMain" , resp);
-		return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/Hinfo/HinfoMain" , resp);
+		if(req.getAttribute("isAdmin") != null) return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/admin/hinfo/hinfoMain" , resp);
+		return MemberCheckMethod.redirectAfterAlert("게시글을 삭제했습니다.",   "/hinfo/hinfoMain" , resp);
 	}
 	
 

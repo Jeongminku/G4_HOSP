@@ -110,28 +110,28 @@ public class AdminController {
 	}
 	
 //	건강정보 게시판
-	@GetMapping({"/Hinfo/{Path}", "/Hinfo/{Path}/{Id}"})
+	@GetMapping({"/hinfo/{Path}", "/hinfo/{Path}/{Id}"})
 	public String hinfoGet (@PathVariable(name = "Path", required = false)String path, 
 							@PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("isAdmin", true);
 		try {
 			Long hinfoId = Long.parseLong(path);
-			return "forward:/Hinfo/" + hinfoId;
+			return "forward:/hinfo/" + hinfoId;
 		} catch (Exception e) {
-			if(StringUtils.equals(path, "HinfoMain")) return "forward:/Hinfo/HinfoMain";			
-			if(StringUtils.equals(path, "write")) return "forward:/Hinfo/write";		
-			if(StringUtils.equals(path, "updatepage")) return "forward:/Hinfo/updatepage/" + id;		
-			if(StringUtils.equals(path, "deletepage")) return "forward:/Hinfo/deletepage/" + id;		
+			if(StringUtils.equals(path, "hinfoMain")) return "forward:/hinfo/hinfoMain";			
+			if(StringUtils.equals(path, "write")) return "forward:/hinfo/write";		
+			if(StringUtils.equals(path, "updatepage")) return "forward:/hinfo/updatepage/" + id;		
+			if(StringUtils.equals(path, "deletepage")) return "forward:/hinfo/deletepage/" + id;		
 		}
-		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/Hinfo/HinfoMain", resp);
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/hinfo/hinfoMain", resp);
 	}
 
-	@PostMapping({"/Hinfo/{Path}", "/Hinfo/{Path}/{Id}"}) 
+	@PostMapping({"/hinfo/{Path}", "/hinfo/{Path}/{Id}"}) 
 	public String hinfoPost (@PathVariable("Path")String path, @PathVariable(name = "Id", required = false)Long id, HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("isAdmin", true);
-		if(StringUtils.equals(path, "Hinfo")) return "forward:/Hinfo/Hinfo";
-		if(StringUtils.equals(path, "updatepage")) return "forward:/Hinfo/updatepage/" + id;
-		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/Hinfo/HinfoMain", resp);
+		if(StringUtils.equals(path, "hinfo")) return "forward:/hinfo/hinfo";
+		if(StringUtils.equals(path, "updatepage")) return "forward:/hinfo/updatepage/" + id;
+		return MemberCheckMethod.redirectAfterAlert("존재하지 않는 페이지입니다.", "/admin/hinfo/hinfoMain", resp);
 	}
 
 //	qa게시판
@@ -313,7 +313,7 @@ public class AdminController {
 	public String qrlist(Model model) {
 		List<QuickReservation> QRlist = quickReservationService.QRList();
 		model.addAttribute("QRlist",QRlist);
-		return "adminPage/QuickReservationList";
+		return "adminPage/quickReservationList";
 	}
 	// 비회원 예약환자 처리 (N -> Y)
 	@GetMapping("/updateqr/{id}")
@@ -321,7 +321,7 @@ public class AdminController {
 		quickReservationService.updateQR(qrid);
 		List<QuickReservation> QRlist = quickReservationService.QRList();
 		model.addAttribute("QRlist",QRlist);
-		return "adminPage/QuickReservationList";
+		return "adminPage/quickReservationList";
 	}
 	// 비회원 예약 환자 삭제
 	@GetMapping("/deleteqr/{id}")
@@ -329,7 +329,7 @@ public class AdminController {
 		quickReservationService.deleteQR(qrid);
 		List<QuickReservation> QRlist = quickReservationService.QRList();
 		model.addAttribute("QRlist",QRlist);
-		return "adminPage/QuickReservationList";
+		return "adminPage/quickReservationList";
 	}
 	
 //	채팅관련
