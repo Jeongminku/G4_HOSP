@@ -177,15 +177,17 @@ function selectReservationDate(arg) {
         calendar.unselect();
     }
     const currentSelect = $('td[data-date="' + arg.startStr + '"]');
-    if (currentSelect.hasClass('fc-day-disabled')) calendar.unselect();
-    else {
+    if (currentSelect.hasClass('fc-day-disabled')) {
+        calendar.unselect();
+        alert('선택하신 날자는 휴뮤일입니다.');
+        return false;
+    } else {
         selectDay = arg.startStr;
         $('td').each(function () {
             $(this).removeClass('selectedDay');
         })
         currentSelect.addClass('selectedDay');
     }
-
     disableTakenTime(selectDay)
 }
 
@@ -195,8 +197,14 @@ $('input[name="time"]').each(function () {
         $('input[name="reservationDoctorId"]').val(doctorId);
         if ($(this).prop('checked')) {
             const selectTime = $(this).attr('id');
-            const finalReservDate = selectDay + 'T' + selectTime + ':00';
-            $('input[name="reservationDate"]').val(finalReservDate);
+            if (selectDay == null || selectDay == '') {
+                alert('일자를 선택해주세요');
+                $(this).siblings('button').prop('disabled', true);
+            } else {
+                const finalReservDate = selectDay + 'T' + selectTime + ':00';
+                $('input[name="reservationDate"]').val(finalReservDate);
+                $(this).siblings('button').prop('disabled', false);
+            }
         }
     })
 })
