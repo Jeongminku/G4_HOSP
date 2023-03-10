@@ -22,6 +22,7 @@
       <thead class="table-header">
         <tr>
           <th scope="col">NO.</th>
+          <th scope="col">아이디</th>
           <th scope="col">성함</th>
           <th scope="col">생년월일</th>
           <th scope="col">전화번호</th>
@@ -32,6 +33,7 @@
       <tbody>
         <tr th:each="member : ${memberList}">
           <td>[[${member.id}]]</td>
+          <td>[[${member.memberId}]]</td>
           <td>[[${member.memberName}]]</td>
           <td>[[${member.memberBirth}]]</td>
           <td>[[${member.memberTel}]]</td>
@@ -47,6 +49,7 @@
     <thead class="table-header">
       <tr>
         <th scope="col">NO.</th>
+        <th scope="col">아이디</th>
         <th scope="col">성함</th>
         <th scope="col">생년월일</th>
         <th scope="col">전화번호</th>
@@ -57,6 +60,7 @@
     <tbody>
       <tr th:each="member : ${memberList}">
         <td>[[${member.id}]]</td>
+        <td>[[${member.memberId}]]</td>
         <td>[[${member.memberName}]]</td>
         <td>[[${member.memberBirth}]]</td>
         <td>[[${member.memberTel}]]</td>
@@ -70,6 +74,7 @@
     <thead class="table-header">
       <tr>
         <th scope="col">NO.</th>
+        <th scope="col">아이디</th>
         <th scope="col">성함</th>
         <th scope="col">생년월일</th>
         <th scope="col">전화번호</th>
@@ -79,6 +84,7 @@
     <tbody>
       <tr th:each="member : ${memberList}">
         <td>[[${member.id}]]</td>
+        <td>[[${member.memberId}]]</td>
         <td>[[${member.memberName}]]</td>
         <td>[[${member.memberBirth}]]</td>
         <td>[[${member.memberTel}]]</td>
@@ -91,6 +97,7 @@
     <thead class="table-header">
       <tr>
         <th scope="col">NO.</th>
+        <th scope="col">아이디</th>
         <th scope="col">성함</th>
         <th scope="col">입원일</th>
         <th scope="col">담당의</th>
@@ -102,6 +109,7 @@
     <tbody>
       <tr th:each="member : ${memberList}">
         <td>[[${member.id}]]</td>
+        <td>[[${member.memberId}]]</td>
         <td>[[${member.memberName}]]</td>
         <td>[[${member.memberHospDate}]]</td>
         <td>[[${member.memberHospDocName}]]</td>

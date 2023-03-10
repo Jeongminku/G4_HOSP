@@ -16,6 +16,7 @@ import lombok.Data;
 @Data
 public class AdminMemberDto {
 	private Long id;
+	private String memberId;
 	private String memberName;
 	private String memberBirth;
 	private String memberTel;
@@ -35,6 +36,7 @@ public class AdminMemberDto {
 		for(Member member : memberList) {
 			AdminMemberDto adminMemberDto = new AdminMemberDto();
 			adminMemberDto.setId(member.getId());
+			adminMemberDto.setMemberId(member.getLoginid());
 			adminMemberDto.setMemberName(member.getName());
 			adminMemberDto.setMemberBirth(member.getBirth());
 			adminMemberDto.setMemberTel(member.getTel());
@@ -50,6 +52,7 @@ public class AdminMemberDto {
 	public static AdminMemberDto createByMemberMed (MemberMed memberMed) {
 		AdminMemberDto adminMemberDto = new AdminMemberDto();
 		adminMemberDto.setId(memberMed.getMemberId().getId());
+		adminMemberDto.setMemberId(memberMed.getMemberId().getLoginid());
 		adminMemberDto.setMemberName(memberMed.getMemberId().getName());
 		adminMemberDto.setMemberBirth(memberMed.getMemberId().getBirth());
 		adminMemberDto.setMemberTel(memberMed.getMemberId().getTel());
@@ -62,6 +65,7 @@ public class AdminMemberDto {
 	public static AdminMemberDto createByHospitalize (Hospitalize hospitalize, HospitalizeDisease hospitalizeDisease) {
 		AdminMemberDto adminMemberDto = new AdminMemberDto();
 		adminMemberDto.setId(hospitalize.getMember().getId());
+		adminMemberDto.setMemberId(hospitalize.getMember().getLoginid());
 		adminMemberDto.setMemberName(hospitalize.getMember().getName());
 		adminMemberDto.setMemberHospDate(hospitalize.getHospitalizeddate());
 		adminMemberDto.setMemberHospDocName(hospitalize.getDoctor().getName());
