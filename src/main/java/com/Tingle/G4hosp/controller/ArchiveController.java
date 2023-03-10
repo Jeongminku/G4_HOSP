@@ -60,7 +60,7 @@ public class ArchiveController {
 	public String archivesearchpage(Model model) {
 		ArchiveSearchDto archiveSearchDto = new ArchiveSearchDto();
 		model.addAttribute("archiveSearchDto",archiveSearchDto);
-		return "/ArchivePage/ArchiveSearch";
+		return "/archivePage/ArchiveSearch";
 	}
 	
 	// PATIENT SEARCH RESULT
@@ -72,14 +72,14 @@ public class ArchiveController {
 			model.addAttribute("errorMessage", "환자 이름이 조회되지 않습니다.");
 			ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
 			model.addAttribute("archiveSearchDto",archiveSearchDto1);
-			return "/ArchivePage/archiveSearch";
+			return "/archivePage/archiveSearch";
 		}
 		
 		ArchiveSearchDto archiveSearchDto1 = new ArchiveSearchDto();
 		model.addAttribute("patientlist",patient);
 		model.addAttribute("archiveSearchDto",archiveSearchDto1);
 		
-		return "ArchivePage/archiveSearch";
+		return "archivePage/archiveSearch";
 	}
 	
 	// OPEN ARCHIVE PAGE
@@ -128,7 +128,7 @@ public class ArchiveController {
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
 		model.addAttribute("patientinfo",patientinfo);
-		return "ArchivePage/archiveView";
+		return "archivePage/archiveView";
 	}
 
 	@PostMapping(value = "/search")
@@ -161,7 +161,7 @@ public class ArchiveController {
 		model.addAttribute("ArchiveImgList",AIL);
 		model.addAttribute("ArchiveList",AL);
 		model.addAttribute("patientinfo",patientinfo);
-		return "ArchivePage/archiveView";
+		return "archivePage/archiveView";
 	}
 	
 	// ARCHIVE WRITE PAGE
@@ -188,7 +188,7 @@ public class ArchiveController {
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("patient", patient);
 		model.addAttribute("DL",Diseaselist);
-		return "/ArchivePage/archiveWrite";
+		return "/archivePage/archiveWrite";
 	}
 	
 	// CLICK ARCHIVE WRITE BUTTON (CREATE)
@@ -199,7 +199,7 @@ public class ArchiveController {
 			@RequestParam("doctorname") String docname) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "값을 가져오는 중 에러가 발생했습니다!");
-			return "ArchivePage/archiveWrite/"+patientid.get();
+			return "archivePage/archiveWrite/"+patientid.get();
 		}
 		// CREATE & SAVE ARCHIVE
 		try {
@@ -207,7 +207,7 @@ public class ArchiveController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "진료기록 작성 중 에러가 발생했습니다!");
-			return "ArchivePage/archiveWrite/"+patientid.get();
+			return "archivePage/archiveWrite/"+patientid.get();
 		}
 		Member patientinfo = memberService.findByMemberid(patientid.get());
 		List<Archive> AL = archiveService.returnArchive(patientinfo.getId());	
@@ -242,7 +242,7 @@ public class ArchiveController {
 		model.addAttribute("archiveFormDto",archiveFormDto);
 		model.addAttribute("archive",archive);
 		model.addAttribute("DL",Diseaselist);
-		return "/ArchivePage/archiveUpdate";
+		return "/archivePage/archiveUpdate";
 	}
 
 	// CLICK ARCHIVE UPDATE BUTTON (UPDATE)
