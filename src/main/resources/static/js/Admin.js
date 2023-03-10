@@ -208,14 +208,18 @@ window.addEventListener('DOMContentLoaded', function () {
                 originHref = methodOnClickToHref(methodOnClick);
                 $(item).attr('onclick', "location.href='" + adminPath + originHref + "'");
             })
-            methodOnClick = $('.qa_mod_btn').attr('onclick');
-            originHref = methodOnClickToHref(methodOnClick);
-            $('.qa_mod_btn').attr('onclick', "location.href='" + adminPath + originHref + "'");
+            $('.qa_mod_btn').each((idx, item) => {
+                methodOnClick = $(item).attr('onclick');
+                originHref = methodOnClickToHref(methodOnClick);
+                $(item).attr('onclick', "location.href='" + adminPath + originHref + "'");
+            })
             $('.qa_del_btn').attr('onclick', '');
-            $('.qa_del_btn').on('click', function () {
-                if (confirm('삭제하시겠습니까?')) {
-                    location.href = '/admin/qa/del/' + $(this).siblings('input').val();
-                }
+            $('.qa_del_btn').each((idx, item) => {
+                $(item).on('click', function () {
+                    if (confirm('삭제하시겠습니까?')) {
+                        location.href = '/admin/qa/del/' + $(this).siblings('input').val();
+                    }
+                })
             })
         }
         if (subPath == '/new' || subPath.startsWith('/mod')) {
